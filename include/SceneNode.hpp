@@ -8,6 +8,10 @@
 #include <memory>
 #include <vector>
 
+#include "Category.hpp"
+
+struct Command;
+
 class SceneNode : public sf::Transformable,
                   public sf::NonCopyable,
                   public sf::Drawable {
@@ -24,6 +28,9 @@ class SceneNode : public sf::Transformable,
 
     sf::Vector2f getWorldPosition() const;
     sf::Transform getWorldTransform() const;
+
+    void onCommand(const Command& command, sf::Time dt);
+    virtual unsigned int getCategory() const;
 
    private:
     // supporting

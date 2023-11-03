@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include "Command.hpp"
+
 SceneNode::SceneNode() : mParent(nullptr) {}
 
 void SceneNode::update(sf::Time dt) {
@@ -40,6 +42,18 @@ sf::Transform SceneNode::getWorldTransform() const {
 
     return transform;
 }
+
+void SceneNode::onCommand(const Command& command, sf::Time dt) {
+    if (command.category & getCategory()) {
+        command.action(*this, dt);
+    }
+
+    for (Ptr& child : mChildren) {
+        child->onCommand(command, dt);
+    }
+}
+
+unsigned int SceneNode::getCategory() const { return Category::Scene; }
 
 void SceneNode::updateCurrent(sf::Time dt) {
     // For derived classes
