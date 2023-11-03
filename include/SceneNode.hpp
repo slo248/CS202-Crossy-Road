@@ -8,14 +8,18 @@
 #include <memory>
 #include <vector>
 
+#include "Category.hpp"
+
+struct Command;
+
 class SceneNode : public sf::Transformable,
-                  public sf::NonCopyable,
-                  public sf::Drawable {
+                  public sf::Drawable,
+                  private sf::NonCopyable {
    public:
     typedef std::unique_ptr<SceneNode> Ptr;
 
    public:
-    SceneNode();
+    SceneNode(unsigned int category = Category::None);
 
     void update(sf::Time dt);
 
@@ -24,6 +28,9 @@ class SceneNode : public sf::Transformable,
 
     sf::Vector2f getWorldPosition() const;
     sf::Transform getWorldTransform() const;
+
+    void onCommand(const Command& command, sf::Time dt);
+    virtual unsigned int getCategory() const;
 
    private:
     // supporting
@@ -37,6 +44,7 @@ class SceneNode : public sf::Transformable,
 
    private:
     SceneNode* mParent;
+    unsigned int mCategory;
     std::vector<Ptr> mChildren;
 };
 
