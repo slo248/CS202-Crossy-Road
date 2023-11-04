@@ -30,7 +30,7 @@ class SceneNode : public sf::Transformable,
     sf::Transform getWorldTransform() const;
 
     void onCommand(const Command& command, sf::Time dt);
-    virtual unsigned int getCategory() const = 0;
+    virtual unsigned int getCategory();
 
    private:
     // supporting
