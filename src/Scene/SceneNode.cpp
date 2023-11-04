@@ -53,7 +53,7 @@ void SceneNode::onCommand(const Command& command, sf::Time dt) {
     }
 }
 
-unsigned int SceneNode::getCategory() const { return Category::Scene; }
+unsigned int SceneNode::getCategory() const {}
 
 void SceneNode::updateCurrent(sf::Time dt) {
     // For derived classes
