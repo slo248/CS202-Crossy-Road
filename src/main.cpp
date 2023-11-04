@@ -5,37 +5,29 @@
 #include "ResourceIdentifiers.hpp"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "Resources");
-    window.setFramerateLimit(20);
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML White Window");
 
-    // Try to load resources
-    ResourceHolder<sf::Texture, Textures::ID> textures;
-    try {
-        textures.load(
-            Textures::bom_bats, "asset/s_vehicles/bombbats/Boom1.png"
-        );
-        textures.load(Textures::bee_boss, "asset/s_vehicles/bees/D_Attack.png");
-    } catch (std::runtime_error& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-        return 1;
+    sf::Sprite button;
+    sf::Texture buttonTexture;
+    if (!buttonTexture.loadFromFile("/asset/DiscardButton.png")) {
     }
 
-    // Access resources
-    sf::Sprite bombats(textures.get(Textures::bom_bats));
-    sf::Sprite beeboss(textures.get(Textures::bee_boss));
-    beeboss.setPosition(200.f, 200.f);
+    button.setTexture(buttonTexture);
+    button.setPosition(100.0f, 100.0f);
 
     while (window.isOpen()) {
+        window.clear(sf::Color::White);
         sf::Event event;
+
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::KeyPressed ||
-                event.type == sf::Event::Closed)
-                return 0;
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
         }
 
-        window.clear();
-        window.draw(bombats);
-        window.draw(beeboss);
+        window.draw(button);
         window.display();
     }
+
+    return 0;
 }
