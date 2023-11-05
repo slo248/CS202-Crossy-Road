@@ -11,6 +11,7 @@ class SceneNode;
 
 struct Command {
     Command();
+
     unsigned int category;
     std::function<void(SceneNode&, sf::Time)> action;
 };
