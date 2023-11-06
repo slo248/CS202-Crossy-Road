@@ -1,8 +1,5 @@
 #include "Label.hpp"
 
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-
 #include "Utility.hpp"
 
 namespace GUI {

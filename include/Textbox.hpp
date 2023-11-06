@@ -1,11 +1,14 @@
-#ifndef TEXT_HPP
-#define TEXT_HPP
+#ifndef TEXTBOX_HPP
+#define TEXTBOX_HPP
 
-#include <SFML/Graphics/Text.hpp>
+#include <iostream>
+#include <sstream>
 
 #include "Component.hpp"
-#include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
+
+#define DELETE_KEY 8
+#define ENTER_KEY 13
+#define ESCAPE_KEY 27
 
 namespace GUI {
 
@@ -16,24 +19,31 @@ class Textbox : public Component {
    public:
     Textbox(
         const std::string& text, const FontHolder& fonts,
-        const TextureHolder& textures
+        const TextureHolder& textures, int characterSize
     );
 
     virtual bool isSelectable() const;
-    void setText(const std::string& text);
     std::string getText() const;
 
+    void typedOn(sf::Event input);
     virtual void handleEvent(const sf::Event& event);
 
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void inputLogic(int charTyped);
+    void deleteLastChar();
+    void updateTextPosition();
 
    private:
     const sf::Texture& mBackgroundTexture;
     sf::Text mText;
+    std::ostringstream text;
     sf::Sprite mBackground;
+    sf::Vector2f size;
+    int limit = 0;
+    bool hasLimit = false;
 };
 
 }  // namespace GUI
 
-#endif  // BOOK_LABEL_HPP
+#endif

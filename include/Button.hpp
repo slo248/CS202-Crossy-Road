@@ -1,10 +1,6 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include <ResourceHolder.hpp>
-#include <ResourceIdentifiers.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <functional>
 #include <memory>
 #include <string>
@@ -50,4 +46,4 @@ class Button : public Component {
 
 }  // namespace GUI
 
-#endif  // BOOK_BUTTON_HPP
+#endif

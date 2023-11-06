@@ -29,4 +29,4 @@
                      BOOK_LINE_ID(passed) = true,                             \
                     BOOK_LINE_ID(broken) = false)
 
-#endif  // BOOK_FOREACH_HPP
+#endif  // FOREACH_HPP

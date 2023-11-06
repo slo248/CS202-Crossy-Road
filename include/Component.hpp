@@ -5,6 +5,9 @@
 #include <SFML/System.hpp>
 #include <memory>
 
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
+
 namespace sf {
 class Event;
 }
@@ -21,6 +24,7 @@ class Component : public sf::Drawable,
     Component();
     virtual ~Component();
 
+   public:
     virtual bool isSelectable() const = 0;
     bool isSelected() const;
     virtual void select();

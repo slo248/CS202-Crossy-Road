@@ -1,11 +1,7 @@
 #ifndef LABEL_HPP
 #define LABEL_HPP
 
-#include <SFML/Graphics/Text.hpp>
-
 #include "Component.hpp"
-#include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
 
 namespace GUI {
 
@@ -30,4 +26,4 @@ class Label : public Component {
 
 }  // namespace GUI
 
-#endif  // BOOK_LABEL_HPP
+#endif
