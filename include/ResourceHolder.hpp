@@ -1,5 +1,5 @@
-#ifndef RESOURCEHOLDER_HPP
-#define RESOURCEHOLDER_HPP
+#ifndef RESOURCE_HOLDER_HPP
+#define RESOURCE_HOLDER_HPP
 
 #include <cassert>
 #include <map>
@@ -28,4 +28,4 @@ class ResourceHolder {
 };
 
 #include "ResourceHolder.inl"
-#endif
+#endif  // RESOURCE_HOLDER_HPP

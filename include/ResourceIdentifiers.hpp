@@ -1,5 +1,5 @@
 #ifndef RESOURCE_IDENTIFIERS_HPP
-#define RESOURCE_EDENTIFIERS_HPP
+#define RESOURCE_IDENTIFIERS_HPP
 
 namespace sf {
 class Texture;
@@ -167,4 +167,4 @@ class ResourceHolder;
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
-#endif
+#endif  // RESOURCE_IDENTIFIERS_HPP
