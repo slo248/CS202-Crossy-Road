@@ -4,13 +4,13 @@
 
 #include "Utility.hpp"
 
-namespace GUI {
-
-Button::Button(const FontHolder& fonts, const TextureHolder& textures)
+Button::Button(
+    const FontHolder& fonts, const TextureHolder& textures, int characterSize
+)
     : mNormalTexture(textures.get(Textures::ButtonNormal)),
       mSelectedTexture(textures.get(Textures::ButtonSelected)),
       mPressedTexture(textures.get(Textures::ButtonPressed)),
-      mText("", fonts.get(Fonts::Main), 16),
+      mText("", fonts.get(Fonts::Main), characterSize),
       mIsToggle(false) {
     mSprite.setTexture(mNormalTexture);
 
@@ -74,5 +74,3 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(mSprite, states);
     target.draw(mText, states);
 }
-
-}  // namespace GUI

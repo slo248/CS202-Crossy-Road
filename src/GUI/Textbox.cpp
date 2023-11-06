@@ -2,23 +2,18 @@
 
 #include "Utility.hpp"
 
-namespace GUI {
-
 Textbox::Textbox(
     const std::string& text, const FontHolder& fonts,
     const TextureHolder& textures, int characterSize
 )
-    : mBackgroundTexture(textures.get(Textures::TextBackground)) {
+    : mText(text, fonts.get(Fonts::Main), characterSize),
+      mBackgroundTexture(textures.get(Textures::TextBackground)) {
     mBackground.setTexture(mBackgroundTexture);
     size = sf::Vector2f(
         mBackground.getLocalBounds().width, mBackground.getLocalBounds().height
     );
     limit = mBackground.getLocalBounds().width / characterSize;
-
-    mText.setFont(fonts.get(Fonts::Main));
-    mText.setCharacterSize(characterSize);
     mText.setFillColor(sf::Color::White);
-    mText.setString(text);
     updateTextPosition();
 }
 
@@ -48,14 +43,10 @@ void Textbox::typedOn(sf::Event input) {
         int charTyped = input.text.unicode;
 
         if (charTyped < 128) {
-            if (hasLimit) {
-                if (text.str().length() <= limit) {
-                    inputLogic(charTyped);
-                } else if (text.str().length() > limit && charTyped == DELETE_KEY) {
-                    deleteLastChar();
-                }
-            } else {
+            if (text.str().length() <= limit) {
                 inputLogic(charTyped);
+            } else if (text.str().length() > limit && charTyped == DELETE_KEY) {
+                deleteLastChar();
             }
         }
     }
@@ -97,5 +88,3 @@ void Textbox::updateTextPosition() {
 }
 
 std::string Textbox::getText() const { return mText.getString(); }
-
-}  // namespace GUI

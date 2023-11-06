@@ -8,7 +8,7 @@
 
 #include "Component.hpp"
 
-namespace GUI {
+using namespace GUI;
 
 class Button : public Component {
    public:
@@ -16,7 +16,10 @@ class Button : public Component {
     typedef std::function<void()> Callback;
 
    public:
-    Button(const FontHolder& fonts, const TextureHolder& textures);
+    Button(
+        const FontHolder& fonts, const TextureHolder& textures,
+        int characterSize = 16
+    );
 
     void setCallback(Callback callback);
     void setText(const std::string& text);
@@ -43,7 +46,5 @@ class Button : public Component {
     sf::Text mText;
     bool mIsToggle;
 };
-
-}  // namespace GUI
 
 #endif

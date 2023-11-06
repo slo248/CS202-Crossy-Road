@@ -10,7 +10,7 @@
 #define ENTER_KEY 13
 #define ESCAPE_KEY 27
 
-namespace GUI {
+using namespace GUI;
 
 class Textbox : public Component {
    public:
@@ -19,7 +19,7 @@ class Textbox : public Component {
    public:
     Textbox(
         const std::string& text, const FontHolder& fonts,
-        const TextureHolder& textures, int characterSize
+        const TextureHolder& textures, int characterSize = 16
     );
 
     virtual bool isSelectable() const;
@@ -43,7 +43,5 @@ class Textbox : public Component {
     int limit = 0;
     bool hasLimit = false;
 };
-
-}  // namespace GUI
 
 #endif

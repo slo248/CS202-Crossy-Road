@@ -168,6 +168,8 @@ enum ID {
     well,
 
     // GUI
+    DialogBackground,
+    LabelBackground,
     TextBackground,
     ButtonNormal,
     ButtonSelected,

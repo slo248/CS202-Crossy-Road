@@ -1,24 +1,29 @@
+#ifndef DIALOG_HPP
+#define DIALOG_HPP
+
 #include "Component.hpp"
 
-namespace GUI {
+using namespace GUI;
 
 class Dialog : public Component {
    public:
     typedef std::shared_ptr<Dialog> Ptr;
 
+   public:
     Dialog(
-        const sf::Font& font, const std::string& message,
-        const sf::Vector2f& positionMessage
+        const std::string& text, const FontHolder& fonts,
+        const TextureHolder& textures, int characterSize = 16
     );
-    virtual bool isSelectable() const override { return false; }
-
-    virtual void handleEvent(const sf::Event& event) override {}
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states);
+    virtual bool isSelectable() const { return false; }
+    virtual void handleEvent(const sf::Event& event) { return; };
 
    private:
-    sf::RectangleShape backgroundBox;
-    sf::Text messageText;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+   private:
+    sf::Text mText;
+    const sf::Texture& mTexture;
+    sf::Sprite mSprite;
 };
 
-}  // namespace GUI
+#endif

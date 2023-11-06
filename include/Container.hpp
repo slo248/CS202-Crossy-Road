@@ -6,7 +6,7 @@
 
 #include "Component.hpp"
 
-namespace GUI {
+using namespace GUI;
 
 class Container : public Component {
    public:
@@ -32,7 +32,5 @@ class Container : public Component {
     std::vector<Component::Ptr> mChildren;
     int mSelectedChild;
 };
-
-}  // namespace GUI
 
 #endif

@@ -1,22 +1,22 @@
 #include "Dialog.hpp"
 
-namespace GUI {
+#include "Utility.hpp"
 
 Dialog::Dialog(
-    const sf::Font& font, const std::string& message,
-    const sf::Vector2f& positionMessage
-) {
-    messageText.setFont(font);
-    messageText.setCharacterSize(24);
-    messageText.setString(message);
-    messageText.setFillColor(sf::Color::White);
-    messageText.setPosition(positionMessage);
+    const std::string& text, const FontHolder& fonts,
+    const TextureHolder& textures, int characterSize
+)
+    : mText(text, fonts.get(Fonts::Main), characterSize),
+      mTexture(textures.get(Textures::DialogBackground)) {
+    mSprite.setTexture(mTexture);
+
+    sf::FloatRect bounds = mSprite.getLocalBounds();
+    centerOrigin(mText);
+    mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
 }
 
-void Dialog::draw(sf::RenderTarget& target, sf::RenderStates states) {
+void Dialog::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
-    target.draw(backgroundBox, states);
-    target.draw(messageText, states);
+    target.draw(mSprite, states);
+    target.draw(mText, states);
 }
-
-}  // namespace GUI

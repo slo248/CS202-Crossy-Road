@@ -1,6 +1,6 @@
 #include "Component.hpp"
 
-namespace GUI {
+using namespace GUI;
 
 Component::Component() : mIsSelected(false), mIsActive(false) {}
 
@@ -18,4 +18,3 @@ void Component::activate() { mIsActive = true; }
 
 void Component::deactivate() { mIsActive = false; }
 
-}  // namespace GUI

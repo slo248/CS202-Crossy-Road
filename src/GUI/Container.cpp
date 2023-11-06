@@ -4,8 +4,6 @@
 
 #include "Foreach.hpp"
 
-namespace GUI {
-
 Container::Container() : mChildren(), mSelectedChild(-1) {}
 
 void Container::pack(Component::Ptr component) {
@@ -74,5 +72,3 @@ void Container::selectPrevious() {
     // Select that component
     select(prev);
 }
-
-}  // namespace GUI
