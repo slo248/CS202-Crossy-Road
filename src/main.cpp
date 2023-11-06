@@ -4,12 +4,13 @@
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
 
+#include "Button.hpp"
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML White Window");
-
     sf::Sprite button;
     sf::Texture buttonTexture;
-    if (!buttonTexture.loadFromFile("/asset/DiscardButton.png")) {
+    if (!buttonTexture.loadFromFile("asset/ButtonNormal.png")) {
     }
 
     button.setTexture(buttonTexture);
@@ -24,8 +25,6 @@ int main() {
                 window.close();
             }
         }
-
-        window.draw(button);
         window.display();
     }
 

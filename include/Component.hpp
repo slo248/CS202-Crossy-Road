@@ -39,4 +39,4 @@ class Component : public sf::Drawable,
 
 }  // namespace GUI
 
-#endif  // BOOK_COMPONENT_HPP
+#endif
