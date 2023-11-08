@@ -3,6 +3,12 @@
 
 namespace sf {
 class Texture;
+class Font;
+}  // namespace sf
+namespace Fonts {
+enum ID {
+    enchanted,
+};
 }
 
 namespace Textures {
