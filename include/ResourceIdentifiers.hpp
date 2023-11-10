@@ -5,8 +5,10 @@ namespace sf {
 class Texture;
 class Font;
 }  // namespace sf
+
 namespace Fonts {
 enum ID {
+    Main,
     enchanted,
 };
 }
@@ -164,6 +166,15 @@ enum ID {
     sw_pointer1,
     sw_pointer2,
     well,
+
+    // GUI
+    DialogBackground,
+    LabelBackground,
+    TextBackground,
+    ButtonNormal,
+    ButtonSelected,
+    ButtonPressed,
+
 };
 }
 

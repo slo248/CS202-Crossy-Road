@@ -1,41 +1,53 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
+#include "Button.hpp"
+#include "Dialog.hpp"
+#include "Label.hpp"
+#include "Textbox.hpp"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "Resources");
-    window.setFramerateLimit(20);
+    FontHolder fonts;
+    TextureHolder textures;
+    fonts.load(Fonts::Main, "asset/Sansation.ttf");
 
-    // Try to load resources
-    ResourceHolder<sf::Texture, Textures::ID> textures;
-    try {
-        textures.load(
-            Textures::bom_bats, "asset/s_vehicles/bombbats/Boom1.png"
-        );
-        textures.load(Textures::bee_boss, "asset/s_vehicles/bees/D_Attack.png");
-    } catch (std::runtime_error& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-        return 1;
-    }
+    textures.load(Textures::TextBackground, "asset/ButtonSelected.png");
+    Textbox textbox("Textbox", fonts, textures, 16);
+    textbox.setPosition(500, 500);
 
-    // Access resources
-    sf::Sprite bombats(textures.get(Textures::bom_bats));
-    sf::Sprite beeboss(textures.get(Textures::bee_boss));
-    beeboss.setPosition(200.f, 200.f);
+    textures.load(Textures::DialogBackground, "asset/ButtonSelected.png");
+    Dialog dialog("Dialog", fonts, textures);
+    dialog.setPosition(300, 300);
+
+    textures.load(Textures::ButtonNormal, "asset/ButtonNormal.png");
+    textures.load(Textures::ButtonSelected, "asset/ButtonSelected.png");
+    textures.load(Textures::ButtonPressed, "asset/ButtonPressed.png");
+    Button button(fonts, textures);
+    button.setText("Button");
+    button.setPosition(100, 100);
+
+    textures.load(Textures::LabelBackground, "asset/ButtonSelected.png");
+    Label label("Label", fonts, textures);
+    label.setPosition(200, 200);
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML White Window");
 
     while (window.isOpen()) {
+        window.clear(sf::Color::White);
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::KeyPressed ||
-                event.type == sf::Event::Closed)
-                return 0;
-        }
+        window.draw(textbox);
+        window.draw(button);
+        window.draw(label);
+        window.draw(dialog);
 
-        window.clear();
-        window.draw(bombats);
-        window.draw(beeboss);
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            textbox.handleEvent(event);
+        }
         window.display();
     }
+
+    return 0;
 }
