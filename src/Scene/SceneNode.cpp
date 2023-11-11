@@ -38,7 +38,7 @@ sf::Transform SceneNode::getWorldTransform() const {
     sf::Transform transform = sf::Transform::Identity;
 
     for (const SceneNode* node = this; node; node = node->mParent) {
-        transform *= node->getTransform();
+        transform = node->getTransform() * transform;
     }
 
     return transform;
