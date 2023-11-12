@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" modified="2023-11-12T05:56:08.154Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="F5xhxPnwK0QIWJyFWvPa" version="22.1.0" type="github">
+  <diagram name="Page-1" id="0lONJyHFGWUX5k2u_x4R">
+    <mxGraphModel dx="875" dy="469" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IWvCMMscmUqjosZtDshd-1" value="ResourceHolder" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="220" width="390" height="164" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-2" value="- map&amp;lt;Identifier, unique_ptr&amp;lt;Resource&amp;gt;&amp;gt; mResourceMap" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="26" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="52" width="390" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-4" value="+ load(id: Identifier, filename: string): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="60" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-13" value="+ get(id: Identifier): Resource&amp;amp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="86" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-14" value="+ &amp;lt;&amp;lt;const&amp;gt;&amp;gt; get(id: Identifier): const Resource&amp;amp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="112" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-12" value="- insertResource(id: Identifier, resource: unique_ptr&amp;lt;Resource&amp;gt;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IWvCMMscmUqjosZtDshd-1">
+          <mxGeometry y="138" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-10" value="Resource: ResourceDataType&lt;br&gt;Identifier: IdentifierEachElement" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="500" y="190" width="185" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-17" value="typedef ResourceHolder&amp;lt;sf::Texture, Textures::ID&amp;gt; TextureHolder&lt;br&gt;&lt;br&gt;typedef ResourceHolder&amp;lt;sf::Font, Fonts::ID&amp;gt; FontHolder" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="430" width="400" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="IWvCMMscmUqjosZtDshd-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="IWvCMMscmUqjosZtDshd-17" target="IWvCMMscmUqjosZtDshd-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
