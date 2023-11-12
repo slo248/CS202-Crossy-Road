@@ -1,0 +1,5 @@
+Death 0 - 384 - 3 moves
+Idle 384 - 1408 - 8 moves
+Jump 1408 - 2432 - 8 moves
+Run 2432 - 3456 - 8 moves
+Walk 3456 - 4480 - 8 moves
