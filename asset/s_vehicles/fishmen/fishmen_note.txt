@@ -1,0 +1,1 @@
+swim 4 attack 6 death 6

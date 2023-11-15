@@ -1,0 +1,1 @@
+6 walk 6 attack
