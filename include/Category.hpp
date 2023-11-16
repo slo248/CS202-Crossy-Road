@@ -10,8 +10,8 @@ enum Type {
     Animal = 1 << 3,
     Enemy = 1 << 4,
     Obstacle = 1 << 5,
-    Lane = 1 << 6,
-    TrafficLight = 1 << 7,
+    TrafficLight = 1 << 6,
+    Lane = 1 << 7,
 };
 }
 

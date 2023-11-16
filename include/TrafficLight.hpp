@@ -10,6 +10,7 @@
 class TrafficLight : public SceneNode {
    public:
     enum Type { Field, Graveyard, Swamp, TypeCount };
+
     TrafficLight(Type type, const TextureHolder& textures);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;

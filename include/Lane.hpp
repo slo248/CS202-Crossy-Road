@@ -12,10 +12,6 @@ class Lane : public SceneNode {
     enum Type { River, Dirt, Grass, Graveyard, Soil, Swamp, TypeCount };
 
    public:
-    // explicit Lane(Type type, const sf::Texture& texture);
-    // Lane(
-    //     Type type, const sf::Texture& texture, const sf::IntRect& textureRect
-    // );
     Lane(Type type, const TextureHolder& textures);
 
     virtual unsigned int getCategory() const override;
@@ -30,8 +26,8 @@ class Lane : public SceneNode {
    private:
     Type mType;
     sf::Sprite mSprite;
-    Lane *mTopLane, *mBottomLane;
-    bool mIsForDecoration;
+    std::unique_ptr<Lane> mTopLane, mBottomLane;
+    std::unique_ptr<TrafficLight> mTrafficLight;
 };
 
 #endif  // LANE_HPP
