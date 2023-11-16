@@ -15,20 +15,26 @@ enum ID {
 
 namespace Textures {
 enum ID {
-    // traffic lights
+    // <----------------Trafic Light------------>
     f_traffic,
     sw_traffic,
     gy_traffic,
+    // <----------------Trafic Light------------->
 
-    // roads
+    //////////////////////////////////////////////
+
+    // <----------------Lane-------------------->
     river,
-    road1,
-    road2,
-    road3,
-    road4,
-    road5,
+    dirt,
+    grass,
+    graveyard,
+    soil,
+    swamp,
+    // <----------------Lane-------------------->
 
-    // animals
+    /////////////////////////////////////////////
+
+    // <------------------Animal---------------->
     bee,
     bird1,
     bird2,
@@ -40,33 +46,32 @@ enum ID {
     rabbit,
     sheep,
     turtle,
+    // <------------------Animal----------------->
 
-    // bombs
-    callbees,
-    octopus,
-    slime,
-    fullscreen_blind,
+    //////////////////////////////////////////////
 
-    // characters
-    archer,
-    enchantress,
-    knight,
-    musketeer,
-    swordman,
-    wizard,
-
-    // vehicles
+    // <-------------------Enemy----------------->
+    // bosses
     bee_boss,
     bom_bats,
     fishmen,
     orcs,
     zombie,
 
-    ////others
-    // Field
-    fence,
+    // bombs
+    callbees,
+    octopus,
+    slime,
+    fullscreen_blind,
+    // <-------------------Enemy----------------->
+
+    ////////////////////////////////////////////////
+
+    // <-------------------Obstacle----------------->
+    // <----------Field---------->
     campfire1,
     campfire2,
+    f_fence,
     pointer1,
     pointer2,
     stone1,
@@ -102,8 +107,12 @@ enum ID {
     box1,
     box2,
     box3,
+    // // <----------Field---------->
 
-    // Graveyard
+    ////////////////////////////////////
+
+    // <-----------Graveyard----------->
+    lantern,
     gy_log,
     gy_tree1,
     gy_tree2,
@@ -118,7 +127,6 @@ enum ID {
     bone2,
     bone3,
     bone4,
-    lantern,
     gy_fence,
     statue1,
     statue2,
@@ -126,8 +134,11 @@ enum ID {
     statue4,
     statue5,
     statue6,
+    // <----------Graveyard----------->
 
-    // river
+    ///////////////////////////////////
+
+    // <-----------River-------------->
     rv_grass1,
     rv_grass2,
     rv_grass3,
@@ -139,11 +150,14 @@ enum ID {
     rv_stone4,
     rv_stone5,
     jump_log,
+    // <-----------River-------------->
 
-    // swamp
-    sw_tree1,
-    sw_tre2,
+    ///////////////////////////////////
+
+    // <----------Swamp--------------->
     torch,
+    sw_tree1,
+    sw_tree2,
     sw_grass1,
     sw_grass2,
     sw_grass3,
@@ -157,6 +171,17 @@ enum ID {
     sw_pointer1,
     sw_pointer2,
     well,
+    // <----------Swamp--------------->
+    // <-------------------Obstacle----------------->
+
+    // <---------------Characters Skin-------------->
+    archer,
+    enchantress,
+    knight,
+    musketeer,
+    swordman,
+    wizard,
+    // <---------------Characters Skin-------------->
 
     //// GUI
     // Common

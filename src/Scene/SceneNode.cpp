@@ -1,17 +1,15 @@
 #include "SceneNode.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 
 #include "Command.hpp"
 
 SceneNode::SceneNode(unsigned int category)
     : mParent(nullptr), mCategory(category) {}
-
-void SceneNode::update(sf::Time dt) {
-    updateCurrent(dt);
-    updateChildren(dt);
-}
 
 void SceneNode::attachChild(Ptr child) {
     child->mParent = this;
@@ -28,6 +26,11 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node) {
     result->mParent = nullptr;
     mChildren.erase(found);
     return result;
+}
+
+void SceneNode::update(sf::Time dt, CommandQueue& commands) {
+    updateCurrent(dt, commands);
+    updateChildren(dt, commands);
 }
 
 sf::Vector2f SceneNode::getWorldPosition() const {
@@ -56,13 +59,25 @@ void SceneNode::onCommand(const Command& command, sf::Time dt) {
 
 unsigned int SceneNode::getCategory() const { return mCategory; }
 
-void SceneNode::updateCurrent(sf::Time dt) {
+void SceneNode::checkSceneCollision(
+    SceneNode& sceneGraph, std::set<Pair>& collisionPairs
+) {}
+
+void SceneNode::checkNodeCollision(
+    SceneNode& node, std::set<Pair>& collisionPairs
+) {}
+
+sf::FloatRect SceneNode::getBoundingRect() const { return sf::FloatRect(); }
+
+bool SceneNode::isDestroyed() const { return false; }
+
+void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // For derived classes
 }
 
-void SceneNode::updateChildren(sf::Time dt) {
+void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands) {
     for (Ptr& child : mChildren) {
-        child->update(dt);
+        child->update(dt, commands);
     }
 }
 
@@ -84,4 +99,31 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states)
     for (const Ptr& child : mChildren) {
         child->draw(target, states);
     }
+}
+
+void SceneNode::drawBoundingRect(
+    sf::RenderTarget& target, sf::RenderStates states
+) const {
+    sf::FloatRect rect = getBoundingRect();
+
+    sf::RectangleShape shape;
+    shape.setPosition(sf::Vector2f(rect.left, rect.top));
+    shape.setSize(sf::Vector2f(rect.width, rect.height));
+    shape.setFillColor(sf::Color::Transparent);
+    shape.setOutlineColor(sf::Color::Green);
+    shape.setOutlineThickness(1.f);
+
+    target.draw(shape);
+}
+
+bool collision(const SceneNode& lhs, const SceneNode& rhs) {
+    // return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+}
+
+float distance(const SceneNode& lhs, const SceneNode& rhs) {
+    return length(lhs.getWorldPosition() - rhs.getWorldPosition());
+}
+
+float length(sf::Vector2f vector) {
+    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
