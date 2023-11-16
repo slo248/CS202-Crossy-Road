@@ -69,8 +69,6 @@ void SceneNode::checkNodeCollision(
 
 sf::FloatRect SceneNode::getBoundingRect() const { return sf::FloatRect(); }
 
-bool SceneNode::isDestroyed() const { return false; }
-
 void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // For derived classes
 }
@@ -118,12 +116,13 @@ void SceneNode::drawBoundingRect(
 
 bool collision(const SceneNode& lhs, const SceneNode& rhs) {
     // return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
-}
-
-float distance(const SceneNode& lhs, const SceneNode& rhs) {
-    return length(lhs.getWorldPosition() - rhs.getWorldPosition());
+    return false;
 }
 
 float length(sf::Vector2f vector) {
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+float distance(const SceneNode& lhs, const SceneNode& rhs) {
+    return length(lhs.getWorldPosition() - rhs.getWorldPosition());
 }

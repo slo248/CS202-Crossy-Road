@@ -47,8 +47,6 @@ class SceneNode : public sf::Transformable,
     );
     void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs);
     virtual sf::FloatRect getBoundingRect() const;
-    virtual bool isMarkedForRemoval() const;
-    virtual bool isDestroyed() const;
 
    private:
     // Update Methods
@@ -64,8 +62,8 @@ class SceneNode : public sf::Transformable,
         const;
 
    private:
-    SceneNode* mParent;
     unsigned int mCategory;
+    SceneNode* mParent;
     std::vector<Ptr> mChildren;
 };
 

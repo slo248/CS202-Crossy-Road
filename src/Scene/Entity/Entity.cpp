@@ -8,10 +8,8 @@ void Entity::setVelocity(float x, float y) {
 
 sf::Vector2f Entity::getVelocity() { return mVelocity; }
 
-int Entity::getDirectionIndex() { return mDirectionIndex; }
+unsigned int Entity::getDirection() { return mDirection; }
 
-void Entity::setDirectionIndex(int directionIndex) {
-    mDirectionIndex = directionIndex;
-}
+void Entity::setDirectionIndex(Direction direction) { mDirection = direction; }
 
 void Entity::updateCurrent(sf::Time dt) { move(mVelocity * dt.asSeconds()); }
