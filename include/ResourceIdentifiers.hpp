@@ -9,7 +9,7 @@ class Font;
 namespace Fonts {
 enum ID {
     Main,
-    enchanted,
+    Enchanted,
 };
 }
 
@@ -179,12 +179,12 @@ enum ID {
     ButtonDownArrow,
     ButtonGeneral,
     ButtonSkin,
-    ButtonConfirm,
-    ButtonKey,
-    ButtonSounds,
+    LabelTextConfirm,
+    LabelTextKeys,
+    LabelTextSounds,
     ButtonSave,
-    IconSounds,
-    IconMusic,
+    ButtonSound,
+    ButtonMusic,
     BarSounds,
 
     // Credit state

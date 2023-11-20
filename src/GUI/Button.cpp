@@ -2,8 +2,6 @@
 
 #include <SFML/Window/Event.hpp>
 
-#include "Utility.hpp"
-
 Button::Button(
     State::Context context, Textures::ID button, sf::Vector2f position,
     bool is2Mode
@@ -13,7 +11,7 @@ Button::Button(
       mIsToggle(false),
       mIsOn(false),
       mIs2Mode(is2Mode),
-      context(context) {
+      mContext(context) {
     originalPosition = position;
     mSprite.setPosition(originalPosition);
     if (mIs2Mode) {
@@ -38,13 +36,13 @@ bool Button::isMouseOver(const sf::RenderWindow& window) const {
     return buttonBounds.contains(convertedMousePosition);
 }
 
-bool Button::isSelectable() const { return true; }
-
 void Button::select() {
+    if (!mIsSelectable) return;
     Component::select();
-    
+
     if (mIs2Mode) {
         changeTexture(Selected);
+
     } else {
         if (mCallback) {
             mCallback();
@@ -59,7 +57,7 @@ void Button::deselect() {
 }
 
 void Button::handleEvent(const sf::Event& event) {
-    if (isMouseOver(*context.window)) {
+    if (isMouseOver(*mContext.window)) {
         if (!mIsOn) {
             changeSize(Size::Small);
             mIsOn = true;
@@ -71,7 +69,7 @@ void Button::handleEvent(const sf::Event& event) {
         }
     }
 
-    if (isMouseOver(*context.window) &&
+    if (isMouseOver(*mContext.window) &&
         event.type == sf::Event::MouseButtonPressed &&
         event.mouseButton.button == sf::Mouse::Left) {
         select();

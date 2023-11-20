@@ -3,17 +3,10 @@
 #include "Utility.hpp"
 
 Label::Label(
-    const std::string& text, const FontHolder& fonts,
-    const TextureHolder& textures, int characterSize
+    const std::string& text, Fonts::ID font, State::Context context,
+    int characterSize
 )
-    : mText(text, fonts.get(Fonts::Main), characterSize),
-      mTexture(textures.get(Textures::BackgroundLabel)) {
-    mSprite.setTexture(mTexture);
-
-    sf::FloatRect bounds = mSprite.getLocalBounds();
-    centerOrigin(mText);
-    mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
-}
+    : mText(text, context.fonts->get(font), characterSize) {}
 
 void Label::setText(const std::string& text) {
     mText.setString(text);
@@ -22,6 +15,5 @@ void Label::setText(const std::string& text) {
 
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
-    target.draw(mSprite, states);
     target.draw(mText, states);
 }

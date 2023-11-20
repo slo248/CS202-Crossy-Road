@@ -25,7 +25,9 @@ class Component : public sf::Drawable,
     virtual ~Component();
 
    public:
-    virtual bool isSelectable() const = 0;
+    virtual void isSelectable(bool isSelectable) {
+        mIsSelectable = isSelectable;
+    }
     bool isSelected() const;
     virtual void select();
     virtual void deselect();
@@ -34,7 +36,8 @@ class Component : public sf::Drawable,
     virtual bool isMouseOver(const sf::RenderWindow& window) const;
     virtual void handleEvent(const sf::Event& event) = 0;
 
-   private:
+   protected:
+    bool mIsSelectable;
     bool mIsSelected;
     bool mIsActive;
 };

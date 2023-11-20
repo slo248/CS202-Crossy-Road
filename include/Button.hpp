@@ -4,11 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <memory>
-#include <string>
-#include <vector>
 
 #include "Component.hpp"
-#include "ResourceHolder.hpp"
 #include "State.hpp"
 
 using namespace GUI;
@@ -23,14 +20,13 @@ class Button : public Component {
 
    public:
     Button(
-        State::Context context, Textures::ID button, sf::Vector2f position = sf::Vector2f(0.f, 0.f),
-        bool is2Mode = false
+        State::Context context, Textures::ID button,
+        sf::Vector2f position = sf::Vector2f(0.f, 0.f), bool is2Mode = false
     );
     void setCallback(Callback callback);
     void setToggle(bool flag);
 
     virtual bool isMouseOver(const sf::RenderWindow& window) const;
-    virtual bool isSelectable() const;
     virtual void select();
     virtual void deselect();
 
@@ -42,12 +38,12 @@ class Button : public Component {
     void changeTexture(Mode buttonMode);
 
    private:
-    State::Context context;
     Callback mCallback;
     sf::Sprite mSprite;
     bool mIsToggle;
     bool mIsOn;
     bool mIs2Mode;
+    State::Context mContext;
     sf::Vector2f originalPosition;
 };
 

@@ -19,7 +19,7 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts
+            FontHolder& fonts, Player& player
         );
         sf::RenderWindow* window;
         TextureHolder* textures;

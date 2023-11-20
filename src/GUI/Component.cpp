@@ -2,7 +2,7 @@
 
 using namespace GUI;
 
-Component::Component() : mIsSelected(false), mIsActive(true) {}
+Component::Component() : mIsSelected(false), mIsActive(true), mIsSelectable(true) {}
 
 Component::~Component() {}
 

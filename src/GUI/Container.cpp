@@ -10,8 +10,6 @@ void Container::pack(Component::Ptr component) {
     mChildren.push_back(component);
 }
 
-bool Container::isSelectable() const { return false; }
-
 void Container::handleEvent(const sf::Event& event) {
     for (auto& child : mChildren) child->handleEvent(event);
 }

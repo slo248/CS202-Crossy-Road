@@ -2,7 +2,6 @@
 #define LOSE_STATE_HPP
 
 
-#include <SFML/Graphics.hpp>
 #include "State.hpp"
 #include "Button.hpp"
 
