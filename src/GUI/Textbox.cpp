@@ -7,7 +7,7 @@ Textbox::Textbox(
     const TextureHolder& textures, int characterSize
 )
     : mText(text, fonts.get(Fonts::Main), characterSize),
-      mBackgroundTexture(textures.get(Textures::TextBackground)) {
+      mBackgroundTexture(textures.get(Textures::BackgroundTextbox)) {
     mBackground.setTexture(mBackgroundTexture);
     size = sf::Vector2f(
         mBackground.getLocalBounds().width, mBackground.getLocalBounds().height

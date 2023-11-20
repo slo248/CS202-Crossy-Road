@@ -1,42 +1,50 @@
-// #include "SettingState.hpp"
+#include "SettingState.hpp"
 
-// #include "ResourceHolder.hpp"
-// #include "Utility.hpp"
+#include "ResourceHolder.hpp"
+#include "Utility.hpp"
 
-// SettingState::SettingState(StateStack& stack, Context context)
-//     : State(stack, context) {
-//     mBackgroundSprite.setTexture(
-//         context.textures->get(Textures::SettingBackground)
-//     );
+SettingState::SettingState(StateStack& stack, Context context)
+    : State(stack, context) {
+    mBackgroundSprite.setTexture(
+        context.textures->get(Textures::BackgroundSetting)
+    );
+    auto dialogGeneral = std::make_shared<DialogGeneral>(
+        context.textures->get(Textures::DialogGeneral)
+    );
+    mGUIContainer.pack(dialogGeneral);
+    // addButton(Player::MoveLeft, 310.f,
+    // context.textures.get(Textures::MoveLeftButton), context);
+    // addButton(Player::MoveRight, 411.f,
+    // context.textures.get(Textures::MoveRightButton), context);
+    // addButton(Player::MoveUp, 512.f,
+    // context.textures.get(Textures::MoveUpButton), context);
+    // addButton(Player::MoveDown, 635.f, context.te
+    // xtures.get(Textures::MoveDownButton), context);
 
-//     addButton(Player::MoveLeft, 310.f, context.textures.get(Textures::MoveLeftButton), context);
-//     addButton(Player::MoveRight, 411.f, context.textures.get(Textures::MoveRightButton), context);
-//     addButton(Player::MoveUp, 512.f, context.textures.get(Textures::MoveUpButton), context);
-//     addButton(Player::MoveDown, 635.f, context.te   xtures.get(Textures::MoveDownButton), context);
+    // updateLabels();
 
-//     updateLabels();
+    // auto backButton =
+    //     std::make_shared<Button>(*context.fonts, *context.textures);
+    // backButton->setPosition(80.f, 375.f);
+    // backButton->setCallback(std::bind(&SettingState::requestStackPop, this));
 
-//     auto backButton =
-//         std::make_shared<Button>(*context.fonts, *context.textures);
-//     backButton->setPosition(80.f, 375.f);
-//     backButton->setCallback(std::bind(&SettingState::requestStackPop, this));
+    // mGUIContainer.pack(backButton);
+}
 
-//     mGUIContainer.pack(backButton);
-// }
+void SettingState::draw() {
+    sf::RenderWindow& window = *getContext().window;
 
-// void SettingState::draw() {
-//     sf::RenderWindow& window = *getContext().window;
-
-//     window.draw(mBackgroundSprite);
-//     window.draw(mGUIContainer);
-// }
+    window.draw(mBackgroundSprite);
+    window.draw(mGUIContainer);
+}
 
 // bool SettingState::update(sf::Time) { return true; }
 
 // bool SettingState::handleEvent(const sf::Event& event) {
 //     bool isKeyBinding = false;
 
-//     // Iterate through all key binding buttons to see if they are being pressed,
+//     // Iterate through all key binding buttons to see if they are being
+//     pressed,
 //     // waiting for the user to enter a key
 //     for (std::size_t action = 0; action < Player::ActionCount; ++action) {
 //         if (mBindingButtons[action]->isActive()) {
@@ -51,7 +59,8 @@
 //         }
 //     }
 
-//     // If pressed button changed key bindings, update labels; otherwise consider
+//     // If pressed button changed key bindings, update labels; otherwise
+//     consider
 //     // other buttons in container
 //     if (isKeyBinding)
 //         updateLabels();
@@ -72,7 +81,8 @@
 // }
 
 // void SettingState::addAButtonLabel(
-//     Player::Action action, float y, const sf::Texture& mNormal, Context context
+//     Player::Action action, float y, const sf::Texture& mNormal, Context
+//     context
 // ) {
 //     mBindingButtons[action] = std::make_shared<Button>(mNormal);
 //     mBindingButtons[action]->setPosition(115.f, y);

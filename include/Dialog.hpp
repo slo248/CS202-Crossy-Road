@@ -11,8 +11,7 @@ class Dialog : public Component {
 
    public:
     Dialog(
-        const std::string& text, const FontHolder& fonts,
-        const TextureHolder& textures, int characterSize = 16
+        const sf::Texture& texture
     );
     virtual bool isSelectable() const { return false; }
     virtual void handleEvent(const sf::Event& event){};
@@ -20,7 +19,7 @@ class Dialog : public Component {
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-   private:
+   protected:
     sf::Text mText;
     const sf::Texture& mTexture;
     sf::Sprite mSprite;

@@ -160,41 +160,44 @@ enum ID {
 
     //// GUI
     // Common
-    MainBackground,
-    TextBackground,
-    LabelBackground,
-    DialogBackground,
-    BackButton,
-    HomeButton,
-    PlayAgainButton,
-    SettingButton,
-    ResumeButton,
-
+    BackgroundMain,
+    BackgroundTextbox,
+    BackgroundLabel,
+    ButtonBack,
+    ButtonHome,
+    ButtonLevel,
+    ButtonPlayAgain,
+    ButtonSetting,
+    ButtonResume,
 
     // Setting state
-    SettingBackground,
+    BackgroundSetting,
+    DialogGeneral,
     ButtonLeftArrow,
     ButtonRightArrow,
     ButtonUpArrow,
     ButtonDownArrow,
-    GeneralButton,
-    SkinsButton,
-    ConfirmButton,
-    KeyButton,
-    SoundsButton,
-    SaveButton,
-    SoundsIcon,
-    MusicIcon,
-    MusicBar,
+    ButtonGeneral,
+    ButtonSkin,
+    ButtonConfirm,
+    ButtonKey,
+    ButtonSounds,
+    ButtonSave,
+    IconSounds,
+    IconMusic,
+    BarSounds,
 
-    //Credit state
-    CreditBackground,
+    // Credit state
+    BackgroundCredit,
 
-    //Menu state
-    MenuBackground,
+    // Menu state
+    BackgroundMenu,
+
+    // Win state
+    DialogVictory,
 
     // Lose state
-    DefeatDialog,
+    DialogDefeat,
 
 };
 }

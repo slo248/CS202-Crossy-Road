@@ -3,11 +3,9 @@
 #include "Utility.hpp"
 
 Dialog::Dialog(
-    const std::string& text, const FontHolder& fonts,
-    const TextureHolder& textures, int characterSize
+    const sf::Texture& texture
 )
-    : mText(text, fonts.get(Fonts::Main), characterSize),
-      mTexture(textures.get(Textures::DialogBackground)) {
+    : mTexture(texture) {
     mSprite.setTexture(mTexture);
 
     sf::FloatRect bounds = mSprite.getLocalBounds();

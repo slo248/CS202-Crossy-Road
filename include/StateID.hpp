@@ -8,6 +8,7 @@ enum ID {
     Menu,
     Setting,
     Game,
+    Level,
     Loading,
     Pause,
     Win,

@@ -42,6 +42,7 @@ bool Button::isSelectable() const { return true; }
 
 void Button::select() {
     Component::select();
+    
     if (mIs2Mode) {
         changeTexture(Selected);
     } else {
@@ -57,7 +58,7 @@ void Button::deselect() {
     changeTexture(Normal);
 }
 
-void Button::handleEvent(const sf::Event&) {
+void Button::handleEvent(const sf::Event& event) {
     if (isMouseOver(*context.window)) {
         if (!mIsOn) {
             changeSize(Size::Small);
@@ -68,6 +69,12 @@ void Button::handleEvent(const sf::Event&) {
             changeSize(Size::Medium);
             mIsOn = false;
         }
+    }
+
+    if (isMouseOver(*context.window) &&
+        event.type == sf::Event::MouseButtonPressed &&
+        event.mouseButton.button == sf::Mouse::Left) {
+        select();
     }
 }
 

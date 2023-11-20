@@ -5,8 +5,8 @@
 
 LoseState::LoseState(StateStack& stack, Context context)
     : State(stack, context),
-      mBackgroundSprite(context.textures->get(Textures::MainBackground)),
-      mDefeatDialog(context.textures->get(Textures::DefeatDialog)) {
+      mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
+      mDefeatDialog(context.textures->get(Textures::DialogDefeat)) {
     mDefeatDialog.setPosition(225.f, 103.f);
 }
 
