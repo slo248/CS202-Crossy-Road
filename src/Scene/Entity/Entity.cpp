@@ -12,4 +12,4 @@ unsigned int Entity::getDirection() { return mDirection; }
 
 void Entity::setDirectionIndex(Direction direction) { mDirection = direction; }
 
-void Entity::updateCurrent(sf::Time dt) { move(mVelocity * dt.asSeconds()); }
+void Entity::updateCurrent(sf::Time dt, CommandQueue& commands) { move(mVelocity * dt.asSeconds()); }

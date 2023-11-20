@@ -1,31 +1,44 @@
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
 
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Animation.hpp"
 #include "Entity.hpp"
 #include "ResourceIdentifiers.hpp"
 
-class Enemy : public Entity {
+class Character : public Entity {
    public:
     enum Type {
-        // bosses
+        Bee,
+        Bird,
+        Dog,
+        Rabbit,
+        Sheep,
+        Crocodile,
+        Frog,
+        Turtle,
         BeeBoss,
         BombBat,
         Fishmen,
         Orc,
         Zombie,
+        // Callbee,
+        // Octopus,
+        // Slime,
 
-        // bombs
-        Callbee,
-        Octopus,
-        Slime,
-        FullscreenBlind,
+        Archer,
+        Enchantress,
+        Knight,
+        Musketeer,
+        Swordsman,
+        Wizard,
+
         TypeCount
     };
 
    public:
-    Enemy(Type type, const TextureHolder& textures);
+    Character(Type type, const TextureHolder& textures);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
 
@@ -37,7 +50,7 @@ class Enemy : public Entity {
 
    private:
     Type mType;
-    sf::Sprite mSprite;
+    Animation mAnimation;
 };
 
-#endif  // ENEMY_HPP
+#endif  // CHARACTER_HPP

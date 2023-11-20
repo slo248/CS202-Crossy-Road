@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Animation.hpp"
 #include "Entity.hpp"
 #include "ResourceIdentifiers.hpp"
 
@@ -132,9 +133,8 @@ class Obstacle : public Entity {
 
    private:
     Type mType;
-    sf::Sprite mSprite;
+    Animation mAnimation;
     bool mIsBlockingPlayer;
-    bool mIsHavingMovement;
 };
 
 #endif  // OBSTACLE_HPP

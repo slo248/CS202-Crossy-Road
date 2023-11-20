@@ -15,7 +15,7 @@ class Entity : public SceneNode {
     void setDirectionIndex(Direction direction);
 
    protected:
-    virtual void updateCurrent(sf::Time dt);
+    virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 
    private:
     sf::Vector2f mVelocity;

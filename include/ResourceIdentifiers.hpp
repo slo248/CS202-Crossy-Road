@@ -59,11 +59,20 @@ enum ID {
     zombie,
 
     // bombs
-    callbees,
-    octopus,
-    slime,
-    fullscreen_blind,
+    // callbees,
+    // octopus,
+    // slime,
+    // fullscreen_blind,
     // <-------------------Enemy----------------->
+
+    // <---------------Characters Skin-------------->
+    archer,
+    enchantress,
+    knight,
+    musketeer,
+    swordman,
+    wizard,
+    // <---------------Characters Skin-------------->
 
     ////////////////////////////////////////////////
 

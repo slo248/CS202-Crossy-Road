@@ -1,4 +1,4 @@
-#include "Obstacle.hpp"
+#include "Character.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -6,34 +6,36 @@
 #include "Category.hpp"
 #include "DataTables.hpp"
 #include "ResourceHolder.hpp"
+#include "Utility.hpp"
 
 namespace {
-const std::vector<ObstacleData> Table = initializeObstacleData();
+const std::vector<CharacterData> Table = initializeCharacterData();
 }
 
-Obstacle::Obstacle(Type type, const TextureHolder& textures)
-    : mType(type), mIsBlockingPlayer(Table[type].isBlockingPlayer) {
+Character::Character(Type type, const TextureHolder& textures) : mType(type) {
     mAnimation.setTexture(textures.get(Table[type].texture));
     mAnimation.setFrameSize(Table[type].textureRect.getSize());
     mAnimation.setNumFrames(6);  // Data table
     mAnimation.setDuration(sf::seconds(1));
     mAnimation.setRepeating(true);
+
+    centerOrigin(mAnimation);
 }
 
-unsigned int Obstacle::getCategory() const { return Category::Obstacle; }
+unsigned int Character::getCategory() const { return Category::Character; }
 
-sf::FloatRect Obstacle::getBoundingRect() const {
+sf::FloatRect Character::getBoundingRect() const {
     return getWorldTransform().transformRect(mAnimation.getGlobalBounds());
 }
 
-void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
+void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
 }
 
-void Obstacle::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
+void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
     target.draw(mAnimation, states);
 }
 
-void Obstacle::updateMovementPattern(sf::Time dt) {}
+void Character::updateMovementPattern(sf::Time dt) {}

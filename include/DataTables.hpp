@@ -9,8 +9,7 @@
 
 #include "ResourceIdentifiers.hpp"
 
-class Animal;
-class Enemy;
+class Character;
 class Obstacle;
 class Lane;
 class TraffictLight;
@@ -22,13 +21,7 @@ struct Direction {
     float distance;
 };
 
-struct AnimalData {
-    float speed;
-    Textures::ID texture;
-    sf::IntRect textureRect;
-};
-
-struct EnemyData {
+struct CharacterData {
     float speed;
     Textures::ID texture;
     sf::IntRect textureRect;
@@ -39,7 +32,6 @@ struct ObstacleData {
     Textures::ID texture;
     sf::IntRect textureRect;
     bool isBlockingPlayer;
-    bool isHavingMovement;
 };
 
 struct LaneData {
@@ -53,8 +45,7 @@ struct TrafficLightData {
     sf::IntRect textureRect;
 };
 
-std::vector<AnimalData> initializeAnimalData();
-std::vector<EnemyData> initializeEnemyData();
+std::vector<CharacterData> initializeCharacterData();
 std::vector<ObstacleData> initializeObstacleData();
 std::vector<LaneData> initializeLaneData();
 std::vector<TrafficLightData> initializeTrafficLightData();
