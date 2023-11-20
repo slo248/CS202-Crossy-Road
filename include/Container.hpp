@@ -23,14 +23,11 @@ class Container : public Component {
    private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    bool hasSelection() const;
-    void select(std::size_t index);
-    void selectNext();
-    void selectPrevious();
+    //bool hasSelection() const;
+    //void select(std::size_t index);
 
    private:
     std::vector<Component::Ptr> mChildren;
-    int mSelectedChild;
 };
 
 #endif

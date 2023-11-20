@@ -15,7 +15,7 @@ class Dialog : public Component {
         const TextureHolder& textures, int characterSize = 16
     );
     virtual bool isSelectable() const { return false; }
-    virtual void handleEvent(const sf::Event& event) { return; };
+    virtual void handleEvent(const sf::Event& event){};
 
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;

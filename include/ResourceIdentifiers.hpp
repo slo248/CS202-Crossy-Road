@@ -158,13 +158,43 @@ enum ID {
     sw_pointer2,
     well,
 
-    // GUI
-    DialogBackground,
-    LabelBackground,
+    //// GUI
+    // Common
+    MainBackground,
     TextBackground,
-    ButtonNormal,
-    ButtonSelected,
-    ButtonPressed,
+    LabelBackground,
+    DialogBackground,
+    BackButton,
+    HomeButton,
+    PlayAgainButton,
+    SettingButton,
+    ResumeButton,
+
+
+    // Setting state
+    SettingBackground,
+    ButtonLeftArrow,
+    ButtonRightArrow,
+    ButtonUpArrow,
+    ButtonDownArrow,
+    GeneralButton,
+    SkinsButton,
+    ConfirmButton,
+    KeyButton,
+    SoundsButton,
+    SaveButton,
+    SoundsIcon,
+    MusicIcon,
+    MusicBar,
+
+    //Credit state
+    CreditBackground,
+
+    //Menu state
+    MenuBackground,
+
+    // Lose state
+    DefeatDialog,
 
 };
 }

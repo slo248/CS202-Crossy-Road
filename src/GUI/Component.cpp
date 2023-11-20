@@ -2,7 +2,7 @@
 
 using namespace GUI;
 
-Component::Component() : mIsSelected(false), mIsActive(false) {}
+Component::Component() : mIsSelected(false), mIsActive(true) {}
 
 Component::~Component() {}
 
@@ -14,7 +14,9 @@ void Component::deselect() { mIsSelected = false; }
 
 bool Component::isActive() const { return mIsActive; }
 
-void Component::activate() { mIsActive = true; }
+bool Component::isMouseOver(const sf::RenderWindow& window) const {
+   return false;
+}
 
-void Component::deactivate() { mIsActive = false; }
+
 

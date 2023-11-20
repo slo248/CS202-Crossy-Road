@@ -15,6 +15,7 @@ class Label : public Component {
         const TextureHolder& textures, int characterSize = 16
     );
 
+    void setText(const std::string& text);
     virtual bool isSelectable() const { return false; };
     virtual void handleEvent(const sf::Event& event){};
 

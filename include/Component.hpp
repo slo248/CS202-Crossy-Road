@@ -31,9 +31,7 @@ class Component : public sf::Drawable,
     virtual void deselect();
 
     virtual bool isActive() const;
-    virtual void activate();
-    virtual void deactivate();
-
+    virtual bool isMouseOver(const sf::RenderWindow& window) const;
     virtual void handleEvent(const sf::Event& event) = 0;
 
    private:

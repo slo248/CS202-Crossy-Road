@@ -15,6 +15,11 @@ Label::Label(
     mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
 }
 
+void Label::setText(const std::string& text) {
+    mText.setString(text);
+    centerOrigin(mText);
+}
+
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(mSprite, states);

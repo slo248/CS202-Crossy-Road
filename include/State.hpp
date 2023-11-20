@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+#include "Container.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "StateID.hpp"
 
@@ -18,7 +19,7 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, Player& player
+            FontHolder& fonts
         );
         sf::RenderWindow* window;
         TextureHolder* textures;
@@ -35,6 +36,7 @@ class State {
     virtual bool handleEvent(const sf::Event& event) = 0;
 
    protected:
+    Container mGUIContainer;
     void requestStackPush(States::ID stateID);
     void requestStackPop();
     void requestStackClear();
@@ -46,4 +48,4 @@ class State {
     Context mContext;
 };
 
-#endif  // STATE_HPP
+#endif
