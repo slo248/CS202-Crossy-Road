@@ -30,10 +30,10 @@
         stack.registerState<CreditState>(States::Credit);
         stack.registerState<WinState>(States::Win);
         stack.registerState<LoseState>(States::Lose);
-        stack.pushState(States::Lose);
         stack.pushState(States::Credit);
         //stack.pushState(States::Setting);
         stack.pushState(States::Win);
+        stack.pushState(States::Lose);
 
         while (stack.mContext.window->isOpen()) {
             stack.mContext.window->clear(sf::Color::White);

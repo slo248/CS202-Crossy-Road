@@ -8,7 +8,7 @@
 
 class LoseState : public State {
     public:
-     LoseState(StateStack& stack, Context context);
+     LoseState(StateStack& stack, Context context, bool isSurviValMode = false);
     
      virtual void draw();
      virtual bool update(sf::Time dt);
@@ -16,7 +16,7 @@ class LoseState : public State {
     
     private:
     sf::Sprite mBackgroundSprite;
-    sf::Sprite mDefeatDialog;
+    sf::Sprite mDialogDefeat;
     Container mGUIContainer;
 
 };
