@@ -10,11 +10,18 @@ Animation::Animation(
       mNumFrame(numFrame),
       mCurFrame(0),
       mElapsedTime(sf::Time::Zero),
+      mTotalElapsedTime(sf::Time::Zero),
       mDuration(sf::seconds(1)),
+      mTimePerFrame(mDuration / (1.f * mNumFrame)),
       mInProgress(false),
       mRepeat(false) {}
 
-void Animation::setDuration(sf::Time t) { mDuration = t; }
+void Animation::setDuration(sf::Time t) {
+    mDuration = t;
+    mTimePerFrame = mDuration / (1.f * mNumFrame);
+}
+
+void Animation::setDurationSingleFrame(sf::Time t) { mTimePerFrame = t; }
 
 void Animation::setRepeat(bool flag) { mRepeat = flag; }
 
@@ -26,19 +33,20 @@ void Animation::update(sf::Time dt) {
     if (!isInProgress()) return;
 
     mElapsedTime += dt;
+    mTotalElapsedTime += dt;
 
-    sf::Time timePerFrame = mDuration / (1.f * mNumFrame);
+    if (mTotalElapsedTime >= mDuration) {
+        mInProgress = false;
+        return;
+    }
+
     sf::Vector2i textureBound(mSprite.getTexture()->getSize());
     sf::IntRect textureRect(mSprite.getTextureRect());
 
-    while (mElapsedTime >= timePerFrame) {
-        mElapsedTime -= timePerFrame;
+    while (mElapsedTime >= mTimePerFrame) {
+        mElapsedTime -= mTimePerFrame;
         mCurFrame++;
         if (mCurFrame == mNumFrame) {
-            if (!isRepeated()) {
-                mInProgress = false;
-                return;
-            }
             mCurFrame = 0;
             textureRect = mStartRect;
             continue;
@@ -59,7 +67,7 @@ void Animation::play() {
     if (isInProgress()) return;
     mInProgress = true;
     mCurFrame = 0;
-    mElapsedTime = sf::Time::Zero;
+    mElapsedTime = mTotalElapsedTime = sf::Time::Zero;
     mSprite.setTextureRect(mStartRect);
 }
 

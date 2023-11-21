@@ -12,8 +12,9 @@ class Animation : public sf::Transformable, public sf::Drawable {
    public:
     Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame);
 
-    void setDuration(sf::Time t);
     void setRepeat(bool flag);
+    void setDuration(sf::Time t);
+    void setDurationSingleFrame(sf::Time t);
 
     bool isInProgress() const;
     bool isRepeated() const;
@@ -29,7 +30,9 @@ class Animation : public sf::Transformable, public sf::Drawable {
     sf::Sprite mSprite;
     sf::IntRect mStartRect;
     sf::Time mElapsedTime;
+    sf::Time mTotalElapsedTime;
     sf::Time mDuration;
+    sf::Time mTimePerFrame;
     int mCurFrame;
     int mNumFrame;
     bool mInProgress;
