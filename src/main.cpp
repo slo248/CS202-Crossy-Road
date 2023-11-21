@@ -33,6 +33,9 @@ int main() {
                         case sf::Keyboard::B:
                             beeMoveRight.setRepeat(true);
                             break;
+                        case sf::Keyboard::S:
+                            beeMoveRight.stop();
+                            break;
                         default:
                             beeMoveRight.setRepeat(false);
                             break;
