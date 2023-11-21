@@ -5,7 +5,7 @@
 AnimationList::AnimationList()
     : mCurAnimation(-1), mAnimations(), mRepeat(false) {}
 
-void AnimationList::setRepeat(bool flag) { mRepeat = true; }
+void AnimationList::setRepeat(bool flag) { mRepeat = flag; }
 
 void AnimationList::add(Animation::Ptr animation) {
     assert(!animation->isRepeated());
@@ -19,9 +19,14 @@ bool AnimationList::isRepeated() const { return mRepeat; }
 void AnimationList::play() {
     if (isInProgress()) return;
     mCurAnimation = 0;
+    mAnimations[mCurAnimation]->play();
 }
 
-void AnimationList::stop() { mCurAnimation = -1; }
+void AnimationList::stop() {
+    if (!isInProgress()) return;
+    mAnimations[mCurAnimation]->stop();
+    mCurAnimation = -1;
+}
 
 void AnimationList::update(sf::Time dt) {
     if (!isInProgress()) return;
@@ -29,11 +34,13 @@ void AnimationList::update(sf::Time dt) {
     if (mAnimations[mCurAnimation]->isInProgress()) return;
     mCurAnimation++;
     if (mCurAnimation == mAnimations.size()) {
-        if (!isRepeated())
+        if (!isRepeated()) {
             mCurAnimation = -1;
-        else
+            return;
+        } else
             mCurAnimation = 0;
     }
+    mAnimations[mCurAnimation]->play();
 }
 
 void AnimationList::draw(sf::RenderTarget& target, sf::RenderStates states)
