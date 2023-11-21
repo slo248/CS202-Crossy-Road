@@ -63,6 +63,11 @@ void Animation::play() {
     mSprite.setTextureRect(mStartRect);
 }
 
+void Animation::stop() {
+    if (!isInProgress()) return;
+    mInProgress = false;
+}
+
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (!isInProgress()) return;
     states.transform *= getTransform();
