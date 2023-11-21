@@ -14,7 +14,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
 
     void setRepeat(bool flag);
     void setDuration(sf::Time t);
-    void setDurationSingleFrame(sf::Time t);
+    void setTimePerFrame(sf::Time t);
 
     bool isInProgress() const;
     bool isRepeated() const;

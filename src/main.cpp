@@ -9,6 +9,7 @@ void AnimationTest() {
 
     Animation beeMoveRight(bee, sf::Vector2i(48, 48), 6);
     beeMoveRight.setDuration(sf::seconds(3));
+    beeMoveRight.setTimePerFrame(sf::seconds(0.25));
 
     beeMoveRight.scale(2, 2);
     beeMoveRight.setPosition(100, 100);
@@ -115,7 +116,7 @@ void AnimationListTest() {
 }
 
 int main() {
-    // AnimationTest();
-    AnimationListTest();
+    AnimationTest();
+    // AnimationListTest();
     return 0;
 }

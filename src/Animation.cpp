@@ -21,7 +21,7 @@ void Animation::setDuration(sf::Time t) {
     mTimePerFrame = mDuration / (1.f * mNumFrame);
 }
 
-void Animation::setDurationSingleFrame(sf::Time t) { mTimePerFrame = t; }
+void Animation::setTimePerFrame(sf::Time t) { mTimePerFrame = t; }
 
 void Animation::setRepeat(bool flag) { mRepeat = flag; }
 
@@ -36,8 +36,13 @@ void Animation::update(sf::Time dt) {
     mTotalElapsedTime += dt;
 
     if (mTotalElapsedTime >= mDuration) {
-        mInProgress = false;
-        return;
+        if (!isRepeated()) {
+            mInProgress = false;
+            return;
+        }
+        float a = mTotalElapsedTime.asSeconds();
+        float b = mDuration.asSeconds();
+        mTotalElapsedTime = sf::seconds(a - (int(a / b)) * b);
     }
 
     sf::Vector2i textureBound(mSprite.getTexture()->getSize());
