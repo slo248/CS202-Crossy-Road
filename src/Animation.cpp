@@ -9,7 +9,7 @@ Animation::Animation(
       mStartRect(0, 0, frameSize.x, frameSize.y),
       mNumFrame(numFrame),
       mCurFrame(0),
-      mElaspedTime(sf::Time::Zero),
+      mElapsedTime(sf::Time::Zero),
       mDuration(sf::seconds(1)),
       mInProgress(false),
       mRepeat(false) {}
@@ -25,14 +25,14 @@ bool Animation::isRepeated() const { return mRepeat; }
 void Animation::update(sf::Time dt) {
     if (!isInProgress()) return;
 
-    mElaspedTime += dt;
+    mElapsedTime += dt;
 
     sf::Time timePerFrame = mDuration / (1.f * mNumFrame);
     sf::Vector2i textureBound(mSprite.getTexture()->getSize());
     sf::IntRect textureRect(mSprite.getTextureRect());
 
-    while (mElaspedTime >= timePerFrame) {
-        mElaspedTime -= timePerFrame;
+    while (mElapsedTime >= timePerFrame) {
+        mElapsedTime -= timePerFrame;
         mCurFrame++;
         if (mCurFrame == mNumFrame) {
             if (!isRepeated()) {
@@ -59,7 +59,7 @@ void Animation::play() {
     if (isInProgress()) return;
     mInProgress = true;
     mCurFrame = 0;
-    mElaspedTime = sf::Time::Zero;
+    mElapsedTime = sf::Time::Zero;
     mSprite.setTextureRect(mStartRect);
 }
 

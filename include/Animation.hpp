@@ -7,6 +7,9 @@
 
 class Animation : public sf::Transformable, public sf::Drawable {
    public:
+    typedef std::unique_ptr<Animation> Ptr;
+
+   public:
     Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame);
 
     void setDuration(sf::Time t);
@@ -23,11 +26,11 @@ class Animation : public sf::Transformable, public sf::Drawable {
 
    private:
     sf::Sprite mSprite;
-    const sf::IntRect mStartRect;
-    sf::Time mElaspedTime;
+    sf::IntRect mStartRect;
+    sf::Time mElapsedTime;
     sf::Time mDuration;
     int mCurFrame;
-    const int mNumFrame;
+    int mNumFrame;
     bool mInProgress;
     bool mRepeat;
 };
