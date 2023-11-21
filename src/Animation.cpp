@@ -23,8 +23,7 @@ void Animation::update(sf::Time dt) {
     sf::Vector2i textureBound(mSprite.getTexture()->getSize());
     sf::IntRect textureRect(mSprite.getTextureRect());
 
-    if (!mCurFrame)
-        textureRect = sf::IntRect(0, 0, textureBound.x, textureBound.y);
+    if (!mCurFrame) textureRect = sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y);
 
     while (mElaspedTime >= timePerFrame) {
         mElaspedTime -= timePerFrame;
@@ -37,10 +36,10 @@ void Animation::update(sf::Time dt) {
             mCurFrame = 0;
         }
 
-        textureRect.left += textureRect.width;
+        textureRect.left += mFrameSize.x;
         if (textureRect.left > textureBound.x) {
             textureRect.left = 0;
-            textureRect.top += textureRect.height;
+            textureRect.top += mFrameSize.y;
             if (textureRect.top > textureBound.y) textureRect.top = 0;
         }
     }
