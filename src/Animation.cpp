@@ -37,13 +37,14 @@ void Animation::update(sf::Time dt) {
                 return;
             }
             mCurFrame = 0;
+            textureRect = sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y);
+            continue;
         }
 
         textureRect.left += mFrameSize.x;
         if (textureRect.left > textureBound.x) {
             textureRect.left = 0;
             textureRect.top += mFrameSize.y;
-            if (textureRect.top > textureBound.y) textureRect.top = 0;
         }
     }
 
