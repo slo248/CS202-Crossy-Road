@@ -60,22 +60,25 @@ void AnimationListTest() {
 
     Animation::Ptr greenAnimation(new Animation(green, sf::Vector2i(32, 64), 6)
     );
-    // greenAnimation->setDuration(sf::seconds(2));
+    greenAnimation->setDuration(sf::seconds(5));
+    greenAnimation->setTimePerFrame(sf::seconds(0.25));
 
     Animation::Ptr yellowAnimation(
         new Animation(yellow, sf::Vector2i(32, 64), 6)
     );
-    // yellowAnimation->setDuration(sf::seconds(2));
+    yellowAnimation->setDuration(sf::seconds(2));
+    yellowAnimation->setTimePerFrame(sf::seconds(0.25));
 
     Animation::Ptr redAnimation(new Animation(red, sf::Vector2i(32, 64), 6));
-    // redAnimation->setDuration(sf::seconds(2));
+    redAnimation->setDuration(sf::seconds(4));
+    redAnimation->setTimePerFrame(sf::seconds(0.25));
 
     AnimationList list;
     list.add(std::move(greenAnimation));
     list.add(std::move(yellowAnimation));
     list.add(std::move(redAnimation));
 
-    list.scale(2, 2);
+    list.scale(1.5, 1.5);
     list.setPosition(100, 100);
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Crossy Road");
@@ -116,7 +119,7 @@ void AnimationListTest() {
 }
 
 int main() {
-    AnimationTest();
-    // AnimationListTest();
+    // AnimationTest();
+    AnimationListTest();
     return 0;
 }
