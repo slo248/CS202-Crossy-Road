@@ -6,15 +6,13 @@ Animation::Animation(
     const sf::Texture& texture, sf::Vector2i frameSize, int numFrame
 )
     : mSprite(texture),
-      mFrameSize(frameSize),
+      mStartRect(0, 0, frameSize.x, frameSize.y),
       mNumFrame(numFrame),
       mCurFrame(0),
       mElaspedTime(sf::Time::Zero),
       mDuration(sf::seconds(1)),
       mInProgress(false),
-      mRepeat(false) {
-    centerOrigin(mSprite);
-}
+      mRepeat(false) {}
 
 void Animation::setDuration(sf::Time t) { mDuration = t; }
 
@@ -42,6 +40,8 @@ void Animation::update(sf::Time dt) {
                 return;
             }
             mCurFrame = 0;
+            textureRect = mStartRect;
+            continue;
         }
 
         textureRect.left += textureRect.width;
@@ -60,7 +60,7 @@ void Animation::play() {
     mInProgress = true;
     mCurFrame = 0;
     mElaspedTime = sf::Time::Zero;
-    mSprite.setTextureRect(sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y));
+    mSprite.setTextureRect(mStartRect);
 }
 
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {

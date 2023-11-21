@@ -23,11 +23,11 @@ class Animation : public sf::Transformable, public sf::Drawable {
 
    private:
     sf::Sprite mSprite;
-    sf::Vector2i mFrameSize;
+    const sf::IntRect mStartRect;
     sf::Time mElaspedTime;
     sf::Time mDuration;
     int mCurFrame;
-    int mNumFrame;
+    const int mNumFrame;
     bool mInProgress;
     bool mRepeat;
 };
