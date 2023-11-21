@@ -10,6 +10,7 @@ class AnimationList : public sf::Transformable, public sf::Drawable {
     AnimationList();
 
     void setRepeat(bool flag);
+    void add(Animation::Ptr animation);
 
     bool isInProgress() const;
     bool isRepeated() const;

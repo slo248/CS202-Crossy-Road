@@ -1,9 +1,16 @@
 #include "AnimationList.hpp"
 
+#include <cassert>
+
 AnimationList::AnimationList()
     : mCurAnimation(-1), mAnimations(), mRepeat(false) {}
 
 void AnimationList::setRepeat(bool flag) { mRepeat = true; }
+
+void AnimationList::add(Animation::Ptr animation) {
+    assert(!animation->isRepeated());
+    mAnimations.push_back(std::move(animation));
+}
 
 bool AnimationList::isInProgress() const { return mCurAnimation != -1; }
 
