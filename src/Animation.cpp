@@ -1,16 +1,19 @@
 #include "Animation.hpp"
 
-Animation::Animation(const sf::Texture& texture) {
+Animation::Animation(const sf::Texture& texture)
+    : mInProgress(false), mRepeat(false) {
     mSprite.setTexture(texture);
 }
 
-void Animation::setRepeat(bool flag) { mRepeat = true; }
+void Animation::setRepeat(bool flag) { mRepeat = flag; }
+
+void Animation::setNumFrame(int num) { mNumFrame = num; }
 
 void Animation::setFrameSize(sf::Vector2i size) { mFrameSize = size; }
 
 void Animation::setDuration(sf::Time t) { mDuration = t; }
 
-bool Animation::isInProgress() const { return mInProgress || mRepeat; }
+bool Animation::isInProgress() const { return mInProgress; }
 
 bool Animation::isRepeated() const { return mRepeat; }
 
@@ -48,12 +51,14 @@ void Animation::update(sf::Time dt) {
 }
 
 void Animation::play() {
+    if (isInProgress()) return;
     mInProgress = true;
     mCurFrame = 0;
     mElaspedTime = sf::Time::Zero;
 }
 
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (!isInProgress()) return;
     states.transform *= getTransform();
     target.draw(mSprite, states);
 }

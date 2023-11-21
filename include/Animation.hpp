@@ -10,6 +10,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
     Animation(const sf::Texture& texture);
 
     void setRepeat(bool flag);
+    void setNumFrame(int num);
     void setFrameSize(sf::Vector2i size);
     void setDuration(sf::Time t);
 

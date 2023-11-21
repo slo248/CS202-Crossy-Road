@@ -1,68 +1,53 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#include "ChooseModeState.hpp"
-#include "CreditState.hpp"
-#include "LevelState.hpp"
-#include "LoseState.hpp"
-#include "MenuState.hpp"
-#include "PauseState.hpp"
-#include "RankingState.hpp"
-#include "SavedState.hpp"
-#include "SettingState.hpp"
-#include "State.hpp"
-#include "StateStack.hpp"
-#include "WinState.hpp"
+#include "Animation.hpp"
 
 int main() {
-    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(
-        sf::VideoMode(896, 640), "Pro Game", sf::Style::Default
-    );
-    window.setPosition(sf::Vector2i(0, 0));
+    sf::Texture bee;
+    bee.loadFromFile("asset/s_animals/bee/bee.png");
+
+    Animation beeMoveRight(bee);
+    beeMoveRight.setNumFrame(6);
+    beeMoveRight.setFrameSize(sf::Vector2i(48, 48));
+    beeMoveRight.setDuration(sf::seconds(3));
+
+    beeMoveRight.scale(2, 2);
+    beeMoveRight.setPosition(100, 100);
+    // beeMoveRight.setRepeat(true);
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Crossy Road");
     window.setFramerateLimit(60);
 
-    FontHolder fonts;
-    TextureHolder textures;
-    textures.loadTextureFromFile();
-    fonts.loadFontFromFile();
-
-    Player player;
-    State::Context context(window, textures, fonts, player);
-    StateStack stack(context);
-
-    stack.registerState<SettingState>(States::Setting);
-    stack.registerState<CreditState>(States::Credit);
-    stack.registerState<LoseState>(States::Lose, 0);
-    stack.registerState<WinState>(States::Win);
-    stack.registerState<PauseState>(States::Pause);
-    stack.registerState<MenuState>(States::Menu);
-    stack.registerState<RankingState>(States::Ranking);
-    stack.registerState<LevelState>(States::Level);
-    stack.registerState<SavedState>(States::Saved);
-    stack.registerState<ChooseModeState>(States::ChooseMode);
-
-    stack.pushState(States::Pause);
-    stack.pushState(States::Credit);
-    stack.pushState(States::Setting);
-    stack.pushState(States::Level);
-    stack.pushState(States::Ranking);
-    stack.pushState(States::Saved);
-    stack.pushState(States::ChooseMode);
-    stack.pushState(States::Menu);
-    stack.pushState(States::Win);
-    stack.pushState(States::Lose);
-
-    while (stack.mContext.window->isOpen()) {
-        stack.mContext.window->clear(sf::Color::White);
+    sf::Clock clock;
+    while (window.isOpen()) {
         sf::Event event;
-        stack.draw();
-        while (stack.mContext.window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                stack.mContext.window->close();
+        while (window.pollEvent(event)) switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyReleased:
+                    std::cout << "Key released!" << std::endl;
+                    switch (event.key.code) {
+                        case sf::Keyboard::A:
+                            // std::cout << "A released" << std::endl;
+                            beeMoveRight.play();
+                            break;
+                        case sf::Keyboard::B:
+                            beeMoveRight.setRepeat(true);
+                            break;
+                        default:
+                            beeMoveRight.setRepeat(false);
+                            break;
+                    }
+                    break;
             }
-            stack.handleEvent(event);
-        }
-        stack.mContext.window->display();
+
+        beeMoveRight.update(clock.restart());
+
+        window.clear();
+        window.draw(beeMoveRight);
+        window.display();
     }
 
     return 0;
