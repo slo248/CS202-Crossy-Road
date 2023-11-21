@@ -7,14 +7,11 @@ int main() {
     sf::Texture bee;
     bee.loadFromFile("asset/s_animals/bee/bee.png");
 
-    Animation beeMoveRight(bee);
-    beeMoveRight.setNumFrame(6);
-    beeMoveRight.setFrameSize(sf::Vector2i(48, 48));
+    Animation beeMoveRight(bee, sf::Vector2i(48, 48), 6);
     beeMoveRight.setDuration(sf::seconds(3));
 
     beeMoveRight.scale(2, 2);
     beeMoveRight.setPosition(100, 100);
-    // beeMoveRight.setRepeat(true);
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Crossy Road");
     window.setFramerateLimit(60);

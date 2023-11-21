@@ -1,17 +1,24 @@
 #include "Animation.hpp"
 
-Animation::Animation(const sf::Texture& texture)
-    : mInProgress(false), mRepeat(false) {
-    mSprite.setTexture(texture);
+#include "Utility.hpp"
+
+Animation::Animation(
+    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame
+)
+    : mSprite(texture, sf::IntRect(0, 0, frameSize.x, frameSize.y)),
+      mFrameSize(frameSize),
+      mNumFrame(numFrame),
+      mCurFrame(0),
+      mElaspedTime(sf::Time::Zero),
+      mDuration(sf::seconds(1)),
+      mInProgress(false),
+      mRepeat(false) {
+    centerOrigin(mSprite);
 }
 
-void Animation::setRepeat(bool flag) { mRepeat = flag; }
-
-void Animation::setNumFrame(int num) { mNumFrame = num; }
-
-void Animation::setFrameSize(sf::Vector2i size) { mFrameSize = size; }
-
 void Animation::setDuration(sf::Time t) { mDuration = t; }
+
+void Animation::setRepeat(bool flag) { mRepeat = flag; }
 
 bool Animation::isInProgress() const { return mInProgress; }
 
@@ -25,8 +32,6 @@ void Animation::update(sf::Time dt) {
     sf::Time timePerFrame = mDuration / (1.f * mNumFrame);
     sf::Vector2i textureBound(mSprite.getTexture()->getSize());
     sf::IntRect textureRect(mSprite.getTextureRect());
-
-    if (!mCurFrame) textureRect = sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y);
 
     while (mElaspedTime >= timePerFrame) {
         mElaspedTime -= timePerFrame;
