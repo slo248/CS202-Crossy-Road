@@ -17,6 +17,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
     bool isRepeated() const;
 
     void update(sf::Time dt);
+    void play();
 
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
