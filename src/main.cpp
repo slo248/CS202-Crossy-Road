@@ -1,7 +1,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "CreditState.hpp"
+#include "LevelState.hpp"
 #include "LoseState.hpp"
+#include "MenuState.hpp"
+#include "PauseState.hpp"
+#include "RankingState.hpp"
+#include "SavedState.hpp"
 #include "SettingState.hpp"
 #include "State.hpp"
 #include "StateStack.hpp"
@@ -27,16 +32,29 @@ int main() {
     WinState winState(stack, context);
     LoseState loseState(stack, context);
     SettingState settingState(stack, context);
+    PauseState pauseState(stack, context);
+    MenuState menuState(stack, context);
+    RankingState rankingState(stack, context);
 
     stack.registerState<SettingState>(States::Setting);
     stack.registerState<CreditState>(States::Credit);
     stack.registerState<WinState>(States::Win);
     stack.registerState<LoseState>(States::Lose);
+    stack.registerState<PauseState>(States::Pause);
+    stack.registerState<MenuState>(States::Menu);
+    stack.registerState<RankingState>(States::Ranking);
+    stack.registerState<LevelState>(States::Level);
+    stack.registerState<SavedState>(States::Saved);
 
     stack.pushState(States::Credit);
     stack.pushState(States::Setting);
-    //stack.pushState(States::Win);
-    //stack.pushState(States::Lose);
+    // stack.pushState(States::Win);
+    // stack.pushState(States::Lose);
+    stack.pushState(States::Pause);
+    stack.pushState(States::Level);
+    stack.pushState(States::Ranking);
+    stack.pushState(States::Saved);
+    stack.pushState(States::Menu);
 
     while (stack.mContext.window->isOpen()) {
         stack.mContext.window->clear(sf::Color::White);

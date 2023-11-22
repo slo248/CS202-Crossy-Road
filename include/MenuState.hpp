@@ -1,11 +1,11 @@
-#ifndef PAUSE_STATE_HPP
-#define PAUSE_STATE_HPP
-#include "State.hpp"
+#ifndef MENU_STATE_HPP
+#define MENU_STATE_HPP
 #include "Button.hpp"
+#include "State.hpp"
 
-class PauseState : public State {
+class MenuState : public State {
    public:
-    PauseState(StateStack& stack, Context context);
+    MenuState(StateStack& stack, Context context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);
