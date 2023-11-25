@@ -12,11 +12,11 @@ class Character : public Entity {
     enum Type {
         Bee,
         Bird,
+        Crocodile,
         Dog,
+        Frog,
         Rabbit,
         Sheep,
-        Crocodile,
-        Frog,
         Turtle,
         BeeBoss,
         BombBat,
@@ -41,11 +41,12 @@ class Character : public Entity {
     Character(Type type, const TextureHolder& textures);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
+    virtual sf::FloatRect getLocalBounds() const override;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
-        const;
+        const override;
     void updateMovementPattern(sf::Time dt);
 
    private:

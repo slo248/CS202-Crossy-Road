@@ -7,11 +7,10 @@ enum Type {
     SceneOnGround = 1,
     SceneAir = 1 << 1,
     Player = 1 << 2,
-    Animal = 1 << 3,
-    Enemy = 1 << 4,
-    Obstacle = 1 << 5,
-    TrafficLight = 1 << 6,
-    Lane = 1 << 7,
+    Character = 1 << 3,
+    Obstacle = 1 << 4,
+    TrafficLight = 1 << 5,
+    Lane = 1 << 6,
 };
 }
 

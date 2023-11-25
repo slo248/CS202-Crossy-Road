@@ -6,11 +6,10 @@ Label::Label(
     const std::string& text, Fonts::ID font, State::Context context,
     int characterSize
 )
-    : mText(text, context.fonts->get(font), characterSize) {}
-
-void Label::setText(const std::string& text) {
-    mText.setString(text);
-    centerOrigin(mText);
+    : mText(text, context.fonts->get(font), characterSize) {
+    sf::FloatRect bounds = mSprite.getLocalBounds();
+    centerOrigin<sf::Text>(mText);
+    mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
 }
 
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {

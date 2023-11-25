@@ -1,8 +1,7 @@
 #include "Utility.hpp"
 
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <cmath>
+#include <cstdlib>
 
 #include "Animation.hpp"
 
@@ -119,26 +118,4 @@ std::string toString(sf::Keyboard::Key key) {
     return "";
 }
 
-void centerOrigin(sf::Sprite& sprite) {
-    sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(
-        std::floor(bounds.left + bounds.width / 2.f),
-        std::floor(bounds.top + bounds.height / 2.f)
-    );
-}
-
-void centerOrigin(sf::Text& text) {
-    sf::FloatRect bounds = text.getLocalBounds();
-    text.setOrigin(
-        std::floor(bounds.left + bounds.width / 2.f),
-        std::floor(bounds.top + bounds.height / 2.f)
-    );
-}
-
-void centerOrigin(Animation& animation) {
-    sf::FloatRect bounds = animation.getLocalBounds();
-    animation.setOrigin(
-        std::floor(bounds.left + bounds.width / 2.f),
-        std::floor(bounds.top + bounds.height / 2.f)
-    );
-}
+int random(int left, int right) { return left + rand() % (right - left + 1); }

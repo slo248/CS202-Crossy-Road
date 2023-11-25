@@ -1,12 +1,18 @@
 #include "Dialog.hpp"
 
+#include "Utility.hpp"
+
 Dialog::Dialog(
-    const sf::Texture& texture, State::Context context
+    const std::string& text, const FontHolder& fonts,
+    const TextureHolder& textures, int characterSize
 )
-    : mGUIContainer(), mTexture(texture), mContext(context) {
+    : mText(text, fonts.get(Fonts::Main), characterSize),
+      mTexture(textures.get(Textures::DialogBackground)) {
     mSprite.setTexture(mTexture);
 
     sf::FloatRect bounds = mSprite.getLocalBounds();
+    centerOrigin<sf::Text>(mText);
+    mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
 }
 
 void Dialog::draw(sf::RenderTarget& target, sf::RenderStates states) const {
