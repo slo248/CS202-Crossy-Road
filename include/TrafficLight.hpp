@@ -10,7 +10,7 @@
 class TrafficLight : public SceneNode {
    public:
     enum Type { Field, Graveyard, Swamp, TypeCount };
-    enum Phase { YellowToRed, RedToGreen, GreenToYellow, InPhase };
+    enum Phase { RedToGreen, GreenToYellow, YellowToRed, InPhase };
     enum Color { Green, Yellow, Red };
 
    public:
