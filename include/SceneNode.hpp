@@ -30,8 +30,12 @@ class SceneNode : public sf::Transformable,
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
 
+    // Parent Method
+    SceneNode* getParent();
+
     // Update Method
     void update(sf::Time dt, CommandQueue& commands);
+    virtual bool isMarkedForRemoval() const;
 
     // Position Methods
     sf::Vector2f getWorldPosition() const;
@@ -47,6 +51,7 @@ class SceneNode : public sf::Transformable,
     );
     void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs);
     virtual sf::FloatRect getBoundingRect() const;
+    virtual sf::FloatRect getLocalBounds() const;
 
    private:
     // Update Methods
@@ -61,10 +66,12 @@ class SceneNode : public sf::Transformable,
     void drawBoundingRect(sf::RenderTarget& target, sf::RenderStates states)
         const;
 
+   protected:
+    std::vector<Ptr> mChildren;
+
    private:
     unsigned int mCategory;
     SceneNode* mParent;
-    std::vector<Ptr> mChildren;
 };
 
 bool collision(const SceneNode& lhs, const SceneNode& rhs);

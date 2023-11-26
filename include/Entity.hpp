@@ -5,21 +5,20 @@
 
 class Entity : public SceneNode {
    public:
+    Entity(sf::Vector2f normalVelocity = {0, 0});
     enum Direction { MoveToLeft, MoveToRight, StandStill };
 
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float x, float y);
+    void setMultipliedNormalVelocity(float times);
     sf::Vector2f getVelocity();
 
-    unsigned int getDirection();
-    void setDirectionIndex(Direction direction);
-
    protected:
-    virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
+    virtual void updateCurrent(sf::Time dt, CommandQueue& commands) override;
 
    private:
     sf::Vector2f mVelocity;
-    Direction mDirection;
+    sf::Vector2f mNormalVelocity;
 };
 
 #endif  // ENTITY_HPP

@@ -28,10 +28,14 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node) {
     return result;
 }
 
+SceneNode* SceneNode::getParent() { return mParent; }
+
 void SceneNode::update(sf::Time dt, CommandQueue& commands) {
     updateCurrent(dt, commands);
     updateChildren(dt, commands);
 }
+
+bool SceneNode::isMarkedForRemoval() const { return false; }
 
 sf::Vector2f SceneNode::getWorldPosition() const {
     return getWorldTransform() * sf::Vector2f();
@@ -68,6 +72,8 @@ void SceneNode::checkNodeCollision(
 ) {}
 
 sf::FloatRect SceneNode::getBoundingRect() const { return sf::FloatRect(); }
+
+sf::FloatRect SceneNode::getLocalBounds() const { return sf::FloatRect(); }
 
 void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // For derived classes

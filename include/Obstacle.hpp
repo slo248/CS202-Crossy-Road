@@ -12,7 +12,7 @@ class Obstacle : public Entity {
     enum Type {
         // <-------------------Obstacle----------------->
         // <----------Field---------->
-        fence,
+        f_fence,
         campfire1,
         campfire2,
         pointer1,
@@ -99,7 +99,7 @@ class Obstacle : public Entity {
 
         // <----------Swamp--------------->
         sw_tree1,
-        sw_tre2,
+        sw_tree2,
         torch,
         sw_grass1,
         sw_grass2,
@@ -124,6 +124,7 @@ class Obstacle : public Entity {
     Obstacle(Type type, const TextureHolder& textures);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
+    virtual sf::FloatRect getLocalBounds() const override;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;

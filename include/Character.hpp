@@ -42,6 +42,7 @@ class Character : public Entity {
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
+    Type getType() const;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;

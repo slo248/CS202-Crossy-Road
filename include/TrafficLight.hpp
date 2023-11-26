@@ -10,23 +10,27 @@
 class TrafficLight : public SceneNode {
    public:
     enum Type { Field, Graveyard, Swamp, TypeCount };
-    enum Color { Red, Green, Blue };
+    enum Phase { YellowToRed, RedToGreen, GreenToYellow, InPhase };
+    enum Color { Green, Yellow, Red };
 
    public:
     TrafficLight(Type type, const TextureHolder& textures);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
+    virtual sf::FloatRect getLocalBounds() const override;
+    Phase getPhase();
     Color getColor();
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
-        const;
+        const override;
 
    private:
     Type mType;
-    sf::Time mElapsedTime;
+    Phase mPhase;
     sf::Sprite mSprite;
+    sf::Time mElapsedTime;
     std::size_t mCurrentFrame;
     std::size_t mNumFrames;
 };

@@ -11,8 +11,7 @@ Animation::Animation()
       mCurrentFrame(0),
       mDuration(sf::Time::Zero),
       mElapsedTime(sf::Time::Zero),
-      mRepeat(false),
-      mStartingFrame(0) {}
+      mRepeat(false) {}
 
 Animation::Animation(const sf::Texture& texture)
     : mSprite(texture),
@@ -31,8 +30,6 @@ const sf::Texture* Animation::getTexture() const {
     return mSprite.getTexture();
 }
 
-void Animation::setSprite(sf::Sprite& sprite) { mSprite = sprite; }
-
 void Animation::setFrameSize(sf::Vector2i frameSize) { mFrameSize = frameSize; }
 
 sf::Vector2i Animation::getFrameSize() const { return mFrameSize; }
@@ -41,10 +38,6 @@ void Animation::setNumFrames(std::size_t numFrames) { mNumFrames = numFrames; }
 
 std::size_t Animation::getNumFrames() const { return mNumFrames; }
 
-void Animation::setStartingFrame(std::size_t startingFrame) {
-    mStartingFrame = startingFrame;
-}
-
 void Animation::setDuration(sf::Time duration) { mDuration = duration; }
 
 sf::Time Animation::getDuration() const { return mDuration; }
@@ -52,8 +45,6 @@ sf::Time Animation::getDuration() const { return mDuration; }
 void Animation::setRepeating(bool flag) { mRepeat = flag; }
 
 bool Animation::isRepeating() const { return mRepeat; }
-
-void Animation::setMoveToRight(bool direction) { isMoveToRight = direction; }
 
 void Animation::restart() { mCurrentFrame = 0; }
 

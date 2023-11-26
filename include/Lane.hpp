@@ -1,33 +1,43 @@
 #ifndef LANE_HPP
 #define LANE_HPP
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/System/Clock.hpp>
 
+#include "ObjectFactory.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "SceneNode.hpp"
 #include "TrafficLight.hpp"
 
 class Lane : public SceneNode {
    public:
-    enum Type { River, Dirt, Grass, Graveyard, Soil, Swamp, TypeCount };
+    enum SpawnSide { Left, None, Right };
 
-   public:
-    Lane(Type type, const TextureHolder& textures);
+    Lane(LaneType type, const TextureHolder& textures, Ptr childLane = nullptr);
 
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
+    Lane* getChildLane();
 
    private:
+    void spawnObstacles();
+    void spawnTrafficLight();
+    void spawnGroundEnemy();
+    void spawnAirEnemy();
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const override;
     void updateMovementPattern(sf::Time dt);
 
    private:
-    Type mType;
+    LaneType mType;
+    SpawnSide mSpawnSide;
     sf::Sprite mSprite;
-    std::unique_ptr<Lane> mTopLane, mBottomLane;
-    std::unique_ptr<TrafficLight> mTrafficLight;
+    sf::Time mSpawnInterval;
+    Lane* mChildLane;
+    TrafficLight* mTrafficLight;
+    std::unique_ptr<ObjectFactory> mObjectFactory;
 };
+
+float slotToPosition(int slot);
 
 #endif  // LANE_HPP

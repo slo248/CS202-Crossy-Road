@@ -16,49 +16,44 @@ enum ID {
 namespace Textures {
 enum ID {
     // <----------------Trafic Light------------>
-    f_traffic,
-    sw_traffic,
-    gy_traffic,
+    FieldTrafficLight,
+    SwampTrafficLight,
+    GraveyardTrafficLight,
     // <----------------Trafic Light------------->
 
     //////////////////////////////////////////////
 
     // <----------------Lane-------------------->
-    river,
-    dirt,
-    grass,
-    graveyard,
-    soil,
-    swamp,
+    River,
+    Dirt,
+    Grass,
+    Graveyard,
+    Soil,
+    Swamp,
     // <----------------Lane-------------------->
 
     /////////////////////////////////////////////
 
     // <------------------Animal---------------->
-    bee,
-    bird1,
-    bird2,
-    bird3,
-    bird4,
-    crocodile,
-    dog,
-    frog,
-    rabbit,
-    sheep,
-    turtle,
+    Bee,
+    Bird,
+    Crocodile,
+    Dog,
+    Frog,
+    Rabbit,
+    Sheep,
+    Turtle,
     // <------------------Animal----------------->
 
     //////////////////////////////////////////////
 
     // <-------------------Enemy----------------->
-    // bosses
-    bee_boss,
-    bom_bats,
-    fishmen,
-    orcs,
-    zombie,
+    BeeBoss,
+    BombBat,
+    Fishmen,
+    Orc,
+    Zombie,
 
-    // bombs
     // callbees,
     // octopus,
     // slime,
@@ -66,12 +61,12 @@ enum ID {
     // <-------------------Enemy----------------->
 
     // <---------------Characters Skin-------------->
-    archer,
-    enchantress,
-    knight,
-    musketeer,
-    swordman,
-    wizard,
+    Archer,
+    Enchantress,
+    Knight,
+    Musketeer,
+    Swordman,
+    Wizard,
     // <---------------Characters Skin-------------->
 
     ////////////////////////////////////////////////

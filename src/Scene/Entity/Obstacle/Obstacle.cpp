@@ -26,6 +26,10 @@ sf::FloatRect Obstacle::getBoundingRect() const {
     return getWorldTransform().transformRect(mAnimation.getGlobalBounds());
 }
 
+sf::FloatRect Obstacle::getLocalBounds() const {
+    return mAnimation.getLocalBounds();
+}
+
 void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
     updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
