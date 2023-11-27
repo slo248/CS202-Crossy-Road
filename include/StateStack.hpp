@@ -42,11 +42,13 @@ class StateStack : private sf::NonCopyable {
         States::ID stateID;
     };
 
+   public:
+    State::Context mContext;
+
    private:
     std::vector<State::Ptr> mStack;
     std::vector<PendingChange> mPendingList;
 
-    State::Context mContext;
     std::map<States::ID, std::function<State::Ptr()> > mFactories;
 };
 

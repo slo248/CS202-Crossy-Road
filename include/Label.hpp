@@ -2,6 +2,7 @@
 #define LABEL_HPP
 
 #include "Component.hpp"
+#include "State.hpp"
 
 using namespace GUI;
 
@@ -11,11 +12,11 @@ class Label : public Component {
 
    public:
     Label(
-        const std::string& text, const FontHolder& fonts,
-        const TextureHolder& textures, int characterSize = 16
+        const std::string& text, Fonts::ID font, State::Context context,
+        int characterSize = 50
     );
 
-    virtual bool isSelectable() const { return false; };
+    void setText(const std::string& text);
     virtual void handleEvent(const sf::Event& event){};
 
    private:
@@ -23,8 +24,6 @@ class Label : public Component {
 
    private:
     sf::Text mText;
-    const sf::Texture& mTexture;
-    sf::Sprite mSprite;
 };
 
 #endif

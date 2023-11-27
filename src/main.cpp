@@ -1,52 +1,54 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
-#include "Button.hpp"
-#include "Dialog.hpp"
-#include "Label.hpp"
-#include "Textbox.hpp"
+#include "CreditState.hpp"
+#include "LoseState.hpp"
+#include "SettingState.hpp"
+#include "State.hpp"
+#include "StateStack.hpp"
+#include "WinState.hpp"
 
 int main() {
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window(
+        sf::VideoMode(1152, 960), "Pro Game", sf::Style::Default
+    );
+    window.setPosition(sf::Vector2i(0, 0));
+    window.setFramerateLimit(60);
+
     FontHolder fonts;
     TextureHolder textures;
-    fonts.load(Fonts::Main, "asset/Sansation.ttf");
+    textures.loadTextureFromFile();
+    fonts.loadFontFromFile();
 
-    textures.load(Textures::TextBackground, "asset/ButtonSelected.png");
-    Textbox textbox("Textbox", fonts, textures, 16);
-    textbox.setPosition(500, 500);
+    Player player;
+    State::Context context(window, textures, fonts, player);
+    StateStack stack(context);
+    CreditState creditState(stack, context);
+    WinState winState(stack, context);
+    LoseState loseState(stack, context);
+    SettingState settingState(stack, context);
 
-    textures.load(Textures::DialogBackground, "asset/ButtonSelected.png");
-    Dialog dialog("Dialog", fonts, textures);
-    dialog.setPosition(300, 300);
+    stack.registerState<SettingState>(States::Setting);
+    stack.registerState<CreditState>(States::Credit);
+    stack.registerState<WinState>(States::Win);
+    stack.registerState<LoseState>(States::Lose);
 
-    textures.load(Textures::ButtonNormal, "asset/ButtonNormal.png");
-    textures.load(Textures::ButtonSelected, "asset/ButtonSelected.png");
-    textures.load(Textures::ButtonPressed, "asset/ButtonPressed.png");
-    Button button(fonts, textures);
-    button.setText("Button");
-    button.setPosition(100, 100);
+    stack.pushState(States::Credit);
+    stack.pushState(States::Setting);
+    //stack.pushState(States::Win);
+    //stack.pushState(States::Lose);
 
-    textures.load(Textures::LabelBackground, "asset/ButtonSelected.png");
-    Label label("Label", fonts, textures);
-    label.setPosition(200, 200);
-
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML White Window");
-
-    while (window.isOpen()) {
-        window.clear(sf::Color::White);
+    while (stack.mContext.window->isOpen()) {
+        stack.mContext.window->clear(sf::Color::White);
         sf::Event event;
-        window.draw(textbox);
-        window.draw(button);
-        window.draw(label);
-        window.draw(dialog);
-
-        while (window.pollEvent(event)) {
+        stack.draw();
+        while (stack.mContext.window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();
+                stack.mContext.window->close();
             }
-            textbox.handleEvent(event);
+            stack.handleEvent(event);
         }
-        window.display();
+        stack.mContext.window->display();
     }
 
     return 0;

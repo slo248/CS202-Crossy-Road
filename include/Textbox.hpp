@@ -22,7 +22,6 @@ class Textbox : public Component {
         const TextureHolder& textures, int characterSize = 16
     );
 
-    virtual bool isSelectable() const;
     std::string getText() const;
 
     void typedOn(sf::Event input);

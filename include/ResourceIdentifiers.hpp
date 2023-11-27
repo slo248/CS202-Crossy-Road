@@ -9,7 +9,7 @@ class Font;
 namespace Fonts {
 enum ID {
     Main,
-    enchanted,
+    Enchanted,
 };
 }
 
@@ -158,13 +158,46 @@ enum ID {
     sw_pointer2,
     well,
 
-    // GUI
-    DialogBackground,
-    LabelBackground,
-    TextBackground,
-    ButtonNormal,
-    ButtonSelected,
-    ButtonPressed,
+    //// GUI
+    // Common
+    BackgroundMain,
+    BackgroundTextbox,
+    BackgroundLabel,
+    ButtonBack,
+    ButtonHome,
+    ButtonLevel,
+    ButtonPlayAgain,
+    ButtonSetting,
+    ButtonResume,
+
+    // Setting state
+    BackgroundSetting,
+    DialogGeneral,
+    ButtonLeftArrow,
+    ButtonRightArrow,
+    ButtonUpArrow,
+    ButtonDownArrow,
+    ButtonGeneral,
+    ButtonSkin,
+    LabelTextConfirm,
+    LabelTextKeys,
+    LabelTextSounds,
+    ButtonSave,
+    ButtonSound,
+    ButtonMusic,
+    BarSounds,
+
+    // Credit state
+    BackgroundCredit,
+
+    // Menu state
+    BackgroundMenu,
+
+    // Win state
+    DialogVictory,
+
+    // Lose state
+    DialogDefeat,
 
 };
 }

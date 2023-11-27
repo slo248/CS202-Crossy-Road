@@ -10,6 +10,8 @@
 template <typename Resource, typename Identifier>
 class ResourceHolder {
    public:
+    void loadTextureFromFile();
+    void loadFontFromFile();
     void load(Identifier id, const std::string& filename);
 
     template <typename Parameter>
@@ -28,4 +30,5 @@ class ResourceHolder {
 };
 
 #include "ResourceHolder.inl"
+#include "ResourceLoad.inl"
 #endif  // RESOURCE_HOLDER_HPP

@@ -2,75 +2,118 @@
 
 #include <SFML/Window/Event.hpp>
 
-#include "Utility.hpp"
-
 Button::Button(
-    const FontHolder& fonts, const TextureHolder& textures, int characterSize
+    State::Context context, Textures::ID button, sf::Vector2f position,
+    bool is2Mode
 )
-    : mNormalTexture(textures.get(Textures::ButtonNormal)),
-      mSelectedTexture(textures.get(Textures::ButtonSelected)),
-      mPressedTexture(textures.get(Textures::ButtonPressed)),
-      mText("", fonts.get(Fonts::Main), characterSize),
-      mIsToggle(false) {
-    mSprite.setTexture(mNormalTexture);
-
-    sf::FloatRect bounds = mSprite.getLocalBounds();
-    mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
+    : mCallback(),
+      mSprite(context.textures->get(button)),
+      mIsToggle(false),
+      mIsOn(false),
+      mIs2Mode(is2Mode),
+      mContext(context) {
+    originalPosition = position;
+    mSprite.setPosition(originalPosition);
+    if (mIs2Mode) {
+        changeTexture(Normal);
+    }
 }
 
 void Button::setCallback(Callback callback) { mCallback = std::move(callback); }
 
-void Button::setText(const std::string& text) {
-    mText.setString(text);
-    centerOrigin(mText);
-}
-
 void Button::setToggle(bool flag) { mIsToggle = flag; }
 
-bool Button::isSelectable() const { return true; }
+bool Button::isMouseOver(const sf::RenderWindow& window) const {
+    sf::Vector2f buttonPosition = mSprite.getPosition();
+    sf::FloatRect buttonBounds = mSprite.getGlobalBounds();
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+    sf::Vector2f convertedMousePosition =
+        window.mapPixelToCoords(mousePosition);
+
+    buttonBounds.left = buttonPosition.x;
+    buttonBounds.top = buttonPosition.y;
+
+    return buttonBounds.contains(convertedMousePosition);
+}
 
 void Button::select() {
+    if (!mIsSelectable) return;
     Component::select();
 
-    mSprite.setTexture(mSelectedTexture);
+    if (mIs2Mode) {
+        changeTexture(Selected);
+
+    } else {
+        if (mCallback) {
+            mCallback();
+        }
+    }
 }
 
 void Button::deselect() {
     Component::deselect();
 
-    mSprite.setTexture(mNormalTexture);
+    changeTexture(Normal);
 }
 
-void Button::activate() {
-    Component::activate();
+void Button::handleEvent(const sf::Event& event) {
+    if (isMouseOver(*mContext.window)) {
+        if (!mIsOn) {
+            changeSize(Size::Small);
+            mIsOn = true;
+        }
+    } else {
+        if (mIsOn) {
+            changeSize(Size::Medium);
+            mIsOn = false;
+        }
+    }
 
-    // If we are toggle then we should show that the button is pressed and thus
-    // "toggled".
-    if (mIsToggle) mSprite.setTexture(mPressedTexture);
-
-    if (mCallback) mCallback();
-
-    // If we are not a toggle then deactivate the button since we are just
-    // momentarily activated.
-    if (!mIsToggle) deactivate();
-}
-
-void Button::deactivate() {
-    Component::deactivate();
-
-    if (mIsToggle) {
-        // Reset texture to right one depending on if we are selected or not.
-        if (isSelected())
-            mSprite.setTexture(mSelectedTexture);
-        else
-            mSprite.setTexture(mNormalTexture);
+    if (isMouseOver(*mContext.window) &&
+        event.type == sf::Event::MouseButtonPressed &&
+        event.mouseButton.button == sf::Mouse::Left) {
+        select();
     }
 }
-
-void Button::handleEvent(const sf::Event&) {}
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(mSprite, states);
-    target.draw(mText, states);
+}
+
+void Button::changeSize(Size buttonSize) {
+    float scaleFactor = 1.0f;
+
+    switch (buttonSize) {
+        case Size::Small: {
+            scaleFactor -= 0.2f;
+            sf::FloatRect bounds = mSprite.getLocalBounds();
+            mSprite.setScale(scaleFactor, scaleFactor);
+            mSprite.move(0.1f * bounds.width, 0.1f * bounds.height);
+            break;
+        }
+        case Size::Medium: {
+            scaleFactor = 1.0f;
+            mSprite.setScale(scaleFactor, scaleFactor);
+            mSprite.setPosition(originalPosition);
+            break;
+        }
+        case Size::Large: {
+            scaleFactor += 0.2f;
+            sf::FloatRect bounds = mSprite.getLocalBounds();
+            mSprite.setScale(scaleFactor, scaleFactor);
+            mSprite.move(-0.1f * bounds.width, -0.1f * bounds.height);
+            break;
+        }
+    }
+
+    mSprite.setScale(scaleFactor, scaleFactor);
+}
+
+void Button::changeTexture(Mode buttonMode) {
+    sf::Vector2u textureSize = mSprite.getTexture()->getSize();
+    sf::IntRect textureRect(
+        (textureSize.x / 2) * buttonMode, 0, textureSize.x / 2, textureSize.y
+    );
+    mSprite.setTextureRect(textureRect);
 }

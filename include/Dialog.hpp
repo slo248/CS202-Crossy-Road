@@ -2,6 +2,8 @@
 #define DIALOG_HPP
 
 #include "Component.hpp"
+#include "Container.hpp"
+#include "State.hpp"
 
 using namespace GUI;
 
@@ -10,18 +12,15 @@ class Dialog : public Component {
     typedef std::shared_ptr<Dialog> Ptr;
 
    public:
-    Dialog(
-        const std::string& text, const FontHolder& fonts,
-        const TextureHolder& textures, int characterSize = 16
-    );
-    virtual bool isSelectable() const { return false; }
-    virtual void handleEvent(const sf::Event& event) { return; };
+    Dialog(const sf::Texture& texture, State::Context context);
+    virtual void handleEvent(const sf::Event& event){};
 
-   private:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+   protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-   private:
-    sf::Text mText;
+   protected:
+    Container mGUIContainer;
+    State::Context mContext;
     const sf::Texture& mTexture;
     sf::Sprite mSprite;
 };
