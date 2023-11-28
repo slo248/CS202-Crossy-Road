@@ -20,8 +20,11 @@ void Movement::setup(sf::Vector2f dst, std::function<float(float)> motion) {
     mStart = mObj->getPosition();
     sf::Vector2f vel = mObj->getVelocity();
     mDuration = sf::seconds(
-        sqrt(pow(mEnd.x - mStart.x, 2) + pow(mEnd.y - mStart.y, 2)) /
-        sqrt(pow(vel.x, 2) + pow(vel.y, 2))
+        sqrt(
+            (mEnd.x - mStart.x) * (mEnd.x - mStart.x) +
+            (mEnd.y - mStart.y) * (mEnd.y - mStart.y)
+        ) /
+        sqrt(vel.x * vel.x + vel.y * vel.y)
     );
     mElapsed = sf::Time::Zero;
 }
@@ -34,7 +37,5 @@ void Movement::update(sf::Time dt) {
         return;
     }
     float t = mMotion(mElapsed.asSeconds() / mDuration.asSeconds());
-    mObj->setPosition(
-        mStart.x + (mEnd.x - mStart.x) * t, mStart.y + (mEnd.y - mStart.y) * t
-    );
+    mObj->setPosition(mStart + (mEnd - mStart) * t);
 }
