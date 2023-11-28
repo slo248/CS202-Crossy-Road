@@ -5,18 +5,13 @@
 #include <SFML/System/Vector2.hpp>
 #include <functional>
 
-#include "Motion.hpp"
-
 class Entity;
 
 class Movement {
    public:
     Movement(Entity* obj);
 
-    void setup(
-        sf::Vector2f start, sf::Vector2f end, sf::Vector2f speed,
-        std::function<float(float)> motion = Motion::Linear()
-    );
+    void setup(sf::Vector2f dst, std::function<float(float)> motion);
 
     void update(sf::Time dt);
 

@@ -1,8 +1,6 @@
 #ifndef MOTION_HPP
 #define MOTION_HPP
 
-#include <cmath>
-
 namespace Motion {
 struct Linear {
     float operator()(float x);

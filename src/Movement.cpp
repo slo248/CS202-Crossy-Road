@@ -1,5 +1,6 @@
 #include "Movement.hpp"
 
+#include <cmath>
 #include <stdexcept>
 
 #include "Entity.hpp"
@@ -12,18 +13,17 @@ Movement::Movement(Entity* obj) : mObj(obj) {
     mMotion = nullptr;
 }
 
-void Movement::setup(
-    sf::Vector2f start, sf::Vector2f end, sf::Vector2f speed,
-    std::function<float(float)> motion
-) {
-    mStart = start;
-    mEnd = end;
+void Movement::setup(sf::Vector2f dst, std::function<float(float)> motion) {
+    mEnd = dst;
+    mMotion = motion;
+
+    mStart = mObj->getPosition();
+    sf::Vector2f vel = mObj->getVelocity();
     mDuration = sf::seconds(
         sqrt(pow(mEnd.x - mStart.x, 2) + pow(mEnd.y - mStart.y, 2)) /
-        sqrt(pow(speed.x, 2) + pow(speed.y, 2))
+        sqrt(pow(vel.x, 2) + pow(vel.y, 2))
     );
     mElapsed = sf::Time::Zero;
-    mMotion = motion;
 }
 
 void Movement::update(sf::Time dt) {
