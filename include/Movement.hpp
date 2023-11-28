@@ -13,6 +13,13 @@ class Movement {
    public:
     Movement(Entity* obj);
 
+    void setup(
+        sf::Vector2f start, sf::Vector2f end, sf::Vector2f speed,
+        std::function<float(float)> motion = Motion::Linear()
+    );
+
+    void update(sf::Time dt);
+
    private:
     Entity* mObj;
     sf::Vector2f mStart, mEnd;
