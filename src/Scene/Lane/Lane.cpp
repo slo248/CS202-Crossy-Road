@@ -19,24 +19,29 @@ Lane::Lane(LaneType type, const TextureHolder& textures, Ptr childLane)
     : mType(type),
       mTrafficLight(nullptr),
       mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
-    /*---------------------------------------------------------------------*/
+    // Set up children lane
     if (childLane) {
         mChildLane = static_cast<Lane*>(childLane.get());
         mChildLane->setPosition(0, DEFAULT_CELL_LENGTH);
         attachChild(std::move(childLane));
+    } else {
+        mChildLane = nullptr;
     }
 
     // Origin
     setOrigin(0, mSprite.getLocalBounds().height / 2.f);
 
-    // Traffic light
+    // Object factory
     int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 ,1
     mSpawnSide = static_cast<SpawnSide>(isHavingTrafficLight + 1);
     mObjectFactory = std::make_unique<ObjectFactory>(textures, type);
+
+    // Spawn initial traffic light or obstacles
     if (isHavingTrafficLight) {
         spawnTrafficLight();
     } else {
         spawnObstacles();
+        mTrafficLight = nullptr;
     }
 }
 
@@ -91,7 +96,7 @@ void Lane::spawnAirEnemy() {
 }
 
 void Lane::spawnLog() {
-    std::unique_ptr<Obstacle> log = mObjectFactory->createLog();
+    std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
     // -1 or 1 based on spawn side
     log->setMultipliedNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
@@ -173,6 +178,23 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 }
 
 void Lane::updateMovementPattern(sf::Time dt) {}
+
+Lane* createMultipleLanes(const TextureHolder& textures, int laneNumber) {
+    std::unique_ptr<Lane> lane(
+        new Lane(static_cast<LaneType>(rand() % LaneType::TypeCount), textures)
+    );
+    Lane* lowest = lane.get();
+
+    while (--laneNumber) {
+        std::unique_ptr<Lane> parentLane(new Lane(
+            static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
+            std::move(lane)
+        ));
+        lane = std::move(parentLane);
+    }
+
+    return lowest;
+}
 
 float slotToPosition(int slot) {
     return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;

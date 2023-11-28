@@ -17,7 +17,6 @@ class Container : public Component {
 
     void pack(Component::Ptr component);
 
-    virtual bool isSelectable() const override;
     virtual void handleEvent(const sf::Event& event);
 
    private:

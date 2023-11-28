@@ -65,11 +65,23 @@ unsigned int SceneNode::getCategory() const { return mCategory; }
 
 void SceneNode::checkSceneCollision(
     SceneNode& sceneGraph, std::set<Pair>& collisionPairs
-) {}
+) {
+    checkNodeCollision(sceneGraph, collisionPairs);
+
+    for (Ptr& child : sceneGraph.mChildren)
+        checkSceneCollision(*child, collisionPairs);
+}
 
 void SceneNode::checkNodeCollision(
     SceneNode& node, std::set<Pair>& collisionPairs
-) {}
+) {
+    if (this != &node && collision(*this, node) && !isMarkedForRemoval() &&
+        !node.isMarkedForRemoval())
+        collisionPairs.insert(std::minmax(this, &node));
+
+    for (Ptr& child : mChildren)
+        child->checkNodeCollision(node, collisionPairs);
+}
 
 sf::FloatRect SceneNode::getBoundingRect() const { return sf::FloatRect(); }
 
@@ -121,7 +133,7 @@ void SceneNode::drawBoundingRect(
 }
 
 bool collision(const SceneNode& lhs, const SceneNode& rhs) {
-    // return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+    return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
     return false;
 }
 

@@ -35,7 +35,6 @@ class SceneNode : public sf::Transformable,
 
     // Update Method
     void update(sf::Time dt, CommandQueue& commands);
-    virtual bool isMarkedForRemoval() const;
 
     // Position Methods
     sf::Vector2f getWorldPosition() const;
@@ -52,6 +51,7 @@ class SceneNode : public sf::Transformable,
     void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs);
     virtual sf::FloatRect getBoundingRect() const;
     virtual sf::FloatRect getLocalBounds() const;
+    virtual bool isMarkedForRemoval() const;
 
    private:
     // Update Methods

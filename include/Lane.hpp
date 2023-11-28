@@ -39,6 +39,8 @@ class Lane : public SceneNode {
     std::unique_ptr<ObjectFactory> mObjectFactory;
 };
 
+Lane* createMultipleLanes(const TextureHolder& textures, int laneNumber);
+
 float slotToPosition(int slot);
 
 #endif  // LANE_HPP

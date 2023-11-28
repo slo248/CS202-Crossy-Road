@@ -21,11 +21,6 @@ Button::Button(
 
 void Button::setCallback(Callback callback) { mCallback = std::move(callback); }
 
-void Button::setText(const std::string& text) {
-    mText.setString(text);
-    centerOrigin<sf::Text>(mText);
-}
-
 void Button::setToggle(bool flag) { mIsToggle = flag; }
 
 bool Button::isMouseOver(const sf::RenderWindow& window) const {

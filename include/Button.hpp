@@ -26,12 +26,9 @@ class Button : public Component {
     void setCallback(Callback callback);
     void setToggle(bool flag);
 
-    virtual bool isSelectable() const override;
-    virtual void select() override;
-    virtual void deselect() override;
-
-    virtual void activate() override;
-    virtual void deactivate() override;
+    virtual bool isMouseOver(const sf::RenderWindow& window) const;
+    virtual void select();
+    virtual void deselect();
 
     virtual void handleEvent(const sf::Event& event);
 
