@@ -304,7 +304,10 @@ void Lane::spawnAirEnemy() {
 
 void Lane::spawnLog() {
     std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0a0803d (temporary restructuring)
     // -1 or 1 based on spawn side
     log->setScaleNormalVelocity((1 - (mSpawnSide << 1)) * mRandomFactor);
 

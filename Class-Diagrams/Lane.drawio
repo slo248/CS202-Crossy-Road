@@ -75,6 +75,9 @@
                 <mxCell id="279" value="- &amp;lt;&amp;lt;virtual&amp;gt;&amp;gt; updateCurrent(sf::Time): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="261" vertex="1">
                     <mxGeometry y="506" width="361.94" height="26" as="geometry"/>
                 </mxCell>
+                <mxCell id="279" value="- &amp;lt;&amp;lt;virtual&amp;gt;&amp;gt; updateCurrent(sf::Time): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="261" vertex="1">
+                    <mxGeometry y="476" width="361.94" height="26" as="geometry"/>
+                </mxCell>
                 <mxCell id="280" value="- &amp;lt;&amp;lt;virtual, const&amp;gt;&amp;gt; drawCurrent(sf::RenderTarget&amp;amp;, &lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt; &lt;/span&gt; &lt;/span&gt;&amp;nbsp; &amp;nbsp;sf::RenderStates): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="261" vertex="1">
                     <mxGeometry y="532" width="361.94" height="38" as="geometry"/>
                 </mxCell>
