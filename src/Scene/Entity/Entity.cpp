@@ -15,6 +15,13 @@ void Entity::setMultipliedNormalVelocity(float times) {
     this->mVelocity = mNormalVelocity * times;
 }
 
+void Entity::accelerate(sf::Vector2f velocity) { mVelocity += velocity; }
+
+void Entity::accelerate(float vx, float vy) {
+    mVelocity.x += vx;
+    mVelocity.y += vy;
+}
+
 sf::Vector2f Entity::getVelocity() { return mVelocity; }
 
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commands) {

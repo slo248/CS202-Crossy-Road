@@ -11,6 +11,8 @@ class Entity : public SceneNode {
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float x, float y);
     void setMultipliedNormalVelocity(float times);
+    void accelerate(sf::Vector2f velocity);
+    void accelerate(float vx, float vy);
     sf::Vector2f getVelocity();
 
    protected:
