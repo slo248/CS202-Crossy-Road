@@ -14,6 +14,7 @@ Movement::Movement(Entity* obj) : mObj(obj) {
 }
 
 void Movement::setup(sf::Vector2f dst, std::function<float(float)> motion) {
+    if (dst == mEnd) return;
     mEnd = dst;
     mMotion = motion;
 
