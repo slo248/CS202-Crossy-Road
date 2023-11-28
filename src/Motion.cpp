@@ -22,5 +22,5 @@ float Bezier::operator()(float x) {
 
 float Sigmoid::operator()(float x) {
     assert(0 <= x && x <= 1);
-    return 1.f / (1.f + exp(-x));
+    return 1.f / (1.f + exp(x - 0.5));
 }

@@ -22,6 +22,7 @@ void AnimationTest() {
         sf::Event event;
         while (window.pollEvent(event)) switch (event.type) {
                 case sf::Event::Closed:
+                    std::cout << "Window closed" << std::endl;
                     window.close();
                     break;
                 case sf::Event::KeyReleased:
