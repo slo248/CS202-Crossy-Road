@@ -12,7 +12,7 @@ std::vector<CharacterData> initializeCharacterData() {
     std::vector<CharacterData> data(Character::TypeCount);
 
     for (int i = 0; i < Character::TypeCount; ++i) {
-        data[i].speed = 200.f;
+        data[i].normalSpeed = 200.f;
         data[i].texture = static_cast<Textures::ID>(Textures::Bee + i);
         data[i].textureRect = DEFAULT_CELL;
     }
@@ -27,7 +27,10 @@ std::vector<ObstacleData> initializeObstacleData() {
         data[i].texture = static_cast<Textures::ID>(Textures::f_fence + i);
         data[i].textureRect = DEFAULT_CELL;
         data[i].isBlockingPlayer = true;
+        data[i].normalSpeed = 0.f;
     }
+
+    data[Obstacle::Type::log].normalSpeed = 70.f;
 
     return data;
 }

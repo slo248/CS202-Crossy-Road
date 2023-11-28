@@ -9,8 +9,9 @@ enum Type {
     Player = 1 << 2,
     Character = 1 << 3,
     Obstacle = 1 << 4,
-    TrafficLight = 1 << 5,
-    Lane = 1 << 6,
+    Decoration = 1 << 5,
+    TrafficLight = 1 << 6,
+    Lane = 1 << 7,
 };
 }
 

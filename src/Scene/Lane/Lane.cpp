@@ -90,6 +90,15 @@ void Lane::spawnAirEnemy() {
     attachChild(std::move(airEnemy));
 }
 
+void Lane::spawnLog() {
+    std::unique_ptr<Obstacle> log = mObjectFactory->createLog();
+    // -1 or 1 based on spawn side
+    log->setMultipliedNormalVelocity(mSpawnSide << 1 - 1);
+    // slot is -1 or 12 based on spawn side
+    setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
+    attachChild(std::move(log));
+}
+
 bool isAirEnemy(Character* character) {
     Character::Type tmp = character->getType();
     return tmp == Character::Type::Bee || tmp == Character::Type::Bird ||
@@ -98,6 +107,12 @@ bool isAirEnemy(Character* character) {
 
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     if (!mTrafficLight) {
+        if (mType == LaneType::River) {
+            mSpawnInterval += dt;
+            if (mSpawnInterval >= Table[mType].spawnInterval) {
+                spawnLog();
+            }
+        }
         return;
     }
 

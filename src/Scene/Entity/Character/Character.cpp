@@ -13,7 +13,7 @@ const std::vector<CharacterData> Table = initializeCharacterData();
 }
 
 Character::Character(Type type, const TextureHolder& textures)
-    : Entity(sf::Vector2f(Table[type].speed, 0)), mType(type) {
+    : Entity(sf::Vector2f(Table[type].normalSpeed, 0)), mType(type) {
     mAnimation.setTexture(textures.get(Table[type].texture));
     mAnimation.setFrameSize(Table[type].textureRect.getSize());
     mAnimation.setNumFrames(6);  // Data table

@@ -10,6 +10,7 @@ ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType)
         Character::Type::Bee, Character::Type::Bird, Character::Type::BeeBoss,
         Character::Type::BombBat
     };
+
     switch (mLaneType) {
         case LaneType::Dirt:
         case LaneType::Grass:
@@ -50,26 +51,6 @@ ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType)
     }
 }
 
-// std::unique_ptr<SceneNode> ObjectFactory::createObject(ObjectType type) {
-//     std::unique_ptr<SceneNode> object;
-//     switch (type) {
-//         case ObjectType::TAirEnemy: {
-//             object = createAirEnemy();
-//         }
-//         case ObjectType::TGroundEnemy: {
-//             object = createGroundEnemy();
-//         }
-//         case ObjectType::TObstacle: {
-//             object = createObstacle();
-//         }
-//         case ObjectType::TTrafficLight: {
-//             object = createTrafficLight();
-//         }
-//     }
-//     centerOrigin(*object);
-//     return object;
-// }
-
 std::unique_ptr<Character> ObjectFactory::createAirEnemy() {
     unsigned int objectType = rand() % mAirEnemies.size();
     return std::make_unique<Character>(
@@ -92,14 +73,8 @@ std::unique_ptr<Obstacle> ObjectFactory::createObstacle() {
 }
 
 std::unique_ptr<TrafficLight> ObjectFactory::createTrafficLight() {
-    TrafficLight::Type trafficLightType;
+    TrafficLight::Type trafficLightType = TrafficLight::Type::Field;
     switch (mLaneType) {
-        case LaneType::Dirt:
-        case LaneType::Grass:
-        case LaneType::Soil: {
-            trafficLightType = TrafficLight::Type::Field;
-            break;
-        }
         case LaneType::Graveyard: {
             trafficLightType = TrafficLight::Type::Graveyard;
             break;
@@ -108,7 +83,15 @@ std::unique_ptr<TrafficLight> ObjectFactory::createTrafficLight() {
             trafficLightType = TrafficLight::Type::Swamp;
             break;
         }
+
+        default: {
+            break;
+        }
     }
 
     return std::make_unique<TrafficLight>(trafficLightType, *mTextures);
+}
+
+std::unique_ptr<Obstacle> ObjectFactory::createLog() {
+    return std::make_unique<Obstacle>(Obstacle::Type::log, *mTextures);
 }

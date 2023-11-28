@@ -17,6 +17,14 @@ class ObjectFactory {
     std::unique_ptr<Character> createGroundEnemy();
     std::unique_ptr<Obstacle> createObstacle();
     std::unique_ptr<TrafficLight> createTrafficLight();
+    std::unique_ptr<Obstacle> createLog();
+    /*
+    What we may actually need
+    Movealbe(Enemy, Ally),
+    UnMoveable(Obstacle, Decoration)
+    TrafficLight
+    good classification leads to good design
+    */
 
    private:
     const TextureHolder* mTextures;

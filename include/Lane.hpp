@@ -23,6 +23,7 @@ class Lane : public SceneNode {
     void spawnTrafficLight();
     void spawnGroundEnemy();
     void spawnAirEnemy();
+    void spawnLog();
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const override;

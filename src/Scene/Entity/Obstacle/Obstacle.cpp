@@ -12,7 +12,9 @@ const std::vector<ObstacleData> Table = initializeObstacleData();
 }
 
 Obstacle::Obstacle(Type type, const TextureHolder& textures)
-    : mType(type), mIsBlockingPlayer(Table[type].isBlockingPlayer) {
+    : Entity(sf::Vector2f(Table[type].normalSpeed, 0)),
+      mType(type),
+      mIsBlockingPlayer(Table[type].isBlockingPlayer) {
     mAnimation.setTexture(textures.get(Table[type].texture));
     mAnimation.setFrameSize(Table[type].textureRect.getSize());
     mAnimation.setNumFrames(6);  // Data table
@@ -20,7 +22,9 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures)
     mAnimation.setRepeating(true);
 }
 
-unsigned int Obstacle::getCategory() const { return Category::Obstacle; }
+unsigned int Obstacle::getCategory() const {
+    return mIsBlockingPlayer ? Category::Obstacle : Category::Decoration;
+}
 
 sf::FloatRect Obstacle::getBoundingRect() const {
     return getWorldTransform().transformRect(mAnimation.getGlobalBounds());
