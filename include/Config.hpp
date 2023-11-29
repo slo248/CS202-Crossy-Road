@@ -14,4 +14,8 @@
 #define LEVEL_FOUR_COEFFICIENT 1.3
 #define LEVEL_FIVE_COEFFICIENT 1.4
 
+namespace Config {
+enum GameType { L1, L2, L3, L4, L5, Endless, Count };
+}
+
 #endif  // CONFIG_HPP
