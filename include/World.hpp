@@ -9,6 +9,12 @@
 
 class World {
    public:
+    World(TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window);
+    void update(sf::Time dt);
+    void draw();
+
+    CommandQueue& getCommandQueue();
+
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
 
