@@ -9,7 +9,7 @@
 #include "Command.hpp"
 
 SceneNode::SceneNode(unsigned int category)
-    : mParent(nullptr), mCategory(category) {}
+    : mParent(nullptr), mCategory(category), mMarkedForRemoval(false) {}
 
 void SceneNode::attachChild(Ptr child) {
     child->mParent = this;
@@ -36,6 +36,20 @@ void SceneNode::update(sf::Time dt, CommandQueue& commands) {
 }
 
 bool SceneNode::isMarkedForRemoval() const { return false; }
+
+void SceneNode::remove() { mMarkedForRemoval = true; }
+
+void SceneNode::removeWrecks() {
+    auto wreckfieldBegin = std::remove_if(
+        mChildren.begin(), mChildren.end(),
+        std::mem_fn(&SceneNode::isMarkedForRemoval)
+    );
+    mChildren.erase(wreckfieldBegin, mChildren.end());
+    std::for_each(
+        mChildren.begin(), mChildren.end(),
+        std::mem_fn(&SceneNode::removeWrecks)
+    );
+}
 
 sf::Vector2f SceneNode::getWorldPosition() const {
     return getWorldTransform() * sf::Vector2f();
