@@ -5,10 +5,10 @@
 
 #include "Category.hpp"
 #include "DataTables.hpp"
+#include "Lane.hpp"
 #include "Motion.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
-#include "Lane.hpp"
 
 namespace {
 const std::vector<CharacterData> Table = initializeCharacterData();
@@ -43,7 +43,7 @@ void Character::moveCharacter(Direction direction) {
     switch (direction) {
         case ToLeft:
         case ToRight: {
-            if (mCurrentLane->checkMovablePlayer(this, direction)) {
+            if (mCurrentLane->checkMoveablePlayer(this, direction)) {
                 int coefficient = (direction == ToLeft) ? -1 : 1;
                 sf::Vector2f incomingPosition(
                     getPosition().x + coefficient * DEFAULT_CELL_LENGTH,
@@ -55,9 +55,11 @@ void Character::moveCharacter(Direction direction) {
         }
         case ToUpper:
         case ToLower: {
-            Lane* nextLane = (direction == ToUpper) ? static_cast<Lane*> (mCurrentLane->getParent())
-                                                    : mCurrentLane->getChildLane();
-            if (nextLane && nextLane->checkMovablePlayer(this, direction)) {
+            Lane* nextLane = (direction == ToUpper)
+                                 ? static_cast<Lane*>(mCurrentLane->getParent())
+                                 : mCurrentLane->getChildLane();
+
+            if (nextLane && nextLane->checkMoveablePlayer(this, direction)) {
                 int coefficient = (direction == ToLeft) ? -1 : 1;
                 sf::Vector2f incomingPosition(
                     getPosition().x,

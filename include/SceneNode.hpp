@@ -45,10 +45,6 @@ class SceneNode : public sf::Transformable,
     virtual unsigned int getCategory() const;
 
     // Collision Methods
-    void checkSceneCollision(
-        SceneNode& sceneGraph, std::set<Pair>& collisionPairs
-    );
-    void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs);
     virtual sf::FloatRect getBoundingRect() const;
     virtual sf::FloatRect getLocalBounds() const;
     virtual bool isMarkedForRemoval() const;

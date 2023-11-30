@@ -3,21 +3,176 @@
 
 #include "AnimationList.hpp"
 
-void AnimationTest() {
-    sf::Texture bee;
-    bee.loadFromFile("asset/s_animals/bee/bee.png");
+void loadTexture(TextureHolder& textures) {
+    /***************************Load Animal Textures***************************/
+    textures.load(Textures::BeeToLeft, "asset/s_animals/bee/S_Walk_ToLeft.png");
+    textures.load(
+        Textures::BeeToRight, "asset/s_animals/bee/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::BirdToLeft, "asset/s_animals/bird_1/S_Fly_ToLeft.png"
+    );
+    textures.load(
+        Textures::BirdToRight, "asset/s_animals/bird_1/S_Fly_ToRight.png"
+    );
+    textures.load(
+        Textures::CrocodileToLeft, "asset/s_animals/crocodile/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::CrocodileToRight,
+        "asset/s_animals/crocodile/S_Walk_ToRight.png"
+    );
+    textures.load(Textures::DogToLeft, "asset/s_animals/dog/S_Walk_ToLeft.png");
+    textures.load(
+        Textures::DogToRight, "asset/s_animals/dog/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::FrogToLeft, "asset/s_animals/frog/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::FrogToRight, "asset/s_animals/frog/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::RabbitToLeft, "asset/s_animals/rabbit/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::RabbitToRight, "asset/s_animals/rabbit/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::SheepToLeft, "asset/s_animals/sheep/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::SheepToRight, "asset/s_animals/sheep/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::TurtleToLeft, "asset/s_animals/turtle/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::TurtleToRight, "asset/s_animals/turtle/S_Walk_ToRight.png"
+    );
+    /*************************************************************************/
 
-    Animation beeMoveRight(bee, sf::Vector2i(48, 48), 6);
-    beeMoveRight.setDuration(sf::seconds(3));
-    beeMoveRight.setTimePerFrame(sf::seconds(0.25));
+    /*******************************Load TrafficLight
+     * Textures************************************/
+    textures.load(
+        Textures::FieldTrafficLight,
+        "asset/s_traffic_light/field_traffic_light.png"
+    );
+    textures.load(
+        Textures::GraveyardTrafficLight,
+        "asset/s_traffic_light/graveyard_traffic_light.png"
+    );
+    textures.load(
+        Textures::SwampTrafficLight,
+        "asset/s_traffic_light/swamp_traffic_light.png"
+    );
+    /*************************************************************************/
 
-    beeMoveRight.scale(2, 2);
-    beeMoveRight.setPosition(100, 100);
+    /********************************Load Enemy
+     * Textures**********************************/
+    textures.load(
+        Textures::BeeBossToLeft, "asset/s_enemy/beeboss/S_Fly_ToLeft.png"
+    );
+    textures.load(
+        Textures::BeeBossToRight, "asset/s_enemy/beeboss/S_Fly_ToRight.png"
+    );
+    textures.load(
+        Textures::BombBatToLeft, "asset/s_enemy/bombbat/S_Fly_ToLeft.png"
+    );
+    textures.load(
+        Textures::BombBatToRight, "asset/s_enemy/bombbat/S_Fly_ToRight.png"
+    );
+    textures.load(
+        Textures::FishmenToLeft, "asset/s_enemy/fishmen/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::FishmenToRight, "asset/s_enemy/fishmen/S_Walk_ToRight.png"
+    );
+    textures.load(Textures::OrcToLeft, "asset/s_enemy/orc/S_Walk_ToLeft.png");
+    textures.load(Textures::OrcToRight, "asset/s_enemy/orc/S_Walk_ToRight.png");
+    textures.load(
+        Textures::ZombieToLeft, "asset/s_enemy/zombie/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::ZombieToRight, "asset/s_enemy/zombie/S_Walk_ToRight.png"
+    );
+    /*************************************************************************/
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Crossy Road");
+    /**************************Load Lane Textures******************************/
+    textures.load(Textures::River, "asset/s_lane/river.png");
+    textures.load(Textures::Dirt, "asset/s_lane/dirt.png");
+    textures.load(Textures::Grass, "asset/s_lane/grass.png");
+    textures.load(Textures::Graveyard, "asset/s_lane/graveyard.png");
+    textures.load(Textures::Soil, "asset/s_lane/soil.png");
+    textures.load(Textures::Swamp, "asset/s_lane/swamp.png");
+    /*************************************************************************/
+
+    /**************************Load Skin Textures************************/
+    textures.load(
+        Textures::ArcherToLeft, "asset/s_skin/Archer/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::ArcherToRight, "asset/s_skin/Archer/Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::EnchantressToLeft, "asset/s_skin/Enchantress/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::EnchantressToRight,
+        "asset/s_skin/Enchantress/Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::KnightToLeft, "asset/s_skin/Knight/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::KnightToRight, "asset/s_skin/Knight/Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::MusketeerToLeft, "asset/s_skin/Musketeer/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::MusketeerToRight, "asset/s_skin/Musketeer/Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::SwordsmanToLeft, "asset/s_skin/Swordsman/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::SwordsmanToRight, "asset/s_skin/Swordsman/Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::WizardToLeft, "asset/s_skin/Wizard/Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::WizardToRight, "asset/s_skin/Wizard/Walk_ToRight.png"
+    );
+    /***********************************************************************/
+
+    /**************************Load Other Textures**************************/
+    textures.load(Textures::bush1, "asset/s_other/Field/Bush/3.png");
+    textures.load(Textures::stone1, "asset/s_other/Field/Stone/7.png");
+    textures.load(Textures::tree1, "asset/s_other/Field/Decor/Tree1.png");
+
+    textures.load(Textures::gy_tree1, "asset/s_other/Graveyard/Tree/1.png");
+    textures.load(Textures::statue1, "asset/s_other/Graveyard/Statue/2.png");
+    textures.load(Textures::statue2, "asset/s_other/Graveyard/Statue/30.png");
+
+    textures.load(Textures::well, "asset/s_other/Swamp/Decor/13.png");
+    textures.load(Textures::log, "asset/s_other/River/log.png");
+}
+
+int main() {
+    sf::RenderWindow window(
+        sf::VideoMode(1152, 960), "Pro Game", sf::Style::Default
+    );
     window.setFramerateLimit(60);
 
-    sf::Clock clock;
+    TextureHolder textures;
+    FontHolder fonts;
+
+    loadTexture(textures);
+
+    World world(textures, fonts, window, Config::GameLevel::L1);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) switch (event.type) {

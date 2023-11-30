@@ -35,24 +35,37 @@ enum ID {
     /////////////////////////////////////////////
 
     // <------------------Animal---------------->
-    Bee,
-    Bird,
-    Crocodile,
-    Dog,
-    Frog,
-    Rabbit,
-    Sheep,
-    Turtle,
+    BeeToLeft,
+    BeeToRight,
+    BirdToLeft,
+    BirdToRight,
+    CrocodileToLeft,
+    CrocodileToRight,
+    DogToLeft,
+    DogToRight,
+    FrogToLeft,
+    FrogToRight,
+    RabbitToLeft,
+    RabbitToRight,
+    SheepToLeft,
+    SheepToRight,
+    TurtleToLeft,
+    TurtleToRight,
     // <------------------Animal----------------->
 
     //////////////////////////////////////////////
 
     // <-------------------Enemy----------------->
-    BeeBoss,
-    BombBat,
-    Fishmen,
-    Orc,
-    Zombie,
+    BeeBossToLeft,
+    BeeBossToRight,
+    BombBatToLeft,
+    BombBatToRight,
+    FishmenToLeft,
+    FishmenToRight,
+    OrcToLeft,
+    OrcToRight,
+    ZombieToLeft,
+    ZombieToRight,
 
     // callbees,
     // octopus,
@@ -61,12 +74,18 @@ enum ID {
     // <-------------------Enemy----------------->
 
     // <---------------Characters Skin-------------->
-    Archer,
-    Enchantress,
-    Knight,
-    Musketeer,
-    Swordman,
-    Wizard,
+    ArcherToLeft,
+    ArcherToRight,
+    EnchantressToLeft,
+    EnchantressToRight,
+    KnightToLeft,
+    KnightToRight,
+    MusketeerToLeft,
+    MusketeerToRight,
+    SwordsmanToLeft,
+    SwordsmanToRight,
+    WizardToLeft,
+    WizardToRight,
     // <---------------Characters Skin-------------->
 
     ////////////////////////////////////////////////

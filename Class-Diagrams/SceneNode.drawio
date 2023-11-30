@@ -1,11 +1,11 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="MYXDUYMXQNMbcBIb65oL">
-        <mxGraphModel dx="955" dy="3782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="940" dy="3763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="36" value="SceneNode" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="115" y="-3130" width="330" height="786" as="geometry">
+                    <mxGeometry x="115" y="-3130" width="330" height="698" as="geometry">
                         <mxRectangle x="-115" y="-2220" width="110" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -42,7 +42,7 @@
                 <mxCell id="47" value="+ detachChild(node: const SceneNode&amp;amp;): Ptr" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
                     <mxGeometry y="268" width="330" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="75" value="&lt;font style=&quot;&quot; color=&quot;#ffffff&quot;&gt;+ getParent(): SceneNode*&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="36">
+                <mxCell id="75" value="&lt;font style=&quot;&quot; color=&quot;#ffffff&quot;&gt;+ getParent(): SceneNode*&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
                     <mxGeometry y="294" width="330" height="24" as="geometry"/>
                 </mxCell>
                 <mxCell id="48" value="+ getWorldTransform(): sf::Transform" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
@@ -51,7 +51,7 @@
                 <mxCell id="49" value="+ getWorldPosition(): sf::Vector2f" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
                     <mxGeometry y="344" width="330" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="74" value="&lt;font color=&quot;#ffffff&quot;&gt;+ getLocalBounds(): sf::FloatRect&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="36">
+                <mxCell id="74" value="&lt;font color=&quot;#ffffff&quot;&gt;+ getLocalBounds(): sf::FloatRect&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
                     <mxGeometry y="370" width="330" height="24" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" value="+ onCommand(cmd: const Command&amp;amp;, dt: sf::Time): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
@@ -66,29 +66,23 @@
                 <mxCell id="53" value="+ &amp;lt;&amp;lt;virtual, const&amp;gt;&amp;gt; getCategory(): unsigned int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
                     <mxGeometry y="472" width="330" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="54" value="+ checkSceneCollision&lt;span style=&quot;background-color: initial;&quot;&gt;(sceneGraph: SceneNode&amp;amp;, collisionPairs: std::set&amp;lt;Pair&amp;gt;&amp;amp;): void&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="498" width="330" height="44" as="geometry"/>
-                </mxCell>
-                <mxCell id="55" value="+ checkNodeCollision&lt;span style=&quot;background-color: initial;&quot;&gt;(SceneNode&amp;amp;, std::set&amp;lt;Pair&amp;gt;&amp;amp;): void&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="542" width="330" height="44" as="geometry"/>
-                </mxCell>
                 <mxCell id="56" value="+ &amp;lt;&amp;lt;virtual, const&amp;gt;&amp;gt; getBoundingRect(): sf::FloatRect" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="586" width="330" height="26" as="geometry"/>
+                    <mxGeometry y="498" width="330" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="57" value="- &amp;lt;&amp;lt;virtual&amp;gt;&amp;gt; updateCurrent(sf::Time): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="612" width="330" height="26" as="geometry"/>
+                    <mxGeometry y="524" width="330" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="58" value=", - updateChildren(sf::Time,&amp;nbsp;CommandQueue&amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="638" width="330" height="34" as="geometry"/>
+                    <mxGeometry y="550" width="330" height="34" as="geometry"/>
                 </mxCell>
                 <mxCell id="59" value="- &amp;lt;&amp;lt;virtual, const&amp;gt;&amp;gt; draw(sf::RenderTarget&amp;amp;,&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&amp;nbsp;sf::RenderStates): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="672" width="330" height="38" as="geometry"/>
+                    <mxGeometry y="584" width="330" height="38" as="geometry"/>
                 </mxCell>
                 <mxCell id="60" value="- &amp;lt;&amp;lt;virtual, const&amp;gt;&amp;gt; drawCurrent(sf::RenderTarget&amp;amp;, &lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt; &lt;/span&gt;&amp;nbsp; &amp;nbsp; sf::RenderStates): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="710" width="330" height="38" as="geometry"/>
+                    <mxGeometry y="622" width="330" height="38" as="geometry"/>
                 </mxCell>
                 <mxCell id="61" value="- &amp;lt;&amp;lt;const&amp;gt;&amp;gt; drawChildren(sf::RenderTarget&amp;amp;, &lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt; &lt;/span&gt;&amp;nbsp;&amp;nbsp;sf::RenderStates): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="36" vertex="1">
-                    <mxGeometry y="748" width="330" height="38" as="geometry"/>
+                    <mxGeometry y="660" width="330" height="38" as="geometry"/>
                 </mxCell>
                 <mxCell id="62" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;CATEGORY&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;SceneOnGround&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;SceneAir&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;Player&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;Obstacle&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;Animal&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;Vehicle&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;TrafficLight&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;text-align:left;&quot;&gt;Lane&lt;/p&gt;" style="shape=rect;html=1;overflow=fill;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="585" y="-2960" width="200" height="170" as="geometry"/>
@@ -125,6 +119,12 @@
                 </mxCell>
                 <mxCell id="73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;endArrow=open;endFill=0;" parent="1" source="38" target="72" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="+ collision(sf::FloatRect, sf::FloatRect): bool" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+                    <mxGeometry x="475" y="-2660" width="330" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="+ distance(SceneNode, SceneNode): float" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+                    <mxGeometry x="475" y="-2620" width="330" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

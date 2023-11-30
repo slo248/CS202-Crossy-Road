@@ -14,14 +14,14 @@ class Lane : public SceneNode {
     enum SpawnSide { Left, None, Right };
 
     Lane(
-        LaneType type, const TextureHolder& textures, Ptr childLane = nullptr,
-        float levelScale = LEVEL_ONE_COEFFICIENT
+        LaneType type, const TextureHolder& textures,
+        float levelScale = LEVEL_ONE_COEFFICIENT, Ptr childLane = nullptr
     );
 
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     Lane* getChildLane();
-    bool checkMovablePlayer(Character* player, Character::Direction direction);
+    bool checkMoveablePlayer(Character* player, Character::Direction direction);
 
    private:
     void spawnObstacles();
@@ -44,7 +44,10 @@ class Lane : public SceneNode {
     std::unique_ptr<ObjectFactory> mObjectFactory;
 };
 
-Lane::Ptr createMultipleLanes(const TextureHolder& textures, int laneNumber);
+std::unique_ptr<Lane> createMultipleLanes(
+    const TextureHolder& textures, int numberOfLanes,
+    float levelScale = LEVEL_ONE_COEFFICIENT
+);
 
 float slotToPosition(int slot);
 

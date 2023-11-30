@@ -77,27 +77,6 @@ void SceneNode::onCommand(const Command& command, sf::Time dt) {
 
 unsigned int SceneNode::getCategory() const { return mCategory; }
 
-void SceneNode::checkSceneCollision(
-    SceneNode& sceneGraph, std::set<Pair>& collisionPairs
-) {
-    checkNodeCollision(sceneGraph, collisionPairs);
-
-    for (Ptr& child : sceneGraph.mChildren)
-        checkSceneCollision(*child, collisionPairs);
-}
-
-void SceneNode::checkNodeCollision(
-    SceneNode& node, std::set<Pair>& collisionPairs
-) {
-    if (this != &node &&
-        collision(this->getBoundingRect(), node.getBoundingRect()) &&
-        !isMarkedForRemoval() && !node.isMarkedForRemoval())
-        collisionPairs.insert(std::minmax(this, &node));
-
-    for (Ptr& child : mChildren)
-        child->checkNodeCollision(node, collisionPairs);
-}
-
 sf::FloatRect SceneNode::getBoundingRect() const { return sf::FloatRect(); }
 
 sf::FloatRect SceneNode::getLocalBounds() const { return sf::FloatRect(); }

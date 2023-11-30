@@ -16,8 +16,8 @@ const std::vector<LaneData> Table = initializeLaneData();
 }
 
 Lane::Lane(
-    LaneType type, const TextureHolder& textures, Ptr childLane,
-    float levelScale
+    LaneType type, const TextureHolder& textures, float levelScale,
+    Ptr childLane
 )
     : mType(type),
       mTrafficLight(nullptr),
@@ -42,9 +42,11 @@ Lane::Lane(
 
     // Spawn initial traffic light or obstacles
     if (isHavingTrafficLight) {
-        spawnTrafficLight();
+        // spawnTrafficLight();
     } else {
-        spawnObstacles();
+        if (type != LaneType::River) {
+            // spawnObstacles();
+        }
         mTrafficLight = nullptr;
     }
 }
@@ -57,7 +59,7 @@ sf::FloatRect Lane::getBoundingRect() const {
 
 Lane* Lane::getChildLane() { return mChildLane; }
 
-bool Lane::checkMovablePlayer(
+bool Lane::checkMoveablePlayer(
     Character* player, Character::Direction direction
 ) {
     sf::FloatRect playerBounds = player->getBoundingRect();
@@ -150,65 +152,68 @@ bool isAirEnemy(Character* character) {
 }
 
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    if (!mTrafficLight) {
-        if (mType == LaneType::River) {
-            mSpawnInterval += dt;
-            if (mSpawnInterval >= Table[mType].spawnInterval) {
-                spawnLog();
-            }
-        }
-        return;
-    }
+    //     if (!mTrafficLight) {
+    //         if (mType == LaneType::River) {
+    //             mSpawnInterval += dt;
+    //             if (mSpawnInterval >= Table[mType].spawnInterval) {
+    //                 spawnLog();
+    //             }
+    //         }
+    //         return;
+    //     }
 
-    mSpawnInterval += dt;
-    if (mSpawnInterval >= Table[mType].spawnInterval) {
-        mSpawnInterval = sf::Time::Zero;
-        if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
-            spawnGroundEnemy();
-        }
-    }
+    //     mSpawnInterval += dt;
+    //     if (mSpawnInterval >= Table[mType].spawnInterval) {
+    //         mSpawnInterval = sf::Time::Zero;
+    //         if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
+    //             spawnGroundEnemy();
+    //         }
+    //     }
 
-    TrafficLight::Phase currentPhase = mTrafficLight->getPhase();
-    Character* character;
-    switch (currentPhase) {
-        case TrafficLight::Phase::RedToGreen: {
-            for (int i = 0; i < mChildren.size(); ++i) {
-                if (mChildren[i]->getCategory() == Category::Character) {
-                    character = static_cast<Character*>(mChildren[i].get());
-                    if (character) {
-                        character->setScaleNormalVelocity(1);
-                    }
-                }
-            }
-            spawnAirEnemy();
-            break;
-        }
+    //     TrafficLight::Phase currentPhase = mTrafficLight->getPhase();
+    //     Character* character;
+    //     switch (currentPhase) {
+    //         case TrafficLight::Phase::RedToGreen: {
+    //             for (int i = 0; i < mChildren.size(); ++i) {
+    //                 if (mChildren[i]->getCategory() == Category::Character) {
+    //                     character =
+    //                     static_cast<Character*>(mChildren[i].get()); if
+    //                     (character) {
+    //                         character->setScaleNormalVelocity(1);
+    //                     }
+    //                 }
+    //             }
+    //             spawnAirEnemy();
+    //             break;
+    //         }
 
-        case TrafficLight::Phase::GreenToYellow: {
-            for (int i = 0; i < mChildren.size(); ++i) {
-                if (mChildren[i]->getCategory() == Category::Character) {
-                    character = static_cast<Character*>(mChildren[i].get());
-                    if (character && !isAirEnemy(character)) {
-                        sf::Vector2f currentVelocity = character->getVelocity();
-                        character->setScaleNormalVelocity(0.25);
-                    }
-                }
-            }
-            spawnAirEnemy();
-            break;
-        }
+    //         case TrafficLight::Phase::GreenToYellow: {
+    //             for (int i = 0; i < mChildren.size(); ++i) {
+    //                 if (mChildren[i]->getCategory() == Category::Character) {
+    //                     character =
+    //                     static_cast<Character*>(mChildren[i].get()); if
+    //                     (character && !isAirEnemy(character)) {
+    //                         sf::Vector2f currentVelocity =
+    //                         character->getVelocity();
+    //                         character->setScaleNormalVelocity(0.25);
+    //                     }
+    //                 }
+    //             }
+    //             spawnAirEnemy();
+    //             break;
+    //         }
 
-        case TrafficLight::Phase::YellowToRed: {
-            for (int i = 0; i < mChildren.size(); ++i) {
-                character = static_cast<Character*>(mChildren[i].get());
-                if (character) {
-                    character->setVelocity(0, 0);
-                }
-            }
-            spawnAirEnemy();
-            break;
-        }
-    }
+    //         case TrafficLight::Phase::YellowToRed: {
+    //             for (int i = 0; i < mChildren.size(); ++i) {
+    //                 character = static_cast<Character*>(mChildren[i].get());
+    //                 if (character) {
+    //                     character->setVelocity(0, 0);
+    //                 }
+    //             }
+    //             spawnAirEnemy();
+    //             break;
+    //         }
+    //     }
 }
 
 void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
@@ -218,7 +223,9 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 
 void Lane::updateMovementPattern(sf::Time dt) {}
 
-Lane::Ptr createMultipleLanes(const TextureHolder& textures, int laneNumber) {
+Lane::Ptr createMultipleLanes(
+    const TextureHolder& textures, int laneNumber, float levelScale
+) {
     Lane::Ptr lane(
         new Lane(static_cast<LaneType>(rand() % LaneType::TypeCount), textures)
     );
@@ -226,7 +233,7 @@ Lane::Ptr createMultipleLanes(const TextureHolder& textures, int laneNumber) {
     while (--laneNumber) {
         Lane::Ptr parentLane(new Lane(
             static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
-            std::move(lane)
+            levelScale, std::move(lane)
         ));
         lane = std::move(parentLane);
     }

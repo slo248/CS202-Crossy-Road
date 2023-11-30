@@ -4,7 +4,9 @@
 
 #include "Utility.hpp"
 
-ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType, float levelScale)
+ObjectFactory::ObjectFactory(
+    const TextureHolder& textures, LaneType laneType, float levelScale
+)
     : mTextures(&textures), mLaneType(laneType), mLevelScale(levelScale) {
     mAirEnemies = {
         Character::Type::Bee, Character::Type::Bird, Character::Type::BeeBoss,
@@ -54,21 +56,21 @@ ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType, f
 std::unique_ptr<Character> ObjectFactory::createAirEnemy() {
     unsigned int objectType = rand() % mAirEnemies.size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(objectType), *mTextures
+        static_cast<Character::Type>(mAirEnemies[objectType]), *mTextures
     );
 }
 
 std::unique_ptr<Character> ObjectFactory::createGroundEnemy() {
     unsigned int objectType = rand() % mGroundEnemies.size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(objectType), *mTextures
+        static_cast<Character::Type>(mGroundEnemies[objectType]), *mTextures
     );
 }
 
 std::unique_ptr<Obstacle> ObjectFactory::createObstacle() {
     unsigned int objectType = rand() % mObstacles.size();
     return std::make_unique<Obstacle>(
-        static_cast<Obstacle::Type>(objectType), *mTextures
+        static_cast<Obstacle::Type>(mObstacles[objectType]), *mTextures
     );
 }
 

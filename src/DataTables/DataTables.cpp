@@ -13,7 +13,7 @@ std::vector<CharacterData> initializeCharacterData() {
 
     for (int i = 0; i < Character::TypeCount; ++i) {
         data[i].normalSpeed = 200.f;
-        data[i].texture = static_cast<Textures::ID>(Textures::Bee + i);
+        data[i].texture = static_cast<Textures::ID>(Textures::BeeToLeft + i);
         data[i].textureRect = DEFAULT_CELL_RECT;
     }
 
