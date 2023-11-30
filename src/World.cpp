@@ -1,10 +1,11 @@
 #include "World.hpp"
 
+#include "Lane.hpp"
 #include "ResourceHolder.hpp"
 
 World::World(
     TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-    Config::GameType gameType
+    Config::GameLevel::Type gameType
 )
     : mTextures(textures),
       mFonts(fonts),
@@ -12,12 +13,14 @@ World::World(
       mWorldView(window.getDefaultView()),
       mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
-      mGameType(gameType) {
+      mGameType(gameType),
+      mScrollSpeed(0, -40) {
     buildScene();
+    mWorldView.setCenter(mPlayer->getPosition());
 }
 
 void World::update(sf::Time dt) {
-    mWorldView.setCenter(mPlayer->getWorldPosition());
+    mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
@@ -30,7 +33,9 @@ void World::update(sf::Time dt) {
 CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 
 void World::buildScene() {
-    // soon
+    if (mGameType != Config::GameLevel::Endless) {
+        int i = mGameType;
+        }
 }
 
 void World::removeEntitiesOutsizeView() {

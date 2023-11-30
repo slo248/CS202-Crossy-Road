@@ -12,7 +12,7 @@ class World {
    public:
     World(
         TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-        Config::GameType gameType
+        Config::GameLevel::Type gameType
     );
     void update(sf::Time dt);
     void draw();
@@ -33,6 +33,7 @@ class World {
     sf::RenderWindow& mWindow;
 
     sf::View mWorldView;
+    sf::Vector2f mScrollSpeed;
 
     SceneNode mSceneGraph;
     std::array<SceneNode*, LayerCount> mLayers;
@@ -41,7 +42,7 @@ class World {
     Character* mPlayer;
 
     CommandQueue mCommandQueue;
-    Config::GameType mGameType;
+    Config::GameLevel::Type mGameType;
 };
 
 #endif

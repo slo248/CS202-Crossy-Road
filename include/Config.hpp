@@ -15,7 +15,10 @@
 #define LEVEL_FIVE_COEFFICIENT 1.4
 
 namespace Config {
-enum GameType { L1, L2, L3, L4, L5, Endless, Count };
-}
+namespace GameLevel {
+enum Type { L1, L2, L3, L4, L5, Endless, Count };
+int NUM_LANES[] = {20, 30, 50, 70, 100};
+}  // namespace GameLevel
+}  // namespace Config
 
 #endif  // CONFIG_HPP
