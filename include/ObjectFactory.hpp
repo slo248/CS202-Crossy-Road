@@ -5,12 +5,13 @@
 #include "Obstacle.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "TrafficLight.hpp"
+#include "Config.hpp"
 
 enum LaneType { River, Dirt, Grass, Graveyard, Soil, Swamp, TypeCount };
 
 class ObjectFactory {
    public:
-    explicit ObjectFactory(const TextureHolder& textures, LaneType laneType);
+    explicit ObjectFactory(const TextureHolder& textures, LaneType laneType, float levelScale = LEVEL_ONE_COEFFICIENT);
 
     // std::unique_ptr<SceneNode> createObject(ObjectType type);
     std::unique_ptr<Character> createAirEnemy();
@@ -32,6 +33,7 @@ class ObjectFactory {
     std::vector<Character::Type> mAirEnemies;
     std::vector<Character::Type> mGroundEnemies;
     std::vector<Obstacle::Type> mObstacles;
+    float mLevelScale;
 };
 
 #endif  // OBJECT_FACTORY_HPP

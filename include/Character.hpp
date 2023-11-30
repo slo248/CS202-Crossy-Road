@@ -4,11 +4,17 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Animation.hpp"
+#include "Config.hpp"
 #include "Entity.hpp"
+#include "Movement.hpp"
 #include "ResourceIdentifiers.hpp"
+
+class Lane;
 
 class Character : public Entity {
    public:
+    enum Direction { ToLeft, ToRight, ToUpper, ToLower };
+
     enum Type {
         Bee,
         Bird,
@@ -38,11 +44,15 @@ class Character : public Entity {
     };
 
    public:
-    Character(Type type, const TextureHolder& textures);
+    Character(
+        Type type, const TextureHolder& textures,
+        float levelScale = LEVEL_ONE_COEFFICIENT
+    );
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
     Type getType() const;
+    void moveCharacter(Direction direction);
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -53,6 +63,8 @@ class Character : public Entity {
    private:
     Type mType;
     Animation mAnimation;
+    Movement mMovement;
+    Lane* mCurrentLane;
 };
 
 #endif  // CHARACTER_HPP

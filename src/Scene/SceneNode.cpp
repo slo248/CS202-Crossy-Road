@@ -75,7 +75,7 @@ void SceneNode::checkSceneCollision(
 void SceneNode::checkNodeCollision(
     SceneNode& node, std::set<Pair>& collisionPairs
 ) {
-    if (this != &node && collision(*this, node) && !isMarkedForRemoval() &&
+    if (this != &node && collision(this->getBoundingRect(), node.getBoundingRect()) && !isMarkedForRemoval() &&
         !node.isMarkedForRemoval())
         collisionPairs.insert(std::minmax(this, &node));
 
@@ -132,9 +132,8 @@ void SceneNode::drawBoundingRect(
     target.draw(shape);
 }
 
-bool collision(const SceneNode& lhs, const SceneNode& rhs) {
-    return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
-    return false;
+bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs) {
+    return lhs.intersects(rhs);
 }
 
 float length(sf::Vector2f vector) {

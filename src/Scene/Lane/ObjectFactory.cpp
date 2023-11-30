@@ -4,8 +4,8 @@
 
 #include "Utility.hpp"
 
-ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType)
-    : mTextures(&textures), mLaneType(laneType) {
+ObjectFactory::ObjectFactory(const TextureHolder& textures, LaneType laneType, float levelScale)
+    : mTextures(&textures), mLaneType(laneType), mLevelScale(levelScale) {
     mAirEnemies = {
         Character::Type::Bee, Character::Type::Bird, Character::Type::BeeBoss,
         Character::Type::BombBat

@@ -5,15 +5,19 @@
 
 #include "Category.hpp"
 #include "DataTables.hpp"
+#include "Motion.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
+#include "Lane.hpp"
 
 namespace {
 const std::vector<CharacterData> Table = initializeCharacterData();
 }
 
-Character::Character(Type type, const TextureHolder& textures)
-    : Entity(sf::Vector2f(Table[type].normalSpeed, 0)), mType(type) {
+Character::Character(Type type, const TextureHolder& textures, float levelScale)
+    : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
+      mType(type),
+      mMovement(this) {
     mAnimation.setTexture(textures.get(Table[type].texture));
     mAnimation.setFrameSize(Table[type].textureRect.getSize());
     mAnimation.setNumFrames(6);  // Data table
@@ -35,9 +39,41 @@ sf::FloatRect Character::getLocalBounds() const {
 
 Character::Type Character::getType() const { return mType; }
 
+void Character::moveCharacter(Direction direction) {
+    switch (direction) {
+        case ToLeft:
+        case ToRight: {
+            if (mCurrentLane->checkMovablePlayer(this, direction)) {
+                int coefficient = (direction == ToLeft) ? -1 : 1;
+                sf::Vector2f incomingPosition(
+                    getPosition().x + coefficient * DEFAULT_CELL_LENGTH,
+                    getPosition().y
+                );
+                mMovement.setup(incomingPosition, Motion::Sigmoid());
+            }
+            break;
+        }
+        case ToUpper:
+        case ToLower: {
+            Lane* nextLane = (direction == ToUpper) ? static_cast<Lane*> (mCurrentLane->getParent())
+                                                    : mCurrentLane->getChildLane();
+            if (nextLane && nextLane->checkMovablePlayer(this, direction)) {
+                int coefficient = (direction == ToLeft) ? -1 : 1;
+                sf::Vector2f incomingPosition(
+                    getPosition().x,
+                    getPosition().y + coefficient * DEFAULT_CELL_LENGTH
+                );
+                mMovement.setup(incomingPosition, Motion::Sigmoid());
+            }
+            break;
+        }
+    }
+}
+
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
+    mAnimation.update(dt);
 }
 
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)

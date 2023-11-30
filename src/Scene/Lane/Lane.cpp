@@ -15,7 +15,10 @@ namespace {
 const std::vector<LaneData> Table = initializeLaneData();
 }
 
-Lane::Lane(LaneType type, const TextureHolder& textures, Ptr childLane)
+Lane::Lane(
+    LaneType type, const TextureHolder& textures, Ptr childLane,
+    float levelScale
+)
     : mType(type),
       mTrafficLight(nullptr),
       mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
@@ -34,7 +37,8 @@ Lane::Lane(LaneType type, const TextureHolder& textures, Ptr childLane)
     // Object factory
     int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 ,1
     mSpawnSide = static_cast<SpawnSide>(isHavingTrafficLight + 1);
-    mObjectFactory = std::make_unique<ObjectFactory>(textures, type);
+    mObjectFactory =
+        std::make_unique<ObjectFactory>(textures, type, levelScale);
 
     // Spawn initial traffic light or obstacles
     if (isHavingTrafficLight) {
@@ -52,6 +56,41 @@ sf::FloatRect Lane::getBoundingRect() const {
 }
 
 Lane* Lane::getChildLane() { return mChildLane; }
+
+bool Lane::checkMovablePlayer(
+    Character* player, Character::Direction direction
+) {
+    sf::FloatRect playerBounds = player->getBoundingRect();
+    switch (direction) {
+        case Character::Direction::ToLeft: {
+            playerBounds.left -= DEFAULT_CELL_LENGTH;
+            break;
+        }
+
+        case Character::Direction::ToRight: {
+            playerBounds.left += DEFAULT_CELL_LENGTH;
+            break;
+        }
+
+        case Character::Direction::ToLower: {
+            playerBounds.top -= DEFAULT_CELL_LENGTH;
+            break;
+        }
+
+        case Character::Direction::ToUpper: {
+            playerBounds.top += DEFAULT_CELL_LENGTH;
+            break;
+        }
+    }
+    for (Ptr& child : mChildren) {
+        if (collision(playerBounds, child->getBoundingRect()) &&
+            child->getCategory() == Category::Obstacle &&
+            player->getCategory() == Category::Player) {
+            return false;
+        }
+    }
+    return true;
+}
 
 void Lane::spawnObstacles() {
     std::unique_ptr<Obstacle> obstacle;
@@ -80,7 +119,7 @@ void Lane::spawnGroundEnemy() {
     std::unique_ptr<Character> groundEnemy =
         mObjectFactory->createGroundEnemy();
     // -1 or 1 based on spawn side
-    groundEnemy->setMultipliedNormalVelocity(mSpawnSide << 1 - 1);
+    groundEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
     setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
     attachChild(std::move(groundEnemy));
@@ -89,7 +128,7 @@ void Lane::spawnGroundEnemy() {
 void Lane::spawnAirEnemy() {
     std::unique_ptr<Character> airEnemy = mObjectFactory->createAirEnemy();
     // -1 or 1 based on spawn side
-    airEnemy->setMultipliedNormalVelocity(mSpawnSide << 1 - 1);
+    airEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
     setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
     attachChild(std::move(airEnemy));
@@ -98,7 +137,7 @@ void Lane::spawnAirEnemy() {
 void Lane::spawnLog() {
     std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
     // -1 or 1 based on spawn side
-    log->setMultipliedNormalVelocity(mSpawnSide << 1 - 1);
+    log->setScaleNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
     setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
     attachChild(std::move(log));
@@ -137,7 +176,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                 if (mChildren[i]->getCategory() == Category::Character) {
                     character = static_cast<Character*>(mChildren[i].get());
                     if (character) {
-                        character->setMultipliedNormalVelocity(1);
+                        character->setScaleNormalVelocity(1);
                     }
                 }
             }
@@ -151,7 +190,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                     character = static_cast<Character*>(mChildren[i].get());
                     if (character && !isAirEnemy(character)) {
                         sf::Vector2f currentVelocity = character->getVelocity();
-                        character->setMultipliedNormalVelocity(0.25);
+                        character->setScaleNormalVelocity(0.25);
                     }
                 }
             }
@@ -179,11 +218,10 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 
 void Lane::updateMovementPattern(sf::Time dt) {}
 
-Lane* createMultipleLanes(const TextureHolder& textures, int laneNumber) {
+std::unique_ptr<Lane> createMultipleLanes(const TextureHolder& textures, int laneNumber) {
     std::unique_ptr<Lane> lane(
         new Lane(static_cast<LaneType>(rand() % LaneType::TypeCount), textures)
     );
-    Lane* lowest = lane.get();
 
     while (--laneNumber) {
         std::unique_ptr<Lane> parentLane(new Lane(
@@ -193,7 +231,7 @@ Lane* createMultipleLanes(const TextureHolder& textures, int laneNumber) {
         lane = std::move(parentLane);
     }
 
-    return lowest;
+    return lane;
 }
 
 float slotToPosition(int slot) {

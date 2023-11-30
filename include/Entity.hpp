@@ -10,7 +10,7 @@ class Entity : public SceneNode {
 
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float x, float y);
-    void setMultipliedNormalVelocity(float times);
+    void setScaleNormalVelocity(float times);
     void accelerate(sf::Vector2f velocity);
     void accelerate(float vx, float vy);
     sf::Vector2f getVelocity();
@@ -20,7 +20,7 @@ class Entity : public SceneNode {
 
    private:
     sf::Vector2f mVelocity;
-    sf::Vector2f mNormalVelocity;
+    const sf::Vector2f mNormalVelocity;
 };
 
 #endif  // ENTITY_HPP

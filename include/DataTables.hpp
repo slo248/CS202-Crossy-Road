@@ -15,13 +15,6 @@ class Obstacle;
 class Lane;
 class TraffictLight;
 
-struct Direction {
-    Direction(float angle, float distance) : angle(angle), distance(distance) {}
-
-    float angle;
-    float distance;
-};
-
 struct CharacterData {
     float normalSpeed;
     Textures::ID texture;

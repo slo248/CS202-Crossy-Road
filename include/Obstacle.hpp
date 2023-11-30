@@ -6,6 +6,7 @@
 #include "Animation.hpp"
 #include "Entity.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "Config.hpp"
 
 class Obstacle : public Entity {
    public:
@@ -121,7 +122,7 @@ class Obstacle : public Entity {
     };
 
    public:
-    Obstacle(Type type, const TextureHolder& textures);
+    Obstacle(Type type, const TextureHolder& textures, float levelScale = LEVEL_ONE_COEFFICIENT);
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;

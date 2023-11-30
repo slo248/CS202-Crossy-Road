@@ -11,8 +11,8 @@ namespace {
 const std::vector<ObstacleData> Table = initializeObstacleData();
 }
 
-Obstacle::Obstacle(Type type, const TextureHolder& textures)
-    : Entity(sf::Vector2f(Table[type].normalSpeed, 0)),
+Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
+    : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
       mIsBlockingPlayer(Table[type].isBlockingPlayer) {
     mAnimation.setTexture(textures.get(Table[type].texture));

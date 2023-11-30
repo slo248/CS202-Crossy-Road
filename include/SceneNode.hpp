@@ -74,7 +74,7 @@ class SceneNode : public sf::Transformable,
     SceneNode* mParent;
 };
 
-bool collision(const SceneNode& lhs, const SceneNode& rhs);
+bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs);
 float distance(const SceneNode& lhs, const SceneNode& rhs);
 
 #endif  // SCENENODE_HPP

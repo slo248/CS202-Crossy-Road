@@ -14,7 +14,7 @@ std::vector<CharacterData> initializeCharacterData() {
     for (int i = 0; i < Character::TypeCount; ++i) {
         data[i].normalSpeed = 200.f;
         data[i].texture = static_cast<Textures::ID>(Textures::Bee + i);
-        data[i].textureRect = DEFAULT_CELL;
+        data[i].textureRect = DEFAULT_CELL_RECT;
     }
 
     return data;
@@ -25,7 +25,7 @@ std::vector<ObstacleData> initializeObstacleData() {
 
     for (int i = 0; i < Obstacle::TypeCount; ++i) {
         data[i].texture = static_cast<Textures::ID>(Textures::f_fence + i);
-        data[i].textureRect = DEFAULT_CELL;
+        data[i].textureRect = DEFAULT_CELL_RECT;
         data[i].isBlockingPlayer = true;
         data[i].normalSpeed = 0.f;
     }
@@ -40,7 +40,7 @@ std::vector<LaneData> initializeLaneData() {
 
     for (int i = 0; i < LaneType::TypeCount; ++i) {
         data[i].texture = static_cast<Textures::ID>(Textures::River + i);
-        data[i].textureRect = DEFAULT_LANE;
+        data[i].textureRect = DEFAULT_LANE_RECT;
         data[i].spawnInterval = DEFAULT_SPAWN_INTERVAL;
     }
 
@@ -53,7 +53,7 @@ std::vector<TrafficLightData> initializeTrafficLightData() {
     for (int i = 0; i < TrafficLight::Type::TypeCount; ++i) {
         data[i].texture =
             static_cast<Textures::ID>(Textures::FieldTrafficLight + i);
-        data[i].textureRect = DEFAULT_CELL;
+        data[i].textureRect = DEFAULT_CELL_RECT;
     }
 
     return data;
