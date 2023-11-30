@@ -30,12 +30,23 @@ void World::update(sf::Time dt) {
     mSceneGraph.update(dt, mCommandQueue);
 }
 
+void World::draw() {
+    mWindow.setView(mWorldView);
+    mWindow.draw(mSceneGraph);
+}
+
 CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 
 void World::buildScene() {
+    for (int i = 0; i < LayerCount; i++) {
+        SceneNode::Ptr layer(new SceneNode());
+        mLayers[i] = layer.get();
+        mSceneGraph.attachChild(std::move(layer));
+    }
+
     if (mGameType != Config::GameLevel::Endless) {
         int i = mGameType;
-        }
+    }
 }
 
 void World::removeEntitiesOutsizeView() {

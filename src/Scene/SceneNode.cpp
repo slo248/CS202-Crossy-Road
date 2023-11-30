@@ -35,7 +35,7 @@ void SceneNode::update(sf::Time dt, CommandQueue& commands) {
     updateChildren(dt, commands);
 }
 
-bool SceneNode::isMarkedForRemoval() const { return false; }
+bool SceneNode::isMarkedForRemoval() const { return mMarkedForRemoval; }
 
 void SceneNode::remove() { mMarkedForRemoval = true; }
 
@@ -89,8 +89,9 @@ void SceneNode::checkSceneCollision(
 void SceneNode::checkNodeCollision(
     SceneNode& node, std::set<Pair>& collisionPairs
 ) {
-    if (this != &node && collision(this->getBoundingRect(), node.getBoundingRect()) && !isMarkedForRemoval() &&
-        !node.isMarkedForRemoval())
+    if (this != &node &&
+        collision(this->getBoundingRect(), node.getBoundingRect()) &&
+        !isMarkedForRemoval() && !node.isMarkedForRemoval())
         collisionPairs.insert(std::minmax(this, &node));
 
     for (Ptr& child : mChildren)

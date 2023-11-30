@@ -10,10 +10,12 @@
 
 class Lane : public SceneNode {
    public:
+    typedef std::unique_ptr<Lane> Ptr;
     enum SpawnSide { Left, None, Right };
 
     Lane(
-        LaneType type, const TextureHolder& textures, Ptr childLane = nullptr, float levelScale = LEVEL_ONE_COEFFICIENT
+        LaneType type, const TextureHolder& textures, Ptr childLane = nullptr,
+        float levelScale = LEVEL_ONE_COEFFICIENT
     );
 
     virtual unsigned int getCategory() const override;
@@ -42,7 +44,7 @@ class Lane : public SceneNode {
     std::unique_ptr<ObjectFactory> mObjectFactory;
 };
 
-std::unique_ptr<Lane> createMultipleLanes(const TextureHolder& textures, int laneNumber);
+Lane::Ptr createMultipleLanes(const TextureHolder& textures, int laneNumber);
 
 float slotToPosition(int slot);
 

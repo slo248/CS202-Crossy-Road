@@ -82,7 +82,7 @@ bool Lane::checkMovablePlayer(
             break;
         }
     }
-    for (Ptr& child : mChildren) {
+    for (auto& child : mChildren) {
         if (collision(playerBounds, child->getBoundingRect()) &&
             child->getCategory() == Category::Obstacle &&
             player->getCategory() == Category::Player) {
@@ -218,13 +218,13 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 
 void Lane::updateMovementPattern(sf::Time dt) {}
 
-std::unique_ptr<Lane> createMultipleLanes(const TextureHolder& textures, int laneNumber) {
-    std::unique_ptr<Lane> lane(
+Lane::Ptr createMultipleLanes(const TextureHolder& textures, int laneNumber) {
+    Lane::Ptr lane(
         new Lane(static_cast<LaneType>(rand() % LaneType::TypeCount), textures)
     );
 
     while (--laneNumber) {
-        std::unique_ptr<Lane> parentLane(new Lane(
+        Lane::Ptr parentLane(new Lane(
             static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
             std::move(lane)
         ));
