@@ -4,25 +4,25 @@ MenuState::MenuState(StateStack& stack, Context context)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
       State(stack, context) {
     auto buttonPlay = std::make_shared<Button>(
-        context, Textures::ButtonPlay, sf::Vector2f(680, 400)
+        context, Textures::ButtonPlay, sf::Vector2f(874, 400)
     );
-    buttonPlay->setCallback([this]() { requestStackPush(States::Level); });
+    buttonPlay->setCallback([this]() { requestStackPush(States::ChooseMode); });
     mGUIContainer.pack(buttonPlay);
 
     auto buttonContinue = std::make_shared<Button>(
-        context, Textures::ButtonContinue, sf::Vector2f(680, 480)
+        context, Textures::ButtonContinue, sf::Vector2f(874, 480)
     );
     buttonContinue->setCallback([this]() { requestStackPush(States::Saved); });
     mGUIContainer.pack(buttonContinue);
 
     auto buttonRanking = std::make_shared<Button>(
-        context, Textures::ButtonRanking, sf::Vector2f(680, 560)
+        context, Textures::ButtonRanking, sf::Vector2f(874, 560)
     );
     buttonRanking->setCallback([this]() { requestStackPush(States::Ranking); });
     mGUIContainer.pack(buttonRanking);
 
     auto buttonSettingMenu = std::make_shared<Button>(
-        context, Textures::ButtonSettingMenu, sf::Vector2f(680, 640)
+        context, Textures::ButtonSettingMenu, sf::Vector2f(874, 640)
     );
     buttonSettingMenu->setCallback([this]() {
         requestStackPush(States::Setting);
@@ -30,7 +30,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     mGUIContainer.pack(buttonSettingMenu);
 
     auto buttonCredit = std::make_shared<Button>(
-        context, Textures::ButtonCredit, sf::Vector2f(680, 720)
+        context, Textures::ButtonCredit, sf::Vector2f(874, 720)
     );
     buttonCredit->setCallback([this]() { requestStackPush(States::Credit); });
     mGUIContainer.pack(buttonCredit);

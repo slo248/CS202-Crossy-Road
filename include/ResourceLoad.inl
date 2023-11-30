@@ -62,9 +62,14 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     // Saved State
     load(Textures::BackgroundSaved, "asset/textures/BackgroundSaved.png");
     load(Textures::BarSaved, "asset/textures/BarSaved.png");
+
+    // Chose Mode State
+    load(Textures::ButtonLevelMenu, "asset/textures/ButtonLevelMenu.png");
+    load(Textures::ButtonSurvivalMenu, "asset/textures/ButtonSurvivalMenu.png");
+    load(Textures::ButtonBackMenu, "asset/textures/ButtonBackMenu.png");
 }
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
-    load(Fonts::Main, "asset/Sansation.ttf");
+    load(Fonts::Main, "asset/font/Inter-Bold.ttf");
 }

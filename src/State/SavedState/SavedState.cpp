@@ -6,7 +6,7 @@ SavedState::SavedState(StateStack& stack, Context context)
     : State(stack, context),
       mBackground(context.textures->get(Textures::BackgroundSaved)) {
     auto buttonBack = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(1072, 5)
+        context, Textures::ButtonBack, sf::Vector2f(1254, 6)
     );
     buttonBack->setCallback(std::bind(&SavedState::requestStackPop, this));
     mGUIContainer.pack(buttonBack);

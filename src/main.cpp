@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 
+#include "ChooseModeState.hpp"
 #include "CreditState.hpp"
 #include "LevelState.hpp"
 #include "LoseState.hpp"
@@ -15,7 +16,7 @@
 int main() {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     sf::RenderWindow window(
-        sf::VideoMode(1152, 960), "Pro Game", sf::Style::Default
+        sf::VideoMode(1344, 960), "Pro Game", sf::Style::Default
     );
     window.setPosition(sf::Vector2i(0, 0));
     window.setFramerateLimit(60);
@@ -35,6 +36,7 @@ int main() {
     PauseState pauseState(stack, context);
     MenuState menuState(stack, context);
     RankingState rankingState(stack, context);
+    ChooseModeState chooseModeState(stack, context);
 
     stack.registerState<SettingState>(States::Setting);
     stack.registerState<CreditState>(States::Credit);
@@ -45,6 +47,7 @@ int main() {
     stack.registerState<RankingState>(States::Ranking);
     stack.registerState<LevelState>(States::Level);
     stack.registerState<SavedState>(States::Saved);
+    stack.registerState<ChooseModeState>(States::ChooseMode);
 
     stack.pushState(States::Credit);
     stack.pushState(States::Setting);
@@ -54,6 +57,7 @@ int main() {
     stack.pushState(States::Level);
     stack.pushState(States::Ranking);
     stack.pushState(States::Saved);
+    stack.pushState(States::ChooseMode);
     stack.pushState(States::Menu);
 
     while (stack.mContext.window->isOpen()) {

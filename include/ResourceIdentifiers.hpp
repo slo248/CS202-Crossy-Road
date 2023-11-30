@@ -220,6 +220,11 @@ enum ID {
     // Saved state
     BackgroundSaved,
     BarSaved,
+
+    // Chose Mode State
+    ButtonLevelMenu,
+    ButtonBackMenu,
+    ButtonSurvivalMenu,
 };
 }
 
