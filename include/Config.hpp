@@ -2,10 +2,13 @@
 #define CONFIG_HPP
 
 #define DEFAULT_CELL_LENGTH 64
-#define DEFAULT_CELL_RECT sf::IntRect(0, 0, DEFAULT_CELL_LENGTH, DEFAULT_CELL_LENGTH)
+#define DEFAULT_CELL_RECT \
+    sf::IntRect(0, 0, DEFAULT_CELL_LENGTH, DEFAULT_CELL_LENGTH)
 #define DEFAULT_CELLS_PER_LANE 14
-#define DEFAULT_LANE_RECT \
-    sf::IntRect(0, 0, DEFAULT_CELL_LENGTH * DEFAULT_CELLS_PER_LANE, DEFAULT_CELL_LENGTH)
+#define DEFAULT_LANE_RECT                                                      \
+    sf::IntRect(                                                               \
+        0, 0, DEFAULT_CELL_LENGTH* DEFAULT_CELLS_PER_LANE, DEFAULT_CELL_LENGTH \
+    )
 #define DEFAULT_SPAWN_INTERVAL sf::seconds(0.5)
 
 #define LEVEL_ONE_COEFFICIENT 1.0
@@ -17,7 +20,6 @@
 namespace Config {
 namespace GameLevel {
 enum Type { L1, L2, L3, L4, L5, Endless, Count };
-int NUM_LANES[] = {20, 30, 50, 70, 100};
 }  // namespace GameLevel
 }  // namespace Config
 

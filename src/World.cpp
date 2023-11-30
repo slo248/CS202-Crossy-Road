@@ -16,7 +16,6 @@ World::World(
       mGameType(gameType),
       mScrollSpeed(0, -40) {
     buildScene();
-    mWorldView.setCenter(mPlayer->getPosition());
 }
 
 void World::update(sf::Time dt) {
@@ -44,9 +43,37 @@ void World::buildScene() {
         mSceneGraph.attachChild(std::move(layer));
     }
 
-    if (mGameType != Config::GameLevel::Endless) {
-        int i = mGameType;
+    Lane::Ptr btm = nullptr;
+    int numRows;
+
+    switch (mGameType) {
+        case Config::GameLevel::L1:
+            btm = createMultipleLanes(mTextures, numRows = 20);
+            break;
+        case Config::GameLevel::L2:
+            btm = createMultipleLanes(mTextures, numRows = 40);
+            break;
+        case Config::GameLevel::L3:
+            btm = createMultipleLanes(mTextures, numRows = 60);
+            break;
+        case Config::GameLevel::L4:
+            btm = createMultipleLanes(mTextures, numRows = 80);
+            break;
+        case Config::GameLevel::L5:
+            btm = createMultipleLanes(mTextures, numRows = 100);
+            break;
+        default:
+            break;
     }
+
+    btm->setPosition(
+        0, mWorldBounds.height + DEFAULT_CELL_LENGTH * (numRows - 0.5)
+    );
+    mLayers[OnGround]->attachChild(std::move(btm));
+
+    mWorldView.setCenter(
+        mWorldBounds.width / 2, mWorldBounds.height - mWorldView.getSize().y / 2
+    );
 }
 
 void World::removeEntitiesOutsizeView() {
