@@ -4,9 +4,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Animation.hpp"
+#include "Config.hpp"
 #include "Entity.hpp"
 #include "ResourceIdentifiers.hpp"
-#include "Config.hpp"
 
 class Obstacle : public Entity {
    public:
@@ -122,7 +122,10 @@ class Obstacle : public Entity {
     };
 
    public:
-    Obstacle(Type type, const TextureHolder& textures, float levelScale = LEVEL_ONE_COEFFICIENT);
+    Obstacle(
+        Type type, const TextureHolder& textures,
+        float levelScale = LEVEL_ONE_COEFFICIENT
+    );
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
@@ -135,7 +138,7 @@ class Obstacle : public Entity {
 
    private:
     Type mType;
-    Animation mAnimation;
+    sf::Sprite mSprite;
     bool mIsBlockingPlayer;
 };
 

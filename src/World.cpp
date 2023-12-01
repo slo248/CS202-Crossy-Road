@@ -24,7 +24,7 @@ void World::update(sf::Time dt) {
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 
-    removeEntitiesOutsizeView();
+    // removeEntitiesOutsizeView();
 
     mSceneGraph.update(dt, mCommandQueue);
 }
@@ -48,31 +48,30 @@ void World::buildScene() {
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            btm = createMultipleLanes(mTextures, numRows = 20);
+            btm = createMultipleLanes(mTextures, numRows = 50);
             break;
         case Config::GameLevel::L2:
-            btm = createMultipleLanes(mTextures, numRows = 40);
+            btm = createMultipleLanes(mTextures, numRows = 70);
             break;
         case Config::GameLevel::L3:
-            btm = createMultipleLanes(mTextures, numRows = 60);
+            btm = createMultipleLanes(mTextures, numRows = 100);
             break;
         case Config::GameLevel::L4:
-            btm = createMultipleLanes(mTextures, numRows = 80);
+            btm = createMultipleLanes(mTextures, numRows = 150);
             break;
         case Config::GameLevel::L5:
-            btm = createMultipleLanes(mTextures, numRows = 100);
+            btm = createMultipleLanes(mTextures, numRows = 200);
             break;
         default:
             break;
     }
 
-    btm->setPosition(
-        0, mWorldBounds.height + DEFAULT_CELL_LENGTH * (numRows - 0.5)
-    );
+    btm->setPosition(0, DEFAULT_CELL_LENGTH / 2);
     mLayers[OnGround]->attachChild(std::move(btm));
 
     mWorldView.setCenter(
-        mWorldBounds.width / 2, mWorldBounds.height - mWorldView.getSize().y / 2
+        mWorldView.getSize().x / 2,
+        DEFAULT_CELL_LENGTH * numRows - mWorldView.getSize().y / 2
     );
 }
 

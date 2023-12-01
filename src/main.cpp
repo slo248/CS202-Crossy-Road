@@ -161,8 +161,10 @@ void loadTexture(TextureHolder& textures) {
 }
 
 int main() {
+    srand(time(NULL));
     sf::RenderWindow window(
-        sf::VideoMode(1152, 960), "Pro Game", sf::Style::Default
+        sf::VideoMode(DEFAULT_CELL_LENGTH * 10, DEFAULT_CELL_LENGTH * 200),
+        "Pro Game", sf::Style::Default
     );
     window.setFramerateLimit(60);
 
@@ -200,10 +202,10 @@ int main() {
                     break;
             }
 
-        beeMoveRight.update(clock.restart());
+        world.update(sf::seconds(1.f / 60.f));
 
-        window.clear();
-        window.draw(beeMoveRight);
+        window.clear(sf::Color::White);
+        world.draw();
         window.display();
     }
 }

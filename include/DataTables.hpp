@@ -16,9 +16,11 @@ class Lane;
 class TraffictLight;
 
 struct CharacterData {
+    enum Direction { Idle, ToLeft, ToRight, ToUpper, ToLower };
     float normalSpeed;
-    Textures::ID texture;
-    sf::IntRect textureRect;
+    std::vector<Textures::ID> textures;
+    sf::Vector2i frameSize;
+    size_t numFrames;
 };
 
 struct ObstacleData {

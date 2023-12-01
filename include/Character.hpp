@@ -62,7 +62,8 @@ class Character : public Entity {
 
    private:
     Type mType;
-    Animation mAnimation;
+    std::vector<Animation> mAnimations;
+    Animation* mCurrentAnimation;
     Movement mMovement;
     Lane* mCurrentLane;
 };

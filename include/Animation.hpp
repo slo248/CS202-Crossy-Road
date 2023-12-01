@@ -23,6 +23,9 @@ class Animation : public sf::Transformable, public sf::Drawable {
     void play();
     void stop();
 
+    sf::FloatRect getGlobalBounds() const;
+    sf::FloatRect getLocalBounds() const;
+
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

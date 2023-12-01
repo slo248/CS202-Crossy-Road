@@ -152,68 +152,66 @@ bool isAirEnemy(Character* character) {
 }
 
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    //     if (!mTrafficLight) {
-    //         if (mType == LaneType::River) {
-    //             mSpawnInterval += dt;
-    //             if (mSpawnInterval >= Table[mType].spawnInterval) {
-    //                 spawnLog();
-    //             }
-    //         }
-    //         return;
-    //     }
-
-    //     mSpawnInterval += dt;
-    //     if (mSpawnInterval >= Table[mType].spawnInterval) {
-    //         mSpawnInterval = sf::Time::Zero;
-    //         if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
-    //             spawnGroundEnemy();
+    // if (!mTrafficLight) {
+    //     if (mType == LaneType::River) {
+    //         mSpawnInterval += dt;
+    //         if (mSpawnInterval >= Table[mType].spawnInterval) {
+    //             spawnLog();
     //         }
     //     }
+    //     return;
+    // }
 
-    //     TrafficLight::Phase currentPhase = mTrafficLight->getPhase();
-    //     Character* character;
-    //     switch (currentPhase) {
-    //         case TrafficLight::Phase::RedToGreen: {
-    //             for (int i = 0; i < mChildren.size(); ++i) {
-    //                 if (mChildren[i]->getCategory() == Category::Character) {
-    //                     character =
-    //                     static_cast<Character*>(mChildren[i].get()); if
-    //                     (character) {
-    //                         character->setScaleNormalVelocity(1);
-    //                     }
-    //                 }
-    //             }
-    //             spawnAirEnemy();
-    //             break;
-    //         }
+    // mSpawnInterval += dt;
+    // if (mSpawnInterval >= Table[mType].spawnInterval) {
+    //     mSpawnInterval = sf::Time::Zero;
+    //     if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
+    //         spawnGroundEnemy();
+    //     }
+    // }
 
-    //         case TrafficLight::Phase::GreenToYellow: {
-    //             for (int i = 0; i < mChildren.size(); ++i) {
-    //                 if (mChildren[i]->getCategory() == Category::Character) {
-    //                     character =
-    //                     static_cast<Character*>(mChildren[i].get()); if
-    //                     (character && !isAirEnemy(character)) {
-    //                         sf::Vector2f currentVelocity =
-    //                         character->getVelocity();
-    //                         character->setScaleNormalVelocity(0.25);
-    //                     }
-    //                 }
-    //             }
-    //             spawnAirEnemy();
-    //             break;
-    //         }
-
-    //         case TrafficLight::Phase::YellowToRed: {
-    //             for (int i = 0; i < mChildren.size(); ++i) {
+    // TrafficLight::Phase currentPhase = mTrafficLight->getPhase();
+    // Character* character;
+    // switch (currentPhase) {
+    //     case TrafficLight::Phase::RedToGreen: {
+    //         for (int i = 0; i < mChildren.size(); ++i) {
+    //             if (mChildren[i]->getCategory() == Category::Character) {
     //                 character = static_cast<Character*>(mChildren[i].get());
     //                 if (character) {
-    //                     character->setVelocity(0, 0);
+    //                     character->setScaleNormalVelocity(1);
     //                 }
     //             }
-    //             spawnAirEnemy();
-    //             break;
     //         }
+    //         spawnAirEnemy();
+    //         break;
     //     }
+
+    //     case TrafficLight::Phase::GreenToYellow: {
+    //         for (int i = 0; i < mChildren.size(); ++i) {
+    //             if (mChildren[i]->getCategory() == Category::Character) {
+    //                 character = static_cast<Character*>(mChildren[i].get());
+    //                 if (character && !isAirEnemy(character)) {
+    //                     sf::Vector2f currentVelocity =
+    //                     character->getVelocity();
+    //                     character->setScaleNormalVelocity(0.25);
+    //                 }
+    //             }
+    //         }
+    //         spawnAirEnemy();
+    //         break;
+    //     }
+
+    //     case TrafficLight::Phase::YellowToRed: {
+    //         for (int i = 0; i < mChildren.size(); ++i) {
+    //             character = static_cast<Character*>(mChildren[i].get());
+    //             if (character) {
+    //                 character->setVelocity(0, 0);
+    //             }
+    //         }
+    //         spawnAirEnemy();
+    //         break;
+    //     }
+    // }
 }
 
 void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)

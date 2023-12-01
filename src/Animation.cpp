@@ -81,6 +81,14 @@ void Animation::stop() {
     mInProgress = false;
 }
 
+sf::FloatRect Animation::getGlobalBounds() const {
+    return getTransform().transformRect(getLocalBounds());
+}
+
+sf::FloatRect Animation::getLocalBounds() const {
+    return mSprite.getLocalBounds();
+}
+
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (!isInProgress()) return;
     states.transform *= getTransform();

@@ -18,23 +18,24 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
       mMovement(this) {
-    mAnimation.setTexture(textures.get(Table[type].texture));
-    mAnimation.setFrameSize(Table[type].textureRect.getSize());
-    mAnimation.setNumFrames(6);  // Data table
-    mAnimation.setDuration(sf::seconds(1));
-    mAnimation.setRepeating(true);
-
-    centerOrigin<Animation>(mAnimation);
+    CharacterData data = Table[type];
+    for (int i = 0; i < data.textures.size(); ++i) {
+        mAnimations.push_back(Animation(
+            textures.get(data.textures[i]), data.frameSize[i], data.numFrames[i]
+        ));
+        centerOrigin<Animation>(mAnimations[i]);
+    }
+    mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
 }
 
 unsigned int Character::getCategory() const { return Category::Character; }
 
 sf::FloatRect Character::getBoundingRect() const {
-    return getWorldTransform().transformRect(mAnimation.getGlobalBounds());
+    return getWorldTransform().transformRect(mAnimations[0].getGlobalBounds());
 }
 
 sf::FloatRect Character::getLocalBounds() const {
-    return mAnimation.getLocalBounds();
+    return mAnimations[0].getLocalBounds();
 }
 
 Character::Type Character::getType() const { return mType; }
@@ -73,14 +74,22 @@ void Character::moveCharacter(Direction direction) {
 }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    updateMovementPattern(dt);
+    // updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
-    mAnimation.update(dt);
+
+    if (getVelocity().x == 0) {
+        mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
+    } else if (getVelocity().x > 0) {
+        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
+    } else {
+        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
+    }
+    mCurrentAnimation->update(dt);
 }
 
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
-    target.draw(mAnimation, states);
+    target.draw(*mCurrentAnimation, states);
 }
 
 void Character::updateMovementPattern(sf::Time dt) {}

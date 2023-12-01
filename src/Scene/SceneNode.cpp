@@ -106,6 +106,7 @@ void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const {
 
 void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states)
     const {
+    states.transform *= getTransform();
     for (const Ptr& child : mChildren) {
         child->draw(target, states);
     }

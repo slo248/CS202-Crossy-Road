@@ -14,24 +14,19 @@ const std::vector<ObstacleData> Table = initializeObstacleData();
 Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
-      mIsBlockingPlayer(Table[type].isBlockingPlayer) {
-    mAnimation.setTexture(textures.get(Table[type].texture));
-    mAnimation.setFrameSize(Table[type].textureRect.getSize());
-    mAnimation.setNumFrames(6);  // Data table
-    mAnimation.setDuration(sf::seconds(1));
-    mAnimation.setRepeating(true);
-}
+      mSprite(textures.get(Table[type].texture), Table[type].textureRect),
+      mIsBlockingPlayer(Table[type].isBlockingPlayer) {}
 
 unsigned int Obstacle::getCategory() const {
     return mIsBlockingPlayer ? Category::Obstacle : Category::Decoration;
 }
 
 sf::FloatRect Obstacle::getBoundingRect() const {
-    return getWorldTransform().transformRect(mAnimation.getGlobalBounds());
+    return getWorldTransform().transformRect(mSprite.getGlobalBounds());
 }
 
 sf::FloatRect Obstacle::getLocalBounds() const {
-    return mAnimation.getLocalBounds();
+    return mSprite.getLocalBounds();
 }
 
 void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
@@ -41,7 +36,7 @@ void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
 void Obstacle::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
-    target.draw(mAnimation, states);
+    target.draw(mSprite, states);
 }
 
 void Obstacle::updateMovementPattern(sf::Time dt) {}
