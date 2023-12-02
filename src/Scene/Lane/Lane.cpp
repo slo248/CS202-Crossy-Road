@@ -36,7 +36,7 @@ Lane::Lane(
     }
 
     // Origin
-    setOrigin(0, DEFAULT_CELL_LENGTH / 2);
+    mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
 
     // Object factory
     int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 ,1
