@@ -123,45 +123,45 @@ void loadTexture(TextureHolder& textures) {
     /***********************Load Enemy Textures****************************/
     textures.load(
         Textures::BeeBossToLeft,
-        "asset/game_textures/Enemy/beeboss/S_Fly_ToLeft.png"
+        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToLeft.png"
     );
     textures.load(
         Textures::BeeBossToRight,
-        "asset/game_textures/Enemy/beeboss/S_Fly_ToRight.png"
+        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToRight.png"
     );
 
     textures.load(
         Textures::BombBatToLeft,
-        "asset/game_textures/Enemy/bombbat/S_Fly_ToLeft.png"
+        "asset/game_textures/Enemy/BombBat/S_Fly_ToLeft.png"
     );
     textures.load(
         Textures::BombBatToRight,
-        "asset/game_textures/Enemy/bombbat/S_Fly_ToRight.png"
+        "asset/game_textures/Enemy/BombBat/S_Fly_ToRight.png"
     );
 
     textures.load(
         Textures::FishmenToLeft,
-        "asset/game_textures/Enemy/fishmen/S_Walk_ToLeft.png"
+        "asset/game_textures/Enemy/Fishmen/S_Walk_ToLeft.png"
     );
     textures.load(
         Textures::FishmenToRight,
-        "asset/game_textures/Enemy/fishmen/S_Walk_ToRight.png"
+        "asset/game_textures/Enemy/Fishmen/S_Walk_ToRight.png"
     );
 
     textures.load(
-        Textures::OrcToLeft, "asset/game_textures/Enemy/orc/S_Walk_ToLeft.png"
+        Textures::OrcToLeft, "asset/game_textures/Enemy/Orc/S_Walk_ToLeft.png"
     );
     textures.load(
-        Textures::OrcToRight, "asset/game_textures/Enemy/orc/S_Walk_ToRight.png"
+        Textures::OrcToRight, "asset/game_textures/Enemy/Orc/S_Walk_ToRight.png"
     );
 
     textures.load(
         Textures::ZombieToLeft,
-        "asset/game_textures/Enemy/zombie/S_Walk_ToLeft.png"
+        "asset/game_textures/Enemy/Zombie/S_Walk_ToLeft.png"
     );
     textures.load(
         Textures::ZombieToRight,
-        "asset/game_textures/Enemy/zombie/S_Walk_ToRight.png"
+        "asset/game_textures/Enemy/Zombie/S_Walk_ToRight.png"
     );
     /*************************************************************************/
 
