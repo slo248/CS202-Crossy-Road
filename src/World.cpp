@@ -24,7 +24,7 @@ void World::update(sf::Time dt) {
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 
-    // removeEntitiesOutsizeView();
+    removeEntitiesOutsizeView();
 
     mSceneGraph.update(dt, mCommandQueue);
 }
@@ -78,9 +78,8 @@ void World::buildScene() {
 void World::removeEntitiesOutsizeView() {
     Command command;
     command.category = Category::Character | Category::Obstacle |
-                       Category::Decoration | Category::Lane |
-                       Category::TrafficLight;
-    command.action = derivedAction<Entity>([this](Entity& e, sf::Time) {
+                       Category::Decoration | Category::TrafficLight;
+    command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
         if (!getViewBounds().intersects(e.getBoundingRect())) e.remove();
     });
 
@@ -89,7 +88,8 @@ void World::removeEntitiesOutsizeView() {
 
 sf::FloatRect World::getViewBounds() const {
     return sf::FloatRect(
-        mWorldView.getCenter() - mWorldView.getSize() / 2.f,
-        mWorldView.getSize()
+        mWorldView.getCenter() - mWorldView.getSize() / 2.f -
+            sf::Vector2f(100, 100),
+        mWorldView.getSize() + sf::Vector2f(200, 200)
     );
 }
