@@ -118,4 +118,6 @@ std::string toString(sf::Keyboard::Key key) {
     return "";
 }
 
-int random(int left, int right) { return left + rand() % (right - left + 1); }
+int random(int left, int right) {
+    return left + (right - left + 1) * rand() / (RAND_MAX + 1);
+}

@@ -16,20 +16,20 @@ enum ID {
 namespace Textures {
 enum ID {
     // <----------------Trafic Light------------>
-    FieldTrafficLight,
-    SwampTrafficLight,
-    GraveyardTrafficLight,
+    Field_TrafficLight,
+    Graveyard_TrafficLight,
+    Swamp_TrafficLight,
     // <----------------Trafic Light------------->
 
     //////////////////////////////////////////////
 
     // <----------------Lane-------------------->
-    River,
     Dirt,
     Grass,
     Graveyard,
     Soil,
     Swamp,
+    River,
     // <----------------Lane-------------------->
 
     /////////////////////////////////////////////
@@ -37,20 +37,35 @@ enum ID {
     // <------------------Animal---------------->
     BeeToLeft,
     BeeToRight,
+    BeeIdle,
+
     BirdToLeft,
     BirdToRight,
+    BirdIdle,
+
     CrocodileToLeft,
     CrocodileToRight,
+    CrocodileIdle,
+
     DogToLeft,
     DogToRight,
+    DogIdle,
+
     FrogToLeft,
     FrogToRight,
+    FrogIdle,
+
     RabbitToLeft,
     RabbitToRight,
+    RabbitIdle,
+
     SheepToLeft,
     SheepToRight,
+    SheepIdle,
+
     TurtleToLeft,
     TurtleToRight,
+    TurtleIdle,
     // <------------------Animal----------------->
 
     //////////////////////////////////////////////
@@ -58,14 +73,23 @@ enum ID {
     // <-------------------Enemy----------------->
     BeeBossToLeft,
     BeeBossToRight,
+    BeeBossIdle,
+
     BombBatToLeft,
     BombBatToRight,
+    BombBatIdle,
+
     FishmenToLeft,
     FishmenToRight,
+    FishmenIdle,
+
     OrcToLeft,
     OrcToRight,
+    OrcIdle,
+
     ZombieToLeft,
     ZombieToRight,
+    ZombieIdle,
 
     // callbees,
     // octopus,
@@ -76,134 +100,69 @@ enum ID {
     // <---------------Characters Skin-------------->
     ArcherToLeft,
     ArcherToRight,
+    ArcherIdle,
+    ArcherDead,
+
     EnchantressToLeft,
     EnchantressToRight,
+    EnchantressIdle,
+    EnchantressDead,
+
     KnightToLeft,
     KnightToRight,
+    KnightIdle,
+    KnightDead,
+
     MusketeerToLeft,
     MusketeerToRight,
+    MusketeerIdle,
+    MusketeerDead,
+
     SwordsmanToLeft,
     SwordsmanToRight,
+    SwordsmanIdle,
+    SwordsmanDead,
+
     WizardToLeft,
     WizardToRight,
+    WizardIdle,
+    WizardDead,
     // <---------------Characters Skin-------------->
 
     ////////////////////////////////////////////////
 
     // <-------------------Obstacle----------------->
     // <----------Field---------->
-    campfire1,
-    campfire2,
-    f_fence,
-    pointer1,
-    pointer2,
-    stone1,
-    stone2,
-    stone3,
-    stone4,
-    stone5,
-    grass1,
-    grass2,
-    grass3,
-    grass4,
-    grass5,
-    bush1,
-    bush2,
-    bush3,
-    bush4,
-    flower1,
-    flower2,
-    flower3,
-    flower4,
-    butterfly1,
-    butterfly2,
-    butterfly3,
-    butterfly4,
-    tent,
-    tree1,
-    tree2,
-    log,
-    lamp,
-    dirt1,
-    dirt2,
-    dirt3,
-    box1,
-    box2,
-    box3,
+    Field_Bush2,
+    Field_Lamp1,
+    Field_Stone6,
+    Field_Tent3,
+    Field_Tree1,
     // // <----------Field---------->
 
     ////////////////////////////////////
 
     // <-----------Graveyard----------->
-    lantern,
-    gy_log,
-    gy_tree1,
-    gy_tree2,
-    gy_tree3,
-    gy_tree4,
-    gy_grass1,
-    gy_grass2,
-    gy_grass3,
-    gy_grass4,
-    gy_grass5,
-    bone1,
-    bone2,
-    bone3,
-    bone4,
-    gy_fence,
-    statue1,
-    statue2,
-    statue3,
-    statue4,
-    statue5,
-    statue6,
+    Graveyard_House1,
+    Graveyard_Statue8,
+    Graveyard_Tree2,
     // <----------Graveyard----------->
 
     ///////////////////////////////////
 
     // <-----------River-------------->
-    rv_grass1,
-    rv_grass2,
-    rv_grass3,
-    rv_grass4,
-    rv_grass5,
-    rv_stone1,
-    rv_stone2,
-    rv_stone3,
-    rv_stone4,
-    rv_stone5,
-    jump_log,
+    River_Log1,
     // <-----------River-------------->
 
     ///////////////////////////////////
 
     // <----------Swamp--------------->
-    torch,
-    sw_tree1,
-    sw_tree2,
-    sw_grass1,
-    sw_grass2,
-    sw_grass3,
-    sw_grass4,
-    sw_grass5,
-    sw_stone1,
-    sw_stone2,
-    sw_stone3,
-    sw_stone4,
-    sw_stone5,
-    sw_pointer1,
-    sw_pointer2,
-    well,
+    Swamp_Tree2,
+    Swamp_House1,
+    Swamp_Well1,
     // <----------Swamp--------------->
     // <-------------------Obstacle----------------->
 
-    // <---------------Characters Skin-------------->
-    archer,
-    enchantress,
-    knight,
-    musketeer,
-    swordman,
-    wizard,
     // <---------------Characters Skin-------------->
 
     //// GUI

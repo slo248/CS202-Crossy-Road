@@ -2,16 +2,19 @@
 #define OBJECT_FACTORY_HPP
 
 #include "Character.hpp"
+#include "Config.hpp"
 #include "Obstacle.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "TrafficLight.hpp"
-#include "Config.hpp"
 
-enum LaneType { River, Dirt, Grass, Graveyard, Soil, Swamp, TypeCount };
+enum LaneType { Dirt, Grass, Graveyard, Soil, Swamp, River, TypeCount };
 
 class ObjectFactory {
    public:
-    explicit ObjectFactory(const TextureHolder& textures, LaneType laneType, float levelScale = LEVEL_ONE_COEFFICIENT);
+    explicit ObjectFactory(
+        const TextureHolder& textures, LaneType laneType,
+        float levelScale = LEVEL_ONE_COEFFICIENT
+    );
 
     // std::unique_ptr<SceneNode> createObject(ObjectType type);
     std::unique_ptr<Character> createAirEnemy();

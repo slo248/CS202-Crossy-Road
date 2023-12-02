@@ -33,6 +33,7 @@ class TrafficLight : public SceneNode {
     sf::Time mElapsedTime;
     std::size_t mCurrentFrame;
     std::size_t mNumFrames;
+    Color mColor;
 };
 
 #endif  // TRAFFIC_LIGHT_HPP

@@ -2,15 +2,16 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <iostream>
 
 #include "Category.hpp"
 #include "DataTables.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-#define GREEN_INTERVAL sf::seconds(1.5)
-#define YELLOW_INTERVAL sf::seconds(0.5)
-#define RED_INTERVAL sf::seconds(2.0)
+#define GREEN_INTERVAL sf::seconds(5.0)
+#define YELLOW_INTERVAL sf::seconds(2.0)
+#define RED_INTERVAL sf::seconds(5.0)
 
 namespace {
 const std::vector<TrafficLightData> Table = initializeTrafficLightData();
@@ -18,8 +19,11 @@ const std::vector<TrafficLightData> Table = initializeTrafficLightData();
 
 TrafficLight::TrafficLight(Type type, const TextureHolder& textures)
     : mType(type),
-      mSprite(textures.get(Table[type].texture), Table[type].textureRect),
-      mCurrentFrame(0) {}
+      mSprite(textures.get(Table[type].texture), sf::IntRect(0, 0, 32, 64)),
+      mCurrentFrame(0),
+      mNumFrames(6),
+      mColor(static_cast<Color>(rand() % 3)),
+      mPhase(InPhase) {}
 
 unsigned int TrafficLight::getCategory() const {
     return Category::TrafficLight;
@@ -35,37 +39,59 @@ sf::FloatRect TrafficLight::getLocalBounds() const {
 
 TrafficLight::Phase TrafficLight::getPhase() { return mPhase; }
 
-TrafficLight::Color TrafficLight::getColor() {
-    return static_cast<Color>(mCurrentFrame / 6);
-}
+TrafficLight::Color TrafficLight::getColor() { return mColor; }
 
 void TrafficLight::updateCurrent(sf::Time dt, CommandQueue& commands) {
     mElapsedTime += dt;
 
-    if (mCurrentFrame < 6 && mElapsedTime >= GREEN_INTERVAL) {
-        mElapsedTime -= GREEN_INTERVAL;
-        mCurrentFrame = 6;
-        mNumFrames = 12;
-        mPhase = Phase::GreenToYellow;
-    } else if (mCurrentFrame < 12 && mElapsedTime >= YELLOW_INTERVAL) {
-        mElapsedTime -= YELLOW_INTERVAL;
-        mCurrentFrame = 12;
-        mNumFrames = 18;
-        mPhase = Phase::YellowToRed;
-    } else if (mElapsedTime >= RED_INTERVAL) {
-        mElapsedTime -= RED_INTERVAL;
-        mCurrentFrame = 0;
-        mNumFrames = 6;
-        mPhase = Phase::RedToGreen;
-    } else {
+    switch (mColor) {
+        case Green: {
+            if (mElapsedTime >= GREEN_INTERVAL) {
+                mElapsedTime -= GREEN_INTERVAL;
+                mPhase = GreenToYellow;
+                mColor = Yellow;
+            } else {
+                mPhase = InPhase;
+            }
+            break;
+        }
+
+        case Yellow: {
+            if (mElapsedTime >= YELLOW_INTERVAL) {
+                mElapsedTime -= YELLOW_INTERVAL;
+                mPhase = YellowToRed;
+                mColor = Red;
+            } else {
+                mPhase = InPhase;
+            }
+            break;
+        }
+
+        case Red: {
+            if (mElapsedTime >= RED_INTERVAL) {
+                mElapsedTime -= RED_INTERVAL;
+                mPhase = RedToGreen;
+                mColor = Green;
+            } else {
+                mPhase = InPhase;
+            }
+            break;
+        }
+    }
+
+    // The important thing is the range of mElapsedTime, if the range is too
+    // small, we need to multiply it by a bigger number, then mod it by a
+    // appropriate number to get the frequency we want
+    int tmp = mElapsedTime.asSeconds() * 60;
+
+    if (tmp % 10 == 0) {
+        // std::cout << tmp << '\n';
         mCurrentFrame = (++mCurrentFrame) % mNumFrames;
-        mPhase = Phase::InPhase;
     }
 
     sf::Vector2f spriteSize = mSprite.getLocalBounds().getSize();
-    sf::IntRect textureRect = sf::IntRect(
-        mCurrentFrame * spriteSize.x, 0, spriteSize.x, spriteSize.y
-    );
+    sf::IntRect textureRect =
+        sf::IntRect((6 * mColor + mCurrentFrame) * 32, 0, 32, 64);
 
     mSprite.setTextureRect(textureRect);
 }

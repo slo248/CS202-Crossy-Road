@@ -17,7 +17,12 @@ ObjectFactory::ObjectFactory(
         case LaneType::Dirt:
         case LaneType::Grass:
         case LaneType::Soil: {
-            mObstacles = {Obstacle::bush1, Obstacle::stone1, Obstacle::tree1};
+            mObstacles = {
+                Obstacle::Field_Bush,
+                Obstacle::Field_Stone6,
+                Obstacle::Field_Tent,
+                Obstacle::Field_Tree1,
+            };
             mGroundEnemies = {
                 Character::Type::Dog, Character::Type::Rabbit,
                 Character::Type::Sheep, Character::Type::Zombie
@@ -28,7 +33,8 @@ ObjectFactory::ObjectFactory(
 
         case LaneType::Graveyard: {
             mObstacles = {
-                Obstacle::gy_tree1, Obstacle::statue1, Obstacle::statue2
+                Obstacle::Graveyard_House1, Obstacle::Graveyard_Statue8,
+                Obstacle::Graveyard_Tree2
             };
             mGroundEnemies = {
                 Character::Type::Orc, Character::Type::Dog,
@@ -39,7 +45,10 @@ ObjectFactory::ObjectFactory(
         }
 
         case LaneType::Swamp: {
-            mObstacles = {Obstacle::stone1, Obstacle::stone1, Obstacle::well};
+            mObstacles = {
+                Obstacle::Swamp_House1, Obstacle::Swamp_Tree2,
+                Obstacle::Swamp_Well1
+            };
             mGroundEnemies = {
                 Character::Type::Turtle, Character::Type::Frog,
                 Character::Type::Fishmen, Character::Type::Zombie
@@ -95,5 +104,5 @@ std::unique_ptr<TrafficLight> ObjectFactory::createTrafficLight() {
 }
 
 std::unique_ptr<Obstacle> ObjectFactory::createLog() {
-    return std::make_unique<Obstacle>(Obstacle::Type::log, *mTextures);
+    return std::make_unique<Obstacle>(Obstacle::Type::River_Log1, *mTextures);
 }

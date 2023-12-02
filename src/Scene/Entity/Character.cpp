@@ -21,7 +21,7 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(Animation(
-            textures.get(data.textures[i]), data.frameSize[i], data.numFrames[i]
+            textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
         centerOrigin<Animation>(mAnimations[i]);
     }

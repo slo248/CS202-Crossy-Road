@@ -6,6 +6,7 @@
 #include "Category.hpp"
 #include "DataTables.hpp"
 #include "ResourceHolder.hpp"
+#include "Utility.hpp"
 
 namespace {
 const std::vector<ObstacleData> Table = initializeObstacleData();
@@ -14,8 +15,19 @@ const std::vector<ObstacleData> Table = initializeObstacleData();
 Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
-      mSprite(textures.get(Table[type].texture), Table[type].textureRect),
-      mIsBlockingPlayer(Table[type].isBlockingPlayer) {}
+      mSprite(textures.get(Table[type].texture)),
+      mIsBlockingPlayer(Table[type].isBlockingPlayer) {
+    if (type == Type::River_Log1) {
+        setScaleNormalVelocity(1.0);
+    }
+
+    // float scaleFactor =
+    //     (float)Table[type].textureRect.height /
+    //     mSprite.getTextureRect().height;
+    // mSprite.scale(scaleFactor, scaleFactor);
+
+    centerOrigin<sf::Sprite>(mSprite);
+}
 
 unsigned int Obstacle::getCategory() const {
     return mIsBlockingPlayer ? Category::Obstacle : Category::Decoration;

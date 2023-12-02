@@ -2,6 +2,7 @@
 #define ANIMATION_HPP
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 #include "ResourceIdentifiers.hpp"
 
