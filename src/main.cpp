@@ -327,7 +327,7 @@ void loadTexture(TextureHolder& textures) {
 
     /*<------------------------River Textures--------------------------->*/
     textures.load(
-        Textures::River_Log1, "asset/game_textures/Obstacle/River/Log/Log1.png"
+        Textures::River_Log1, "asset/game_textures/Obstacle/River/Log/Log2.png"
     );
     /*<------------------------River Textures--------------------------->*/
 }

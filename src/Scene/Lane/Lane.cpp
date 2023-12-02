@@ -4,7 +4,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <unordered_set>
 
 #include "Category.hpp"
 #include "Character.hpp"
@@ -26,6 +25,20 @@ Lane::Lane(
     : mType(type),
       mTrafficLight(nullptr),
       mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
+    // Setup random factor
+    if (!childLane) {
+        mRandomFactor = 1.0;
+        return;
+    }
+    float childRandomFactor = childLane->getRandomFactor();
+    if (childRandomFactor > 1.0) {
+        mRandomFactor = 1.0;
+    } else if (childRandomFactor < 1.0) {
+        mRandomFactor = 0.7;
+    } else {
+        mRandomFactor = 1.3;
+    }
+
     // Set up children lane
     if (childLane) {
         mChildLane = childLane.get();
@@ -36,15 +49,24 @@ Lane::Lane(
     }
 
     // Origin
+    // Death Experience: origin must be set for mSprite, not the Lane itself!
     mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
+    // If it works, then don't touch it!
+    // setOrigin(0, DEFAULT_CELL_LENGTH / 2);
 
-    // Object factory
-    int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 ,1
-    mSpawnSide = static_cast<SpawnSide>(isHavingTrafficLight + 1);
+    // Object factory for Non-River
+    int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 , 1
+    mSpawnSide = isHavingTrafficLight == 0
+                     ? None
+                     : static_cast<SpawnSide>((isHavingTrafficLight + 1) / 2);
+
     mObjectFactory =
         std::make_unique<ObjectFactory>(textures, type, levelScale);
 
+    // For River
     if (type == LaneType::River) {
+        mSpawnSide = static_cast<SpawnSide>(rand() % 2);
+        mSpawnInterval = Table[type].spawnInterval;
         return;
     }
 
@@ -102,21 +124,30 @@ bool Lane::checkMoveablePlayer(
     return true;
 }
 
+float Lane::getRandomFactor() const { return mRandomFactor; }
+
 void Lane::spawnObstacles() {
-    std::unordered_set<int> slots;
     std::unique_ptr<Obstacle> obstacle;
     int count = (rand() % 3) + 3;  // 3, 4, 5 obstacles per lane
-    int slot = 1;
+    int slot = -1;
 
+    // Divide in half for better objects distribution
     std::cout << count << '\n';
-    for (int i = 0; i < count; ++i) {
-        // slot = random(slot, DEFAULT_CELLS_PER_LANE - slot - i);
-        while (slots.find(slot) != slots.end()) {
-            slot = rand() % (DEFAULT_CELLS_PER_LANE - 6) + 3;
-        }
-        slots.insert(slot);
+    for (int i = 0; i < count / 2; ++i) {
+        slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 - 1 + i);
         obstacle = mObjectFactory->createObstacle();
         obstacle->setPosition(slotToPosition(slot), 0);
+        std::cout << slot << ' ';
+        attachChild(std::move(obstacle));
+    }
+
+    slot = -1;
+    for (int i = count / 2; i < count; ++i) {
+        slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 - 1 + i);
+        obstacle = mObjectFactory->createObstacle();
+        obstacle->setPosition(
+            slotToPosition(slot + DEFAULT_CELLS_PER_LANE / 2), 0
+        );
         std::cout << slot << ' ';
         attachChild(std::move(obstacle));
     }
@@ -126,6 +157,7 @@ void Lane::spawnObstacles() {
 void Lane::spawnTrafficLight() {
     std::unique_ptr<TrafficLight> trafficLight =
         mObjectFactory->createTrafficLight();
+
     mTrafficLight = static_cast<TrafficLight*>(trafficLight.get());
     int slot = (rand() % 8) + 3;  // 3 -> 11
 
@@ -136,49 +168,85 @@ void Lane::spawnTrafficLight() {
 void Lane::spawnGroundEnemy() {
     std::unique_ptr<Character> groundEnemy =
         mObjectFactory->createGroundEnemy();
+
     // -1 or 1 based on spawn side
-    groundEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
+    groundEnemy->setScaleNormalVelocity(1 - (mSpawnSide << 1));
+
     // slot is -1 or 12 based on spawn side
-    groundEnemy->setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
+    groundEnemy->setPosition(
+        slotToPosition(DEFAULT_CELLS_PER_LANE * mSpawnSide - 1), 0
+    );
+
     attachChild(std::move(groundEnemy));
 }
 
 void Lane::spawnAirEnemy() {
     std::unique_ptr<Character> airEnemy = mObjectFactory->createAirEnemy();
+
     // -1 or 1 based on spawn side
-    airEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
+    airEnemy->setScaleNormalVelocity(1 - (mSpawnSide << 1));
+
     // slot is -1 or 12 based on spawn side
-    airEnemy->setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
+    airEnemy->setPosition(
+        slotToPosition(DEFAULT_CELLS_PER_LANE * mSpawnSide - 1), 0
+    );
+
     attachChild(std::move(airEnemy));
 }
 
 void Lane::spawnLog() {
     std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
-    // -1 or 1 based on spawn side
-    log->setScaleNormalVelocity(mSpawnSide << 1 - 1);
 
-    // slot is -1 or 12 based on spawn side
-    // setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
-    log->setPosition(slotToPosition(1), 0);
+    // -1 or 1 based on spawn side
+    log->setScaleNormalVelocity((1 - (mSpawnSide << 1)) * mRandomFactor);
+
+    // slot is -1 or 14 based on spawn side
+    log->setPosition(
+        slotToPosition((DEFAULT_CELLS_PER_LANE + 1) * mSpawnSide - 1), 0
+    );
+
     attachChild(std::move(log));
 }
 
+// void Lane::spawnMultipleLogs() {
+//     int count = (rand() % 3) + 3;  // 3, 4, 5 logs per lane
+//     int slot = -1;
+
+//     // Divide in half for better objects distribution
+//     for (int i = 0; i < count / 2; ++i) {
+//         slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 + i);
+//         std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
+//         log->setPosition(slotToPosition(slot), 0);
+//         log->setScaleNormalVelocity((1 - (mSpawnSide << 1)));
+//         attachChild(std::move(log));
+//     }
+
+//     slot = count / 2 - 1;
+//     for (int i = count / 2; i < count; ++i) {
+//         slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 + i);
+//         std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
+//         log->setPosition(slotToPosition(slot), 0);
+//         log->setScaleNormalVelocity(1 - (mSpawnSide << 1));
+//         attachChild(std::move(log));
+//     }
+// }
+
 bool isAirEnemy(Character* character) {
-    Character::Type tmp = character->getType();
-    return tmp == Character::Type::Bee || tmp == Character::Type::Bird ||
-           tmp == Character::Type::BeeBoss || tmp == Character::Type::BombBat;
+    Character::Type characterType = character->getType();
+    return characterType == Character::Type::Bee ||
+           characterType == Character::Type::Bird ||
+           characterType == Character::Type::BeeBoss ||
+           characterType == Character::Type::BombBat;
 }
 
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    mSpawnInterval += dt;
+    mSpawnInterval += dt;  // 0 -> 1.5 -> 0.3 -> 1.5
     if (!mTrafficLight) {
         if (mType == LaneType::River) {
             if (mSpawnInterval >= Table[mType].spawnInterval) {
-                mSpawnInterval -= Table[mType].spawnInterval;
-                // if (num < 1) {
-                //     num++;
-                //     spawnLog();
-                // }
+                int tmp = Table[mType].spawnInterval.asSeconds();
+                mSpawnInterval = sf::seconds((float)tmp * (rand() % 3 + 1) / 5);
+                spawnLog();
             }
         }
         return;

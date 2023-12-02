@@ -1,15 +1,14 @@
 #include "Entity.hpp"
 
-Entity::Entity(sf::Vector2f normalVelocity) : mVelocity(normalVelocity), mNormalVelocity(normalVelocity) {}
+Entity::Entity(sf::Vector2f normalVelocity)
+    : mVelocity(normalVelocity), mNormalVelocity(normalVelocity) {}
 
-void Entity::setVelocity(sf::Vector2f velocity) { this->mVelocity = velocity; }
+void Entity::setVelocity(sf::Vector2f velocity) { mVelocity = velocity; }
 
-void Entity::setVelocity(float x, float y) {
-    this->mVelocity = sf::Vector2f(x, y);
-}
+void Entity::setVelocity(float x, float y) { mVelocity = sf::Vector2f(x, y); }
 
 void Entity::setScaleNormalVelocity(float times) {
-    this->mVelocity = mNormalVelocity * times;
+    mVelocity = mNormalVelocity * times;
 }
 
 void Entity::accelerate(sf::Vector2f velocity) { mVelocity += velocity; }

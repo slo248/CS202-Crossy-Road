@@ -30,7 +30,7 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
 }
 
 unsigned int Obstacle::getCategory() const {
-    return mIsBlockingPlayer ? Category::Obstacle : Category::Decoration;
+    return mType == River_Log1 ? Category::Decoration : Category::Obstacle;
 }
 
 sf::FloatRect Obstacle::getBoundingRect() const {

@@ -11,7 +11,7 @@
 class Lane : public SceneNode {
    public:
     typedef std::unique_ptr<Lane> Ptr;
-    enum SpawnSide { Left, None, Right };
+    enum SpawnSide { Left, Right, None };
 
     Lane(
         LaneType type, const TextureHolder& textures,
@@ -23,6 +23,7 @@ class Lane : public SceneNode {
     virtual sf::FloatRect getLocalBounds() const override;
     Lane* getChildLane();
     bool checkMoveablePlayer(Character* player, Character::Direction direction);
+    float getRandomFactor() const;
 
    private:
     void spawnObstacles();
@@ -43,6 +44,7 @@ class Lane : public SceneNode {
     Lane* mChildLane;
     TrafficLight* mTrafficLight;
     std::unique_ptr<ObjectFactory> mObjectFactory;
+    float mRandomFactor;
 };
 
 std::unique_ptr<Lane> createMultipleLanes(
