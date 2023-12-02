@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
 #include "Command.hpp"
 
@@ -94,6 +95,9 @@ void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands) {
 void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // Get the current transform
     states.transform *= getTransform();
+    if (getCategory() == Category::Lane)
+        std::cout << "Lane: " << this->getWorldPosition().x << ' '
+                  << this->getWorldPosition().y << std::endl;
 
     // Draw recursively
     drawCurrent(target, states);
@@ -106,7 +110,7 @@ void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const {
 
 void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states)
     const {
-    states.transform *= getTransform();
+    // states.transform *= getTransform();
     for (const Ptr& child : mChildren) {
         child->draw(target, states);
     }

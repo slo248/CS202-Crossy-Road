@@ -28,7 +28,7 @@ Lane::Lane(
       mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
     // Set up children lane
     if (childLane) {
-        mChildLane = static_cast<Lane*>(childLane.get());
+        mChildLane = childLane.get();
         attachChild(std::move(childLane));
         mChildLane->setPosition(0, DEFAULT_CELL_LENGTH);
     } else {
@@ -62,6 +62,8 @@ unsigned int Lane::getCategory() const { return Category::Lane; }
 sf::FloatRect Lane::getBoundingRect() const {
     return getWorldTransform().transformRect(mSprite.getGlobalBounds());
 }
+
+sf::FloatRect Lane::getLocalBounds() const { return mSprite.getLocalBounds(); }
 
 Lane* Lane::getChildLane() { return mChildLane; }
 
@@ -114,7 +116,7 @@ void Lane::spawnObstacles() {
         }
         slots.insert(slot);
         obstacle = mObjectFactory->createObstacle();
-        obstacle->setPosition(slotToPosition(slot), DEFAULT_CELL_LENGTH / 2);
+        obstacle->setPosition(slotToPosition(slot), 0);
         std::cout << slot << ' ';
         attachChild(std::move(obstacle));
     }
@@ -137,7 +139,7 @@ void Lane::spawnGroundEnemy() {
     // -1 or 1 based on spawn side
     groundEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
-    setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
+    groundEnemy->setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
     attachChild(std::move(groundEnemy));
 }
 
@@ -146,7 +148,7 @@ void Lane::spawnAirEnemy() {
     // -1 or 1 based on spawn side
     airEnemy->setScaleNormalVelocity(mSpawnSide << 1 - 1);
     // slot is -1 or 12 based on spawn side
-    setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
+    airEnemy->setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
     attachChild(std::move(airEnemy));
 }
 
@@ -157,7 +159,7 @@ void Lane::spawnLog() {
 
     // slot is -1 or 12 based on spawn side
     // setPosition(slotToPosition(13 * mSpawnSide - 1), 0);
-    setPosition(slotToPosition(1), DEFAULT_CELL_LENGTH / 2);
+    log->setPosition(slotToPosition(1), 0);
     attachChild(std::move(log));
 }
 
@@ -173,10 +175,10 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
         if (mType == LaneType::River) {
             if (mSpawnInterval >= Table[mType].spawnInterval) {
                 mSpawnInterval -= Table[mType].spawnInterval;
-                if (num < 1) {
-                    num++;
-                    // spawnLog();
-                }
+                // if (num < 1) {
+                //     num++;
+                //     spawnLog();
+                // }
             }
         }
         return;
@@ -236,7 +238,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
 void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
-    states.transform *= getTransform();
+    // states.transform *= getTransform();
     target.draw(mSprite, states);
 }
 
@@ -250,7 +252,7 @@ Lane::Ptr createMultipleLanes(
     );
 
     while (--laneNumber) {
-        lane->setPosition(0, DEFAULT_CELL_LENGTH);
+        // lane->setPosition(0, DEFAULT_CELL_LENGTH * 10);
         Lane::Ptr parentLane(new Lane(
             static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
             levelScale, std::move(lane)

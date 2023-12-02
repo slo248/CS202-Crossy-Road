@@ -20,6 +20,7 @@ class Lane : public SceneNode {
 
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
+    virtual sf::FloatRect getLocalBounds() const override;
     Lane* getChildLane();
     bool checkMoveablePlayer(Character* player, Character::Direction direction);
 
@@ -31,7 +32,7 @@ class Lane : public SceneNode {
     void spawnLog();
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
-        const override;
+        const;
     void updateMovementPattern(sf::Time dt);
 
    private:
