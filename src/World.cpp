@@ -19,7 +19,7 @@ World::World(
 }
 
 void World::update(sf::Time dt) {
-    // mWorldView.move(mScrollSpeed * dt.asSeconds());
+    mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
@@ -30,7 +30,7 @@ void World::update(sf::Time dt) {
 }
 
 void World::draw() {
-    // mWindow.setView(mWorldView);
+    mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
 }
 
@@ -48,7 +48,7 @@ void World::buildScene() {
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            btm = createMultipleLanes(mTextures, numRows = 10);
+            btm = createMultipleLanes(mTextures, numRows = 50);
             break;
         case Config::GameLevel::L2:
             btm = createMultipleLanes(mTextures, numRows = 70);
@@ -69,16 +69,17 @@ void World::buildScene() {
     btm->setPosition(0, DEFAULT_CELL_LENGTH / 2);
     mLayers[OnGround]->attachChild(std::move(btm));
 
-    // mWorldView.setCenter(
-    //     mWorldView.getSize().x / 2,
-    //     DEFAULT_CELL_LENGTH * numRows - mWorldView.getSize().y / 2
-    // );
+    mWorldView.setCenter(
+        mWorldView.getSize().x / 2,
+        DEFAULT_CELL_LENGTH * numRows - mWorldView.getSize().y / 2
+    );
 }
 
 void World::removeEntitiesOutsizeView() {
     Command command;
     command.category = Category::Character | Category::Obstacle |
-                       Category::Decoration | Category::TrafficLight;
+                       Category::Decoration | Category::TrafficLight |
+                       Category::Lane;
     command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
         if (!getViewBounds().intersects(e.getBoundingRect())) e.remove();
     });
