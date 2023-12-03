@@ -77,9 +77,8 @@ void World::buildScene() {
 
 void World::removeEntitiesOutsizeView() {
     Command command;
-    command.category = Category::Character | Category::Obstacle |
-                       Category::Decoration | Category::TrafficLight |
-                       Category::Lane;
+    command.category =
+        Category::Character | Category::Obstacle | Category::Lane;
     command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
         if (!getViewBounds().intersects(e.getBoundingRect())) e.remove();
     });
