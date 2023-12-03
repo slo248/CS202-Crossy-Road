@@ -16,7 +16,7 @@ class Lane;
 class TraffictLight;
 
 struct CharacterData {
-    enum Direction { Idle, ToLeft, ToRight, ToUpper, ToLower };
+    enum Direction { ToLeft, ToRight, Idle, ToUpper, ToLower };
     float normalSpeed;
     std::vector<Textures::ID> textures;
     sf::Vector2i frameSize;

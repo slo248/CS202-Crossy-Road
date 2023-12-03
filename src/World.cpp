@@ -49,7 +49,7 @@ void World::buildScene() {
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            topLane = createMultipleLanes(mTextures, numRows = 10);
+            topLane = createMultipleLanes(mTextures, numRows = 50);
             break;
         case Config::GameLevel::L2:
             topLane = createMultipleLanes(mTextures, numRows = 70);
@@ -78,8 +78,7 @@ void World::buildScene() {
 
 void World::removeEntitiesOutsizeView() {
     Command command;
-    command.category =
-        Category::Character | Category::Obstacle | Category::Lane;
+    command.category = Category::Enemy | Category::Obstacle | Category::Lane;
     command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
         if (!getViewBounds().intersects(e.getBoundingRect())) e.remove();
     });

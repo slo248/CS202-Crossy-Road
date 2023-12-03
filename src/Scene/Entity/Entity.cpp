@@ -1,7 +1,6 @@
 #include "Entity.hpp"
 
-Entity::Entity(sf::Vector2f normalVelocity)
-    : mVelocity(normalVelocity), mNormalVelocity(normalVelocity) {}
+Entity::Entity(sf::Vector2f normalVelocity) : mNormalVelocity(normalVelocity) {}
 
 void Entity::setVelocity(sf::Vector2f velocity) { mVelocity = velocity; }
 

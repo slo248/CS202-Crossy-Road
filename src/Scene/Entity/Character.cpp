@@ -23,13 +23,17 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
         mAnimations.push_back(Animation(
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
-        // centerOrigin(mAnimations[i]);
     }
     mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
     // centerOrigin(*this);
 }
 
-unsigned int Character::getCategory() const { return Category::Character; }
+unsigned int Character::getCategory() const {
+    if (mType == Archer || mType == Enchantress || mType == Knight ||
+        mType == Musketeer || mType == Swordsman || mType == Wizard)
+        return Category::Player;
+    return Category::Enemy;
+}
 
 sf::FloatRect Character::getBoundingRect() const {
     return getWorldTransform().transformRect(mAnimations[0].getGlobalBounds());
@@ -83,7 +87,7 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     } else if (getVelocity().x > 0) {
         mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
     } else {
-        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
+        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToLeft];
     }
     mCurrentAnimation->update(dt);
 }
@@ -91,6 +95,7 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
     target.draw(*mCurrentAnimation, states);
+    mCurrentAnimation->play();
 }
 
 void Character::updateMovementPattern(sf::Time dt) {}

@@ -7,7 +7,7 @@ enum Type {
     SceneOnGround = 1,
     SceneAir = 1 << 1,
     Player = 1 << 2,
-    Character = 1 << 3,
+    Enemy = 1 << 3,
     Obstacle = 1 << 4,
     Decoration = 1 << 5,
     TrafficLight = 1 << 6,
