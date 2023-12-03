@@ -14,7 +14,9 @@ Animation::Animation(
       mDuration(sf::seconds(1)),
       mTimePerFrame(mDuration / (1.f * mNumFrame)),
       mInProgress(false),
-      mRepeat(false) {}
+      mRepeat(false) {
+    centerOrigin(mSprite);
+}
 
 void Animation::setDuration(sf::Time t) {
     mDuration = t;

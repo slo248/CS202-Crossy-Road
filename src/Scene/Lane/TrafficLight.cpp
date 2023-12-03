@@ -24,7 +24,7 @@ TrafficLight::TrafficLight(Type type, const TextureHolder& textures)
       mNumFrames(6),
       mColor(static_cast<Color>(rand() % 3)),
       mPhase(InPhase) {
-    centerOrigin(*this);
+    centerOrigin(mSprite);
 }
 
 unsigned int TrafficLight::getCategory() const {

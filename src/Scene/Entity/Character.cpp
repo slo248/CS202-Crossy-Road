@@ -23,10 +23,10 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
         mAnimations.push_back(Animation(
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
-        centerOrigin(mAnimations[i]);
+        // centerOrigin(mAnimations[i]);
     }
     mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
-    centerOrigin(*this);
+    // centerOrigin(*this);
 }
 
 unsigned int Character::getCategory() const { return Category::Character; }

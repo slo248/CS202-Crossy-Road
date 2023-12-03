@@ -26,7 +26,7 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     //     mSprite.getTextureRect().height;
     // mSprite.scale(scaleFactor, scaleFactor);
 
-    centerOrigin(*this);
+    centerOrigin(mSprite);
 }
 
 unsigned int Obstacle::getCategory() const {
