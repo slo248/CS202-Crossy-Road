@@ -38,36 +38,37 @@ CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 
 void World::buildScene() {
     for (int i = 0; i < LayerCount; i++) {
-        SceneNode::Ptr layer(new SceneNode());
+        // used to be new SceneNode()
+        SceneNode::Ptr layer(std::make_unique<SceneNode>());
         mLayers[i] = layer.get();
         mSceneGraph.attachChild(std::move(layer));
     }
 
-    Lane::Ptr btm = nullptr;
+    Lane::Ptr topLane = nullptr;
     int numRows;
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            btm = createMultipleLanes(mTextures, numRows = 50);
+            topLane = createMultipleLanes(mTextures, numRows = 10);
             break;
         case Config::GameLevel::L2:
-            btm = createMultipleLanes(mTextures, numRows = 70);
+            topLane = createMultipleLanes(mTextures, numRows = 70);
             break;
         case Config::GameLevel::L3:
-            btm = createMultipleLanes(mTextures, numRows = 100);
+            topLane = createMultipleLanes(mTextures, numRows = 100);
             break;
         case Config::GameLevel::L4:
-            btm = createMultipleLanes(mTextures, numRows = 150);
+            topLane = createMultipleLanes(mTextures, numRows = 150);
             break;
         case Config::GameLevel::L5:
-            btm = createMultipleLanes(mTextures, numRows = 200);
+            topLane = createMultipleLanes(mTextures, numRows = 200);
             break;
         default:
             break;
     }
 
-    btm->setPosition(0, DEFAULT_CELL_LENGTH / 2);
-    mLayers[OnGround]->attachChild(std::move(btm));
+    topLane->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+    mLayers[OnGround]->attachChild(std::move(topLane));
 
     mWorldView.setCenter(
         mWorldView.getSize().x / 2,

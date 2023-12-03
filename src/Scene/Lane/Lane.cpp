@@ -25,27 +25,23 @@ Lane::Lane(
     : mType(type),
       mTrafficLight(nullptr),
       mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
-    // Setup random factor
-    if (!childLane) {
-        mRandomFactor = 1.0;
-        return;
-    }
-    float childRandomFactor = childLane->getRandomFactor();
-    if (childRandomFactor > 1.0) {
-        mRandomFactor = 1.0;
-    } else if (childRandomFactor < 1.0) {
-        mRandomFactor = 0.7;
-    } else {
-        mRandomFactor = 1.3;
-    }
-
     // Set up children lane
     if (childLane) {
+        float childRandomFactor = childLane->getRandomFactor();
+        if (childRandomFactor > 1.0) {
+            mRandomFactor = 1.0;
+        } else if (childRandomFactor < 1.0) {
+            mRandomFactor = 0.7;
+        } else {
+            mRandomFactor = 1.3;
+        }
+
         mChildLane = childLane.get();
         attachChild(std::move(childLane));
         mChildLane->setPosition(0, DEFAULT_CELL_LENGTH);
     } else {
         mChildLane = nullptr;
+        mRandomFactor = 1.0;
     }
 
     // Origin
@@ -315,13 +311,13 @@ void Lane::updateMovementPattern(sf::Time dt) {}
 Lane::Ptr createMultipleLanes(
     const TextureHolder& textures, int laneNumber, float levelScale
 ) {
-    Lane::Ptr lane(
-        new Lane(static_cast<LaneType>(rand() % LaneType::TypeCount), textures)
-    );
+    Lane::Ptr lane(std::make_unique<Lane>(
+        static_cast<LaneType>(0 % LaneType::TypeCount), textures
+    ));
 
     while (--laneNumber) {
         // lane->setPosition(0, DEFAULT_CELL_LENGTH * 10);
-        Lane::Ptr parentLane(new Lane(
+        Lane::Ptr parentLane(std::make_unique<Lane>(
             static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
             levelScale, std::move(lane)
         ));
