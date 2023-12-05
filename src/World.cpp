@@ -2,6 +2,7 @@
 
 #include "Lane.hpp"
 #include "ResourceHolder.hpp"
+#include "Utility.hpp"
 
 World::World(
     TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
@@ -28,6 +29,8 @@ void World::update(sf::Time dt) {
 
     mSceneGraph.removeWrecks();
     mSceneGraph.update(dt, mCommandQueue);
+
+    std::cout << "\n";
 }
 
 void World::draw() {

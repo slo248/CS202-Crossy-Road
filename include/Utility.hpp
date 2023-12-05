@@ -2,6 +2,7 @@
 #define UTILITY_HPP
 
 #include <SFML/Window/Keyboard.hpp>
+#include <iostream>
 #include <sstream>
 
 namespace sf {

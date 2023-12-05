@@ -37,7 +37,8 @@ class Lane : public SceneNode {
     void updateMovementPattern(sf::Time dt);
 
    private:
-    LaneType mType;
+    const LaneType mType;
+    int typePre;
     SpawnSide mSpawnSide;
     sf::Sprite mSprite;
     sf::Time mSpawnInterval;

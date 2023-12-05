@@ -23,6 +23,7 @@ Lane::Lane(
     Ptr childLane
 )
     : mType(type),
+      typePre(type),
       mTrafficLight(nullptr),
       mSprite(textures.get(Table[type].texture), Table[type].textureRect),
       mObjectFactory(std::make_unique<ObjectFactory>(textures, type, levelScale)
@@ -193,7 +194,8 @@ void Lane::spawnLog() {
 
     // slot is -1 or 14 based on spawn side
     log->setPosition(
-        slotToPosition((DEFAULT_CELLS_PER_LANE + 1) * mSpawnSide - 1), 0
+        slotToPosition(DEFAULT_CELLS_PER_LANE / 2), 0
+        // slotToPosition((DEFAULT_CELLS_PER_LANE + 1) * mSpawnSide - 1), 0
     );
     attachChild(std::move(log));
 }
@@ -209,14 +211,28 @@ bool isAirEnemy(Character* character) {
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     mSpawnInterval += dt;
 
+    if ((int)mType != typePre) {
+        std::cout << "wtf" << std::endl;
+    }
+
+    std::cout << this << ' ' << mType << ' ' << typePre << " updating";
     if (mType == LaneType::River) {
+        std::cout << " river\n";
+
+        // std::cout << mSpawnInterval.asSeconds() << '\n';
+
         if (mSpawnInterval >= Table[mType].spawnInterval) {
-            int tmp = Table[mType].spawnInterval.asSeconds();
-            mSpawnInterval = sf::seconds((float)tmp * (rand() % 3 + 1) / 5);
+            // mSpawnInterval = sf::seconds((float)tmp * (rand() % 3 + 1) / 5);
             spawnLog();
+            std::cout << this << " spawn a log (" << mSpawnInterval.asSeconds()
+                      << ")\n";
+            float tmp = Table[mType].spawnInterval.asSeconds();
+            mSpawnInterval -= Table[mType].spawnInterval;
         }
+
         return;
     }
+    std::cout << '\n';
 
     if (!mTrafficLight) {
         return;
@@ -226,7 +242,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     if (mSpawnInterval >= Table[mType].spawnInterval) {
         mSpawnInterval = sf::Time::Zero;
         if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
-            spawnGroundEnemy();
+            // spawnGroundEnemy();
         }
     }
 
@@ -244,7 +260,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                     }
                 }
             }
-            spawnAirEnemy();
+            // spawnAirEnemy();
             break;
         }
 
@@ -258,7 +274,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                     }
                 }
             }
-            spawnAirEnemy();
+            // spawnAirEnemy();
             break;
         }
 
@@ -269,7 +285,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                     character->setVelocity(0, 0);
                 }
             }
-            spawnAirEnemy();
+            // spawnAirEnemy();
             break;
         }
     }
@@ -292,10 +308,16 @@ Lane::Ptr createMultipleLanes(
     ));
 
     while (--laneNumber) {
-        Lane::Ptr parentLane(std::make_unique<Lane>(
-            static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
-            levelScale, std::move(lane)
-        ));
+        Lane::Ptr parentLane;
+        if (laneNumber & 1)
+            parentLane = std::make_unique<Lane>(
+                LaneType::River, textures, levelScale, std::move(lane)
+            );
+        else
+            parentLane = std::make_unique<Lane>(
+                static_cast<LaneType>(rand() % LaneType::TypeCount), textures,
+                levelScale, std::move(lane)
+            );
         lane = std::move(parentLane);
     }
 

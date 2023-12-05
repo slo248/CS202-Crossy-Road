@@ -361,13 +361,19 @@ int main() {
     loadTexture(textures);
     World world(textures, fonts, window, Config::GameLevel::L1);
 
+    sf::Clock clock;
+    sf::Time dt = sf::Time::Zero;
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
         }
 
-        world.update(sf::seconds(1.f / 60.f));
+        dt += clock.restart();
+        while (dt >= sf::seconds(1)) {
+            world.update(sf::seconds(1));
+            dt -= sf::seconds(1);
+        }
 
         window.clear(sf::Color::White);
         world.draw();
