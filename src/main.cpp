@@ -29,7 +29,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Bird1/S_Fly_ToRight.png"
     );
     textures.load(
-        Textures::BirdIdle, "asset/game_textures/Animal/Bird1/D_Fly.png"
+        Textures::BirdIdle, "asset/game_textures/Animal/Bird1/S_Idle.png"
     );
 
     textures.load(
@@ -42,7 +42,7 @@ void loadTexture(TextureHolder& textures) {
     );
     textures.load(
         Textures::CrocodileIdle,
-        "asset/game_textures/Animal/Crocodile/D_Walk.png"
+        "asset/game_textures/Animal/Crocodile/S_Attack.png"
     );
 
     textures.load(
@@ -53,7 +53,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Dog/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::DogIdle, "asset/game_textures/Animal/Dog/D_Walk.png"
+        Textures::DogIdle, "asset/game_textures/Animal/Dog/S_Attack.png"
     );
 
     textures.load(
@@ -65,7 +65,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Frog/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::FrogIdle, "asset/game_textures/Animal/Frog/D_Walk.png"
+        Textures::FrogIdle, "asset/game_textures/Animal/Frog/S_Idle.png"
     );
 
     textures.load(
@@ -77,7 +77,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Rabbit/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::RabbitIdle, "asset/game_textures/Animal/Rabbit/D_Walk.png"
+        Textures::RabbitIdle, "asset/game_textures/Animal/Rabbit/S_Idle.png"
     );
 
     textures.load(
@@ -89,7 +89,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Sheep/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::SheepIdle, "asset/game_textures/Animal/Sheep/D_Walk.png"
+        Textures::SheepIdle, "asset/game_textures/Animal/Sheep/S_Idle.png"
     );
 
     textures.load(
@@ -101,7 +101,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Animal/Turtle/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::TurtleIdle, "asset/game_textures/Animal/Turtle/D_Walk.png"
+        Textures::TurtleIdle, "asset/game_textures/Animal/Turtle/S_Attack.png"
     );
 
     /*************************************************************************/
@@ -131,7 +131,8 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Enemy/BeeBoss/S_Fly_ToRight.png"
     );
     textures.load(
-        Textures::BeeBossIdle, "asset/game_textures/Enemy/BeeBoss/D_Fly.png"
+        Textures::BeeBossIdle,
+        "asset/game_textures/Enemy/BeeBoss/Special_Idle.png"
     );
 
     textures.load(
@@ -155,7 +156,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Enemy/Fishmen/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::FishmenIdle, "asset/game_textures/Enemy/Fishmen/D_Walk.png"
+        Textures::FishmenIdle, "asset/game_textures/Enemy/Fishmen/S_Swim.png"
     );
 
     textures.load(
@@ -165,7 +166,7 @@ void loadTexture(TextureHolder& textures) {
         Textures::OrcToRight, "asset/game_textures/Enemy/Orc/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_Walk.png"
+        Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_Special.png"
     );
 
     textures.load(
@@ -177,7 +178,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Enemy/Zombie/S_Walk_ToRight.png"
     );
     textures.load(
-        Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/D_Walk.png"
+        Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/D_Attack.png"
     );
     /*************************************************************************/
 
