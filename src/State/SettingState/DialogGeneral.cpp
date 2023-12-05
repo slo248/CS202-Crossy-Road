@@ -97,7 +97,7 @@ void DialogGeneral::addButtonLabel(
 
     mBindingLabels[action] = std::make_shared<Label>("", Fonts::Main, context);
     mBindingLabels[action]->setPosition(435.f, y + 25.f);
-
+    mBindingLabels[action]->setColor("#901212");
     mGUIContainer.pack(mBindingButtons[action]);
     mGUIContainer.pack(mBindingLabels[action]);
 }
