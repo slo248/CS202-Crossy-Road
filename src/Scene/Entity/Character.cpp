@@ -30,60 +30,60 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
 }
 
 Character::~Character() {
-    switch (mType) {
-        case Bee:
-            std::cout << "Bee";
-            break;
+    // switch (mType) {
+    //     case Bee:
+    //         std::cout << "Bee";
+    //         break;
 
-        case Bird:
-            std::cout << "Bird";
-            break;
+    //     case Bird:
+    //         std::cout << "Bird";
+    //         break;
 
-        case Crocodile:
-            std::cout << "Crocodile";
-            break;
+    //     case Crocodile:
+    //         std::cout << "Crocodile";
+    //         break;
 
-        case Dog:
-            std::cout << "Dog";
-            break;
+    //     case Dog:
+    //         std::cout << "Dog";
+    //         break;
 
-        case Frog:
-            std::cout << "Frog";
-            break;
+    //     case Frog:
+    //         std::cout << "Frog";
+    //         break;
 
-        case Rabbit:
-            std::cout << "Rabbit";
-            break;
+    //     case Rabbit:
+    //         std::cout << "Rabbit";
+    //         break;
 
-        case Sheep:
-            std::cout << "Sheep";
-            break;
+    //     case Sheep:
+    //         std::cout << "Sheep";
+    //         break;
 
-        case Turtle:
-            std::cout << "Turtle";
-            break;
+    //     case Turtle:
+    //         std::cout << "Turtle";
+    //         break;
 
-        case BeeBoss:
-            std::cout << "BeeBoss";
-            break;
+    //     case BeeBoss:
+    //         std::cout << "BeeBoss";
+    //         break;
 
-        case BombBat:
-            std::cout << "BombBat";
-            break;
+    //     case BombBat:
+    //         std::cout << "BombBat";
+    //         break;
 
-        case Fishmen:
-            std::cout << "Fishmen";
-            break;
+    //     case Fishmen:
+    //         std::cout << "Fishmen";
+    //         break;
 
-        case Orc:
-            std::cout << "Orc";
-            break;
+    //     case Orc:
+    //         std::cout << "Orc";
+    //         break;
 
-        case Zombie:
-            std::cout << "Zombie";
-            break;
-    }
-    std::cout << " destroyed!\n";
+    //     case Zombie:
+    //         std::cout << "Zombie";
+    //         break;
+    // }
+    // std::cout << " destroyed!\n";
 }
 
 unsigned int Character::getCategory() const {

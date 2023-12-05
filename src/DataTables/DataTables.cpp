@@ -183,7 +183,7 @@ std::vector<ObstacleData> initializeObstacleData() {
         data[i].normalSpeed = 0.f;
     }
 
-    data[Obstacle::Type::River_Log1].normalSpeed = 70.f;
+    data[Obstacle::Type::River_Log1].normalSpeed = 100.f;
     data[Obstacle::Type::River_Log1].isBlockingPlayer = false;
 
     return data;

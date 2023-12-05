@@ -31,45 +31,45 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
 }
 
 Obstacle::~Obstacle() {
-    switch (mType) {
-        case Type::Field_Stone6:
-            std::cout << "Field_Stone6";
-            break;
+    // switch (mType) {
+    //     case Type::Field_Stone6:
+    //         std::cout << "Field_Stone6";
+    //         break;
 
-        case Type::Field_Bush:
-            std::cout << "Field_Bush";
-            break;
+    //     case Type::Field_Bush:
+    //         std::cout << "Field_Bush";
+    //         break;
 
-        case Type::Field_Tent:
-            std::cout << "Field_Tent";
-            break;
+    //     case Type::Field_Tent:
+    //         std::cout << "Field_Tent";
+    //         break;
 
-        case Type::Field_Tree1:
-            std::cout << "Field_Tree1";
-            break;
+    //     case Type::Field_Tree1:
+    //         std::cout << "Field_Tree1";
+    //         break;
 
-        case Type::Field_Lamp1:
-            std::cout << "Field_Lamp1";
-            break;
+    //     case Type::Field_Lamp1:
+    //         std::cout << "Field_Lamp1";
+    //         break;
 
-        case Type::Graveyard_House1:
-            std::cout << "Graveyard_House1";
-            break;
+    //     case Type::Graveyard_House1:
+    //         std::cout << "Graveyard_House1";
+    //         break;
 
-        case Type::Graveyard_Tree2:
-            std::cout << "Graveyard_Tree2";
-            break;
+    //     case Type::Graveyard_Tree2:
+    //         std::cout << "Graveyard_Tree2";
+    //         break;
 
-        case Type::Graveyard_Statue8:
-            std::cout << "Graveyard_Statue8";
-            break;
+    //     case Type::Graveyard_Statue8:
+    //         std::cout << "Graveyard_Statue8";
+    //         break;
 
-        case Type::River_Log1:
-            std::cout << "River_Log1";
-            break;
-    }
+    //     case Type::River_Log1:
+    //         std::cout << "River_Log1";
+    //         break;
+    // }
 
-    std::cout << " destroyed!\n";
+    // std::cout << " destroyed!\n";
 }
 
 unsigned int Obstacle::getCategory() const {

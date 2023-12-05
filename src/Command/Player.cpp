@@ -64,7 +64,8 @@ void Player::initKeys() {
 void Player::initActions() {
     mActionBinding[ShowPosition].action = [](SceneNode& a, sf::Time dt) {
         sf::Vector2f pos = a.getWorldPosition();
-        std::cout << "Player position: " << pos.x << ' ' << pos.y << std::endl;
+        // std::cout << "Player position: " << pos.x << ' ' << pos.y <<
+        // std::endl;
     };
 
     for (auto& pair : mActionBinding) pair.second.category = Category::Player;

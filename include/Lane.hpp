@@ -2,11 +2,22 @@
 #define LANE_HPP
 
 #include <SFML/System/Clock.hpp>
+#include <iostream>
 
 #include "ObjectFactory.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "SceneNode.hpp"
 #include "TrafficLight.hpp"
+
+// class LaneTypeHolder {
+//    public:
+//     LaneTypeHolder(LaneType type) : mType(type) {}
+//     LaneType getType() const { return mType; }
+//     ~LaneTypeHolder() { std::cout << "LaneTypeHolder destroyed\n"; }
+
+//    private:
+//     const LaneType mType;
+// };
 
 class Lane : public SceneNode {
    public:
@@ -17,6 +28,7 @@ class Lane : public SceneNode {
         LaneType type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT, Ptr childLane = nullptr
     );
+    ~Lane();
 
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
@@ -37,8 +49,8 @@ class Lane : public SceneNode {
     void updateMovementPattern(sf::Time dt);
 
    private:
-    const LaneType mType;
-    int typePre;
+    LaneType mType;
+    // const LaneTypeHolder* const mTypeHolder;
     SpawnSide mSpawnSide;
     sf::Sprite mSprite;
     sf::Time mSpawnInterval;

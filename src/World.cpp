@@ -20,7 +20,7 @@ World::World(
 }
 
 void World::update(sf::Time dt) {
-    // mWorldView.move(mScrollSpeed * dt.asSeconds());
+    mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
@@ -30,7 +30,7 @@ void World::update(sf::Time dt) {
     mSceneGraph.removeWrecks();
     mSceneGraph.update(dt, mCommandQueue);
 
-    std::cout << "\n";
+    // std::cout << "\n";
 }
 
 void World::draw() {
@@ -53,7 +53,7 @@ void World::buildScene() {
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            topLane = createMultipleLanes(mTextures, mNumRows = 10);
+            topLane = createMultipleLanes(mTextures, mNumRows = 100);
             break;
         case Config::GameLevel::L2:
             topLane = createMultipleLanes(mTextures, mNumRows = 70);
@@ -92,16 +92,11 @@ void World::removeEntitiesOutsizeView() {
 }
 
 sf::FloatRect World::getViewBounds() const {
-    // return sf::FloatRect(
-    //     mWorldView.getCenter() - mWorldView.getSize() / 2.f -
-    //         sf::Vector2f(100, 100),
-    //     mWorldView.getSize() + sf::Vector2f(200, 200)
-    // );
-
     return sf::FloatRect(
-        sf::Vector2f(-64, -64),
+        sf::Vector2f(-DEFAULT_CELL_LENGTH, -DEFAULT_CELL_LENGTH),
         sf::Vector2f(
-            DEFAULT_CELL_LENGTH * 16, DEFAULT_CELL_LENGTH * (mNumRows + 2)
+            DEFAULT_CELL_LENGTH * (DEFAULT_CELLS_PER_LANE + 2),
+            DEFAULT_CELL_LENGTH * (mNumRows + 2)
         )
     );
 }
