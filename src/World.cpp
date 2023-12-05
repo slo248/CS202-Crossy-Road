@@ -19,13 +19,14 @@ World::World(
 }
 
 void World::update(sf::Time dt) {
-    mWorldView.move(mScrollSpeed * dt.asSeconds());
+    // mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 
     removeEntitiesOutsizeView();
 
+    mSceneGraph.removeWrecks();
     mSceneGraph.update(dt, mCommandQueue);
 }
 
@@ -45,23 +46,23 @@ void World::buildScene() {
     }
 
     Lane::Ptr topLane = nullptr;
-    int numRows;
+    // int numRows;
 
     switch (mGameType) {
         case Config::GameLevel::L1:
-            topLane = createMultipleLanes(mTextures, numRows = 50);
+            topLane = createMultipleLanes(mTextures, mNumRows = 10);
             break;
         case Config::GameLevel::L2:
-            topLane = createMultipleLanes(mTextures, numRows = 70);
+            topLane = createMultipleLanes(mTextures, mNumRows = 70);
             break;
         case Config::GameLevel::L3:
-            topLane = createMultipleLanes(mTextures, numRows = 100);
+            topLane = createMultipleLanes(mTextures, mNumRows = 100);
             break;
         case Config::GameLevel::L4:
-            topLane = createMultipleLanes(mTextures, numRows = 150);
+            topLane = createMultipleLanes(mTextures, mNumRows = 150);
             break;
         case Config::GameLevel::L5:
-            topLane = createMultipleLanes(mTextures, numRows = 200);
+            topLane = createMultipleLanes(mTextures, mNumRows = 200);
             break;
         default:
             break;
@@ -72,13 +73,14 @@ void World::buildScene() {
 
     mWorldView.setCenter(
         mWorldView.getSize().x / 2,
-        DEFAULT_CELL_LENGTH * numRows - mWorldView.getSize().y / 2
+        DEFAULT_CELL_LENGTH * mNumRows - mWorldView.getSize().y / 2
     );
 }
 
 void World::removeEntitiesOutsizeView() {
     Command command;
-    command.category = Category::Enemy | Category::Obstacle | Category::Lane;
+    command.category = Category::Enemy | Category::Obstacle | Category::Lane |
+                       Category::Decoration;
     command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
         if (!getViewBounds().intersects(e.getBoundingRect())) e.remove();
     });
@@ -87,9 +89,16 @@ void World::removeEntitiesOutsizeView() {
 }
 
 sf::FloatRect World::getViewBounds() const {
+    // return sf::FloatRect(
+    //     mWorldView.getCenter() - mWorldView.getSize() / 2.f -
+    //         sf::Vector2f(100, 100),
+    //     mWorldView.getSize() + sf::Vector2f(200, 200)
+    // );
+
     return sf::FloatRect(
-        mWorldView.getCenter() - mWorldView.getSize() / 2.f -
-            sf::Vector2f(100, 100),
-        mWorldView.getSize() + sf::Vector2f(200, 200)
+        sf::Vector2f(-64, -64),
+        sf::Vector2f(
+            DEFAULT_CELL_LENGTH * 16, DEFAULT_CELL_LENGTH * (mNumRows + 2)
+        )
     );
 }

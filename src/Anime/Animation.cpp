@@ -14,9 +14,7 @@ Animation::Animation(
       mDuration(sf::seconds(1)),
       mTimePerFrame(mDuration / (1.f * mNumFrame)),
       mInProgress(false),
-      mRepeat(false) {
-    centerOrigin(mSprite);
-}
+      mRepeat(false) {}
 
 void Animation::setDuration(sf::Time t) {
     mDuration = t;
@@ -68,6 +66,7 @@ void Animation::update(sf::Time dt) {
     }
 
     mSprite.setTextureRect(textureRect);
+    centerOrigin(mSprite);
 }
 
 void Animation::play() {
@@ -84,7 +83,7 @@ void Animation::stop() {
 }
 
 sf::FloatRect Animation::getGlobalBounds() const {
-    return getTransform().transformRect(getLocalBounds());
+    return mSprite.getGlobalBounds();
 }
 
 sf::FloatRect Animation::getLocalBounds() const {

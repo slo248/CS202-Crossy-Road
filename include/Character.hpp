@@ -48,6 +48,7 @@ class Character : public Entity {
         Type type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT
     );
+    ~Character();
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;

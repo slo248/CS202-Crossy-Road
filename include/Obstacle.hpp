@@ -51,6 +51,7 @@ class Obstacle : public Entity {
         Type type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT
     );
+    ~Obstacle();
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;

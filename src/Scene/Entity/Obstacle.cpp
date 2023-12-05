@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <iostream>
 
 #include "Category.hpp"
 #include "DataTables.hpp"
@@ -29,6 +30,48 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     centerOrigin(mSprite);
 }
 
+Obstacle::~Obstacle() {
+    switch (mType) {
+        case Type::Field_Stone6:
+            std::cout << "Field_Stone6";
+            break;
+
+        case Type::Field_Bush:
+            std::cout << "Field_Bush";
+            break;
+
+        case Type::Field_Tent:
+            std::cout << "Field_Tent";
+            break;
+
+        case Type::Field_Tree1:
+            std::cout << "Field_Tree1";
+            break;
+
+        case Type::Field_Lamp1:
+            std::cout << "Field_Lamp1";
+            break;
+
+        case Type::Graveyard_House1:
+            std::cout << "Graveyard_House1";
+            break;
+
+        case Type::Graveyard_Tree2:
+            std::cout << "Graveyard_Tree2";
+            break;
+
+        case Type::Graveyard_Statue8:
+            std::cout << "Graveyard_Statue8";
+            break;
+
+        case Type::River_Log1:
+            std::cout << "River_Log1";
+            break;
+    }
+
+    std::cout << " destroyed!\n";
+}
+
 unsigned int Obstacle::getCategory() const {
     return mType == River_Log1 ? Category::Decoration : Category::Obstacle;
 }
@@ -42,6 +85,8 @@ sf::FloatRect Obstacle::getLocalBounds() const {
 }
 
 void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
+    // std::cout << "Position" << getWorldPosition().x << " "
+    //           << getWorldPosition().y << '\n';
     updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
 }

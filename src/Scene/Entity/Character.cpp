@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <iostream>
 
 #include "Category.hpp"
 #include "DataTables.hpp"
@@ -28,6 +29,63 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     // centerOrigin(*this);
 }
 
+Character::~Character() {
+    switch (mType) {
+        case Bee:
+            std::cout << "Bee";
+            break;
+
+        case Bird:
+            std::cout << "Bird";
+            break;
+
+        case Crocodile:
+            std::cout << "Crocodile";
+            break;
+
+        case Dog:
+            std::cout << "Dog";
+            break;
+
+        case Frog:
+            std::cout << "Frog";
+            break;
+
+        case Rabbit:
+            std::cout << "Rabbit";
+            break;
+
+        case Sheep:
+            std::cout << "Sheep";
+            break;
+
+        case Turtle:
+            std::cout << "Turtle";
+            break;
+
+        case BeeBoss:
+            std::cout << "BeeBoss";
+            break;
+
+        case BombBat:
+            std::cout << "BombBat";
+            break;
+
+        case Fishmen:
+            std::cout << "Fishmen";
+            break;
+
+        case Orc:
+            std::cout << "Orc";
+            break;
+
+        case Zombie:
+            std::cout << "Zombie";
+            break;
+    }
+    std::cout << " destroyed!\n";
+}
+
 unsigned int Character::getCategory() const {
     if (mType == Archer || mType == Enchantress || mType == Knight ||
         mType == Musketeer || mType == Swordsman || mType == Wizard)
@@ -36,7 +94,8 @@ unsigned int Character::getCategory() const {
 }
 
 sf::FloatRect Character::getBoundingRect() const {
-    return getWorldTransform().transformRect(mAnimations[0].getGlobalBounds());
+    return getWorldTransform().transformRect(mCurrentAnimation->getGlobalBounds(
+    ));
 }
 
 sf::FloatRect Character::getLocalBounds() const {
@@ -84,10 +143,15 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
     if (getVelocity().x == 0) {
         mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
+        mCurrentAnimation->play();
+
     } else if (getVelocity().x > 0) {
         mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
+        mCurrentAnimation->play();
+
     } else {
         mCurrentAnimation = &mAnimations[CharacterData::Direction::ToLeft];
+        mCurrentAnimation->play();
     }
     mCurrentAnimation->update(dt);
 }
@@ -95,7 +159,6 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
     target.draw(*mCurrentAnimation, states);
-    mCurrentAnimation->play();
 }
 
 void Character::updateMovementPattern(sf::Time dt) {}

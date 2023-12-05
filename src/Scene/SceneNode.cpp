@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "Command.hpp"
+#include "Utility.hpp"
 
 SceneNode::SceneNode(unsigned int category)
     : mParent(nullptr), mCategory(category), mMarkedForRemoval(false) {}
@@ -97,6 +98,8 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // Draw recursively
     drawCurrent(target, states);
     drawChildren(target, states);
+
+    drawBoundingRect(target, states);
 }
 
 void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const {

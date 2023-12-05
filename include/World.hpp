@@ -43,6 +43,8 @@ class World {
 
     CommandQueue mCommandQueue;
     Config::GameLevel::Type mGameType;
+
+    int mNumRows;
 };
 
 #endif
