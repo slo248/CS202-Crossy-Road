@@ -192,6 +192,11 @@ enum ID {
 
     // Menu state
     BackgroundMenu,
+    ButtonPlay,
+    ButtonContinue,
+    ButtonRanking,
+    ButtonSettingMenu,
+    ButtonCredit,
 
     // Win state
     DialogVictory,
@@ -199,6 +204,27 @@ enum ID {
     // Lose state
     DialogDefeat,
 
+    // Pause state
+    BackgroundPause,
+    ButtonStar,
+    ButtonResumePause,
+    ButtonPlayAgainPause,
+
+    // Ranking state
+    BackgroundRanking,
+
+    // Level state
+    BackgroundLevel,
+    BarLevel,
+
+    // Saved state
+    BackgroundSaved,
+    BarSaved,
+
+    // Chose Mode State
+    ButtonLevelMenu,
+    ButtonBackMenu,
+    ButtonSurvivalMenu,
 };
 }
 

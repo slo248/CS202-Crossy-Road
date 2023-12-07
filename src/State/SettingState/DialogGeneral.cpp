@@ -7,26 +7,21 @@ DialogGeneral::DialogGeneral(const sf::Texture& texture, State::Context context)
     : Dialog(texture, context),
       mLabelTextKeys(context.textures->get(Textures::LabelTextKeys)),
       mLabelTextSounds(context.textures->get(Textures::LabelTextSounds)) {
-    mSprite.setPosition(21.f, 146.f);
-    mLabelTextKeys.setPosition(164.f, 180.f);
-    mLabelTextSounds.setPosition(791.f, 180.f);
-
-    auto saveButton = std::make_shared<Button>(
-        context, Textures::ButtonSave, sf::Vector2f(484.f, 759.f)
-    );
-    mGUIContainer.pack(saveButton);  // do we really need a save button in this?
+    mSprite.setPosition(20.f, 119.f);
+    mLabelTextKeys.setPosition(264.f, 232.f);
+    mLabelTextSounds.setPosition(900.f, 232.f);
 
     auto buttonSound = std::make_shared<Button>(
-        context, Textures::ButtonSound, sf::Vector2f(621.f, 315.f)
+        context, Textures::ButtonSound, sf::Vector2f(730.f, 367.f)
     );
     mGUIContainer.pack(buttonSound);
 
     auto buttonMusic = std::make_shared<Button>(
-        context, Textures::ButtonMusic, sf::Vector2f(631.f, 420.f)
+        context, Textures::ButtonMusic, sf::Vector2f(740.f, 472.f)
     );
     mGUIContainer.pack(buttonMusic);
 
-    float y = 310.f;
+    float y = 362.f;
     addButtonLabel(Player::MoveLeft, y, Textures::ButtonLeftArrow, mContext);
     addButtonLabel(
         Player::MoveRight, y + 101.f, Textures::ButtonRightArrow, mContext
@@ -97,12 +92,12 @@ void DialogGeneral::addButtonLabel(
     State::Context context
 ) {
     mBindingButtons[action] = std::make_shared<Button>(
-        context, idTextures, sf::Vector2f(115.f, y), true
+        context, idTextures, sf::Vector2f(215.f, y), true
     );
 
     mBindingLabels[action] = std::make_shared<Label>("", Fonts::Main, context);
-    mBindingLabels[action]->setPosition(334.f, y + 25.f);
-
+    mBindingLabels[action]->setPosition(435.f, y + 25.f);
+    mBindingLabels[action]->setColor("#901212");
     mGUIContainer.pack(mBindingButtons[action]);
     mGUIContainer.pack(mBindingLabels[action]);
-}                                                                  
+}

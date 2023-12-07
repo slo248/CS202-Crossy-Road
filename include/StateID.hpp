@@ -14,7 +14,9 @@ enum ID {
     Win,
     Lose,
     Credit,
-    Ranking
+    Ranking,
+    Saved,
+    ChooseMode,
 };
 }
 

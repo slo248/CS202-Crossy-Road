@@ -34,9 +34,42 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
 
     // Lose state
     load(Textures::DialogDefeat, "asset/textures/DialogDefeat.png");
+
+    // Pause state
+    load(Textures::BackgroundPause, "asset/textures/BackgroundPause.png");
+    load(Textures::ButtonStar, "asset/textures/ButtonStar.png");
+    load(Textures::ButtonResumePause, "asset/textures/ButtonResumePause.png");
+    load(
+        Textures::ButtonPlayAgainPause,
+        "asset/textures/ButtonPlayAgainPause.png"
+    );
+
+    // Menu State
+    load(Textures::BackgroundMenu, "asset/textures/BackgroundMenu.png");
+    load(Textures::ButtonPlay, "asset/textures/ButtonPlay.png");
+    load(Textures::ButtonContinue, "asset/textures/ButtonContinue.png");
+    load(Textures::ButtonRanking, "asset/textures/ButtonRanking.png");
+    load(Textures::ButtonSettingMenu, "asset/textures/ButtonSettingMenu.png");
+    load(Textures::ButtonCredit, "asset/textures/ButtonCredit.png");
+
+    // Ranking State
+    load(Textures::BackgroundRanking, "asset/textures/BackgroundRanking.png");
+
+    // Level State
+    load(Textures::BackgroundLevel, "asset/textures/BackgroundLevel.png");
+    load(Textures::BarLevel, "asset/textures/BarLevel.png");
+
+    // Saved State
+    load(Textures::BackgroundSaved, "asset/textures/BackgroundSaved.png");
+    load(Textures::BarSaved, "asset/textures/BarSaved.png");
+
+    // Chose Mode State
+    load(Textures::ButtonLevelMenu, "asset/textures/ButtonLevelMenu.png");
+    load(Textures::ButtonSurvivalMenu, "asset/textures/ButtonSurvivalMenu.png");
+    load(Textures::ButtonBackMenu, "asset/textures/ButtonBackMenu.png");
 }
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
-    load(Fonts::Main, "asset/Sansation.ttf");
+    load(Fonts::Main, "asset/font/Inter-Bold.ttf");
 }

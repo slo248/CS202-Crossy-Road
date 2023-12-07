@@ -6,7 +6,7 @@ CreditState::CreditState(StateStack& stack, Context context)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundCredit)) {
     auto buttonBack = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(1065.f, 6.f)
+        context, Textures::ButtonBack, sf::Vector2f(1254, 6)
     );
     buttonBack->setCallback(std::bind(&CreditState::requestStackPop, this));
     mGUIContainer.pack(buttonBack);

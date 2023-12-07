@@ -1,11 +1,11 @@
-#ifndef PAUSE_STATE_HPP
-#define PAUSE_STATE_HPP
-#include "State.hpp"
+#ifndef RANKING_STATE_HPP
+#define RANKING_STATE_HPP
 #include "Button.hpp"
+#include "State.hpp"
 
-class PauseState : public State {
+class RankingState : public State {
    public:
-    PauseState(StateStack& stack, Context context);
+    RankingState(StateStack& stack, Context context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);
