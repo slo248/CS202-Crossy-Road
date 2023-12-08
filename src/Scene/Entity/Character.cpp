@@ -25,7 +25,7 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
     }
-    mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+    // mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
     // centerOrigin(*this);
 }
 
@@ -105,55 +105,75 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
+    sf::Vector2f incomingPosition;
+    Lane* nextLane = nullptr;
+
     switch (direction) {
         case ToLeft:
         case ToRight: {
-            if (mCurrentLane->checkMoveablePlayer(this, direction)) {
-                int coefficient = (direction == ToLeft) ? -1 : 1;
-                sf::Vector2f incomingPosition(
-                    getPosition().x + coefficient * DEFAULT_CELL_LENGTH,
-                    getPosition().y
-                );
-                mMovement.setup(incomingPosition, Motion::Sigmoid());
-            }
+            nextLane = mCurrentLane;
             break;
         }
-        case ToUpper:
-        case ToLower: {
-            Lane* nextLane = (direction == ToUpper)
-                                 ? static_cast<Lane*>(mCurrentLane->getParent())
-                                 : mCurrentLane->getChildLane();
 
-            if (nextLane && nextLane->checkMoveablePlayer(this, direction)) {
-                int coefficient = (direction == ToLeft) ? -1 : 1;
-                sf::Vector2f incomingPosition(
-                    getPosition().x,
-                    getPosition().y + coefficient * DEFAULT_CELL_LENGTH
-                );
-                mMovement.setup(incomingPosition, Motion::Sigmoid());
-            }
+        case ToUpper: {
+            nextLane = static_cast<Lane*>(mCurrentLane->getParent());
+            break;
+        }
+
+        case ToLower: {
+            nextLane = mCurrentLane->getChildLane();
             break;
         }
     }
+
+    if (!nextLane) {
+        std::cout << "Jumped to undefined lane!!!\n";
+        return;
+    }
+
+    incomingPosition = nextLane->checkMoveablePlayer(this, direction);
+    mMovement.setup(incomingPosition, Motion::Sigmoid());
+}
+
+bool Character::isMarkedForRemoval() const {
+    if (getCategory() == Category::Player)
+        return SceneNode::isMarkedForRemoval() && mCurrentAnimation &&
+               !mCurrentAnimation->isInProgress();
+
+    return SceneNode::isMarkedForRemoval();
 }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
 
-    if (getVelocity().x == 0) {
-        mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
-        mCurrentAnimation->play();
-
-    } else if (getVelocity().x > 0) {
-        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToRight];
-        mCurrentAnimation->play();
-
-    } else {
-        mCurrentAnimation = &mAnimations[CharacterData::Direction::ToLeft];
-        mCurrentAnimation->play();
+    if (getCategory() == Category::Player &&
+        mCurrentLane->isCollidedWithPlayer(this)) {
+        destroy();
+        // The last animation of player is "dead animation"
+        mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+        mCurrentAnimation->update(dt);
+        std::cout << "Player is dead!\n";
+        return;
     }
+
+    Animation* tmpAnimation;
+    if (getVelocity().x == 0) {
+        tmpAnimation = &mAnimations[CharacterData::Direction::Idle];
+    } else if (getVelocity().x > 0) {
+        tmpAnimation = &mAnimations[CharacterData::Direction::ToRight];
+    } else {
+        tmpAnimation = &mAnimations[CharacterData::Direction::ToLeft];
+    }
+
+    if (!mCurrentAnimation || mCurrentAnimation != tmpAnimation) {
+        mCurrentAnimation = tmpAnimation;
+        mCurrentAnimation->play();
+        mCurrentAnimation->setRepeat(true);
+    }
+
     mCurrentAnimation->update(dt);
+    mMovement.update(dt);
 }
 
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)

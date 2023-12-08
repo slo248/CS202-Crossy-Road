@@ -18,7 +18,7 @@
 // const LaneTypeHolder with const LaneType: failed
 // const LaneTypeHolder with const LaneType*: passed
 // static map: passed
-static std::unordered_map<Lane*, int> laneMap;
+static std::unordered_map<Lane*, std::pair<LaneType, Lane::SpawnSide>> laneMap;
 
 namespace {
 const std::vector<LaneData> Table = initializeLaneData();
@@ -34,7 +34,7 @@ Lane::Lane(
       mSprite(textures.get(Table[type].texture), Table[type].textureRect),
       mObjectFactory(std::make_unique<ObjectFactory>(textures, type, levelScale)
       ) {
-    laneMap[this] = type;
+    laneMap[this].first = type;
     // std::cout << "Lane " << this << " is created\n";
 
     // Set up children lane
@@ -74,6 +74,8 @@ Lane::Lane(
         return;
     }
 
+    laneMap[this].second = mSpawnSide;
+
     // Spawn initial traffic light or obstacles
     if (isHavingTrafficLight) {
         spawnTrafficLight();
@@ -85,6 +87,7 @@ Lane::Lane(
 Lane::~Lane() {
     // std::cout << "Lane " << laneMap[this] << " is deleted\n";
     // delete mTypeHolder;
+    laneMap.erase(this);
 }
 
 unsigned int Lane::getCategory() const { return Category::Lane; }
@@ -97,39 +100,84 @@ sf::FloatRect Lane::getLocalBounds() const { return mSprite.getLocalBounds(); }
 
 Lane* Lane::getChildLane() { return mChildLane; }
 
-bool Lane::checkMoveablePlayer(
+sf::Vector2f Lane::checkMoveablePlayer(
     Character* player, Character::Direction direction
 ) {
-    sf::FloatRect playerBounds = player->getBoundingRect();
+    sf::FloatRect playerBound = player->getBoundingRect();
     switch (direction) {
         case Character::Direction::ToLeft: {
-            playerBounds.left -= DEFAULT_CELL_LENGTH;
+            playerBound.left -= DEFAULT_CELL_LENGTH;
             break;
         }
 
         case Character::Direction::ToRight: {
-            playerBounds.left += DEFAULT_CELL_LENGTH;
+            playerBound.left += DEFAULT_CELL_LENGTH;
             break;
         }
 
         case Character::Direction::ToLower: {
-            playerBounds.top -= DEFAULT_CELL_LENGTH;
+            playerBound.top -= DEFAULT_CELL_LENGTH;
             break;
         }
 
         case Character::Direction::ToUpper: {
-            playerBounds.top += DEFAULT_CELL_LENGTH;
+            playerBound.top += DEFAULT_CELL_LENGTH;
             break;
         }
     }
+
+    sf::Vector2f incommingPosition = playerBound.getPosition();
+
     for (auto& child : mChildren) {
-        if (collision(playerBounds, child->getBoundingRect()) &&
-            child->getCategory() == Category::Obstacle &&
-            player->getCategory() == Category::Player) {
+        if (collision(playerBound, child->getBoundingRect())) {
+            switch (child->getCategory()) {
+                case Category::Obstacle: {
+                    // Player stands still
+                    incommingPosition = player->getPosition();
+                    break;
+                }
+
+                case Category::Decoration: {
+                    // Player jumps to the log
+                    incommingPosition = child->getWorldPosition();
+                    Obstacle* log = static_cast<Obstacle*>(child.get());
+                    player->setVelocity(log->getVelocity());
+                    break;
+                }
+
+                default: {
+                    // Player jumps to the incomming position
+                    break;
+                }
+            }
+        }
+    }
+    return incommingPosition;
+}
+
+bool Lane::isCollidedWithPlayer(Character* player) {
+    sf::FloatRect playerBound = player->getBoundingRect();
+
+    // Detect any collision with enemy
+    for (auto& child : mChildren) {
+        if (collision(playerBound, child->getBoundingRect())) {
+            if (child->getCategory() == Category::Enemy) {
+                // Collided with enemy
+                return true;
+            }
+
+            // Collided with decoration, obstacle?
             return false;
         }
     }
-    return true;
+
+    // If no collision happened, check if player is on the river
+    if (mType == LaneType::River) {
+        return true;
+    }
+
+    // No collision, not on the river -> totally normal
+    return false;
 }
 
 float Lane::getRandomFactor() const { return mRandomFactor; }
@@ -224,7 +272,9 @@ bool isAirEnemy(Character* character) {
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     mSpawnInterval += dt;
 
-    mType = static_cast<LaneType>(laneMap[this]);
+    // In case unknown changes happen
+    mType = laneMap[this].first;
+    mSpawnSide = laneMap[this].second;
     // mType = mTypeHolder->getType();
 
     // std::cout << this << ' ' << mType << " updating";

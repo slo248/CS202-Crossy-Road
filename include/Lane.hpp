@@ -34,7 +34,10 @@ class Lane : public SceneNode {
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
     Lane* getChildLane();
-    bool checkMoveablePlayer(Character* player, Character::Direction direction);
+    sf::Vector2f checkMoveablePlayer(
+        Character* player, Character::Direction direction
+    );
+    bool isCollidedWithPlayer(Character* player);
     float getRandomFactor() const;
 
    private:

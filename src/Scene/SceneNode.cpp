@@ -10,7 +10,7 @@
 #include "Utility.hpp"
 
 SceneNode::SceneNode(unsigned int category)
-    : mParent(nullptr), mCategory(category), mMarkedForRemoval(false) {}
+    : mParent(nullptr), mCategory(category), mIsMarkedForRemoval(false) {}
 
 void SceneNode::attachChild(Ptr child) {
     child->mParent = this;
@@ -36,9 +36,9 @@ void SceneNode::update(sf::Time dt, CommandQueue& commands) {
     updateChildren(dt, commands);
 }
 
-bool SceneNode::isMarkedForRemoval() const { return mMarkedForRemoval; }
+bool SceneNode::isMarkedForRemoval() const { return mIsMarkedForRemoval; }
 
-void SceneNode::remove() { mMarkedForRemoval = true; }
+void SceneNode::destroy() { mIsMarkedForRemoval = true; }
 
 void SceneNode::removeWrecks() {
     auto wreckfieldBegin = std::remove_if(

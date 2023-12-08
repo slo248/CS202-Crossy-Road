@@ -48,7 +48,7 @@ class SceneNode : public sf::Transformable,
     virtual sf::FloatRect getBoundingRect() const;
     virtual sf::FloatRect getLocalBounds() const;
     virtual bool isMarkedForRemoval() const;
-    void remove();
+    void destroy();
     void removeWrecks();
 
    private:
@@ -70,7 +70,7 @@ class SceneNode : public sf::Transformable,
    private:
     unsigned int mCategory;
     SceneNode* mParent;
-    bool mMarkedForRemoval;
+    bool mIsMarkedForRemoval;
 };
 
 bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs);

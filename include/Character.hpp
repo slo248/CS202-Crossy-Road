@@ -54,6 +54,7 @@ class Character : public Entity {
     virtual sf::FloatRect getLocalBounds() const override;
     Type getType() const;
     void moveCharacter(Direction direction);
+    bool isMarkedForRemoval() const override;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
