@@ -23,8 +23,10 @@ class World {
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
+    const int NUM_LANE = 20;
 
     void buildScene();
+    void buildBlocks();
     void removeEntitiesOutsizeView();
 
    private:
@@ -44,7 +46,8 @@ class World {
     CommandQueue mCommandQueue;
     Config::GameLevel::Type mGameType;
 
-    int mNumRows;
+    Lane* mTopLane;
+    int mRemainBlocks;
 };
 
 #endif

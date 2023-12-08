@@ -310,11 +310,14 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 
 void Lane::updateMovementPattern(sf::Time dt) {}
 
-Lane::Ptr createMultipleLanes(
-    const TextureHolder& textures, int laneNumber, float levelScale
+void createMultipleLanes(
+    const TextureHolder& textures, int laneNumber, Lane::Ptr& topLane,
+    Lane*& botLane, float levelScale
 ) {
     LaneType tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
     Lane::Ptr lane(std::make_unique<Lane>(tmp /*LaneType::River*/, textures));
+
+    botLane = lane.get();
 
     while (--laneNumber) {
         std::cout << "Lane of type " << tmp << " is created\n";
@@ -333,7 +336,7 @@ Lane::Ptr createMultipleLanes(
         lane = std::move(parentLane);
     }
 
-    return lane;
+    topLane = std::move(lane);
 }
 
 float slotToPosition(int slot) {

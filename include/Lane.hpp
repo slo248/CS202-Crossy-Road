@@ -60,9 +60,9 @@ class Lane : public SceneNode {
     float mRandomFactor;
 };
 
-std::unique_ptr<Lane> createMultipleLanes(
-    const TextureHolder& textures, int numberOfLanes,
-    float levelScale = LEVEL_ONE_COEFFICIENT
+void createMultipleLanes(
+    const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
+    Lane*& botLane, float levelScale = LEVEL_ONE_COEFFICIENT
 );
 
 float slotToPosition(int slot);
