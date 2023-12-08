@@ -16,7 +16,7 @@
 int main() {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     sf::RenderWindow window(
-        sf::VideoMode(1344, 960), "Pro Game", sf::Style::Default
+        sf::VideoMode(896, 640), "Pro Game", sf::Style::Default
     );
     window.setPosition(sf::Vector2i(0, 0));
     window.setFramerateLimit(60);
