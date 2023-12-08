@@ -42,7 +42,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::BeeBossToRight,
         Textures::BeeBossIdle,
     };
-    data[Character::BeeBoss].frameSize = sf::Vector2i(96, 96);
+    data[Character::BeeBoss].frameSize = sf::Vector2i(64, 64);
     data[Character::BeeBoss].numFrames = 6;
     /*<-------------------------BeeBoss--------------------------->*/
 
@@ -141,7 +141,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::OrcToRight,
         Textures::OrcIdle,
     };
-    data[Character::Orc].frameSize = sf::Vector2i(96, 96);
+    data[Character::Orc].frameSize = sf::Vector2i(64, 64);
     data[Character::Orc].numFrames = 6;
     /*<-------------------------Orc------------------------->*/
 
