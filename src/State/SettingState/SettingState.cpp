@@ -15,17 +15,17 @@ SettingState::SettingState(StateStack& stack, Context context)
     mGUIContainer.pack(dialogGeneral);
 
     auto buttonGeneral = std::make_shared<Button>(
-        context, Textures::ButtonGeneral, sf::Vector2f(20, 119)
+        context, Textures::ButtonGeneral, sf::Vector2f(13, 79)
     );
     mGUIContainer.pack(buttonGeneral);
 
     auto buttonSkin = std::make_shared<Button>(
-        context, Textures::ButtonSkin, sf::Vector2f(672, 119)
+        context, Textures::ButtonSkin, sf::Vector2f(448, 79)
     );
     mGUIContainer.pack(buttonSkin);
 
     auto backButton = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(1254, 6)
+        context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );
     backButton->setCallback(std::bind(&SettingState::requestStackPop, this));
     mGUIContainer.pack(backButton);

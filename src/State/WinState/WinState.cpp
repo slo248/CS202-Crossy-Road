@@ -6,10 +6,10 @@ WinState::WinState(StateStack& stack, Context context)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogVictory(context.textures->get(Textures::DialogVictory)) {
-    mDialogVictory.setPosition(222.f, 147.f);
+    mDialogVictory.setPosition(211.f, 98.f);
 
     auto buttonHome = std::make_shared<Button>(
-        context, Textures::ButtonHome, sf::Vector2f(38.f, 841.f)
+        context, Textures::ButtonHome, sf::Vector2f(25.f, 560.f)
     );
     buttonHome->setCallback([this]() {
         requestStackClear();
@@ -17,26 +17,26 @@ WinState::WinState(StateStack& stack, Context context)
     });
 
     auto buttonSetting = std::make_shared<Button>(
-        context, Textures::ButtonSetting, sf::Vector2f(1024.f, 841.f)
+        context, Textures::ButtonSetting, sf::Vector2f(810.f, 560.f)
     );
     buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
 
     auto buttonLevel = std::make_shared<Button>(
-        context, Textures::ButtonLevel, sf::Vector2f(413.f, 531.f)
+        context, Textures::ButtonLevel, sf::Vector2f(339.f, 364.f)
     );
     buttonLevel->setCallback([this]() { requestStackPush(States::Level); });
 
     auto buttonPlayAgain = std::make_shared<Button>(
-        context, Textures::ButtonPlayAgain, sf::Vector2f(554.f, 531.f)
+        context, Textures::ButtonPlayAgain, sf::Vector2f(433.f, 364.f)
     );
 
     auto buttonResume = std::make_shared<Button>(
-        context, Textures::ButtonResume, sf::Vector2f(695.f, 531.f)
+        context, Textures::ButtonResume, sf::Vector2f(527.f, 364.f)
     );
-    buttonResume->setCallback([this]() {
-        requestStackPop();
-        requestStackPush(States::Game);
-    });
+    // buttonResume->setCallback([this]() {
+    //     requestStackPop();
+    //     requestStackPush(States::Game);
+    // });
 
     mGUIContainer.pack(buttonHome);
     mGUIContainer.pack(buttonSetting);

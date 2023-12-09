@@ -7,30 +7,30 @@ DialogGeneral::DialogGeneral(const sf::Texture& texture, State::Context context)
     : Dialog(texture, context),
       mLabelTextKeys(context.textures->get(Textures::LabelTextKeys)),
       mLabelTextSounds(context.textures->get(Textures::LabelTextSounds)) {
-    mSprite.setPosition(20.f, 119.f);
-    mLabelTextKeys.setPosition(264.f, 232.f);
-    mLabelTextSounds.setPosition(900.f, 232.f);
+    mSprite.setPosition(13.f, 79.f);
+    mLabelTextKeys.setPosition(174.f, 155.f);
+    mLabelTextSounds.setPosition(603.f, 155.f);
 
     auto buttonSound = std::make_shared<Button>(
-        context, Textures::ButtonSound, sf::Vector2f(730.f, 367.f)
+        context, Textures::ButtonSound, sf::Vector2f(487.f, 238.f)
     );
     mGUIContainer.pack(buttonSound);
 
     auto buttonMusic = std::make_shared<Button>(
-        context, Textures::ButtonMusic, sf::Vector2f(740.f, 472.f)
+        context, Textures::ButtonMusic, sf::Vector2f(493.f, 315.f)
     );
     mGUIContainer.pack(buttonMusic);
 
-    float y = 362.f;
+    float y = 241.f;
     addButtonLabel(Player::MoveLeft, y, Textures::ButtonLeftArrow, mContext);
     addButtonLabel(
-        Player::MoveRight, y + 101.f, Textures::ButtonRightArrow, mContext
+        Player::MoveRight, y + 67.f, Textures::ButtonRightArrow, mContext
     );
     addButtonLabel(
-        Player::MoveUp, y + 202.f, Textures::ButtonUpArrow, mContext
+        Player::MoveUp, y + 135.f, Textures::ButtonUpArrow, mContext
     );
     addButtonLabel(
-        Player::MoveDown, y + 325.f, Textures::ButtonDownArrow, mContext
+        Player::MoveDown, y + 217.f, Textures::ButtonDownArrow, mContext
     );
 
     updateLabels();
@@ -92,11 +92,11 @@ void DialogGeneral::addButtonLabel(
     State::Context context
 ) {
     mBindingButtons[action] = std::make_shared<Button>(
-        context, idTextures, sf::Vector2f(215.f, y), true
+        context, idTextures, sf::Vector2f(144.f, y), true
     );
 
     mBindingLabels[action] = std::make_shared<Label>("", Fonts::Main, context);
-    mBindingLabels[action]->setPosition(435.f, y + 25.f);
+    mBindingLabels[action]->setPosition(290.f, y + 25.f);
     mBindingLabels[action]->setColor("#901212");
     mGUIContainer.pack(mBindingButtons[action]);
     mGUIContainer.pack(mBindingLabels[action]);

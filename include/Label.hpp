@@ -13,7 +13,7 @@ class Label : public Component {
    public:
     Label(
         const std::string& text, Fonts::ID font, State::Context context,
-        int characterSize = 50
+        int characterSize = 33
     );
 
     void setText(const std::string& text);

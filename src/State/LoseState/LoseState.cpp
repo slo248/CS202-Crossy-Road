@@ -7,25 +7,25 @@ LoseState::LoseState(StateStack& stack, Context context, bool isSurvivalMode)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogDefeat(context.textures->get(Textures::DialogDefeat)) {
-    mDialogDefeat.setPosition(225.f, 103.f);
+    mDialogDefeat.setPosition(200.f, 80.f);
     std::shared_ptr<Button> buttonHome;
 
     auto buttonSetting = std::make_shared<Button>(
-        context, Textures::ButtonSetting, sf::Vector2f(1024.f, 841.f)
+        context, Textures::ButtonSetting, sf::Vector2f(810.f, 560.f)
     );
     buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
 
     auto buttonPlayAgain = std::make_shared<Button>(
-        context, Textures::ButtonPlayAgain, sf::Vector2f(704.f, 533.f)
+        context, Textures::ButtonPlayAgain, sf::Vector2f(485.f, 362.f)
     );
     buttonPlayAgain->setCallback([this]() {
-        requestStackPop();
-        requestStackPush(States::Game);  // can be changed later
+        // requestStackPop();
+        // requestStackPush(States::Game);
     });
 
     if (isSurvivalMode) {
         buttonHome = std::make_shared<Button>(
-            context, Textures::ButtonHome, sf::Vector2f(422.f, 533.f)
+            context, Textures::ButtonHome, sf::Vector2f(345.f, 362.f)
         );
         buttonHome->setCallback([this]() {
             requestStackClear();
@@ -33,7 +33,7 @@ LoseState::LoseState(StateStack& stack, Context context, bool isSurvivalMode)
         });
     } else {
         buttonHome = std::make_shared<Button>(
-            context, Textures::ButtonHome, sf::Vector2f(32.f, 841.f)
+            context, Textures::ButtonHome, sf::Vector2f(25.f, 560.f)
         );
         buttonHome->setCallback([this]() {
             requestStackClear();
@@ -41,7 +41,7 @@ LoseState::LoseState(StateStack& stack, Context context, bool isSurvivalMode)
         });
 
         auto buttonLevel = std::make_shared<Button>(
-            context, Textures::ButtonLevel, sf::Vector2f(422.f, 533.f)
+            context, Textures::ButtonLevel, sf::Vector2f(345.f, 362.f)
         );
         buttonLevel->setCallback([this]() { requestStackPush(States::Level); });
         mGUIContainer.pack(buttonLevel);
