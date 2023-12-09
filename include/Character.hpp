@@ -44,6 +44,8 @@ class Character : public Entity {
     };
 
    public:
+    typedef std::unique_ptr<Character> Ptr;
+
     Character(
         Type type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT
