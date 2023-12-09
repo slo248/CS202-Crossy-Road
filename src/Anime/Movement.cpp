@@ -19,7 +19,7 @@ void Movement::setup(sf::Vector2f dst, std::function<float(float)> motion) {
     mMotion = motion;
 
     mStart = mObj->getPosition();
-    sf::Vector2f vel = mObj->getVelocity();
+    sf::Vector2f vel = mObj->getNormalVelocity();
     mDuration = sf::seconds(
         sqrt(
             (mEnd.x - mStart.x) * (mEnd.x - mStart.x) +

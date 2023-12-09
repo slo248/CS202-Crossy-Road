@@ -363,7 +363,7 @@ int main() {
     World world(textures, fonts, window, Config::GameLevel::L1);
     Player player;
 
-    // sf::Clock clock;
+    sf::Clock clock;
     // sf::Time dt = sf::Time::Zero;
     while (window.isOpen()) {
         sf::Event event;
@@ -377,7 +377,7 @@ int main() {
         //     world.update(sf::seconds(1));
         //     dt -= sf::seconds(1);
         // }
-        world.update(sf::seconds(1.f / 60.f));
+        world.update(clock.restart());
 
         window.clear(sf::Color::White);
         world.draw();

@@ -158,7 +158,7 @@ std::vector<CharacterData> initializeCharacterData() {
 
     // Skin data
     for (int i = Character::Archer; i < Character::TypeCount; ++i) {
-        data[i].normalSpeed = 0.f;
+        data[i].normalSpeed = 300.f;
         int tmp = 4 * (i - Character::Archer);
         data[i].textures = {
             static_cast<Textures::ID>(Textures::ArcherToLeft + tmp),

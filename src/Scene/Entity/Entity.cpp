@@ -19,6 +19,8 @@ void Entity::accelerate(float vx, float vy) {
 
 sf::Vector2f Entity::getVelocity() { return mVelocity; }
 
+sf::Vector2f Entity::getNormalVelocity() const { return mNormalVelocity; }
+
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commands) {
     move(mVelocity * dt.asSeconds());
 }

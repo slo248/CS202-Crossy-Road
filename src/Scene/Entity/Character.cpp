@@ -24,11 +24,10 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
         mAnimations.push_back(Animation(
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
-        mAnimations.back().setRepeat(true);
     }
-    mAnimations.back().setRepeat(false);
     mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
     mCurrentAnimation->play();
+    mCurrentAnimation->setRepeat(true);
     // centerOrigin(*this);
 }
 
@@ -108,6 +107,7 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
+    if (!mMovement.isFinished()) return;
     Animation* mNextAnimation;
     switch (direction) {
         case ToLeft:
@@ -157,7 +157,7 @@ void Character::moveCharacter(Direction direction) {
         mCurrentLane = nextLane;
 
         mCurrentAnimation->play();
-        mMovement.setup(incomingPosition, Motion::Sigmoid());
+        mMovement.setup(incomingPosition, Motion::Linear());
     }
 }
 
@@ -173,7 +173,7 @@ void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // updateMovementPattern(dt);
-    Entity::updateCurrent(dt, commands);
+    if (getCategory() != Category::Player) Entity::updateCurrent(dt, commands);
 
     if (getCategory() == Category::Player && mCurrentLane &&
         mCurrentLane->isCollidedWithPlayer(this)) {
