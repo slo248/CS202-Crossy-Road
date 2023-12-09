@@ -45,22 +45,23 @@ sf::Keyboard::Key Player::getKey(Action action) const {
 }
 
 bool Player::isRealtimeAction(Action action) {
-    switch (action) {
-        case MoveUp:
-        case MoveDown:
-        case MoveLeft:
-        case MoveRight:
-            return true;
-        default:
-            return false;
-    }
+    // switch (action) {
+    //     case MoveUp:
+    //     case MoveDown:
+    //     case MoveLeft:
+    //     case MoveRight:
+    //         return true;
+    //     default:
+    //         return false;
+    // }
+    return false;
 }
 
 void Player::initKeys() {
     mKeyBinding[sf::Keyboard::W] = MoveUp;
-    mKeyBinding[sf::Keyboard::D] = MoveDown;
+    mKeyBinding[sf::Keyboard::S] = MoveDown;
     mKeyBinding[sf::Keyboard::A] = MoveLeft;
-    mKeyBinding[sf::Keyboard::S] = MoveRight;
+    mKeyBinding[sf::Keyboard::D] = MoveRight;
     mKeyBinding[sf::Keyboard::P] = ShowPosition;
 }
 

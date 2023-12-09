@@ -116,17 +116,18 @@ sf::Vector2f Lane::checkMoveablePlayer(
         }
 
         case Character::Direction::ToLower: {
-            playerBound.top -= DEFAULT_CELL_LENGTH;
+            playerBound.top += DEFAULT_CELL_LENGTH;
             break;
         }
 
         case Character::Direction::ToUpper: {
-            playerBound.top += DEFAULT_CELL_LENGTH;
+            playerBound.top -= DEFAULT_CELL_LENGTH;
             break;
         }
     }
 
-    sf::Vector2f incommingPosition = playerBound.getPosition();
+    sf::Vector2f incommingPosition =
+        playerBound.getPosition() + playerBound.getSize() / 2.f;
 
     for (auto& child : mChildren) {
         if (collision(playerBound, child->getBoundingRect())) {
@@ -152,31 +153,34 @@ sf::Vector2f Lane::checkMoveablePlayer(
             }
         }
     }
+    if (incommingPosition != player->getPosition())
+        player->setCurrentLane(this);
+
     return incommingPosition;
 }
 
 bool Lane::isCollidedWithPlayer(Character* player) {
-    sf::FloatRect playerBound = player->getBoundingRect();
+    // sf::FloatRect playerBound = player->getBoundingRect();
 
-    // Detect any collision with enemy
-    for (auto& child : mChildren) {
-        if (collision(playerBound, child->getBoundingRect())) {
-            if (child->getCategory() == Category::Enemy) {
-                // Collided with enemy
-                return true;
-            }
+    // // Detect any collision with enemy
+    // for (auto& child : mChildren) {
+    //     if (collision(playerBound, child->getBoundingRect())) {
+    //         if (child->getCategory() == Category::Enemy) {
+    //             // Collided with enemy
+    //             return true;
+    //         }
 
-            // Collided with decoration, obstacle?
-            return false;
-        }
-    }
+    //         // Collided with decoration, obstacle?
+    //         return false;
+    //     }
+    // }
 
-    // If no collision happened, check if player is on the river
-    if (mType == LaneType::River) {
-        return true;
-    }
+    // // If no collision happened, check if player is on the river
+    // if (mType == LaneType::River) {
+    //     return true;
+    // }
 
-    // No collision, not on the river -> totally normal
+    // // No collision, not on the river -> totally normal
     return false;
 }
 

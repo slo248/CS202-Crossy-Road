@@ -108,7 +108,20 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
-    std::cout << "moveCharacter\n";
+    switch (direction) {
+        case ToLeft:
+            std::cout << "Move to left\n";
+            break;
+        case ToRight:
+            std::cout << "Move to right\n";
+            break;
+        case ToUpper:
+            std::cout << "Move to upper\n";
+            break;
+        case ToLower:
+            std::cout << "Move to lower\n";
+            break;
+    }
     sf::Vector2f incomingPosition;
     Lane* nextLane = nullptr;
 
