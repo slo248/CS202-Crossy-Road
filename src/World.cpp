@@ -22,7 +22,7 @@ World::World(
 
 void World::update(sf::Time dt) {
     buildBlocks();
-    mWorldView.move(mScrollSpeed * dt.asSeconds());
+    // mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
@@ -66,11 +66,12 @@ void World::buildScene() {
     mTopLane = top1.get();
     mLayers[OnGround]->attachChild(std::move(top1));
 
-    Character::Ptr player(new Character(Character::Type::Bee, mTextures));
+    Character::Ptr player(new Character(Character::Type::Archer, mTextures));
     mPlayer = player.get();
     mPlayer->setPosition(
         mWorldView.getSize().x / 2, bot2->getWorldPosition().y
     );
+    mPlayer->setCurrentLane(bot2);
     mLayers[OnGround]->attachChild(std::move(player));
 
     mWorldView.setCenter(

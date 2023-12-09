@@ -159,15 +159,16 @@ std::vector<CharacterData> initializeCharacterData() {
     // Skin data
     for (int i = Character::Archer; i < Character::TypeCount; ++i) {
         data[i].normalSpeed = 0.f;
-        int tmp = 4 * i;
+        int tmp = 4 * (i - Character::Archer);
         data[i].textures = {
             static_cast<Textures::ID>(Textures::ArcherToLeft + tmp),
             static_cast<Textures::ID>(Textures::ArcherToRight + tmp),
             static_cast<Textures::ID>(Textures::ArcherIdle + tmp),
             static_cast<Textures::ID>(Textures::ArcherDead + tmp),
         };
-        data[i].frameSize = DEFAULT_CELL_RECT.getSize();
-        data[i].numFrames = 4;
+        // data[i].frameSize = DEFAULT_CELL_RECT.getSize();
+        data[i].frameSize = sf::Vector2i(128, 128);
+        data[i].numFrames = 6;
     }
 
     return data;

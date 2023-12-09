@@ -57,6 +57,7 @@ class Character : public Entity {
     Type getType() const;
     void moveCharacter(Direction direction);
     bool isMarkedForRemoval() const override;
+    void setCurrentLane(Lane* lane);
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;

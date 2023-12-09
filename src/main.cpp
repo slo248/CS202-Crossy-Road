@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 
+#include "Player.hpp"
 #include "ResourceHolder.hpp"
 #include "World.hpp"
 
@@ -360,6 +361,7 @@ int main() {
 
     loadTexture(textures);
     World world(textures, fonts, window, Config::GameLevel::L1);
+    Player player;
 
     // sf::Clock clock;
     // sf::Time dt = sf::Time::Zero;
@@ -367,8 +369,9 @@ int main() {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
+            player.handleEvent(event, world.getCommandQueue());
         }
-
+        player.handleRealtimeInput(world.getCommandQueue());
         // dt += clock.restart();
         // while (dt >= sf::seconds(1)) {
         //     world.update(sf::seconds(1));

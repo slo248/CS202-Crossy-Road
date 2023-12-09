@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Character.hpp"
 #include "CommandQueue.hpp"
 #include "SceneNode.hpp"
 
@@ -20,8 +21,10 @@ void Player::handleEvent(const sf::Event& event, CommandQueue& commands) {
 void Player::handleRealtimeInput(CommandQueue& commands) {
     for (const auto& pair : mKeyBinding)
         if (isRealtimeAction(pair.second) &&
-            sf::Keyboard::isKeyPressed(pair.first))
+            sf::Keyboard::isKeyPressed(pair.first)) {
             commands.push(mActionBinding[pair.second]);
+            std::cout << "real time pushed" << std::endl;
+        }
 }
 
 void Player::assignKey(Action action, sf::Keyboard::Key key) {
@@ -64,9 +67,24 @@ void Player::initKeys() {
 void Player::initActions() {
     mActionBinding[ShowPosition].action = [](SceneNode& a, sf::Time dt) {
         sf::Vector2f pos = a.getWorldPosition();
-        // std::cout << "Player position: " << pos.x << ' ' << pos.y <<
-        // std::endl;
+        std::cout << "Player position: " << pos.x << ' ' << pos.y << std::endl;
     };
+    mActionBinding[MoveUp].action =
+        derivedAction<Character>([](Character& a, sf::Time dt) {
+            a.moveCharacter(Character::Direction::ToUpper);
+        });
+    mActionBinding[MoveDown].action =
+        derivedAction<Character>([](Character& a, sf::Time dt) {
+            a.moveCharacter(Character::Direction::ToLower);
+        });
+    mActionBinding[MoveLeft].action =
+        derivedAction<Character>([](Character& a, sf::Time dt) {
+            a.moveCharacter(Character::Direction::ToLeft);
+        });
+    mActionBinding[MoveRight].action =
+        derivedAction<Character>([](Character& a, sf::Time dt) {
+            a.moveCharacter(Character::Direction::ToRight);
+        });
 
     for (auto& pair : mActionBinding) pair.second.category = Category::Player;
 }

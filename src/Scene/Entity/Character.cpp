@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <iostream>
 
 #include "Category.hpp"
 #include "DataTables.hpp"
@@ -18,14 +17,18 @@ const std::vector<CharacterData> Table = initializeCharacterData();
 Character::Character(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
-      mMovement(this) {
+      mMovement(this),
+      mCurrentLane(nullptr) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(Animation(
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
+        mAnimations.back().setRepeat(true);
     }
-    // mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+    mAnimations.back().setRepeat(false);
+    mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
+    mCurrentAnimation->play();
     // centerOrigin(*this);
 }
 
@@ -105,6 +108,7 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
+    std::cout << "moveCharacter\n";
     sf::Vector2f incomingPosition;
     Lane* nextLane = nullptr;
 
@@ -143,11 +147,13 @@ bool Character::isMarkedForRemoval() const {
     return SceneNode::isMarkedForRemoval();
 }
 
+void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
+
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
 
-    if (getCategory() == Category::Player &&
+    if (getCategory() == Category::Player && mCurrentLane &&
         mCurrentLane->isCollidedWithPlayer(this)) {
         destroy();
         // The last animation of player is "dead animation"
