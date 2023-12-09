@@ -125,6 +125,7 @@ sf::Vector2f Lane::checkMoveablePlayer(
     }
 
     for (auto& child : mChildren) {
+        std::cout << child->getCategory() << '\n';
         if (collision(playerBound, child->getBoundingRect())) {
             switch (child->getCategory()) {
                 case Category::Obstacle: {
@@ -181,7 +182,7 @@ float Lane::getRandomFactor() const { return mRandomFactor; }
 void Lane::attachChild(SceneNode::Ptr child) {
     if (child->getCategory() == Category::Lane) {
         mChildLane = static_cast<Lane*>(child.get());
-        if (child) {
+        if (mChildLane) {
             float childRandomFactor = mChildLane->getRandomFactor();
             if (childRandomFactor > 1.0) {
                 mRandomFactor = 1.0;

@@ -61,22 +61,34 @@ void World::buildScene() {
     createMultipleLanes(mTextures, NUM_LANE, top1, bot1, mGameType);
     createMultipleLanes(mTextures, NUM_LANE, top2, bot2, mGameType);
     top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
-    top2->setPosition(0, DEFAULT_CELL_LENGTH);
     bot1->attachChild(std::move(top2));
     mTopLane = top1.get();
     mLayers[OnGround]->attachChild(std::move(top1));
 
+    Lane::Ptr top3 = nullptr;
+    Lane* bot3 = nullptr;
+    createMultipleBufferLanes(mTextures, BUFFER_LANE, top3, bot3);
+    bot2->attachChild(std::move(top3));
+
+    Lane::Ptr top4 = nullptr;
+    Lane* bot4 = nullptr;
+    createMultipleBufferLanes(mTextures, BUFFER_LANE, top4, bot4);
+    bot3->attachChild(std::move(top4));
+
     Character::Ptr player(new Character(Character::Type::Archer, mTextures));
     mPlayer = player.get();
     mPlayer->setPosition(
-        mWorldView.getSize().x / 2, bot2->getWorldPosition().y
+        mWorldView.getSize().x / 2,
+        DEFAULT_CELL_LENGTH * (2 * NUM_LANE + BUFFER_LANE) -
+            DEFAULT_CELL_LENGTH / 2
     );
-    mPlayer->setCurrentLane(bot2);
+    mPlayer->setCurrentLane(bot3);
     mLayers[OnGround]->attachChild(std::move(player));
 
     mWorldView.setCenter(
         mWorldView.getSize().x / 2,
-        DEFAULT_CELL_LENGTH * 2 * NUM_LANE - mWorldView.getSize().y / 2
+        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
+            mWorldView.getSize().y / 2
     );
 }
 
@@ -117,7 +129,7 @@ sf::FloatRect World::getViewBounds() const {
         sf::Vector2f(-DEFAULT_CELL_LENGTH, -DEFAULT_CELL_LENGTH),
         sf::Vector2f(
             DEFAULT_CELL_LENGTH * (DEFAULT_CELLS_PER_LANE + 2),
-            DEFAULT_CELL_LENGTH * (2 * NUM_LANE + 2)
+            2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE + 1)
         )
     );
 }
