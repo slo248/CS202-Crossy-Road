@@ -14,6 +14,7 @@ class Movement {
     void setup(sf::Vector2f dst, std::function<float(float)> motion);
 
     void update(sf::Time dt);
+    bool isFinished() const;
 
    private:
     Entity* mObj;

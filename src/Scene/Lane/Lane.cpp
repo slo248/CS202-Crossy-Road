@@ -153,9 +153,6 @@ sf::Vector2f Lane::checkMoveablePlayer(
             }
         }
     }
-    if (incommingPosition != player->getPosition())
-        player->setCurrentLane(this);
-
     return incommingPosition;
 }
 
@@ -376,17 +373,17 @@ void createMultipleLanes(
     while (--laneNumber) {
         std::cout << "Lane of type " << tmp << " is created\n";
         Lane::Ptr parentLane;
-        if (laneNumber & 1) {
-            tmp = LaneType::River;
-            parentLane = std::make_unique<Lane>(
-                tmp, textures, levelScale, std::move(lane)
-            );
-        } else {
-            tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
-            parentLane = std::make_unique<Lane>(
-                tmp, textures, levelScale, std::move(lane)
-            );
-        }
+        // if (laneNumber & 1) {
+        //     tmp = LaneType::River;
+        //     parentLane = std::make_unique<Lane>(
+        //         tmp, textures, levelScale, std::move(lane)
+        //     );
+        // } else {
+        // tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
+        tmp = static_cast<LaneType>(rand() % (LaneType::TypeCount - 1));
+        parentLane =
+            std::make_unique<Lane>(tmp, textures, levelScale, std::move(lane));
+        // }
         lane = std::move(parentLane);
     }
 

@@ -108,12 +108,15 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
+    Animation* mNextAnimation;
     switch (direction) {
         case ToLeft:
             std::cout << "Move to left\n";
+            mNextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
             break;
         case ToRight:
             std::cout << "Move to right\n";
+            mNextAnimation = &mAnimations[CharacterData::Direction::ToRight];
             break;
         case ToUpper:
             std::cout << "Move to upper\n";
@@ -149,7 +152,13 @@ void Character::moveCharacter(Direction direction) {
     }
 
     incomingPosition = nextLane->checkMoveablePlayer(this, direction);
-    mMovement.setup(incomingPosition, Motion::Sigmoid());
+    if (incomingPosition != getWorldPosition()) {
+        mCurrentAnimation = mNextAnimation;
+        mCurrentLane = nextLane;
+
+        mCurrentAnimation->play();
+        mMovement.setup(incomingPosition, Motion::Sigmoid());
+    }
 }
 
 bool Character::isMarkedForRemoval() const {

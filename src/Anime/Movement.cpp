@@ -35,8 +35,14 @@ void Movement::update(sf::Time dt) {
     mElapsed += dt;
     if (mElapsed > mDuration) {
         mObj->setPosition(mEnd);
+        mObj->setVelocity(sf::Vector2f(0.f, 0.f));
         return;
     }
     float t = mMotion(mElapsed.asSeconds() / mDuration.asSeconds());
     mObj->setPosition(mStart + (mEnd - mStart) * t);
+    mObj->setVelocity((mEnd - mStart) / mDuration.asSeconds());
+}
+
+bool Movement::isFinished() const {
+    return mElapsed >= mDuration || mMotion == nullptr;
 }
