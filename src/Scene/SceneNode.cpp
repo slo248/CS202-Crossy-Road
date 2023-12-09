@@ -12,7 +12,7 @@
 SceneNode::SceneNode(unsigned int category)
     : mParent(nullptr), mCategory(category), mIsMarkedForRemoval(false) {}
 
-void SceneNode::attachChild(Ptr child) {
+void SceneNode::attachChild(SceneNode::Ptr child) {
     child->mParent = this;
     mChildren.push_back(std::move(child));
 }

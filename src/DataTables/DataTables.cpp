@@ -14,143 +14,143 @@ std::vector<CharacterData> initializeCharacterData() {
     // Enemy data
     // Air enemy data
     /*<-------------------------Bee------------------------------->*/
-    data[Character::Bee].normalSpeed = 350.f;
+    data[Character::Bee].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
     data[Character::Bee].textures = {
-        static_cast<Textures::ID>(Textures::BeeToLeft),
-        static_cast<Textures::ID>(Textures::BeeToRight),
-        static_cast<Textures::ID>(Textures::BeeIdle),
+        Textures::BeeToLeft,
+        Textures::BeeToRight,
+        Textures::BeeIdle,
     };
     data[Character::Bee].frameSize = sf::Vector2i(48, 48);
     data[Character::Bee].numFrames = 6;
     /*<-------------------------Bee------------------------------->*/
 
     /*<-------------------------Bird------------------------------->*/
-    data[Character::Bird].normalSpeed = 350.f;
+    data[Character::Bird].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
     data[Character::Bird].textures = {
-        static_cast<Textures::ID>(Textures::BirdToLeft),
-        static_cast<Textures::ID>(Textures::BirdToRight),
-        static_cast<Textures::ID>(Textures::BirdIdle),
+        Textures::BirdToLeft,
+        Textures::BirdToRight,
+        Textures::BirdIdle,
     };
     data[Character::Bird].frameSize = sf::Vector2i(48, 48);
     data[Character::Bird].numFrames = 4;
     /*<-------------------------Bird------------------------------->*/
 
     /*<-------------------------BeeBoss--------------------------->*/
-    data[Character::BeeBoss].normalSpeed = 350.f;
+    data[Character::BeeBoss].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
     data[Character::BeeBoss].textures = {
-        static_cast<Textures::ID>(Textures::BeeBossToLeft),
-        static_cast<Textures::ID>(Textures::BeeBossToRight),
-        static_cast<Textures::ID>(Textures::BeeBossIdle),
+        Textures::BeeBossToLeft,
+        Textures::BeeBossToRight,
+        Textures::BeeBossIdle,
     };
     data[Character::BeeBoss].frameSize = sf::Vector2i(96, 96);
     data[Character::BeeBoss].numFrames = 6;
     /*<-------------------------BeeBoss--------------------------->*/
 
     /*<-------------------------BombBat--------------------------->*/
-    data[Character::BombBat].normalSpeed = 350.f;
+    data[Character::BombBat].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
     data[Character::BombBat].textures = {
-        static_cast<Textures::ID>(Textures::BombBatToLeft),
-        static_cast<Textures::ID>(Textures::BombBatToRight),
-        static_cast<Textures::ID>(Textures::BombBatIdle),
+        Textures::BombBatToLeft,
+        Textures::BombBatToRight,
+        Textures::BombBatIdle,
     };
     data[Character::BombBat].frameSize = sf::Vector2i(48, 48);
     data[Character::BombBat].numFrames = 6;
     /*<-------------------------BombBat--------------------------->*/
 
     /*<-------------------------Crocodile------------------------->*/
-    data[Character::Crocodile].normalSpeed = 150.f;
+    data[Character::Crocodile].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Crocodile].textures = {
-        static_cast<Textures::ID>(Textures::CrocodileToLeft),
-        static_cast<Textures::ID>(Textures::CrocodileToRight),
-        static_cast<Textures::ID>(Textures::CrocodileIdle),
+        Textures::CrocodileToLeft,
+        Textures::CrocodileToRight,
+        Textures::CrocodileIdle,
     };
     data[Character::Crocodile].frameSize = sf::Vector2i(48, 48);
     data[Character::Crocodile].numFrames = 6;
     /*<-------------------------Crocodile------------------------->*/
 
     /*<-------------------------Dog------------------------->*/
-    data[Character::Dog].normalSpeed = 150.f;
+    data[Character::Dog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Dog].textures = {
-        static_cast<Textures::ID>(Textures::DogToLeft),
-        static_cast<Textures::ID>(Textures::DogToRight),
-        static_cast<Textures::ID>(Textures::DogIdle),
+        Textures::DogToLeft,
+        Textures::DogToRight,
+        Textures::DogIdle,
     };
     data[Character::Dog].frameSize = sf::Vector2i(48, 48);
     data[Character::Dog].numFrames = 6;
     /*<-------------------------Dog------------------------->*/
 
     /*<-------------------------Frog------------------------->*/
-    data[Character::Frog].normalSpeed = 150.f;
+    data[Character::Frog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Frog].textures = {
-        static_cast<Textures::ID>(Textures::FrogToLeft),
-        static_cast<Textures::ID>(Textures::FrogToRight),
-        static_cast<Textures::ID>(Textures::FrogIdle),
+        Textures::FrogToLeft,
+        Textures::FrogToRight,
+        Textures::FrogIdle,
     };
     data[Character::Frog].frameSize = sf::Vector2i(48, 48);
     data[Character::Frog].numFrames = 4;
     /*<-------------------------Frog------------------------->*/
 
     /*<-------------------------Rabbit------------------------->*/
-    data[Character::Rabbit].normalSpeed = 150.f;
+    data[Character::Rabbit].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Rabbit].textures = {
-        static_cast<Textures::ID>(Textures::RabbitToLeft),
-        static_cast<Textures::ID>(Textures::RabbitToRight),
-        static_cast<Textures::ID>(Textures::RabbitIdle),
+        Textures::RabbitToLeft,
+        Textures::RabbitToRight,
+        Textures::RabbitIdle,
     };
     data[Character::Rabbit].frameSize = sf::Vector2i(48, 48);
     data[Character::Rabbit].numFrames = 4;
     /*<-------------------------Rabbit------------------------->*/
 
     /*<-------------------------Sheep------------------------->*/
-    data[Character::Sheep].normalSpeed = 150.f;
+    data[Character::Sheep].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Sheep].textures = {
-        static_cast<Textures::ID>(Textures::SheepToLeft),
-        static_cast<Textures::ID>(Textures::SheepToRight),
-        static_cast<Textures::ID>(Textures::SheepIdle),
+        Textures::SheepToLeft,
+        Textures::SheepToRight,
+        Textures::SheepIdle,
     };
     data[Character::Sheep].frameSize = sf::Vector2i(48, 48);
     data[Character::Sheep].numFrames = 4;
     /*<-------------------------Sheep------------------------->*/
 
     /*<-------------------------Turtle------------------------->*/
-    data[Character::Turtle].normalSpeed = 150.f;
+    data[Character::Turtle].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Turtle].textures = {
-        static_cast<Textures::ID>(Textures::TurtleToLeft),
-        static_cast<Textures::ID>(Textures::TurtleToRight),
-        static_cast<Textures::ID>(Textures::TurtleIdle),
+        Textures::TurtleToLeft,
+        Textures::TurtleToRight,
+        Textures::TurtleIdle,
     };
     data[Character::Turtle].frameSize = sf::Vector2i(48, 48);
     data[Character::Turtle].numFrames = 6;
     /*<-------------------------Turtle------------------------->*/
 
     /*<-------------------------Fishmen------------------------->*/
-    data[Character::Fishmen].normalSpeed = 150.f;
+    data[Character::Fishmen].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Fishmen].textures = {
-        static_cast<Textures::ID>(Textures::FishmenToLeft),
-        static_cast<Textures::ID>(Textures::FishmenToRight),
-        static_cast<Textures::ID>(Textures::FishmenIdle),
+        Textures::FishmenToLeft,
+        Textures::FishmenToRight,
+        Textures::FishmenIdle,
     };
     data[Character::Fishmen].frameSize = sf::Vector2i(48, 48);
     data[Character::Fishmen].numFrames = 6;
     /*<-------------------------Fishmen------------------------->*/
 
     /*<-------------------------Orc------------------------->*/
-    data[Character::Orc].normalSpeed = 150.f;
+    data[Character::Orc].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Orc].textures = {
-        static_cast<Textures::ID>(Textures::OrcToLeft),
-        static_cast<Textures::ID>(Textures::OrcToRight),
-        static_cast<Textures::ID>(Textures::OrcIdle),
+        Textures::OrcToLeft,
+        Textures::OrcToRight,
+        Textures::OrcIdle,
     };
     data[Character::Orc].frameSize = sf::Vector2i(96, 96);
     data[Character::Orc].numFrames = 6;
     /*<-------------------------Orc------------------------->*/
 
     /*<-------------------------Zombie------------------------->*/
-    data[Character::Zombie].normalSpeed = 150.f;
+    data[Character::Zombie].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Zombie].textures = {
-        static_cast<Textures::ID>(Textures::ZombieToLeft),
-        static_cast<Textures::ID>(Textures::ZombieToRight),
-        static_cast<Textures::ID>(Textures::ZombieIdle),
+        Textures::ZombieToLeft,
+        Textures::ZombieToRight,
+        Textures::ZombieIdle,
     };
     data[Character::Zombie].frameSize = sf::Vector2i(48, 48);
     data[Character::Zombie].numFrames = 6;
@@ -158,7 +158,7 @@ std::vector<CharacterData> initializeCharacterData() {
 
     // Skin data
     for (int i = Character::Archer; i < Character::TypeCount; ++i) {
-        data[i].normalSpeed = 300.f;
+        data[i].normalSpeed = DEFAULT_PLAYER_SPEED;
         int tmp = 4 * (i - Character::Archer);
         data[i].textures = {
             static_cast<Textures::ID>(Textures::ArcherToLeft + tmp),
@@ -167,7 +167,7 @@ std::vector<CharacterData> initializeCharacterData() {
             static_cast<Textures::ID>(Textures::ArcherDead + tmp),
         };
         // data[i].frameSize = DEFAULT_CELL_RECT.getSize();
-        data[i].frameSize = sf::Vector2i(128, 128);
+        data[i].frameSize = sf::Vector2i(110, 64);
         data[i].numFrames = 6;
     }
 
@@ -184,7 +184,7 @@ std::vector<ObstacleData> initializeObstacleData() {
         data[i].normalSpeed = 0.f;
     }
 
-    data[Obstacle::Type::River_Log1].normalSpeed = 100.f;
+    data[Obstacle::Type::River_Log1].normalSpeed = DEFAULT_LOG_SPEED;
     data[Obstacle::Type::River_Log1].isBlockingPlayer = false;
 
     return data;

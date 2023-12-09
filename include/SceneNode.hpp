@@ -27,8 +27,8 @@ class SceneNode : public sf::Transformable,
     SceneNode(unsigned int category = Category::None);
 
     // Child Methods
-    void attachChild(Ptr child);
-    Ptr detachChild(const SceneNode& node);
+    virtual void attachChild(SceneNode::Ptr child);
+    virtual Ptr detachChild(const SceneNode& node);
 
     // Parent Method
     SceneNode* getParent();

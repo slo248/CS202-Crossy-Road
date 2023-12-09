@@ -25,8 +25,8 @@ class Lane : public SceneNode {
     enum SpawnSide { Left, Right, None };
 
     Lane(
-        LaneType type, const TextureHolder& textures,
-        float levelScale = LEVEL_ONE_COEFFICIENT, Ptr childLane = nullptr
+        LaneType type, const TextureHolder& textures, bool isBufferLane = false,
+        float levelScale = LEVEL_ONE_COEFFICIENT
     );
     ~Lane();
 
@@ -39,6 +39,7 @@ class Lane : public SceneNode {
     );
     bool isCollidedWithPlayer(Character* player);
     float getRandomFactor() const;
+    void attachChild(SceneNode::Ptr child) override;
 
    private:
     void spawnObstacles();
@@ -66,6 +67,11 @@ class Lane : public SceneNode {
 void createMultipleLanes(
     const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
     Lane*& botLane, float levelScale = LEVEL_ONE_COEFFICIENT
+);
+
+void createMultipleBufferLanes(
+    const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
+    Lane*& botLane
 );
 
 float slotToPosition(int slot);

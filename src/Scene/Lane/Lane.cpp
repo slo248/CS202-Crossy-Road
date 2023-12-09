@@ -25,63 +25,51 @@ const std::vector<LaneData> Table = initializeLaneData();
 }
 
 Lane::Lane(
-    LaneType type, const TextureHolder& textures, float levelScale,
-    Ptr childLane
+    LaneType type, const TextureHolder& textures, bool isBufferLane,
+    float levelScale
 )
     : mType(type),
-      //   mTypeHolder(new LaneTypeHolder(type)),
+      mRandomFactor(1.f),
+      mChildLane(nullptr),
       mTrafficLight(nullptr),
-      mSprite(textures.get(Table[type].texture), Table[type].textureRect),
-      mObjectFactory(std::make_unique<ObjectFactory>(textures, type, levelScale)
-      ) {
+      mSpawnInterval(Table[type].spawnInterval),
+      mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
     laneMap[this].first = type;
     // std::cout << "Lane " << this << " is created\n";
-
-    // Set up children lane
-    if (childLane) {
-        float childRandomFactor = childLane->getRandomFactor();
-        if (childRandomFactor > 1.0) {
-            mRandomFactor = 1.0;
-        } else if (childRandomFactor < 1.0) {
-            mRandomFactor = 0.7;
-        } else {
-            mRandomFactor = 1.3;
-        }
-
-        mChildLane = childLane.get();
-        attachChild(std::move(childLane));
-        mChildLane->setPosition(0, DEFAULT_CELL_LENGTH);
-    } else {
-        mChildLane = nullptr;
-        mRandomFactor = 1.0;
-    }
 
     // Origin
     // Death Experience: origin must be set for mSprite, not the Lane itself!
     mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
     // If it works, then don't touch it!
 
-    // Object factory for Non-River
-    int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 , 1
-    mSpawnSide = isHavingTrafficLight == 0
-                     ? None
-                     : static_cast<SpawnSide>((isHavingTrafficLight + 1) / 2);
-
-    // For River
-    if (type == LaneType::River) {
-        mSpawnSide = static_cast<SpawnSide>(rand() % 2);
-        mSpawnInterval = Table[type].spawnInterval;
+    // Early return for buffer lane
+    if (isBufferLane) {
         return;
     }
 
-    laneMap[this].second = mSpawnSide;
+    // Object factory
+    mObjectFactory =
+        std::make_unique<ObjectFactory>(textures, type, levelScale);
 
-    // Spawn initial traffic light or obstacles
-    if (isHavingTrafficLight) {
-        spawnTrafficLight();
+    // Spawn initial objects
+    if (type == LaneType::River) {
+        mSpawnSide = static_cast<SpawnSide>(rand() % 2);
+        return;
     } else {
-        spawnObstacles();
+        int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 , 1
+        mSpawnSide =
+            isHavingTrafficLight == 0
+                ? None
+                : static_cast<SpawnSide>((isHavingTrafficLight + 1) / 2);
+
+        // Spawn initial traffic light or obstacles
+        if (isHavingTrafficLight) {
+            spawnTrafficLight();
+        } else {
+            spawnObstacles();
+        }
     }
+    laneMap[this].second = mSpawnSide;
 }
 
 Lane::~Lane() {
@@ -126,8 +114,15 @@ sf::Vector2f Lane::checkMoveablePlayer(
         }
     }
 
+    // playerBound position is at top left corner
     sf::Vector2f incommingPosition =
         playerBound.getPosition() + playerBound.getSize() / 2.f;
+
+    if (incommingPosition.x < 1 * DEFAULT_CELL_LENGTH ||
+        incommingPosition.x >
+            (DEFAULT_CELLS_PER_LANE - 1) * DEFAULT_CELL_LENGTH) {
+        return player->getPosition();
+    }
 
     for (auto& child : mChildren) {
         if (collision(playerBound, child->getBoundingRect())) {
@@ -182,6 +177,25 @@ bool Lane::isCollidedWithPlayer(Character* player) {
 }
 
 float Lane::getRandomFactor() const { return mRandomFactor; }
+
+void Lane::attachChild(SceneNode::Ptr child) {
+    if (child->getCategory() == Category::Lane) {
+        mChildLane = static_cast<Lane*>(child.get());
+        if (child) {
+            float childRandomFactor = mChildLane->getRandomFactor();
+            if (childRandomFactor > 1.0) {
+                mRandomFactor = 1.0;
+            } else if (childRandomFactor < 1.0) {
+                mRandomFactor = 0.7;
+            } else {
+                mRandomFactor = 1.3;
+            }
+
+            mChildLane->setPosition(0, DEFAULT_CELL_LENGTH);
+        }
+    }
+    SceneNode::attachChild(std::move(child));
+}
 
 void Lane::spawnObstacles() {
     std::unique_ptr<Obstacle> obstacle;
@@ -276,7 +290,6 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     // In case unknown changes happen
     mType = laneMap[this].first;
     mSpawnSide = laneMap[this].second;
-    // mType = mTypeHolder->getType();
 
     // std::cout << this << ' ' << mType << " updating";
     if (mType == LaneType::River) {
@@ -381,13 +394,37 @@ void createMultipleLanes(
         // } else {
         // tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
         tmp = static_cast<LaneType>(rand() % (LaneType::TypeCount - 1));
-        parentLane =
-            std::make_unique<Lane>(tmp, textures, levelScale, std::move(lane));
+        parentLane = std::make_unique<Lane>(tmp, textures, false, levelScale);
+        parentLane->attachChild(std::move(lane));
         // }
         lane = std::move(parentLane);
     }
 
     topLane = std::move(lane);
+}
+
+void createMultipleBufferLanes(
+    const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
+    Lane*& botLane
+) {
+    // Buffer lanes do not contain river
+    LaneType randomLaneType = static_cast<LaneType>(rand() % LaneType::River);
+    Lane::Ptr currentLane(std::make_unique<Lane>(randomLaneType, textures, true)
+    );
+    botLane = currentLane.get();
+
+    for (int i = 0; i < NUMBER_OF_BUFFER_LANE; ++i) {
+        std::cout << "Lane of type " << randomLaneType << " is created\n";
+        randomLaneType =
+            static_cast<LaneType>(rand() % (LaneType::TypeCount - 1));
+
+        Lane::Ptr parentLane =
+            std::make_unique<Lane>(randomLaneType, textures, true);
+        parentLane->attachChild(std::move(currentLane));
+        currentLane = std::move(parentLane);
+    }
+
+    topLane = std::move(currentLane);
 }
 
 float slotToPosition(int slot) {

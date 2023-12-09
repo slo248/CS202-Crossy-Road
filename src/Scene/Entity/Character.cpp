@@ -108,40 +108,33 @@ Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
     if (!mMovement.isFinished()) return;
-    Animation* mNextAnimation;
-    switch (direction) {
-        case ToLeft:
-            std::cout << "Move to left\n";
-            mNextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
-            break;
-        case ToRight:
-            std::cout << "Move to right\n";
-            mNextAnimation = &mAnimations[CharacterData::Direction::ToRight];
-            break;
-        case ToUpper:
-            std::cout << "Move to upper\n";
-            break;
-        case ToLower:
-            std::cout << "Move to lower\n";
-            break;
-    }
+    Animation* nextAnimation;
     sf::Vector2f incomingPosition;
     Lane* nextLane = nullptr;
 
     switch (direction) {
-        case ToLeft:
+        case ToLeft: {
+            nextLane = mCurrentLane;
+            nextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
+            std::cout << "Move to left\n";
+            break;
+        }
         case ToRight: {
             nextLane = mCurrentLane;
+            nextAnimation = &mAnimations[CharacterData::Direction::ToRight];
+            std::cout << "Move to right\n";
             break;
         }
 
         case ToUpper: {
             nextLane = static_cast<Lane*>(mCurrentLane->getParent());
+            std::cout << "Move to upper\n";
             break;
         }
 
         case ToLower: {
             nextLane = mCurrentLane->getChildLane();
+            std::cout << "Move to lower\n";
             break;
         }
     }
@@ -153,7 +146,7 @@ void Character::moveCharacter(Direction direction) {
 
     incomingPosition = nextLane->checkMoveablePlayer(this, direction);
     if (incomingPosition != getWorldPosition()) {
-        mCurrentAnimation = mNextAnimation;
+        mCurrentAnimation = nextAnimation;
         mCurrentLane = nextLane;
 
         mCurrentAnimation->play();
@@ -185,17 +178,17 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
         return;
     }
 
-    Animation* tmpAnimation;
+    Animation* nextAnimation;
     if (getVelocity().x == 0) {
-        tmpAnimation = &mAnimations[CharacterData::Direction::Idle];
+        nextAnimation = &mAnimations[CharacterData::Direction::Idle];
     } else if (getVelocity().x > 0) {
-        tmpAnimation = &mAnimations[CharacterData::Direction::ToRight];
+        nextAnimation = &mAnimations[CharacterData::Direction::ToRight];
     } else {
-        tmpAnimation = &mAnimations[CharacterData::Direction::ToLeft];
+        nextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
     }
 
-    if (!mCurrentAnimation || mCurrentAnimation != tmpAnimation) {
-        mCurrentAnimation = tmpAnimation;
+    if (!mCurrentAnimation || mCurrentAnimation != nextAnimation) {
+        mCurrentAnimation = nextAnimation;
         mCurrentAnimation->play();
         mCurrentAnimation->setRepeat(true);
     }
