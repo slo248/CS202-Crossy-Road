@@ -6,7 +6,7 @@ LevelState::LevelState(StateStack& stack, Context context)
     : State(stack, context),
       mBackground(context.textures->get(Textures::BackgroundLevel)) {
     auto buttonBack = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(1254, 6)
+        context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );
     buttonBack->setCallback(std::bind(&LevelState::requestStackPop, this));
     mGUIContainer.pack(buttonBack);
@@ -14,7 +14,7 @@ LevelState::LevelState(StateStack& stack, Context context)
     int numLevel = 5;
     for (int i = 0; i < numLevel; ++i) {
         auto barLevel = std::make_shared<Button>(
-            context, Textures::BarLevel, sf::Vector2f(52, 258 + 118 * i)
+            context, Textures::BarLevel, sf::Vector2f(36, 150 + 79 * i)
         );
         mGUIContainer.pack(barLevel);
     }

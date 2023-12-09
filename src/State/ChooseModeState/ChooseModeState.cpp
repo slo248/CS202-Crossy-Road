@@ -14,9 +14,9 @@ ChooseModeState::ChooseModeState(StateStack& stack, Context context)
     auto buttonSurvivalMenu = std::make_shared<Button>(
         context, Textures::ButtonSurvivalMenu, sf::Vector2f(584, 373)
     );
-    buttonSurvivalMenu->setCallback([this]() {
-        requestStackPush(States::ChooseMode);
-    });
+    // buttonSurvivalMenu->setCallback([this]() {
+    //     requestStackPush(States::ChooseMode);
+    // });
     mGUIContainer.pack(buttonSurvivalMenu);
 
     auto buttonBackMenu = std::make_shared<Button>(
