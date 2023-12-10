@@ -129,13 +129,21 @@ sf::Vector2f Lane::checkMoveablePlayer(
             switch (child->getCategory()) {
                 case Category::Decoration: {
                     // Player jumps to the log -> early return
-                    incommingPosition = child->getWorldPosition();
                     Obstacle* log = static_cast<Obstacle*>(child.get());
-                    // logic skill issue
                     player->setVelocity(log->getVelocity());
-                    std::cout << "Jumped to a log, velocity changes to "
-                              << player->getVelocity().x << '\n';
-                    return log->getWorldPosition();
+
+                    // Need some alignment later
+                    incommingPosition.x = child->getWorldPosition().x +
+                                          child->getBoundingRect().width / 4.f;
+                    // std::cout << "Player position: " << incommingPosition.x
+                    //           << '\n';
+                    // std::cout << "Log position: " <<
+                    // child->getWorldPosition().x
+                    //           << '\n';
+                    // std::cout << "Log width: " <<
+                    // child->getBoundingRect().width
+                    //           << '\n';
+                    return incommingPosition;
                 }
 
                 case Category::Obstacle: {
@@ -187,9 +195,9 @@ bool Lane::isCollidedWithPlayer(Character* player) {
         }
     }
 
-    // If no collision happened, check if player is on the river
-    if (mType == LaneType::River) {
-        std::cout << "Jumped to the river\n";
+    // If no collision happened, check if player is on the river and not moving
+    if (mType == LaneType::River && player->getVelocity().x == 0) {
+        // std::cout << "Jumped to the river\n";
         return true;
     }
 

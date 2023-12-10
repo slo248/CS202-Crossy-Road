@@ -18,7 +18,8 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
       mMovement(this),
-      mCurrentLane(nullptr) {
+      mCurrentLane(nullptr),
+      isInMovement(false) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(Animation(
@@ -152,6 +153,7 @@ void Character::moveCharacter(Direction direction) {
 
         mCurrentAnimation->play();
         mMovement.setup(incomingPosition, Motion::Linear());
+        isInMovement = true;
     }
 }
 
@@ -168,7 +170,6 @@ void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     Entity::updateCurrent(dt, commands);
-    // std::cout << getVelocity().x << " " << getVelocity().y << "\n";
 
     // Only for the death of player
     if (getCategory() == Category::Player && mCurrentLane &&
@@ -202,7 +203,17 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     }
 
     mCurrentAnimation->update(dt);
-    mMovement.update(dt);
+
+    // By default, only player can set isInMovement to true
+    if (isInMovement) {
+        // The reason why player can't move along with the log
+        // This set player's velocity to 0 everytime the player is not in a
+        // movement
+        mMovement.update(dt);
+    }
+    if (mMovement.isFinished()) {
+        isInMovement = false;
+    }
 }
 
 void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)

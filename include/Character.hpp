@@ -71,6 +71,7 @@ class Character : public Entity {
     Animation* mCurrentAnimation;
     Movement mMovement;
     Lane* mCurrentLane;
+    bool isInMovement;
 };
 
 #endif  // CHARACTER_HPP
