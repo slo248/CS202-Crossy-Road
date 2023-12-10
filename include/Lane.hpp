@@ -66,12 +66,9 @@ class Lane : public SceneNode {
 
 void createMultipleLanes(
     const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
-    Lane*& botLane, float levelScale = LEVEL_ONE_COEFFICIENT
-);
+    Lane*& botLane, bool isBuffer = false,
+    float levelScale = LEVEL_ONE_COEFFICIENT
 
-void createMultipleBufferLanes(
-    const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
-    Lane*& botLane
 );
 
 float slotToPosition(int slot);

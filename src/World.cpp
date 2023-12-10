@@ -67,12 +67,12 @@ void World::buildScene() {
 
     Lane::Ptr top3 = nullptr;
     Lane* bot3 = nullptr;
-    createMultipleBufferLanes(mTextures, BUFFER_LANE, top3, bot3);
+    createMultipleLanes(mTextures, BUFFER_LANE, top3, bot3, true);
     bot2->attachChild(std::move(top3));
 
     Lane::Ptr top4 = nullptr;
     Lane* bot4 = nullptr;
-    createMultipleBufferLanes(mTextures, BUFFER_LANE, top4, bot4);
+    createMultipleLanes(mTextures, BUFFER_LANE, top4, bot4, true);
     bot3->attachChild(std::move(top4));
 
     Character::Ptr player(new Character(Character::Type::Archer, mTextures));

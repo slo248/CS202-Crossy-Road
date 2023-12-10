@@ -42,11 +42,6 @@ Lane::Lane(
     mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
     // If it works, then don't touch it!
 
-    // Early return for buffer lane
-    if (isBufferLane) {
-        return;
-    }
-
     // Object factory
     mObjectFactory =
         std::make_unique<ObjectFactory>(textures, type, levelScale);
@@ -56,17 +51,20 @@ Lane::Lane(
         mSpawnSide = static_cast<SpawnSide>(rand() % 2);
         return;
     } else {
-        int isHavingTrafficLight = (rand() % 3) - 1;  // -1, 0 , 1
+        int isHavingTrafficLight =
+            isBufferLane ? 0 : (rand() % 3) - 1;  // -1, 0 , 1
         mSpawnSide =
             isHavingTrafficLight == 0
                 ? None
                 : static_cast<SpawnSide>((isHavingTrafficLight + 1) / 2);
 
-        // Spawn initial traffic light or obstacles
-        if (isHavingTrafficLight) {
-            spawnTrafficLight();
-        } else {
+        // Spawn initial traffic light or obstacles if having no traffic light
+        // or buffer lane
+        // This is pretty dangerous
+        if (!isHavingTrafficLight) {
             spawnObstacles();
+        } else {
+            spawnTrafficLight();
         }
     }
     laneMap[this].second = mSpawnSide;
@@ -74,7 +72,6 @@ Lane::Lane(
 
 Lane::~Lane() {
     // std::cout << "Lane " << laneMap[this] << " is deleted\n";
-    // delete mTypeHolder;
     laneMap.erase(this);
 }
 
@@ -377,55 +374,30 @@ void Lane::updateMovementPattern(sf::Time dt) {}
 
 void createMultipleLanes(
     const TextureHolder& textures, int laneNumber, Lane::Ptr& topLane,
-    Lane*& botLane, float levelScale
+    Lane*& botLane, bool isBuffer, float levelScale
 ) {
-    LaneType tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
-    Lane::Ptr lane(std::make_unique<Lane>(tmp /*LaneType::River*/, textures));
+    // If these are buffer lanes, then they do not contain river
+    int laneTypeCount = LaneType::TypeCount - isBuffer;
+    std::cout << laneTypeCount << '\n';
+
+    // Bottom lane
+    LaneType randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
+    Lane::Ptr lane(std::make_unique<Lane>(randomLaneType, textures, isBuffer));
 
     botLane = lane.get();
 
     while (--laneNumber) {
-        std::cout << "Lane of type " << tmp << " is created\n";
-        Lane::Ptr parentLane;
-        // if (laneNumber & 1) {
-        //     tmp = LaneType::River;
-        //     parentLane = std::make_unique<Lane>(
-        //         tmp, textures, levelScale, std::move(lane)
-        //     );
-        // } else {
-        // tmp = static_cast<LaneType>(rand() % LaneType::TypeCount);
-        tmp = static_cast<LaneType>(rand() % (LaneType::TypeCount - 1));
-        parentLane = std::make_unique<Lane>(tmp, textures, false, levelScale);
+        std::cout << "Lane of type " << randomLaneType << " is created\n";
+        randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
+
+        Lane::Ptr parentLane(std::make_unique<Lane>(
+            randomLaneType, textures, isBuffer, levelScale
+        ));
         parentLane->attachChild(std::move(lane));
-        // }
         lane = std::move(parentLane);
     }
 
     topLane = std::move(lane);
-}
-
-void createMultipleBufferLanes(
-    const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
-    Lane*& botLane
-) {
-    // Buffer lanes do not contain river
-    LaneType randomLaneType = static_cast<LaneType>(rand() % LaneType::River);
-    Lane::Ptr currentLane(std::make_unique<Lane>(randomLaneType, textures, true)
-    );
-    botLane = currentLane.get();
-
-    for (int i = 0; i < NUMBER_OF_BUFFER_LANE; ++i) {
-        std::cout << "Lane of type " << randomLaneType << " is created\n";
-        randomLaneType =
-            static_cast<LaneType>(rand() % (LaneType::TypeCount - 1));
-
-        Lane::Ptr parentLane =
-            std::make_unique<Lane>(randomLaneType, textures, true);
-        parentLane->attachChild(std::move(currentLane));
-        currentLane = std::move(parentLane);
-    }
-
-    topLane = std::move(currentLane);
 }
 
 float slotToPosition(int slot) {
