@@ -196,11 +196,11 @@ void loadTexture(TextureHolder& textures) {
     /**************************Load Skin Textures************************/
     textures.load(
         Textures::ArcherToLeft,
-        "asset/game_textures/Skin/Archer/Walk_ToLeft.png"
+        "asset/game_textures/Skin/Archer/Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::ArcherToRight,
-        "asset/game_textures/Skin/Archer/Walk_ToRight.png"
+        "asset/game_textures/Skin/Archer/Walk_ToRightNew.png"
     );
     textures.load(
         Textures::ArcherIdle, "asset/game_textures/Skin/Archer/Idle.png"
