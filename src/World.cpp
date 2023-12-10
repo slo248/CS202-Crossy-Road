@@ -78,7 +78,7 @@ void World::buildScene() {
     Character::Ptr player(new Character(Character::Type::Archer, mTextures));
     mPlayer = player.get();
     mPlayer->setPosition(
-        mWorldView.getSize().x / 2,
+        slotToPosition(DEFAULT_PLAYER_SLOT),
         DEFAULT_CELL_LENGTH * (2 * NUM_LANE + BUFFER_LANE) -
             DEFAULT_CELL_LENGTH / 2
     );

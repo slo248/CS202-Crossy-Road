@@ -202,7 +202,7 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Skin/Archer/Walk_ToRight.png"
     );
     textures.load(
-        Textures::ArcherIdle, "asset/game_textures/Skin/Archer/Idle64.png"
+        Textures::ArcherIdle, "asset/game_textures/Skin/Archer/Idle.png"
     );
     textures.load(
         Textures::ArcherDead, "asset/game_textures/Skin/Archer/Dead.png"

@@ -62,7 +62,7 @@ Lane::Lane(
         // or buffer lane
         // This is pretty dangerous
         if (!isHavingTrafficLight) {
-            spawnObstacles();
+            spawnObstacles(isBufferLane);
         } else {
             spawnTrafficLight();
         }
@@ -85,6 +85,7 @@ sf::FloatRect Lane::getLocalBounds() const { return mSprite.getLocalBounds(); }
 
 Lane* Lane::getChildLane() { return mChildLane; }
 
+// Check for the next position of the player
 sf::Vector2f Lane::checkMoveablePlayer(
     Character* player, Character::Direction direction
 ) {
@@ -115,28 +116,31 @@ sf::Vector2f Lane::checkMoveablePlayer(
     sf::Vector2f incommingPosition =
         playerBound.getPosition() + playerBound.getSize() / 2.f;
 
-    if (incommingPosition.x < 1 * DEFAULT_CELL_LENGTH ||
-        incommingPosition.x >
-            (DEFAULT_CELLS_PER_LANE - 1) * DEFAULT_CELL_LENGTH) {
+    if (incommingPosition.x < 0 ||
+        incommingPosition.x > DEFAULT_CELLS_PER_LANE * DEFAULT_CELL_LENGTH) {
         return player->getPosition();
     }
 
     for (auto& child : mChildren) {
         std::cout << child->getCategory() << '\n';
         if (collision(playerBound, child->getBoundingRect())) {
-            switch (child->getCategory()) {
-                case Category::Obstacle: {
-                    // Player stands still
-                    incommingPosition = player->getPosition();
-                    break;
-                }
+            std::cout << "Collided with sth\n";
 
+            switch (child->getCategory()) {
                 case Category::Decoration: {
-                    // Player jumps to the log
+                    // Player jumps to the log -> early return
                     incommingPosition = child->getWorldPosition();
                     Obstacle* log = static_cast<Obstacle*>(child.get());
+                    // logic skill issue
                     player->setVelocity(log->getVelocity());
-                    break;
+                    std::cout << "Jumped to a log, velocity changes to "
+                              << player->getVelocity().x << '\n';
+                    return log->getWorldPosition();
+                }
+
+                case Category::Obstacle: {
+                    // Player stands still
+                    return player->getPosition();
                 }
 
                 default: {
@@ -146,31 +150,50 @@ sf::Vector2f Lane::checkMoveablePlayer(
             }
         }
     }
+
+    // Align incomming position (need optimization)
+    incommingPosition.x =
+        round(
+            (incommingPosition.x - DEFAULT_CELL_LENGTH / 2.f) /
+            DEFAULT_CELL_LENGTH
+        ) * DEFAULT_CELL_LENGTH +
+        DEFAULT_CELL_LENGTH / 2.f;
+    std::cout << incommingPosition.x << '\n';
     return incommingPosition;
 }
 
+// Check for the current position of the player
 bool Lane::isCollidedWithPlayer(Character* player) {
-    // sf::FloatRect playerBound = player->getBoundingRect();
+    sf::FloatRect playerBound = player->getBoundingRect();
 
-    // // Detect any collision with enemy
-    // for (auto& child : mChildren) {
-    //     if (collision(playerBound, child->getBoundingRect())) {
-    //         if (child->getCategory() == Category::Enemy) {
-    //             // Collided with enemy
-    //             return true;
-    //         }
+    // Detect any collision with enemy
+    for (auto& child : mChildren) {
+        if (collision(playerBound, child->getBoundingRect())) {
+            switch (child->getCategory()) {
+                case Category::Enemy: {
+                    return true;
+                }
 
-    //         // Collided with decoration, obstacle?
-    //         return false;
-    //     }
-    // }
+                case Category::Decoration: {
+                    Obstacle* log = static_cast<Obstacle*>(child.get());
+                    player->setVelocity(log->getVelocity());
+                    return false;
+                }
 
-    // // If no collision happened, check if player is on the river
-    // if (mType == LaneType::River) {
-    //     return true;
-    // }
+                default: {
+                    break;
+                }
+            }
+        }
+    }
 
-    // // No collision, not on the river -> totally normal
+    // If no collision happened, check if player is on the river
+    if (mType == LaneType::River) {
+        std::cout << "Jumped to the river\n";
+        return true;
+    }
+
+    // No collision, not on the river -> totally normal
     return false;
 }
 
@@ -195,7 +218,7 @@ void Lane::attachChild(SceneNode::Ptr child) {
     SceneNode::attachChild(std::move(child));
 }
 
-void Lane::spawnObstacles() {
+void Lane::spawnObstacles(bool isBufferLane) {
     std::unique_ptr<Obstacle> obstacle;
     int count = (rand() % 3) + 3;  // 3, 4, 5 obstacles per lane
     int slot = -1;
@@ -210,7 +233,8 @@ void Lane::spawnObstacles() {
         attachChild(std::move(obstacle));
     }
 
-    slot = -1;
+    // Reserve the 7th slot for player if this is a buffer lane
+    slot = -1 + isBufferLane;
     for (int i = 0; i < count / 2; ++i) {
         slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 - 1 + i);
         obstacle = mObjectFactory->createObstacle();
@@ -398,8 +422,4 @@ void createMultipleLanes(
     }
 
     topLane = std::move(lane);
-}
-
-float slotToPosition(int slot) {
-    return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;
 }

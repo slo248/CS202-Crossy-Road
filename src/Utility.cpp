@@ -3,8 +3,6 @@
 #include <SFML/Graphics/Text.hpp>
 #include <cstdlib>
 
-#include "Animation.hpp"
-
 std::string toString(sf::Keyboard::Key key) {
 #define KEYTOSTRING_CASE(KEY) \
     case sf::Keyboard::KEY:   \
@@ -119,3 +117,7 @@ std::string toString(sf::Keyboard::Key key) {
 }
 
 int random(int left, int right) { return left + rand() % (right - left + 1); }
+
+float slotToPosition(int slot) {
+    return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;
+}

@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "Config.hpp"
+
 namespace sf {
 class Sprite;
 class Text;
@@ -23,6 +25,8 @@ template <typename T>
 void centerOrigin(T& t);
 
 int random(int left, int right);
+
+float slotToPosition(int slot);
 
 #include "Utility.inl"
 #endif

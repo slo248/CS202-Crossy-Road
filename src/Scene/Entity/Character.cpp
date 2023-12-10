@@ -25,6 +25,7 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
             textures.get(data.textures[i]), data.frameSize, data.numFrames
         ));
     }
+
     mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
     mCurrentAnimation->play();
     mCurrentAnimation->setRepeat(true);
@@ -154,6 +155,7 @@ void Character::moveCharacter(Direction direction) {
     }
 }
 
+// Check if character is ready for removed (death animation is finished)
 bool Character::isMarkedForRemoval() const {
     if (getCategory() == Category::Player)
         return SceneNode::isMarkedForRemoval() && mCurrentAnimation &&
@@ -165,32 +167,38 @@ bool Character::isMarkedForRemoval() const {
 void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    // updateMovementPattern(dt);
-    if (getCategory() != Category::Player) Entity::updateCurrent(dt, commands);
+    Entity::updateCurrent(dt, commands);
+    // std::cout << getVelocity().x << " " << getVelocity().y << "\n";
 
+    // Only for the death of player
     if (getCategory() == Category::Player && mCurrentLane &&
         mCurrentLane->isCollidedWithPlayer(this)) {
-        destroy();
         // The last animation of player is "dead animation"
-        mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
-        mCurrentAnimation->update(dt);
-        std::cout << "Player is dead!\n";
-        return;
+        if (mCurrentAnimation != &mAnimations[mAnimations.size() - 1]) {
+            std::cout << "Player is performing death!\n";
+            mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+            mCurrentAnimation->play();
+            mCurrentAnimation->setRepeat(false);
+            destroy();
+        }
     }
+    // For characters in general, check if character is dead
+    else if (!SceneNode::isMarkedForRemoval()) {
+        Animation* nextAnimation;
 
-    Animation* nextAnimation;
-    if (getVelocity().x == 0) {
-        nextAnimation = &mAnimations[CharacterData::Direction::Idle];
-    } else if (getVelocity().x > 0) {
-        nextAnimation = &mAnimations[CharacterData::Direction::ToRight];
-    } else {
-        nextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
-    }
+        if (getVelocity().x == 0) {
+            nextAnimation = &mAnimations[CharacterData::Direction::Idle];
+        } else if (getVelocity().x > 0) {
+            nextAnimation = &mAnimations[CharacterData::Direction::ToRight];
+        } else {
+            nextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
+        }
 
-    if (!mCurrentAnimation || mCurrentAnimation != nextAnimation) {
-        mCurrentAnimation = nextAnimation;
-        mCurrentAnimation->play();
-        mCurrentAnimation->setRepeat(true);
+        if (!mCurrentAnimation || mCurrentAnimation != nextAnimation) {
+            mCurrentAnimation = nextAnimation;
+            mCurrentAnimation->play();
+            mCurrentAnimation->setRepeat(true);
+        }
     }
 
     mCurrentAnimation->update(dt);

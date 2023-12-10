@@ -42,7 +42,7 @@ class Lane : public SceneNode {
     void attachChild(SceneNode::Ptr child) override;
 
    private:
-    void spawnObstacles();
+    void spawnObstacles(bool isBufferLane = false);
     void spawnTrafficLight();
     void spawnGroundEnemy();
     void spawnAirEnemy();
