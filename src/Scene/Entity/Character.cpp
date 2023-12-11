@@ -19,7 +19,7 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
       mType(type),
       mMovement(this),
       mCurrentLane(nullptr),
-      isInMovement(false) {
+      mIsMoving(false) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(Animation(
@@ -129,7 +129,7 @@ void Character::moveCharacter(Direction direction) {
         }
 
         case ToUpper: {
-            nextLane = static_cast<Lane*>(mCurrentLane->getParent());
+            nextLane = dynamic_cast<Lane*>(mCurrentLane->getParent());
             std::cout << "Move to upper\n";
             break;
         }
@@ -153,7 +153,7 @@ void Character::moveCharacter(Direction direction) {
 
         mCurrentAnimation->play();
         mMovement.setup(incomingPosition, Motion::Linear());
-        isInMovement = true;
+        mIsMoving = true;
     }
 }
 
@@ -167,6 +167,8 @@ bool Character::isMarkedForRemoval() const {
 }
 
 void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
+
+bool Character::isMoving() const { return mIsMoving; }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     Entity::updateCurrent(dt, commands);
@@ -204,15 +206,15 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
     mCurrentAnimation->update(dt);
 
-    // By default, only player can set isInMovement to true
-    if (isInMovement) {
+    // By default, only player can set mIsMoving to true
+    if (mIsMoving) {
         // The reason why player can't move along with the log
         // This set player's velocity to 0 everytime the player is not in a
         // movement
         mMovement.update(dt);
     }
     if (mMovement.isFinished()) {
-        isInMovement = false;
+        mIsMoving = false;
     }
 }
 

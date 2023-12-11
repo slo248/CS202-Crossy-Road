@@ -360,7 +360,7 @@ int main() {
     FontHolder fonts;
 
     loadTexture(textures);
-    World world(textures, fonts, window, Config::GameLevel::L1);
+    World world(textures, fonts, window, Config::GameLevel::Endless);
     Player player;
 
     sf::Clock clock;

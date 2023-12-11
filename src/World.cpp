@@ -15,7 +15,7 @@ World::World(
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mGameType(gameType),
-      mScrollSpeed(0, -40),
+      mScrollSpeed(0, -60),
       mTopLane(nullptr) {
     buildScene();
 }
@@ -54,9 +54,8 @@ void World::buildScene() {
         mLayers[i] = layer.get();
         mSceneGraph.attachChild(std::move(layer));
     }
-
     if (mGameType != Config::GameLevel::Endless) {
-        mRemainBlocks = (static_cast<int>(mGameType) + 1) * 2 + 3;
+        mRemainBlocks = (static_cast<int>(mGameType) + 1) * 3;
     } else
         mRemainBlocks = -1;
 
@@ -101,18 +100,21 @@ void World::buildScene() {
 }
 
 void World::buildBlocks() {
-    if (mRemainBlocks == -2) return;
+    if (mRemainBlocks == -2 || mPlayer->isMoving()) return;
     if (mRemainBlocks == 0) {
         Lane::Ptr top = nullptr;
         Lane* bot = nullptr;
         createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bot, true);
-        bot->attachChild(std::move(mLayers[OnGround]->detachChild(*mTopLane)));
-        top->setPosition(
-            0, DEFAULT_CELL_LENGTH / 2 - DEFAULT_CELL_LENGTH * BUFFER_LANE * 2
+        bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane))
         );
+        top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
         mTopLane = top.get();
-        mLayers[OnGround]->attachChild(std::move(top));
+        mLayers[Background]->attachChild(std::move(top));
         mRemainBlocks = -2;
+
+        mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
+        mPlayer->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
+
         return;
     }
     if (mWorldView.getCenter().y + mWorldView.getSize().y / 2 >
@@ -128,11 +130,12 @@ void World::buildBlocks() {
 
     bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
     mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
 
     mTopLane = top.get();
     mLayers[Background]->attachChild(std::move(top));
 
-    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+    std::cout << "Remaining blocks: " << mRemainBlocks << std::endl;
 }
 
 void World::removeEntitiesOutsizeView() {

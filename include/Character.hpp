@@ -58,6 +58,7 @@ class Character : public Entity {
     void moveCharacter(Direction direction);
     bool isMarkedForRemoval() const override;
     void setCurrentLane(Lane* lane);
+    bool isMoving() const;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -71,7 +72,7 @@ class Character : public Entity {
     Animation* mCurrentAnimation;
     Movement mMovement;
     Lane* mCurrentLane;
-    bool isInMovement;
+    bool mIsMoving;
 };
 
 #endif  // CHARACTER_HPP
