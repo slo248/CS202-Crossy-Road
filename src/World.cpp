@@ -23,10 +23,10 @@ World::World(
 void World::update(sf::Time dt) {
     buildBlocks();
 
-    // if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
-    //     mWorldView.move(
-    //         0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
-    //     );
+    if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
+        mWorldView.move(
+            0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
+        );
     mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
@@ -62,7 +62,7 @@ void World::buildScene() {
     Lane::Ptr top1 = nullptr;
     Lane* bot1 = nullptr;
 
-    createMultipleLanes(mTextures, 2 * NUM_LANE, top1, bot1, mGameType);
+    createMultipleLanes(mTextures, 2 * NUM_LANE, top1, bot1);
     top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
     mTopLane = top1.get();
     mLayers[Background]->attachChild(std::move(top1));
@@ -94,7 +94,7 @@ void World::buildScene() {
     );
 
     mWorldBounds = sf::FloatRect(
-        0, -DEFAULT_CELL_LENGTH * 2, mWorldView.getSize().x,
+        0, 0, mWorldView.getSize().x,
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
     );
 }
@@ -125,7 +125,7 @@ void World::buildBlocks() {
     Lane::Ptr top = nullptr;
     Lane* bot = nullptr;
 
-    createMultipleLanes(mTextures, NUM_LANE, top, bot, mGameType);
+    createMultipleLanes(mTextures, NUM_LANE, top, bot);
     top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
 
     bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));

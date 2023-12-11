@@ -347,7 +347,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     if (mSpawnInterval >= Table[mType].spawnInterval) {
         mSpawnInterval = sf::Time::Zero;
         if (mTrafficLight->getColor() == TrafficLight::Color::Green) {
-            // spawnGroundEnemy();
+            spawnGroundEnemy();
         }
     }
 
@@ -365,7 +365,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
                     }
                 }
             }
-            // spawnAirEnemy();
+            spawnAirEnemy();
             break;
         }
 
