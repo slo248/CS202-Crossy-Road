@@ -93,7 +93,20 @@ void World::buildScene() {
 }
 
 void World::buildBlocks() {
-    if (mRemainBlocks == 0) return;
+    if (mRemainBlocks == -2) return;
+    if (mRemainBlocks == 0) {
+        Lane::Ptr top = nullptr;
+        Lane* bot = nullptr;
+        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bot, true);
+        bot->attachChild(std::move(mLayers[OnGround]->detachChild(*mTopLane)));
+        top->setPosition(
+            0, DEFAULT_CELL_LENGTH / 2 - DEFAULT_CELL_LENGTH * BUFFER_LANE * 2
+        );
+        mTopLane = top.get();
+        mLayers[OnGround]->attachChild(std::move(top));
+        mRemainBlocks = -2;
+        return;
+    }
     if (mWorldView.getCenter().y + mWorldView.getSize().y / 2 >
         NUM_LANE * DEFAULT_CELL_LENGTH)
         return;
