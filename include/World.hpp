@@ -21,6 +21,9 @@ class World {
 
     sf::FloatRect getViewBounds() const;
 
+    bool hasAlivePlayer() const;
+    bool hasPlayerReachedEnd() const;
+
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
     const int NUM_LANE = 20;

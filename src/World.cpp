@@ -133,3 +133,9 @@ sf::FloatRect World::getViewBounds() const {
         )
     );
 }
+
+bool World::hasAlivePlayer() const { return !mPlayer->isMarkedForRemoval(); }
+
+bool World::hasPlayerReachedEnd() const {
+    return !mWorldBounds.contains(mPlayer->getPosition());
+}
