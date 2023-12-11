@@ -12,7 +12,7 @@ World::World(
       mFonts(fonts),
       mWindow(window),
       mWorldView(window.getDefaultView()),
-      mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
+      //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mGameType(gameType),
       mScrollSpeed(0, -20),
@@ -90,6 +90,11 @@ void World::buildScene() {
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
             mWorldView.getSize().y / 2
     );
+
+    mWorldBounds = sf::FloatRect(
+        0, 0, mWorldView.getSize().x,
+        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
+    );
 }
 
 void World::buildBlocks() {
@@ -147,7 +152,14 @@ sf::FloatRect World::getViewBounds() const {
     );
 }
 
-bool World::hasAlivePlayer() const { return !mPlayer->isMarkedForRemoval(); }
+bool World::hasAlivePlayer() const {
+    sf::FloatRect bounds(
+        mWorldView.getCenter() - mWorldView.getSize() / 2.f,
+        mWorldView.getSize()
+    );
+    return !mPlayer->isMarkedForRemoval() &&
+           bounds.contains(mPlayer->getWorldPosition());
+}
 
 bool World::hasPlayerReachedEnd() const {
     return !mWorldBounds.contains(mPlayer->getPosition());
