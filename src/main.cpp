@@ -384,11 +384,17 @@ int main() {
         //     dt -= sf::seconds(1);
         // }
         world.update(clock.restart());
+        if (!world.hasAlivePlayer()) {
+            std::cout << "Game Over!\n";
+            window.close();
+        }
 
         window.clear(sf::Color::White);
         world.draw();
         window.display();
     }
+
+    std::cout << "Game exited successfully!\n";
 
     return 0;
 }
