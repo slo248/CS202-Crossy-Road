@@ -1,6 +1,8 @@
 #ifndef LEVEL_STATE_HPP
 #define LEVEL_STATE_HPP
+
 #include "Button.hpp"
+#include "Label.hpp"
 #include "State.hpp"
 
 class LevelState : public State {
@@ -13,6 +15,7 @@ class LevelState : public State {
 
    private:
     sf::Sprite mBackground;
+    void addButtonLevel(State::Context context, const int& numLevel);
 };
 
 #endif

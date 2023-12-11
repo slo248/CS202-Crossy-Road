@@ -2,17 +2,21 @@
 
 #include <SFML/Window/Event.hpp>
 
+#include "Utility.hpp"
+
 Button::Button(
     State::Context context, Textures::ID button, sf::Vector2f position,
     bool is2Mode
 )
     : mCallback(),
       mSprite(context.textures->get(button)),
+      mText(),
       mIsToggle(false),
       mIsOn(false),
       mIs2Mode(is2Mode),
       mContext(context) {
     originalPosition = position;
+    textOriginalPosition = sf::Vector2f(0, 0);
     mSprite.setPosition(originalPosition);
     if (mIs2Mode) {
         changeTexture(Normal);
@@ -22,6 +26,25 @@ Button::Button(
 void Button::setCallback(Callback callback) { mCallback = std::move(callback); }
 
 void Button::setToggle(bool flag) { mIsToggle = flag; }
+
+void Button::setText(
+    const std::string& text, const std::string& hexCode, int characterSize,
+    sf::Vector2f position, Fonts::ID font
+) {
+    mText.setString(text);
+    centerOrigin(mText);
+    textOriginalPosition = position;
+
+    mText.setFont(mContext.fonts->get(font));
+
+    unsigned int r, g, b;
+    sscanf(hexCode.c_str(), "#%02x%02x%02x", &r, &g, &b);
+    mText.setFillColor(sf::Color(r, g, b));
+
+    mText.setCharacterSize(characterSize);
+
+    mText.setPosition(position);
+}
 
 bool Button::isMouseOver(const sf::RenderWindow& window) const {
     sf::Vector2f buttonPosition = mSprite.getPosition();
@@ -79,6 +102,7 @@ void Button::handleEvent(const sf::Event& event) {
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(mSprite, states);
+    target.draw(mText, states);
 }
 
 void Button::changeSize(Size buttonSize) {
@@ -90,12 +114,16 @@ void Button::changeSize(Size buttonSize) {
             sf::FloatRect bounds = mSprite.getLocalBounds();
             mSprite.setScale(scaleFactor, scaleFactor);
             mSprite.move(0.1f * bounds.width, 0.1f * bounds.height);
+            mText.setScale(scaleFactor, scaleFactor);
+            mText.move(0.1f * bounds.width, 0.1f * bounds.height);
             break;
         }
         case Size::Medium: {
             scaleFactor = 1.0f;
             mSprite.setScale(scaleFactor, scaleFactor);
             mSprite.setPosition(originalPosition);
+            mText.setScale(scaleFactor, scaleFactor);
+            mText.setPosition(textOriginalPosition);
             break;
         }
         case Size::Large: {
@@ -103,6 +131,8 @@ void Button::changeSize(Size buttonSize) {
             sf::FloatRect bounds = mSprite.getLocalBounds();
             mSprite.setScale(scaleFactor, scaleFactor);
             mSprite.move(-0.1f * bounds.width, -0.1f * bounds.height);
+            mText.setScale(scaleFactor, scaleFactor);
+            mText.move(-0.1f * bounds.width, -0.1f * bounds.height);
             break;
         }
     }

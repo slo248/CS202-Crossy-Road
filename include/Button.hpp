@@ -25,6 +25,10 @@ class Button : public Component {
     );
     void setCallback(Callback callback);
     void setToggle(bool flag);
+    void setText(
+        const std::string& text, const std::string& hexCode, int characterSize,
+        sf::Vector2f position, Fonts::ID font = Fonts::Main
+    );
 
     virtual bool isMouseOver(const sf::RenderWindow& window) const;
     virtual void select();
@@ -40,11 +44,13 @@ class Button : public Component {
    private:
     Callback mCallback;
     sf::Sprite mSprite;
+    sf::Text mText;
     bool mIsToggle;
     bool mIsOn;
     bool mIs2Mode;
     State::Context mContext;
     sf::Vector2f originalPosition;
+    sf::Vector2f textOriginalPosition;
 };
 
 #endif
