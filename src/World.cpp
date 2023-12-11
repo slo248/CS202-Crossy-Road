@@ -187,5 +187,6 @@ bool World::hasAlivePlayer() const {
 }
 
 bool World::hasPlayerReachedEnd() const {
-    return !mWorldBounds.contains(mPlayer->getPosition());
+    return mGameType != Config::GameLevel::Endless && mRemainBlocks == -2 &&
+           getCurrentRow(mPlayer->getWorldPosition().y) == BUFFER_LANE - 1;
 }
