@@ -5,7 +5,7 @@
 
 class LevelState : public State {
    public:
-    LevelState(StateStack& stack, Context context);
+    LevelState(StateStack& stack, Context context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

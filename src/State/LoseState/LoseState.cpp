@@ -3,8 +3,8 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-LoseState::LoseState(StateStack& stack, Context context, bool isSurvivalMode)
-    : State(stack, context),
+LoseState::LoseState(StateStack& stack, Context context, bool mode)
+    : State(stack, context, mode),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogDefeat(context.textures->get(Textures::DialogDefeat)) {
     mDialogDefeat.setPosition(200.f, 80.f);
@@ -23,7 +23,7 @@ LoseState::LoseState(StateStack& stack, Context context, bool isSurvivalMode)
         // requestStackPush(States::Game);
     });
 
-    if (isSurvivalMode) {
+    if (mMode) {
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome, sf::Vector2f(345.f, 362.f)
         );

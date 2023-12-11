@@ -3,8 +3,8 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-SettingState::SettingState(StateStack& stack, Context context)
-    : State(stack, context) {
+SettingState::SettingState(StateStack& stack, Context context, int mode)
+    : State(stack, context, mode) {
     mBackgroundSprite.setTexture(
         context.textures->get(Textures::BackgroundSetting)
     );

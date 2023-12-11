@@ -6,7 +6,7 @@
 
 class SettingState : public State {
    public:
-    SettingState(StateStack& stack, Context context);
+    SettingState(StateStack& stack, Context context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

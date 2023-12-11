@@ -5,7 +5,7 @@
 
 class SavedState : public State {
    public:
-    SavedState(StateStack& stack, Context context);
+    SavedState(StateStack& stack, Context context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

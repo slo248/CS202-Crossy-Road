@@ -2,8 +2,8 @@
 
 #include "ResourceHolder.hpp"
 
-WinState::WinState(StateStack& stack, Context context)
-    : State(stack, context),
+WinState::WinState(StateStack& stack, Context context, int mode)
+    : State(stack, context, mode),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogVictory(context.textures->get(Textures::DialogVictory)) {
     mDialogVictory.setPosition(211.f, 98.f);

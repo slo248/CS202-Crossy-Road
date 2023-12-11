@@ -7,7 +7,7 @@
 
 class CreditState : public State {
    public:
-    CreditState(StateStack& stack, Context context);
+    CreditState(StateStack& stack, Context context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

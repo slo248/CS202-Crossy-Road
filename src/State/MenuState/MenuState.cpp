@@ -1,8 +1,8 @@
 #include "MenuState.hpp"
 
-MenuState::MenuState(StateStack& stack, Context context)
+MenuState::MenuState(StateStack& stack, Context context, int mode)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
-      State(stack, context) {
+      State(stack, context, mode) {
     auto buttonPlay = std::make_shared<Button>(
         context, Textures::ButtonPlay, sf::Vector2f(584, 267)
     );
