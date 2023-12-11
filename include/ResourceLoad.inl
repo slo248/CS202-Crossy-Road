@@ -452,9 +452,12 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonSetting, "asset/textures/ButtonSetting.png");
     load(Textures::ButtonResume, "asset/textures/ButtonResume.png");
 
+    // Skin (serve for GUI)
+    load(Textures::SkinArcher, "asset/textures/SkinArcher.png");
+
     // Setting state
     load(Textures::BackgroundSetting, "asset/textures/BackgroundSetting.png");
-    load(Textures::DialogGeneral, "asset/textures/DialogGeneral.png");
+    load(Textures::DialogCommon, "asset/textures/DialogCommon.png");
     load(Textures::ButtonLeftArrow, "asset/textures/ButtonLeftArrow.png");
     load(Textures::ButtonRightArrow, "asset/textures/ButtonRightArrow.png");
     load(Textures::ButtonUpArrow, "asset/textures/ButtonUpArrow.png");
@@ -466,6 +469,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
     load(Textures::ButtonSound, "asset/textures/ButtonSound.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
+    load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
 
     // Credit state
     load(Textures::BackgroundCredit, "asset/textures/BackgroundCredit.png");

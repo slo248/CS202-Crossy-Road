@@ -13,6 +13,7 @@ class Dialog : public Component {
 
    public:
     Dialog(const sf::Texture& texture, State::Context context);
+    virtual void update(sf::Time dt){};
     virtual void handleEvent(const sf::Event& event){};
 
    protected:

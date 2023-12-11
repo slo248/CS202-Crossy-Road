@@ -221,9 +221,12 @@ enum ID {
     ButtonSetting,
     ButtonResume,
 
+    // Skin(serve for GUI)
+    SkinArcher,
+
     // Setting state
     BackgroundSetting,
-    DialogGeneral,
+    DialogCommon,
     ButtonLeftArrow,
     ButtonRightArrow,
     ButtonUpArrow,
@@ -236,6 +239,7 @@ enum ID {
     ButtonSave,
     ButtonSound,
     ButtonMusic,
+    ButtonConfirm,
     BarSounds,
 
     // Credit state
