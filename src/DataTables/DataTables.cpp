@@ -167,7 +167,7 @@ std::vector<CharacterData> initializeCharacterData() {
             static_cast<Textures::ID>(Textures::ArcherDead + tmp),
         };
         // data[i].frameSize = DEFAULT_CELL_RECT.getSize();
-        data[i].frameSize = sf::Vector2i(64, 64);
+        data[i].frameSize = sf::Vector2i(42, 38);
         data[i].numFrames = 3;
     }
 

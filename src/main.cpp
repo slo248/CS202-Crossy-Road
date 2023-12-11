@@ -203,27 +203,27 @@ void loadTexture(TextureHolder& textures) {
         "asset/game_textures/Skin/Archer/Walk_ToRightNew.png"
     );
     textures.load(
-        Textures::ArcherIdle, "asset/game_textures/Skin/Archer/Idle.png"
+        Textures::ArcherIdle, "asset/game_textures/Skin/Archer/IdleNew.png"
     );
     textures.load(
-        Textures::ArcherDead, "asset/game_textures/Skin/Archer/Dead.png"
+        Textures::ArcherDead, "asset/game_textures/Skin/Archer/DeadNew.png"
     );
 
     textures.load(
         Textures::EnchantressToLeft,
-        "asset/game_textures/Skin/Enchantress/Walk_ToLeft.png"
+        "asset/game_textures/Skin/Enchantress/Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::EnchantressToRight,
-        "asset/game_textures/Skin/Enchantress/Walk_ToRight.png"
+        "asset/game_textures/Skin/Enchantress/Walk_ToRightNew.png"
     );
     textures.load(
         Textures::EnchantressIdle,
-        "asset/game_textures/Skin/Enchantress/Idle.png"
+        "asset/game_textures/Skin/Enchantress/IdleNew.png"
     );
     textures.load(
         Textures::EnchantressDead,
-        "asset/game_textures/Skin/Enchantress/Dead.png"
+        "asset/game_textures/Skin/Enchantress/DeadNew.png"
     );
 
     textures.load(
