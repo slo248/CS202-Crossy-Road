@@ -7,7 +7,7 @@ DialogGeneral::DialogGeneral(const sf::Texture& texture, State::Context context)
     : Dialog(texture, context),
       mLabelTextKeys(context.textures->get(Textures::LabelTextKeys)),
       mLabelTextSounds(context.textures->get(Textures::LabelTextSounds)) {
-    mSprite.setPosition(13.f, 79.f);
+    mSprite.setPosition(13.f, 112.f);
     mLabelTextKeys.setPosition(174.f, 155.f);
     mLabelTextSounds.setPosition(603.f, 155.f);
 

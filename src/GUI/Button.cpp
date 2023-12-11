@@ -65,11 +65,15 @@ void Button::select() {
 
     if (mIs2Mode) {
         changeTexture(Selected);
-
+        callBack();
     } else {
-        if (mCallback) {
-            mCallback();
-        }
+        callBack();
+    }
+}
+
+void Button::callBack() {
+    if (mCallback) {
+        mCallback();
     }
 }
 

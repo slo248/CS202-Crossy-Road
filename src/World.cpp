@@ -16,9 +16,9 @@ World::World(
       mPlayer(nullptr),
       mTopLane(nullptr),
       // The sequence of initializer list is not the sequence of initialization
-      // -> fucked up
+      // -> fucked up 
       mTotalBlocks(2 + (gameType + 1) * 2),
-      mScrollSpeed(0, -25 * getLevelFactor(gameType)),
+      mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)

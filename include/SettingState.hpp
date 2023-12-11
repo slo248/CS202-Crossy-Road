@@ -3,6 +3,7 @@
 
 #include "Button.hpp"
 #include "DialogGeneral.hpp"
+#include "DialogSkin.hpp"
 
 class SettingState : public State {
    public:
@@ -13,7 +14,13 @@ class SettingState : public State {
     virtual bool handleEvent(const sf::Event& event);
 
    private:
+    bool mIsGeneral;
     sf::Sprite mBackgroundSprite;
+    DialogGeneral::Ptr mDialogGeneral;
+    Button::Ptr mButtonGeneral;
+    DialogSkin::Ptr mDialogSkin;
+    Button::Ptr mButtonSkin;
+    sf::RenderWindow* mWindow;
 };
 
-#endif  // BOOK_SettingSTATE_HPP
+#endif

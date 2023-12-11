@@ -12,7 +12,7 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
     auto buttonContinue = std::make_shared<Button>(
         context, Textures::ButtonContinue, sf::Vector2f(584, 320)
     );
-    buttonContinue->setCallback([this]() { requestStackPush(States::Saved); });
+    buttonContinue->setCallback([this]() { requestStackPush(States::ChooseModeSaved); });
     mGUIContainer.pack(buttonContinue);
 
     auto buttonRanking = std::make_shared<Button>(

@@ -30,9 +30,10 @@ class Button : public Component {
         sf::Vector2f position, Fonts::ID font = Fonts::Main
     );
 
-    virtual bool isMouseOver(const sf::RenderWindow& window) const;
-    virtual void select();
-    virtual void deselect();
+    virtual bool isMouseOver(const sf::RenderWindow& window) const override;
+    virtual void select() override;
+    void callBack();
+    virtual void deselect() override;
 
     virtual void handleEvent(const sf::Event& event);
 

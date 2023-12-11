@@ -9,6 +9,5 @@ Dialog::Dialog(const sf::Texture& texture, State::Context context)
 
 void Dialog::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
-    target.draw(mGUIContainer, states);
     target.draw(mSprite, states);
 }
