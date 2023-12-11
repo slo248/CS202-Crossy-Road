@@ -348,6 +348,11 @@ void loadTexture(TextureHolder& textures) {
     /*<------------------------River Textures--------------------------->*/
 }
 
+void loadFonts(FontHolder& fonts) {
+    fonts.load(Fonts::Main, "asset/font/Sansation.ttf");
+    fonts.load(Fonts::Enchanted, "asset/font/Enchanted Land.otf");
+}
+
 int main() {
     srand(time(0));
     sf::RenderWindow window(
@@ -360,6 +365,7 @@ int main() {
     FontHolder fonts;
 
     loadTexture(textures);
+    loadFonts(fonts);
     World world(textures, fonts, window, Config::GameLevel::Endless);
     Player player;
 

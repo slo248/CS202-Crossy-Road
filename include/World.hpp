@@ -52,6 +52,11 @@ class World {
 
     Lane* mTopLane;
     int mRemainBlocks;
+
+    int mPlayerPreRow;
+    int mScores;
+
+    sf::Text mScoreText;
 };
 
 #endif

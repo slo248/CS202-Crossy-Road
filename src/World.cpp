@@ -16,8 +16,14 @@ World::World(
       mPlayer(nullptr),
       mGameType(gameType),
       mScrollSpeed(0, -60),
-      mTopLane(nullptr) {
+      mTopLane(nullptr),
+      mScores(0) {
     buildScene();
+    mScoreText.setFont(mFonts.get(Fonts::Main));
+    mScoreText.setCharacterSize(20);
+    mScoreText.setPosition(10, 10);
+    mScoreText.setOutlineThickness(5);
+    mScoreText.setOutlineColor(sf::Color::Black);
 }
 
 void World::update(sf::Time dt) {
@@ -37,12 +43,23 @@ void World::update(sf::Time dt) {
     mSceneGraph.removeWrecks();
     mSceneGraph.update(dt, mCommandQueue);
 
+    int curRow = getCurrentRow(mPlayer->getWorldPosition().y);
+
+    if (mPlayerPreRow > curRow) {
+        mScores++;
+        mPlayerPreRow = curRow;
+    }
+
+    mScoreText.setString("Scores: " + std::to_string(mScores));
+
     // std::cout << "\n";
 }
 
 void World::draw() {
     mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
+    mWindow.setView(mWindow.getDefaultView());
+    mWindow.draw(mScoreText);
 }
 
 CommandQueue& World::getCommandQueue() { return mCommandQueue; }
@@ -84,6 +101,7 @@ void World::buildScene() {
         DEFAULT_CELL_LENGTH * (2 * NUM_LANE + BUFFER_LANE) -
             DEFAULT_CELL_LENGTH / 2
     );
+    mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
     mPlayer->setCurrentLane(bot3);
     mLayers[OnGround]->attachChild(std::move(player));
 

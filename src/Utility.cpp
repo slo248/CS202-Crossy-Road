@@ -121,3 +121,5 @@ int random(int left, int right) { return left + rand() % (right - left + 1); }
 float slotToPosition(int slot) {
     return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;
 }
+
+int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }

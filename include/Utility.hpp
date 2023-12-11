@@ -28,5 +28,7 @@ int random(int left, int right);
 
 float slotToPosition(int slot);
 
+int getCurrentRow(int y);
+
 #include "Utility.inl"
 #endif
