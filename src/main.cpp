@@ -124,61 +124,61 @@ void loadTexture(TextureHolder& textures) {
     /***********************Load Enemy Textures****************************/
     textures.load(
         Textures::BeeBossToLeft,
-        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToLeft.png"
+        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToLeftNew.png"
     );
     textures.load(
         Textures::BeeBossToRight,
-        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToRight.png"
+        "asset/game_textures/Enemy/BeeBoss/S_Fly_ToRightNew.png"
     );
     textures.load(
         Textures::BeeBossIdle,
-        "asset/game_textures/Enemy/BeeBoss/Special_Idle.png"
+        "asset/game_textures/Enemy/BeeBoss/Special_IdleNew.png"
     );
 
     textures.load(
         Textures::BombBatToLeft,
-        "asset/game_textures/Enemy/BombBat/S_Fly_ToLeft.png"
+        "asset/game_textures/Enemy/BombBat/S_Fly_ToLeftNew.png"
     );
     textures.load(
         Textures::BombBatToRight,
-        "asset/game_textures/Enemy/BombBat/S_Fly_ToRight.png"
+        "asset/game_textures/Enemy/BombBat/S_Fly_ToRightNew.png"
     );
     textures.load(
-        Textures::BombBatIdle, "asset/game_textures/Enemy/BombBat/D_Fly.png"
+        Textures::BombBatIdle, "asset/game_textures/Enemy/BombBat/D_FlyNew.png"
     );
 
     textures.load(
         Textures::FishmenToLeft,
-        "asset/game_textures/Enemy/Fishmen/S_Walk_ToLeft.png"
+        "asset/game_textures/Enemy/Fishmen/S_Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::FishmenToRight,
-        "asset/game_textures/Enemy/Fishmen/S_Walk_ToRight.png"
+        "asset/game_textures/Enemy/Fishmen/S_Walk_ToRightNew.png"
     );
     textures.load(
-        Textures::FishmenIdle, "asset/game_textures/Enemy/Fishmen/S_Swim.png"
+        Textures::FishmenIdle, "asset/game_textures/Enemy/Fishmen/S_SwimNew.png"
     );
 
     textures.load(
-        Textures::OrcToLeft, "asset/game_textures/Enemy/Orc/S_Walk_ToLeft.png"
+        Textures::OrcToLeft, "asset/game_textures/Enemy/Orc/S_Walk_ToLeftNew.png"
     );
     textures.load(
-        Textures::OrcToRight, "asset/game_textures/Enemy/Orc/S_Walk_ToRight.png"
+        Textures::OrcToRight, "asset/game_textures/Enemy/Orc/S_Walk_ToRightNew.png"
     );
     textures.load(
-        Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_Special.png"
+        Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_SpecialNew.png"
     );
 
     textures.load(
         Textures::ZombieToLeft,
-        "asset/game_textures/Enemy/Zombie/S_Walk_ToLeft.png"
+        "asset/game_textures/Enemy/Zombie/S_Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::ZombieToRight,
-        "asset/game_textures/Enemy/Zombie/S_Walk_ToRight.png"
+        "asset/game_textures/Enemy/Zombie/S_Walk_ToRightNew.png"
     );
     textures.load(
-        Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/D_Attack.png"
+        Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/S_AttackNew.png"
     );
     /*************************************************************************/
 

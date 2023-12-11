@@ -42,7 +42,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::BeeBossToRight,
         Textures::BeeBossIdle,
     };
-    data[Character::BeeBoss].frameSize = sf::Vector2i(64, 64);
+    data[Character::BeeBoss].frameSize = sf::Vector2i(42, 50);
     data[Character::BeeBoss].numFrames = 6;
     /*<-------------------------BeeBoss--------------------------->*/
 
@@ -53,7 +53,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::BombBatToRight,
         Textures::BombBatIdle,
     };
-    data[Character::BombBat].frameSize = sf::Vector2i(48, 48);
+    data[Character::BombBat].frameSize = sf::Vector2i(52, 44);
     data[Character::BombBat].numFrames = 6;
     /*<-------------------------BombBat--------------------------->*/
 
@@ -130,7 +130,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::FishmenToRight,
         Textures::FishmenIdle,
     };
-    data[Character::Fishmen].frameSize = sf::Vector2i(48, 48);
+    data[Character::Fishmen].frameSize = sf::Vector2i(42, 44);
     data[Character::Fishmen].numFrames = 6;
     /*<-------------------------Fishmen------------------------->*/
 
@@ -141,7 +141,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::OrcToRight,
         Textures::OrcIdle,
     };
-    data[Character::Orc].frameSize = sf::Vector2i(64, 64);
+    data[Character::Orc].frameSize = sf::Vector2i(60, 56);
     data[Character::Orc].numFrames = 6;
     /*<-------------------------Orc------------------------->*/
 
@@ -152,7 +152,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::ZombieToRight,
         Textures::ZombieIdle,
     };
-    data[Character::Zombie].frameSize = sf::Vector2i(48, 48);
+    data[Character::Zombie].frameSize = sf::Vector2i(42, 44);
     data[Character::Zombie].numFrames = 6;
     /*<-------------------------Zombie------------------------->*/
 
