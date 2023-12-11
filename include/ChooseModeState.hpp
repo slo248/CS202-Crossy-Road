@@ -7,7 +7,7 @@
 
 class ChooseModeState : public State {
    public:
-    ChooseModeState(StateStack& stack, Context context);
+    ChooseModeState(StateStack& stack, Context context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

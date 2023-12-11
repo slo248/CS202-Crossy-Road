@@ -32,7 +32,7 @@ int main() {
 
     stack.registerState<SettingState>(States::Setting);
     stack.registerState<CreditState>(States::Credit);
-    stack.registerState<LoseState>(States::Lose);
+    stack.registerState<LoseState>(States::Lose, 0);
     stack.registerState<WinState>(States::Win);
     stack.registerState<PauseState>(States::Pause);
     stack.registerState<MenuState>(States::Menu);
@@ -49,8 +49,8 @@ int main() {
     stack.pushState(States::Saved);
     stack.pushState(States::ChooseMode);
     stack.pushState(States::Menu);
-    stack.pushState(States::Lose);
     stack.pushState(States::Win);
+    stack.pushState(States::Lose);
 
     while (stack.mContext.window->isOpen()) {
         stack.mContext.window->clear(sf::Color::White);

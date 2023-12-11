@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-ChooseModeState::ChooseModeState(StateStack& stack, Context context)
+ChooseModeState::ChooseModeState(StateStack& stack, Context context, int mode)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMenu)) {
     auto buttonLevelMenu = std::make_shared<Button>(

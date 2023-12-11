@@ -1,8 +1,8 @@
 #include "PauseState.hpp"
 
-PauseState::PauseState(StateStack& stack, Context context)
+PauseState::PauseState(StateStack& stack, Context context, int mode)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
-      State(stack, context) {
+      State(stack, context, mode) {
     int x = 300;
 
     auto buttonStar = std::make_shared<Button>(

@@ -28,7 +28,7 @@ class State {
     };
 
    public:
-    State(StateStack& stack, Context context);
+    State(StateStack& stack, Context context, int mode = 0);
     virtual ~State();
 
     virtual void draw() = 0;
@@ -36,6 +36,7 @@ class State {
     virtual bool handleEvent(const sf::Event& event) = 0;
 
    protected:
+    int mMode;
     Container mGUIContainer;
     void requestStackPush(States::ID stateID);
     void requestStackPop();
