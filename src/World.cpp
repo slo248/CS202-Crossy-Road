@@ -15,7 +15,7 @@ World::World(
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mGameType(gameType),
-      mScrollSpeed(0, -20),
+      mScrollSpeed(0, -40),
       mTopLane(nullptr) {
     buildScene();
 }
@@ -23,10 +23,10 @@ World::World(
 void World::update(sf::Time dt) {
     buildBlocks();
 
-    if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
-        mWorldView.move(
-            0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
-        );
+    // if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
+    //     mWorldView.move(
+    //         0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
+    //     );
     mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
@@ -60,20 +60,18 @@ void World::buildScene() {
     } else
         mRemainBlocks = -1;
 
-    Lane::Ptr top1 = nullptr, top2 = nullptr;
-    Lane *bot1 = nullptr, *bot2 = nullptr;
+    Lane::Ptr top1 = nullptr;
+    Lane* bot1 = nullptr;
 
-    createMultipleLanes(mTextures, NUM_LANE, top1, bot1, mGameType);
-    createMultipleLanes(mTextures, NUM_LANE, top2, bot2, mGameType);
+    createMultipleLanes(mTextures, 2 * NUM_LANE, top1, bot1, mGameType);
     top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
-    bot1->attachChild(std::move(top2));
     mTopLane = top1.get();
-    mLayers[OnGround]->attachChild(std::move(top1));
+    mLayers[Background]->attachChild(std::move(top1));
 
     Lane::Ptr top3 = nullptr;
     Lane* bot3 = nullptr;
     createMultipleLanes(mTextures, BUFFER_LANE, top3, bot3, true);
-    bot2->attachChild(std::move(top3));
+    bot1->attachChild(std::move(top3));
 
     Lane::Ptr top4 = nullptr;
     Lane* bot4 = nullptr;
@@ -97,7 +95,7 @@ void World::buildScene() {
     );
 
     mWorldBounds = sf::FloatRect(
-        0, 0, mWorldView.getSize().x,
+        0, -DEFAULT_CELL_LENGTH * 2, mWorldView.getSize().x,
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
     );
 }
@@ -128,12 +126,13 @@ void World::buildBlocks() {
     createMultipleLanes(mTextures, NUM_LANE, top, bot, mGameType);
     top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
 
-    mTopLane->setPosition(0, DEFAULT_CELL_LENGTH);
-    bot->attachChild(std::move(mLayers[OnGround]->detachChild(*mTopLane)));
+    bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
     mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
 
     mTopLane = top.get();
-    mLayers[OnGround]->attachChild(std::move(top));
+    mLayers[Background]->attachChild(std::move(top));
+
+    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
 }
 
 void World::removeEntitiesOutsizeView() {
@@ -141,19 +140,19 @@ void World::removeEntitiesOutsizeView() {
     command.category = Category::Enemy | Category::Obstacle | Category::Lane |
                        Category::Decoration;
     command.action = derivedAction<SceneNode>([this](SceneNode& e, sf::Time) {
-        if (!getViewBounds().intersects(e.getBoundingRect())) e.destroy();
+        if (!getBattlefieldBounds().intersects(e.getBoundingRect()))
+            e.destroy();
     });
 
     mCommandQueue.push(command);
 }
 
-sf::FloatRect World::getViewBounds() const {
+sf::FloatRect World::getBattlefieldBounds() const {
     return sf::FloatRect(
-        sf::Vector2f(-DEFAULT_CELL_LENGTH, -DEFAULT_CELL_LENGTH * BUFFER_LANE),
-        sf::Vector2f(
-            DEFAULT_CELL_LENGTH * (DEFAULT_CELLS_PER_LANE + 2),
-            DEFAULT_CELL_LENGTH * (2 * NUM_LANE + 3 * BUFFER_LANE + 2)
-        )
+        mWorldBounds.getPosition().x - DEFAULT_CELL_LENGTH,
+        mWorldBounds.getPosition().y - DEFAULT_CELL_LENGTH,
+        mWorldBounds.getSize().x + DEFAULT_CELL_LENGTH * 2,
+        mWorldBounds.getSize().y + DEFAULT_CELL_LENGTH * 2
     );
 }
 

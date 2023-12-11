@@ -19,14 +19,14 @@ class World {
 
     CommandQueue& getCommandQueue();
 
-    sf::FloatRect getViewBounds() const;
+    sf::FloatRect getBattlefieldBounds() const;
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
-    const int NUM_LANE = 20;
+    const int NUM_LANE = 10;
     const int BUFFER_LANE = 2;
 
     void buildScene();

@@ -68,7 +68,9 @@ void Player::initKeys() {
 void Player::initActions() {
     mActionBinding[ShowPosition].action = [](SceneNode& a, sf::Time dt) {
         sf::Vector2f pos = a.getWorldPosition();
-        std::cout << "Player position: " << pos.x << ' ' << pos.y << std::endl;
+        std::cout << "Player is at row "
+                  << (pos.y + DEFAULT_CELL_LENGTH / 2) / DEFAULT_CELL_LENGTH
+                  << std::endl;
     };
     mActionBinding[MoveUp].action =
         derivedAction<Character>([](Character& a, sf::Time dt) {
