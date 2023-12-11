@@ -22,7 +22,12 @@ World::World(
 
 void World::update(sf::Time dt) {
     buildBlocks();
-    // mWorldView.move(mScrollSpeed * dt.asSeconds());
+
+    if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
+        mWorldView.move(
+            0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
+        );
+    mWorldView.move(mScrollSpeed * dt.asSeconds());
 
     while (!mCommandQueue.isEmpty())
         mSceneGraph.onCommand(mCommandQueue.pop(), dt);
@@ -144,10 +149,10 @@ void World::removeEntitiesOutsizeView() {
 
 sf::FloatRect World::getViewBounds() const {
     return sf::FloatRect(
-        sf::Vector2f(-DEFAULT_CELL_LENGTH, -DEFAULT_CELL_LENGTH),
+        sf::Vector2f(-DEFAULT_CELL_LENGTH, -DEFAULT_CELL_LENGTH * BUFFER_LANE),
         sf::Vector2f(
             DEFAULT_CELL_LENGTH * (DEFAULT_CELLS_PER_LANE + 2),
-            2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE + 1)
+            DEFAULT_CELL_LENGTH * (2 * NUM_LANE + 3 * BUFFER_LANE + 2)
         )
     );
 }
