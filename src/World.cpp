@@ -15,7 +15,7 @@ World::World(
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mGameType(gameType),
-      mScrollSpeed(0, -60),
+      mScrollSpeed(0, -40),
       mTopLane(nullptr),
       mScores(0) {
     buildScene();

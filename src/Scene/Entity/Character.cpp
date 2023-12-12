@@ -109,7 +109,7 @@ sf::FloatRect Character::getLocalBounds() const {
 Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
-    if (!mMovement.isFinished()) return;
+    if (!mMovement.isFinished() || SceneNode::isMarkedForRemoval()) return;
     Animation* nextAnimation;
     sf::Vector2f incomingPosition;
     Lane* nextLane = nullptr;
@@ -174,8 +174,8 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     Entity::updateCurrent(dt, commands);
 
     // Only for the death of player
-    if (getCategory() == Category::Player && mCurrentLane &&
-        mCurrentLane->isCollidedWithPlayer(this)) {
+    if (!SceneNode::isMarkedForRemoval() && getCategory() == Category::Player &&
+        mCurrentLane && mCurrentLane->isCollidedWithPlayer(this)) {
         // The last animation of player is "dead animation"
         if (mCurrentAnimation != &mAnimations[mAnimations.size() - 1]) {
             std::cout << "Player is performing death!\n";
