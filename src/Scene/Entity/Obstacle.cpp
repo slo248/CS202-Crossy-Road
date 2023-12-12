@@ -16,8 +16,7 @@ const std::vector<ObstacleData> Table = initializeObstacleData();
 Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     : Entity(sf::Vector2f(Table[type].normalSpeed * levelScale, 0)),
       mType(type),
-      mSprite(textures.get(Table[type].texture)),
-      mIsBlockingPlayer(Table[type].isBlockingPlayer) {
+      mSprite(textures.get(Table[type].texture)) {
     if (type == Type::River_Log1) {
         setScaleNormalVelocity(1.0);
     }

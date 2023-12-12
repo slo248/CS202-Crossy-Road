@@ -53,15 +53,15 @@ class Lane : public SceneNode {
     void updateMovementPattern(sf::Time dt);
 
    private:
-    LaneType mType;
+    LaneType mType;  // Save
     // const LaneTypeHolder* const mTypeHolder;
-    SpawnSide mSpawnSide;
+    SpawnSide mSpawnSide;  // Save
     sf::Sprite mSprite;
-    sf::Time mSpawnInterval;
+    sf::Time mSpawnInterval;  // Save
     Lane* mChildLane;
     TrafficLight* mTrafficLight;
     std::unique_ptr<ObjectFactory> mObjectFactory;
-    float mRandomFactor;
+    float mRandomFactor;  // Save
 };
 
 void createMultipleLanes(

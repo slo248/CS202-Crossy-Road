@@ -27,13 +27,13 @@ class TrafficLight : public SceneNode {
         const override;
 
    private:
-    Type mType;
-    Phase mPhase;
+    Type mType;    // Save
+    Phase mPhase;  // Save
     sf::Sprite mSprite;
     sf::Time mElapsedTime;
     std::size_t mCurrentFrame;
     std::size_t mNumFrames;
-    Color mColor;
+    Color mColor;  // Save
 };
 
 #endif  // TRAFFIC_LIGHT_HPP

@@ -63,9 +63,8 @@ class Obstacle : public Entity {
     void updateMovementPattern(sf::Time dt);
 
    private:
-    Type mType;
+    Type mType;  // Save
     sf::Sprite mSprite;
-    bool mIsBlockingPlayer;
 };
 
 #endif  // OBSTACLE_HPP

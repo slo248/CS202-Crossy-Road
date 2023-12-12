@@ -180,12 +180,10 @@ std::vector<ObstacleData> initializeObstacleData() {
     for (int i = 0; i < Obstacle::TypeCount; ++i) {
         data[i].texture = static_cast<Textures::ID>(Textures::Field_Bush2 + i);
         data[i].textureRect = DEFAULT_CELL_RECT;
-        data[i].isBlockingPlayer = true;
         data[i].normalSpeed = 0.f;
     }
 
     data[Obstacle::Type::River_Log1].normalSpeed = DEFAULT_LOG_SPEED;
-    data[Obstacle::Type::River_Log1].isBlockingPlayer = false;
 
     return data;
 }

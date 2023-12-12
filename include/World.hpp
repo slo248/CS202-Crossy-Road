@@ -48,13 +48,13 @@ class World {
     Character* mPlayer;
 
     CommandQueue mCommandQueue;
-    Config::GameLevel::Type mGameType;
+    Config::GameLevel::Type mGameType;  // Save
 
     Lane* mTopLane;
-    int mRemainBlocks;
+    int mRemainBlocks;  // Save
 
-    int mPlayerPreRow;
-    int mScores;
+    int mPlayerPreRow;  // Save
+    int mScores;        // Save
 
     sf::Text mScoreText;
 };

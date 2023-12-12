@@ -20,8 +20,8 @@ class Entity : public SceneNode {
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands) override;
 
    private:
-    sf::Vector2f mVelocity;
-    const sf::Vector2f mNormalVelocity;
+    sf::Vector2f mVelocity;              // save
+    const sf::Vector2f mNormalVelocity;  // save
 };
 
 #endif  // ENTITY_HPP

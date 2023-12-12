@@ -26,7 +26,6 @@ struct CharacterData {
 struct ObstacleData {
     Textures::ID texture;
     sf::IntRect textureRect;
-    bool isBlockingPlayer;
     float normalSpeed;
 };
 
