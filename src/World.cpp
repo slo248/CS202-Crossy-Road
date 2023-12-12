@@ -15,7 +15,7 @@ World::World(
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mGameType(gameType),
-      mScrollSpeed(0, -40),
+      mScrollSpeed(0, -40 * getLevelFactor(gameType)),
       mTopLane(nullptr),
       mScores(0) {
     buildScene();
@@ -79,7 +79,9 @@ void World::buildScene() {
     Lane::Ptr top1 = nullptr;
     Lane* bot1 = nullptr;
 
-    createMultipleLanes(mTextures, 2 * NUM_LANE, top1, bot1);
+    createMultipleLanes(
+        mTextures, 2 * NUM_LANE, top1, bot1, false, getLevelFactor(mGameType)
+    );
     top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
     mTopLane = top1.get();
     mLayers[Background]->attachChild(std::move(top1));
@@ -143,7 +145,9 @@ void World::buildBlocks() {
     Lane::Ptr top = nullptr;
     Lane* bot = nullptr;
 
-    createMultipleLanes(mTextures, NUM_LANE, top, bot);
+    createMultipleLanes(
+        mTextures, NUM_LANE, top, bot, false, getLevelFactor(mGameType)
+    );
     top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
 
     bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));

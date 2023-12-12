@@ -123,3 +123,7 @@ float slotToPosition(int slot) {
 }
 
 int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
+
+float getLevelFactor(Config::GameLevel::Type gameType) {
+    return 1.f + static_cast<float>(gameType) / 20;
+}

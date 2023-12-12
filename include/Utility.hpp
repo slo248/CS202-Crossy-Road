@@ -30,5 +30,7 @@ float slotToPosition(int slot);
 
 int getCurrentRow(int y);
 
+float getLevelFactor(Config::GameLevel::Type gameType);
+
 #include "Utility.inl"
 #endif
