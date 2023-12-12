@@ -141,7 +141,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::OrcToRight,
         Textures::OrcIdle,
     };
-    data[Character::Orc].frameSize = sf::Vector2i(60, 56);
+    data[Character::Orc].frameSize = sf::Vector2i(54, 54);
     data[Character::Orc].numFrames = 6;
     /*<-------------------------Orc------------------------->*/
 
