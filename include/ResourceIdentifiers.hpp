@@ -43,14 +43,6 @@ enum ID {
     BirdToRight,
     BirdIdle,
 
-    CrocodileToLeft,
-    CrocodileToRight,
-    CrocodileIdle,
-
-    DogToLeft,
-    DogToRight,
-    DogIdle,
-
     FrogToLeft,
     FrogToRight,
     FrogIdle,
@@ -90,6 +82,18 @@ enum ID {
     ZombieToLeft,
     ZombieToRight,
     ZombieIdle,
+
+    CrocodileToLeft,
+    CrocodileToRight,
+    CrocodileIdle,
+
+    DogToLeft,
+    DogToRight,
+    DogIdle,
+
+    WraithToLeft,
+    WraithToRight,
+    WraithIdle,
 
     // callbees,
     // octopus,

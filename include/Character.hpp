@@ -29,6 +29,7 @@ class Character : public Entity {
         Fishmen,
         Orc,
         Zombie,
+        Wraith,
         // Callbee,
         // Octopus,
         // Slime,

@@ -24,8 +24,9 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Field_Tree1,
             };
             mGroundEnemies = {
-                Character::Type::Dog, Character::Type::Rabbit,
-                Character::Type::Sheep, Character::Type::Zombie
+                Character::Type::Dog,       Character::Type::Rabbit,
+                Character::Type::Sheep,     Character::Type::Zombie,
+                Character::Type::Crocodile, Character::Type::Wraith,
             };
 
             break;
@@ -37,8 +38,9 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Graveyard_Tree2
             };
             mGroundEnemies = {
-                Character::Type::Orc, Character::Type::Dog,
-                Character::Type::Fishmen, Character::Type::Zombie
+                Character::Type::Orc,       Character::Type::Dog,
+                Character::Type::Fishmen,   Character::Type::Zombie,
+                Character::Type::Crocodile, Character::Type::Wraith,
             };
 
             break;
@@ -50,8 +52,9 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Swamp_Well1
             };
             mGroundEnemies = {
-                Character::Type::Turtle, Character::Type::Frog,
-                Character::Type::Fishmen, Character::Type::Zombie
+                Character::Type::Turtle,    Character::Type::Frog,
+                Character::Type::Fishmen,   Character::Type::Zombie,
+                Character::Type::Crocodile, Character::Type::Wraith,
             };
 
             break;

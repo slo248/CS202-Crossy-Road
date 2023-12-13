@@ -64,7 +64,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::CrocodileToRight,
         Textures::CrocodileIdle,
     };
-    data[Character::Crocodile].frameSize = sf::Vector2i(48, 48);
+    data[Character::Crocodile].frameSize = sf::Vector2i(72, 72);
     data[Character::Crocodile].numFrames = 6;
     /*<-------------------------Crocodile------------------------->*/
 
@@ -75,7 +75,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::DogToRight,
         Textures::DogIdle,
     };
-    data[Character::Dog].frameSize = sf::Vector2i(48, 48);
+    data[Character::Dog].frameSize = sf::Vector2i(72, 72);
     data[Character::Dog].numFrames = 6;
     /*<-------------------------Dog------------------------->*/
 
@@ -155,6 +155,17 @@ std::vector<CharacterData> initializeCharacterData() {
     data[Character::Zombie].frameSize = sf::Vector2i(42, 44);
     data[Character::Zombie].numFrames = 6;
     /*<-------------------------Zombie------------------------->*/
+
+    /*<-------------------------Wraith------------------------->*/
+    data[Character::Wraith].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Wraith].textures = {
+        Textures::WraithToLeft,
+        Textures::WraithToRight,
+        Textures::WraithIdle,
+    };
+    data[Character::Wraith].frameSize = sf::Vector2i(83, 67);
+    data[Character::Wraith].numFrames = 10;
+    /*<-------------------------Wraith------------------------->*/
 
     // Skin data
     for (int i = Character::Archer; i < Character::TypeCount; ++i) {

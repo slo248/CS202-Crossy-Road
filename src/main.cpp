@@ -34,26 +34,27 @@ void loadTexture(TextureHolder& textures) {
 
     textures.load(
         Textures::CrocodileToLeft,
-        "asset/game_textures/Animal/Crocodile/S_Walk_ToLeft.png"
+        "asset/game_textures/Animal/Crocodile/S_Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::CrocodileToRight,
-        "asset/game_textures/Animal/Crocodile/S_Walk_ToRight.png"
+        "asset/game_textures/Animal/Crocodile/S_Walk_ToRightNew.png"
     );
     textures.load(
         Textures::CrocodileIdle,
-        "asset/game_textures/Animal/Crocodile/S_Attack.png"
+        "asset/game_textures/Animal/Crocodile/S_AttackNew.png"
     );
 
     textures.load(
-        Textures::DogToLeft, "asset/game_textures/Animal/Dog/S_Walk_ToLeft.png"
+        Textures::DogToLeft,
+        "asset/game_textures/Animal/Dog/S_Walk_ToLeftNew.png"
     );
     textures.load(
         Textures::DogToRight,
-        "asset/game_textures/Animal/Dog/S_Walk_ToRight.png"
+        "asset/game_textures/Animal/Dog/S_Walk_ToRightNew.png"
     );
     textures.load(
-        Textures::DogIdle, "asset/game_textures/Animal/Dog/S_Attack.png"
+        Textures::DogIdle, "asset/game_textures/Animal/Dog/S_AttackNew.png"
     );
 
     textures.load(
@@ -160,10 +161,12 @@ void loadTexture(TextureHolder& textures) {
     );
 
     textures.load(
-        Textures::OrcToLeft, "asset/game_textures/Enemy/Orc/S_Walk_ToLeftNew.png"
+        Textures::OrcToLeft,
+        "asset/game_textures/Enemy/Orc/S_Walk_ToLeftNew.png"
     );
     textures.load(
-        Textures::OrcToRight, "asset/game_textures/Enemy/Orc/S_Walk_ToRightNew.png"
+        Textures::OrcToRight,
+        "asset/game_textures/Enemy/Orc/S_Walk_ToRightNew.png"
     );
     textures.load(
         Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_SpecialNew.png"
@@ -179,6 +182,18 @@ void loadTexture(TextureHolder& textures) {
     );
     textures.load(
         Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/S_AttackNew.png"
+    );
+
+    textures.load(
+        Textures::WraithToLeft,
+        "asset/game_textures/Enemy/Wraith/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::WraithToRight,
+        "asset/game_textures/Enemy/Wraith/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::WraithIdle, "asset/game_textures/Enemy/Wraith/S_Idle.png"
     );
     /*************************************************************************/
 
