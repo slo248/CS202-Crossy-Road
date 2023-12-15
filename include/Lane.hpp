@@ -9,23 +9,18 @@
 #include "SceneNode.hpp"
 #include "TrafficLight.hpp"
 
-// class LaneTypeHolder {
-//    public:
-//     LaneTypeHolder(LaneType type) : mType(type) {}
-//     LaneType getType() const { return mType; }
-//     ~LaneTypeHolder() { std::cout << "LaneTypeHolder destroyed\n"; }
-
-//    private:
-//     const LaneType mType;
-// };
-
 class Lane : public SceneNode {
    public:
     typedef std::unique_ptr<Lane> Ptr;
     enum SpawnSide { Left, Right, None };
 
     Lane(
-        LaneType type, const TextureHolder& textures, bool isBufferLane = false,
+        LaneType type, const TextureHolder& textures, bool isBufferLane,
+        float levelScale = LEVEL_ONE_COEFFICIENT
+    );
+    // levelScale should not be passed to the constructor, it should be global
+    explicit Lane(
+        std::istream& in, LaneType type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT
     );
     ~Lane();
@@ -34,6 +29,7 @@ class Lane : public SceneNode {
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
     Lane* getChildLane();
+    LaneType getType();
     sf::Vector2f checkMoveablePlayer(
         Character* player, Character::Direction direction
     );
@@ -42,26 +38,35 @@ class Lane : public SceneNode {
     void attachChild(SceneNode::Ptr child) override;
 
    private:
+    Lane(LaneType type, const TextureHolder& textures, float levelScale);
+
     void spawnObstacles(bool isBufferLane = false);
     void spawnTrafficLight();
     void spawnGroundEnemy();
     void spawnAirEnemy();
     void spawnLog();
+
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const;
     void updateMovementPattern(sf::Time dt);
 
+    virtual void saveCurrent(std::ostream& out) const override;
+    virtual void saveChildren(std::ostream& out) const override;
+
+    virtual void loadCurrent(std::istream& in) override;
+    virtual void loadChildren(std::istream& in, const TextureHolder& textures)
+        override;
+
    private:
-    LaneType mType;  // Save
-    // const LaneTypeHolder* const mTypeHolder;
-    SpawnSide mSpawnSide;  // Save
-    sf::Sprite mSprite;
-    sf::Time mSpawnInterval;  // Save
-    Lane* mChildLane;
-    TrafficLight* mTrafficLight;
-    std::unique_ptr<ObjectFactory> mObjectFactory;
-    float mRandomFactor;  // Save
+    LaneType mType;                                 // Save
+    SpawnSide mSpawnSide;                           // Save
+    sf::Sprite mSprite;                             // Type-dependent
+    sf::Time mSpawnInterval;                        // Type-dependent
+    Lane* mChildLane;                               // Saved independently
+    TrafficLight* mTrafficLight;                    // Saved independently
+    std::unique_ptr<ObjectFactory> mObjectFactory;  // Type-dependent
+    float mRandomFactor;                            // Save
 };
 
 void createMultipleLanes(
@@ -70,7 +75,5 @@ void createMultipleLanes(
     float levelScale = LEVEL_ONE_COEFFICIENT
 
 );
-
-float slotToPosition(int slot);
 
 #endif  // LANE_HPP

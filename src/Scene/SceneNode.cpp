@@ -129,6 +129,45 @@ void SceneNode::drawBoundingRect(
     target.draw(shape);
 }
 
+void SceneNode::save(std::ostream& out) const {
+    // Lanes must be saved from bottom to top
+    saveCurrent(out);
+    saveChildren(out);
+}
+
+// void SceneNode::load(std::istream& in, const TextureHolder& textures) {
+//     loadCurrent(in);
+//     loadChildren(in, textures);
+// }
+
+void SceneNode::saveCurrent(std::ostream& out) const {
+    // For derived classes
+}
+
+void SceneNode::saveChildren(std::ostream& out) const {
+    for (const Ptr& child : mChildren) {
+        child->save(out);
+    }
+}
+
+// void SceneNode::loadIndependentInformation(std::istream& in) {
+//     // For derived classes
+// }
+
+// void SceneNode::loadDependentInformation(
+//     std::istream& in, const TextureHolder& textures
+// ) {
+//     // For derived classes
+// }
+
+void SceneNode::loadCurrent(std::istream& in) {
+    // For derived classes
+}
+
+void SceneNode::loadChildren(std::istream& in, const TextureHolder& textures) {
+    // For derived classes
+}
+
 bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs) {
     return lhs.intersects(rhs);
 }

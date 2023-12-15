@@ -17,7 +17,7 @@ void Entity::accelerate(float vx, float vy) {
     mVelocity.y += vy;
 }
 
-sf::Vector2f Entity::getVelocity() { return mVelocity; }
+sf::Vector2f Entity::getVelocity() const { return mVelocity; }
 
 sf::Vector2f Entity::getNormalVelocity() const { return mNormalVelocity; }
 

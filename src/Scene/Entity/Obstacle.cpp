@@ -20,13 +20,14 @@ Obstacle::Obstacle(Type type, const TextureHolder& textures, float levelScale)
     if (type == Type::River_Log1) {
         setScaleNormalVelocity(1.0);
     }
-
-    // float scaleFactor =
-    //     (float)Table[type].textureRect.height /
-    //     mSprite.getTextureRect().height;
-    // mSprite.scale(scaleFactor, scaleFactor);
-
     centerOrigin(mSprite);
+}
+
+Obstacle::Obstacle(
+    std::istream& in, Type type, const TextureHolder& textures, float levelScale
+)
+    : Obstacle(type, textures, levelScale) {
+    loadCurrent(in);
 }
 
 Obstacle::~Obstacle() {
@@ -96,3 +97,27 @@ void Obstacle::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 }
 
 void Obstacle::updateMovementPattern(sf::Time dt) {}
+
+void Obstacle::saveCurrent(std::ostream& out) const {
+    Category::Type category = static_cast<Category::Type>(getCategory());
+    out << category << ' ' << mType << ' ';
+    if (category == Category::Decoration) {
+        out << getPosition().x << ' ' << getVelocity().x << '\n';
+    } else {
+        out << positionToSlot(getPosition().x) << '\n';
+    }
+}
+
+void Obstacle::loadCurrent(std::istream& in) {
+    if (mType == River_Log1) {
+        float x, velocity;
+        in >> x >> velocity;
+        setPosition(x, 0);
+        setVelocity(velocity, 0);
+        return;
+    }
+
+    int slot;
+    in >> slot;
+    setPosition(slotToPosition(slot), 0);
+}

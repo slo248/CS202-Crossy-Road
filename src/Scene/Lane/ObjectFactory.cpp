@@ -65,21 +65,24 @@ ObjectFactory::ObjectFactory(
 std::unique_ptr<Character> ObjectFactory::createAirEnemy() {
     unsigned int objectType = rand() % mAirEnemies.size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(mAirEnemies[objectType]), *mTextures
+        static_cast<Character::Type>(mAirEnemies[objectType]), *mTextures,
+        mLevelScale
     );
 }
 
 std::unique_ptr<Character> ObjectFactory::createGroundEnemy() {
     unsigned int objectType = rand() % mGroundEnemies.size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(mGroundEnemies[objectType]), *mTextures
+        static_cast<Character::Type>(mGroundEnemies[objectType]), *mTextures,
+        mLevelScale
     );
 }
 
 std::unique_ptr<Obstacle> ObjectFactory::createObstacle() {
     unsigned int objectType = rand() % mObstacles.size();
     return std::make_unique<Obstacle>(
-        static_cast<Obstacle::Type>(mObstacles[objectType]), *mTextures
+        static_cast<Obstacle::Type>(mObstacles[objectType]), *mTextures,
+        mLevelScale
     );
 }
 
@@ -104,5 +107,36 @@ std::unique_ptr<TrafficLight> ObjectFactory::createTrafficLight() {
 }
 
 std::unique_ptr<Obstacle> ObjectFactory::createLog() {
-    return std::make_unique<Obstacle>(Obstacle::Type::River_Log1, *mTextures);
+    return std::make_unique<Obstacle>(
+        Obstacle::Type::River_Log1, *mTextures, mLevelScale
+    );
+}
+
+SceneNode::Ptr ObjectFactory::createObject(
+    std::istream& in, Category::Type category
+) {
+    int type;
+    in >> type;
+    SceneNode::Ptr object = nullptr;
+    switch (category) {
+        case Category::Type::Enemy: {
+            return std::make_unique<Character>(
+                in, static_cast<Character::Type>(type), *mTextures, mLevelScale
+            );
+        }
+
+        case Category::Type::Decoration:
+        case Category::Type::Obstacle: {
+            return std::make_unique<Obstacle>(
+                in, static_cast<Obstacle::Type>(type), *mTextures, mLevelScale
+            );
+        }
+
+        case Category::Type::TrafficLight: {
+            return std::make_unique<TrafficLight>(
+                in, static_cast<TrafficLight::Type>(type), *mTextures
+            );
+        }
+    }
+    return object;
 }

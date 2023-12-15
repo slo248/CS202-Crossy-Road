@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
+#include <fstream>
 #include <memory>
 #include <set>
 #include <utility>
@@ -12,6 +13,7 @@
 
 #include "Category.hpp"
 #include "CommandQueue.hpp"
+#include "ResourceIdentifiers.hpp"
 
 struct Command;
 
@@ -36,6 +38,12 @@ class SceneNode : public sf::Transformable,
     // Update Method
     void update(sf::Time dt, CommandQueue& commands);
 
+    // Save Method
+    void save(std::ostream& out) const;
+
+    // Load Method
+    // void load(std::istream& in, const TextureHolder& textures);
+
     // Position Methods
     sf::Vector2f getWorldPosition() const;
     sf::Transform getWorldTransform() const;
@@ -54,7 +62,7 @@ class SceneNode : public sf::Transformable,
    private:
     // Update Methods
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
-    void updateChildren(sf::Time dt, CommandQueue& commands);
+    virtual void updateChildren(sf::Time dt, CommandQueue& commands);
 
     // Draw Methods
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -63,6 +71,19 @@ class SceneNode : public sf::Transformable,
     void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
     void drawBoundingRect(sf::RenderTarget& target, sf::RenderStates states)
         const;
+
+    // Save methods
+    virtual void saveCurrent(std::ostream& out) const;
+    virtual void saveChildren(std::ostream& out) const;
+
+    // Load methods
+    // There should be two methods right below for better encapsulation
+    // virtual void loadIndependentInformation(std::istream& in);
+    // virtual void loadDependentInformation(
+    //     std::istream& in, const TextureHolder& textures
+    // );
+    virtual void loadCurrent(std::istream& in);
+    virtual void loadChildren(std::istream& in, const TextureHolder& textures);
 
    protected:
     std::vector<Ptr> mChildren;

@@ -15,6 +15,10 @@ class TrafficLight : public SceneNode {
 
    public:
     TrafficLight(Type type, const TextureHolder& textures);
+    explicit TrafficLight(
+        std::istream& in, Type type, const TextureHolder& textures
+    );
+
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
@@ -26,14 +30,17 @@ class TrafficLight : public SceneNode {
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const override;
 
+    virtual void saveCurrent(std::ostream& out) const override;
+    virtual void loadCurrent(std::istream& in) override;
+
    private:
-    Type mType;    // Save
-    Phase mPhase;  // Save
-    sf::Sprite mSprite;
-    sf::Time mElapsedTime;
-    std::size_t mCurrentFrame;
-    std::size_t mNumFrames;
-    Color mColor;  // Save
+    Type mType;                 // Save
+    Phase mPhase;               // Save
+    Color mColor;               // Save
+    sf::Time mElapsedTime;      // Save
+    sf::Sprite mSprite;         // Type-dependent
+    std::size_t mCurrentFrame;  // Type-dependent
+    std::size_t mNumFrames;     // Type-dependent
 };
 
 #endif  // TRAFFIC_LIGHT_HPP

@@ -47,9 +47,10 @@ class Obstacle : public Entity {
     };
 
    public:
+    Obstacle(Type type, const TextureHolder& textures, float levelScale);
     Obstacle(
-        Type type, const TextureHolder& textures,
-        float levelScale = LEVEL_ONE_COEFFICIENT
+        std::istream& in, Type type, const TextureHolder& textures,
+        float levelScale
     );
     ~Obstacle();
     virtual unsigned int getCategory() const override;
@@ -62,9 +63,12 @@ class Obstacle : public Entity {
         const;
     void updateMovementPattern(sf::Time dt);
 
+    virtual void saveCurrent(std::ostream& out) const override;
+    virtual void loadCurrent(std::istream& in) override;
+
    private:
-    Type mType;  // Save
-    sf::Sprite mSprite;
+    Type mType;          // Save
+    sf::Sprite mSprite;  // Type-dependent
 };
 
 #endif  // OBSTACLE_HPP

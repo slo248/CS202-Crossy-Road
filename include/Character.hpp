@@ -50,15 +50,21 @@ class Character : public Entity {
         Type type, const TextureHolder& textures,
         float levelScale = LEVEL_ONE_COEFFICIENT
     );
+    explicit Character(
+        std::istream& in, Type type, const TextureHolder& textures,
+        float levelScale = LEVEL_ONE_COEFFICIENT
+    );
     ~Character();
+
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
     Type getType() const;
+
     void moveCharacter(Direction direction);
     bool isMarkedForRemoval() const override;
     void setCurrentLane(Lane* lane);
-    bool isMoving() const;
+    bool isInMovement() const;
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -66,13 +72,16 @@ class Character : public Entity {
         const override;
     void updateMovementPattern(sf::Time dt);
 
+    virtual void saveCurrent(std::ostream& out) const override;
+    virtual void loadCurrent(std::istream& in) override;
+
    private:
-    Type mType;
-    std::vector<Animation> mAnimations;
-    Animation* mCurrentAnimation;
-    Movement mMovement;
-    Lane* mCurrentLane;
-    bool mIsMoving;
+    Type mType;                          // Save
+    std::vector<Animation> mAnimations;  // Type-dependent
+    Animation* mCurrentAnimation;        // Type-dependent
+    Movement mMovement;                  // Type-dependent
+    Lane* mCurrentLane;                  // Position-dependent
+    bool mIsInMovement;                  // Player-dependent -> no need to save
 };
 
 #endif  // CHARACTER_HPP

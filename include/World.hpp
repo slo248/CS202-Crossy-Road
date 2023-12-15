@@ -12,8 +12,9 @@ class World {
    public:
     World(
         TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-        Config::GameLevel::Type gameType
+        Config::GameLevel::Type gameType, bool isLoadedFromFile = false
     );
+
     void update(sf::Time dt);
     void draw();
 
@@ -23,6 +24,7 @@ class World {
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
+    void saveCurrentGame(const std::string& path) const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
@@ -32,6 +34,8 @@ class World {
     void buildScene();
     void buildBlocks();
     void removeEntitiesOutsizeView();
+    void setDefaultScoreText();
+    void loadGame();
 
    private:
     TextureHolder& mTextures;
@@ -43,14 +47,15 @@ class World {
 
     SceneNode mSceneGraph;
     std::array<SceneNode*, LayerCount> mLayers;
+    // Above are all type-dependent
 
-    sf::FloatRect mWorldBounds;
-    Character* mPlayer;
+    sf::FloatRect mWorldBounds;  // Type-dependent
+    Character* mPlayer;          // Saved independently
 
     CommandQueue mCommandQueue;
     Config::GameLevel::Type mGameType;  // Save
 
-    Lane* mTopLane;
+    Lane* mTopLane;     // Saved independently
     int mRemainBlocks;  // Save
 
     int mPlayerPreRow;  // Save

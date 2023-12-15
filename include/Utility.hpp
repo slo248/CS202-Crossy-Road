@@ -28,6 +28,8 @@ int random(int left, int right);
 
 float slotToPosition(int slot);
 
+int positionToSlot(float x);
+
 int getCurrentRow(int y);
 
 float getLevelFactor(Config::GameLevel::Type gameType);

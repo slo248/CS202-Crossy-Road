@@ -6,24 +6,28 @@
 
 World::World(
     TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-    Config::GameLevel::Type gameType
+    Config::GameLevel::Type gameType, bool isLoadedFromFile
 )
     : mTextures(textures),
       mFonts(fonts),
       mWindow(window),
+      mGameType(gameType),
       mWorldView(window.getDefaultView()),
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
-      mGameType(gameType),
-      mScrollSpeed(0, -40 * getLevelFactor(gameType)),
       mTopLane(nullptr),
-      mScores(0) {
-    buildScene();
-    mScoreText.setFont(mFonts.get(Fonts::Main));
-    mScoreText.setCharacterSize(20);
-    mScoreText.setPosition(10, 10);
-    mScoreText.setOutlineThickness(5);
-    mScoreText.setOutlineColor(sf::Color::Black);
+      mScrollSpeed(0, -40 * getLevelFactor(gameType)) {
+    mWorldBounds = sf::FloatRect(
+        0, 0, mWorldView.getSize().x,
+        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
+    );
+    if (isLoadedFromFile) {
+        loadGame();
+    } else {
+        mScores = 0;
+        buildScene();
+    }
+    setDefaultScoreText();
 }
 
 void World::update(sf::Time dt) {
@@ -112,15 +116,10 @@ void World::buildScene() {
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
             mWorldView.getSize().y / 2
     );
-
-    mWorldBounds = sf::FloatRect(
-        0, 0, mWorldView.getSize().x,
-        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
-    );
 }
 
 void World::buildBlocks() {
-    if (mRemainBlocks == -2 || mPlayer->isMoving()) return;
+    if (mRemainBlocks == -2 || mPlayer->isInMovement()) return;
     if (mRemainBlocks == 0) {
         Lane::Ptr top = nullptr;
         Lane* bot = nullptr;
@@ -170,6 +169,104 @@ void World::removeEntitiesOutsizeView() {
     });
 
     mCommandQueue.push(command);
+}
+
+void World::setDefaultScoreText() {
+    mScoreText.setFont(mFonts.get(Fonts::Main));
+    mScoreText.setCharacterSize(20);
+    mScoreText.setPosition(10, 10);
+    mScoreText.setOutlineThickness(5);
+    mScoreText.setOutlineColor(sf::Color::Black);
+}
+
+void World::loadGame() {
+    for (int i = 0; i < LayerCount; i++) {
+        // used to be new SceneNode()
+        SceneNode::Ptr layer(std::make_unique<SceneNode>());
+        mLayers[i] = layer.get();
+        mSceneGraph.attachChild(std::move(layer));
+    }
+
+    std::ifstream in;
+    if (mGameType == Config::GameLevel::Endless) {
+        in.open("data/endless.txt", std::ios::in);
+    } else {
+        in.open("data/level.txt", std::ios::in);
+    }
+
+    if (!in.is_open()) {
+        std::cout << "Cannot open save file!\n";
+        return;
+    }
+
+    // Load world data
+    int category, type;
+    in >> type >> mRemainBlocks >> mPlayerPreRow >> mScores;
+    mGameType = static_cast<Config::GameLevel::Type>(type);
+
+    // Load view
+    float x, y;
+    in >> x >> y;
+    mWorldView.setCenter(x, y);
+
+    // Load player data
+    in >> category >> type;
+    auto player = std::make_unique<Character>(
+        in, static_cast<Character::Type>(type), mTextures
+    );
+    mPlayer = player.get();
+    mLayers[OnGround]->attachChild(std::move(player));
+
+    // Load lanes data
+    in >> category >> type;
+    auto top =
+        std::make_unique<Lane>(in, static_cast<LaneType>(type), mTextures);
+    mTopLane = top.get();
+    top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+    mLayers[Background]->attachChild(std::move(top));
+    in.close();
+
+    std::cout << "Game loaded successfully!\n";
+    saveCurrentGame("data/endless2.txt");
+}
+
+void World::saveCurrentGame(const std::string& path) const {
+    std::ofstream out;
+    // if (mGameType == Config::GameLevel::Endless) {
+    //     out.open("data/endless.txt", std::ios::out);
+    // } else {
+    //     out.open("data/level.txt", std::ios::out);
+    // }
+
+    out.open(path, std::ios::out);
+
+    if (!out.is_open()) {
+        std::cout << "Cannot open save file!\n";
+        return;
+    }
+
+    // Save world data
+    out << mGameType << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
+        << mScores << '\n';
+
+    // Save view center
+    out << mWorldView.getCenter().x << ' ' << mWorldView.getCenter().y << '\n';
+
+    // Save player and lanes data
+    mLayers[OnGround]->save(out);  // OnGround only has player at the moment
+    mLayers[Background]->save(out);
+
+    std::cout << "Game saved successfully!\n";
+    out.close();
+
+    Lane* current = mTopLane;
+    while (current) {
+        if (current->getWorldPosition().y == mPlayer->getWorldPosition().y) {
+            mPlayer->setCurrentLane(current);
+            break;
+        }
+        current = current->getChildLane();
+    }
 }
 
 sf::FloatRect World::getBattlefieldBounds() const {

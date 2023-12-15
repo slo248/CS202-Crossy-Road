@@ -22,9 +22,23 @@ TrafficLight::TrafficLight(Type type, const TextureHolder& textures)
       mSprite(textures.get(Table[type].texture), sf::IntRect(0, 0, 32, 64)),
       mCurrentFrame(0),
       mNumFrames(6),
+      mElapsedTime(sf::Time::Zero),
       mColor(static_cast<Color>(rand() % 3)),
       mPhase(InPhase) {
     centerOrigin(mSprite);
+}
+
+/* problem */
+TrafficLight::TrafficLight(
+    std::istream& in, Type type, const TextureHolder& textures
+)
+    : mType(type),
+      mSprite(textures.get(Table[type].texture), sf::IntRect(0, 0, 32, 64)),
+      mCurrentFrame(0),
+      mNumFrames(6) {
+    loadCurrent(in);
+    centerOrigin(mSprite);
+    // move(0, -30);
 }
 
 unsigned int TrafficLight::getCategory() const {
@@ -102,4 +116,21 @@ void TrafficLight::drawCurrent(
     sf::RenderTarget& target, sf::RenderStates states
 ) const {
     target.draw(mSprite, states);
+}
+
+void TrafficLight::saveCurrent(std::ostream& out) const {
+    out << getCategory() << ' ' << mType << ' ' << mPhase << ' ' << mColor
+        << ' ' << mElapsedTime.asSeconds() << ' '
+        << positionToSlot(getPosition().x) << '\n';
+}
+
+void TrafficLight::loadCurrent(std::istream& in) {
+    int phase, color, slot;
+    float elapsedTime;
+    in >> phase >> color >> elapsedTime >> slot;
+
+    mPhase = static_cast<Phase>(phase);
+    mColor = static_cast<Color>(color);
+    mElapsedTime = sf::seconds(elapsedTime);
+    setPosition(slotToPosition(slot), 0);
 }

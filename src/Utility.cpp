@@ -122,6 +122,10 @@ float slotToPosition(int slot) {
     return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;
 }
 
+int positionToSlot(float x) {
+    return (x - DEFAULT_CELL_LENGTH / 2) / DEFAULT_CELL_LENGTH;
+}
+
 int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
 
 float getLevelFactor(Config::GameLevel::Type gameType) {

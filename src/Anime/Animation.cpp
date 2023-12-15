@@ -12,9 +12,11 @@ Animation::Animation(
       mElapsedTime(sf::Time::Zero),
       mTotalElapsedTime(sf::Time::Zero),
       mDuration(sf::seconds(1.5)),
-      mTimePerFrame(mDuration / (1.f * mNumFrame)),
       mInProgress(false),
-      mRepeat(false) {}
+      mRepeat(false) {
+    mTimePerFrame = sf::seconds(mDuration.asSeconds() / mNumFrame + 0.1);
+    std::cout << mTimePerFrame.asSeconds() << std::endl;
+}
 
 void Animation::setDuration(sf::Time t) {
     mDuration = t;

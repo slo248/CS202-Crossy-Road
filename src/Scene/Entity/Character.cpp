@@ -19,7 +19,7 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
       mType(type),
       mMovement(this),
       mCurrentLane(nullptr),
-      mIsMoving(false) {
+      mIsInMovement(false) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(Animation(
@@ -31,6 +31,13 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     mCurrentAnimation->play();
     mCurrentAnimation->setRepeat(true);
     // centerOrigin(*this);
+}
+
+Character::Character(
+    std::istream& in, Type type, const TextureHolder& textures, float levelScale
+)
+    : Character(type, textures, levelScale) {
+    loadCurrent(in);
 }
 
 Character::~Character() {
@@ -153,8 +160,9 @@ void Character::moveCharacter(Direction direction) {
 
         mCurrentAnimation->play();
         mMovement.setup(incomingPosition, Motion::Linear());
-        mIsMoving = true;
+        mIsInMovement = true;
     }
+    std::cout << mCurrentLane->getType() << '\n';
 }
 
 // Check if character is ready for removed (death animation is finished)
@@ -168,7 +176,7 @@ bool Character::isMarkedForRemoval() const {
 
 void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
 
-bool Character::isMoving() const { return mIsMoving; }
+bool Character::isInMovement() const { return mIsInMovement; }
 
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     Entity::updateCurrent(dt, commands);
@@ -206,15 +214,15 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
     mCurrentAnimation->update(dt);
 
-    // By default, only player can set mIsMoving to true
-    if (mIsMoving) {
+    // By default, only player can set mIsInMovement to true
+    if (mIsInMovement) {
         // The reason why player can't move along with the log
         // This set player's velocity to 0 everytime the player is not in a
         // movement
         mMovement.update(dt);
     }
     if (mMovement.isFinished()) {
-        mIsMoving = false;
+        mIsInMovement = false;
     }
 }
 
@@ -224,3 +232,30 @@ void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 }
 
 void Character::updateMovementPattern(sf::Time dt) {}
+
+void Character::saveCurrent(std::ostream& out) const {
+    Category::Type category = static_cast<Category::Type>(getCategory());
+    out << category << ' ' << mType << ' ';
+    if (category == Category::Player) {
+        out << getWorldPosition().x << ' ' << getWorldPosition().y << ' '
+            << getVelocity().x << '\n';
+
+    } else {
+        out << getPosition().x << ' ' << getVelocity().x << '\n';
+    }
+}
+
+void Character::loadCurrent(std::istream& in) {
+    if (getCategory() == Category::Player) {
+        float x, y, velocity;
+        in >> x >> y >> velocity;
+        setPosition(x, y);
+        setVelocity(velocity, 0);
+        return;
+    }
+
+    float x, velocity;
+    in >> x >> velocity;
+    setPosition(x, 0);
+    setVelocity(velocity, 0);
+}

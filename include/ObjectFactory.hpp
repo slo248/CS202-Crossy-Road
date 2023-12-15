@@ -16,12 +16,15 @@ class ObjectFactory {
         float levelScale = LEVEL_ONE_COEFFICIENT
     );
 
-    // std::unique_ptr<SceneNode> createObject(ObjectType type);
+    // Normal object creation
     std::unique_ptr<Character> createAirEnemy();
     std::unique_ptr<Character> createGroundEnemy();
     std::unique_ptr<Obstacle> createObstacle();
     std::unique_ptr<TrafficLight> createTrafficLight();
     std::unique_ptr<Obstacle> createLog();
+
+    // Object creation from file
+    SceneNode::Ptr createObject(std::istream& in, Category::Type type);
     /*
     What we may actually need
     Movealbe(Enemy, Ally),

@@ -366,7 +366,7 @@ int main() {
 
     loadTexture(textures);
     loadFonts(fonts);
-    World world(textures, fonts, window, Config::GameLevel::Endless);
+    World world(textures, fonts, window, Config::GameLevel::Endless, true);
     Player player;
 
     sf::Clock clock;
@@ -394,6 +394,7 @@ int main() {
         window.display();
     }
 
+    world.saveCurrentGame("data/endless.txt");
     std::cout << "Game exited successfully!\n";
 
     return 0;

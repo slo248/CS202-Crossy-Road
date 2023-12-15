@@ -28,23 +28,10 @@ Lane::Lane(
     LaneType type, const TextureHolder& textures, bool isBufferLane,
     float levelScale
 )
-    : mType(type),
-      mRandomFactor(1.f),
-      mChildLane(nullptr),
-      mTrafficLight(nullptr),
-      mSpawnInterval(Table[type].spawnInterval),
-      mSprite(textures.get(Table[type].texture), Table[type].textureRect) {
-    laneMap[this].first = type;
-    // std::cout << "Lane " << this << " is created\n";
-
+    : Lane(type, textures, levelScale) {
     // Origin
     // Death Experience: origin must be set for mSprite, not the Lane itself!
-    mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
     // If it works, then don't touch it!
-
-    // Object factory
-    mObjectFactory =
-        std::make_unique<ObjectFactory>(textures, type, levelScale);
 
     // Spawn initial objects
     if (type == LaneType::River) {
@@ -70,6 +57,16 @@ Lane::Lane(
     laneMap[this].second = mSpawnSide;
 }
 
+Lane::Lane(
+    std::istream& in, LaneType type, const TextureHolder& textures,
+    float levelScale
+)
+    : Lane(type, textures, levelScale) {
+    loadCurrent(in);
+    loadChildren(in, textures);
+    laneMap[this].second = mSpawnSide;
+}
+
 Lane::~Lane() {
     // std::cout << "Lane " << laneMap[this] << " is deleted\n";
     laneMap.erase(this);
@@ -84,6 +81,8 @@ sf::FloatRect Lane::getBoundingRect() const {
 sf::FloatRect Lane::getLocalBounds() const { return mSprite.getLocalBounds(); }
 
 Lane* Lane::getChildLane() { return mChildLane; }
+
+LaneType Lane::getType() { return mType; }
 
 // Check for the next position of the player
 sf::Vector2f Lane::checkMoveablePlayer(
@@ -135,14 +134,6 @@ sf::Vector2f Lane::checkMoveablePlayer(
                     // Need some alignment later
                     incommingPosition.x = child->getWorldPosition().x +
                                           child->getBoundingRect().width / 4.f;
-                    // std::cout << "Player position: " << incommingPosition.x
-                    //           << '\n';
-                    // std::cout << "Log position: " <<
-                    // child->getWorldPosition().x
-                    //           << '\n';
-                    // std::cout << "Log width: " <<
-                    // child->getBoundingRect().width
-                    //           << '\n';
                     return incommingPosition;
                 }
 
@@ -209,7 +200,7 @@ float Lane::getRandomFactor() const { return mRandomFactor; }
 
 void Lane::attachChild(SceneNode::Ptr child) {
     if (child->getCategory() == Category::Lane) {
-        mChildLane = static_cast<Lane*>(child.get());
+        mChildLane = dynamic_cast<Lane*>(child.get());
         if (mChildLane) {
             float childRandomFactor = mChildLane->getRandomFactor();
             if (childRandomFactor > 1.0) {
@@ -224,6 +215,18 @@ void Lane::attachChild(SceneNode::Ptr child) {
         }
     }
     SceneNode::attachChild(std::move(child));
+}
+
+Lane::Lane(LaneType type, const TextureHolder& textures, float levelScale)
+    : mType(type),
+      mChildLane(nullptr),
+      mTrafficLight(nullptr),
+      mSpawnInterval(Table[type].spawnInterval),
+      mSprite(textures.get(Table[type].texture), Table[type].textureRect),
+      mObjectFactory(std::make_unique<ObjectFactory>(textures, type, levelScale)
+      ) {
+    laneMap[this].first = type;
+    mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
 }
 
 void Lane::spawnObstacles(bool isBufferLane) {
@@ -323,8 +326,6 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
     // std::cout << this << ' ' << mType << " updating";
     if (mType == LaneType::River) {
-        // std::cout << " river\n";
-
         if (mSpawnInterval >= Table[mType].spawnInterval) {
             float tmp = Table[mType].spawnInterval.asSeconds();
             mSpawnInterval = sf::seconds((float)tmp * (rand() % 3 + 1) / 5);
@@ -337,7 +338,6 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
         return;
     }
-    // std::cout << '\n';
 
     if (!mTrafficLight) {
         return;
@@ -404,6 +404,64 @@ void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
 
 void Lane::updateMovementPattern(sf::Time dt) {}
 
+void Lane::saveCurrent(std::ostream& out) const {
+    out << getCategory() << ' ' << mType << ' ' << mSpawnSide << ' '
+        << mRandomFactor << '\n';
+}
+
+void Lane::saveChildren(std::ostream& out) const {
+    Lane* childLane = nullptr;
+    for (auto& child : mChildren) {
+        if (child->getCategory() == Category::Lane) {
+            childLane = dynamic_cast<Lane*>(child.get());
+            continue;
+        }
+        child->save(out);
+    }
+    out << "-1\n";  // mark end of children
+
+    if (childLane) {
+        childLane->save(out);
+    } else {
+        out << "-2\n";  // mark end of lanes
+    }
+}
+
+void Lane::loadCurrent(std::istream& in) {
+    int spawnSide;
+    in >> spawnSide >> mRandomFactor;
+    mSpawnSide = static_cast<SpawnSide>(spawnSide);
+}
+
+void Lane::loadChildren(std::istream& in, const TextureHolder& textures) {
+    int category;
+    in >> category;
+    while (category != -1) {
+        SceneNode::Ptr object(mObjectFactory->createObject(
+            in, static_cast<Category::Type>(category)
+        ));
+        if (object) {
+            if (object->getCategory() == Category::TrafficLight) {
+                mTrafficLight = dynamic_cast<TrafficLight*>(object.get());
+            }
+            attachChild(std::move(object));
+        }
+        in >> category;
+    }
+
+    in >> category;
+    if (category == -2) {
+        return;
+    } else {
+        int type;
+        in >> type;
+        SceneNode::Ptr lane(
+            std::make_unique<Lane>(in, static_cast<LaneType>(type), textures)
+        );
+        attachChild(std::move(lane));
+    }
+}
+
 void createMultipleLanes(
     const TextureHolder& textures, int laneNumber, Lane::Ptr& topLane,
     Lane*& botLane, bool isBuffer, float levelScale
@@ -414,12 +472,14 @@ void createMultipleLanes(
 
     // Bottom lane
     LaneType randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
-    Lane::Ptr lane(std::make_unique<Lane>(randomLaneType, textures, isBuffer));
+    Lane::Ptr lane(
+        std::make_unique<Lane>(randomLaneType, textures, isBuffer, levelScale)
+    );
 
     botLane = lane.get();
 
     while (--laneNumber) {
-        std::cout << "Lane of type " << randomLaneType << " is created\n";
+        // std::cout << "Lane of type " << randomLaneType << " is created\n";
         randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
 
         Lane::Ptr parentLane(std::make_unique<Lane>(
