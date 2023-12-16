@@ -95,6 +95,50 @@ enum ID {
     WraithToRight,
     WraithIdle,
 
+    WraithProToLeft,
+    WraithProToRight,
+    WraithProIdle,
+
+    WraithSwampToLeft,
+    WraithSwampToRight,
+    WraithSwampIdle,
+
+    GolemGyToLeft,
+    GolemGyToRight,
+    GolemGyIdle,
+
+    GolemToLeft,
+    GolemToRight,
+    GolemIdle,
+
+    GolemSwampToLeft,
+    GolemSwampToRight,
+    GolemSwampIdle,
+
+    SatyrGyToLeft,
+    SatyrGyToRight,
+    SatyrGyIdle,
+
+    SatyrToLeft,
+    SatyrToRight,
+    SatyrIdle,
+
+    SatyrSwampToLeft,
+    SatyrSwampToRight,
+    SatyrSwampIdle,
+
+    MinoGyToLeft,
+    MinoGyToRight,
+    MinoGyIdle,
+
+    MinoToLeft,
+    MinoToRight,
+    MinoIdle,
+
+    MinoSwampToLeft,
+    MinoSwampToRight,
+    MinoSwampIdle,
+
     // callbees,
     // octopus,
     // slime,

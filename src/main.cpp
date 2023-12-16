@@ -33,31 +33,6 @@ void loadTexture(TextureHolder& textures) {
     );
 
     textures.load(
-        Textures::CrocodileToLeft,
-        "asset/game_textures/Animal/Crocodile/S_Walk_ToLeftNew.png"
-    );
-    textures.load(
-        Textures::CrocodileToRight,
-        "asset/game_textures/Animal/Crocodile/S_Walk_ToRightNew.png"
-    );
-    textures.load(
-        Textures::CrocodileIdle,
-        "asset/game_textures/Animal/Crocodile/S_AttackNew.png"
-    );
-
-    textures.load(
-        Textures::DogToLeft,
-        "asset/game_textures/Animal/Dog/S_Walk_ToLeftNew.png"
-    );
-    textures.load(
-        Textures::DogToRight,
-        "asset/game_textures/Animal/Dog/S_Walk_ToRightNew.png"
-    );
-    textures.load(
-        Textures::DogIdle, "asset/game_textures/Animal/Dog/S_AttackNew.png"
-    );
-
-    textures.load(
         Textures::FrogToLeft,
         "asset/game_textures/Animal/Frog/S_Walk_ToLeft.png"
     );
@@ -123,6 +98,31 @@ void loadTexture(TextureHolder& textures) {
     /*************************************************************************/
 
     /***********************Load Enemy Textures****************************/
+    textures.load(
+        Textures::CrocodileToLeft,
+        "asset/game_textures/Enemy/Crocodile/S_Walk_ToLeftNew.png"
+    );
+    textures.load(
+        Textures::CrocodileToRight,
+        "asset/game_textures/Enemy/Crocodile/S_Walk_ToRightNew.png"
+    );
+    textures.load(
+        Textures::CrocodileIdle,
+        "asset/game_textures/Enemy/Crocodile/S_AttackNew.png"
+    );
+
+    textures.load(
+        Textures::DogToLeft,
+        "asset/game_textures/Enemy/Dog/S_Walk_ToLeftNew.png"
+    );
+    textures.load(
+        Textures::DogToRight,
+        "asset/game_textures/Enemy/Dog/S_Walk_ToRightNew.png"
+    );
+    textures.load(
+        Textures::DogIdle, "asset/game_textures/Enemy/Dog/S_AttackNew.png"
+    );
+
     textures.load(
         Textures::BeeBossToLeft,
         "asset/game_textures/Enemy/BeeBoss/S_Fly_ToLeftNew.png"
@@ -195,6 +195,150 @@ void loadTexture(TextureHolder& textures) {
     textures.load(
         Textures::WraithIdle, "asset/game_textures/Enemy/Wraith/S_Idle.png"
     );
+
+    textures.load(
+        Textures::WraithProToLeft,
+        "asset/game_textures/Enemy/WraithPro/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::WraithProToRight,
+        "asset/game_textures/Enemy/WraithPro/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::WraithProIdle,
+        "asset/game_textures/Enemy/WraithPro/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::WraithSwampToLeft,
+        "asset/game_textures/Enemy/WraithSwamp/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::WraithSwampToRight,
+        "asset/game_textures/Enemy/WraithSwamp/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::WraithSwampIdle,
+        "asset/game_textures/Enemy/WraithSwamp/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::GolemGyToLeft,
+        "asset/game_textures/Enemy/GolemGy/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::GolemGyToRight,
+        "asset/game_textures/Enemy/GolemGy/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::GolemGyIdle,
+        "asset/game_textures/Enemy/GolemGy/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::GolemToLeft,
+        "asset/game_textures/Enemy/Golem/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::GolemToRight,
+        "asset/game_textures/Enemy/Golem/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::GolemIdle,
+        "asset/game_textures/Enemy/Golem/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::GolemSwampToLeft,
+        "asset/game_textures/Enemy/GolemSwamp/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::GolemSwampToRight,
+        "asset/game_textures/Enemy/GolemSwamp/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::GolemSwampIdle,
+        "asset/game_textures/Enemy/GolemSwamp/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::SatyrGyToLeft,
+        "asset/game_textures/Enemy/SatyrGy/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::SatyrGyToRight,
+        "asset/game_textures/Enemy/SatyrGy/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::SatyrGyIdle,
+        "asset/game_textures/Enemy/SatyrGy/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::SatyrToLeft,
+        "asset/game_textures/Enemy/Satyr/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::SatyrToRight,
+        "asset/game_textures/Enemy/Satyr/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::SatyrIdle,
+        "asset/game_textures/Enemy/Satyr/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::SatyrSwampToLeft,
+        "asset/game_textures/Enemy/SatyrSwamp/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::SatyrSwampToRight,
+        "asset/game_textures/Enemy/SatyrSwamp/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::SatyrSwampIdle,
+        "asset/game_textures/Enemy/SatyrSwamp/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::MinoGyToLeft,
+        "asset/game_textures/Enemy/MinoGy/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::MinoGyToRight,
+        "asset/game_textures/Enemy/MinoGy/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::MinoGyIdle,
+        "asset/game_textures/Enemy/MinoGy/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::MinoToLeft,
+        "asset/game_textures/Enemy/Mino/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::MinoToRight,
+        "asset/game_textures/Enemy/Mino/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::MinoIdle,
+        "asset/game_textures/Enemy/Mino/S_Idle.png"
+    );
+
+    textures.load(
+        Textures::MinoSwampToLeft,
+        "asset/game_textures/Enemy/MinoSwamp/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::MinoSwampToRight,
+        "asset/game_textures/Enemy/MinoSwamp/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::MinoSwampIdle,
+        "asset/game_textures/Enemy/MinoSwamp/S_Idle.png"
+    );
+
     /*************************************************************************/
 
     /**************************Load Lane Textures******************************/

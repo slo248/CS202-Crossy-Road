@@ -75,7 +75,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::DogToRight,
         Textures::DogIdle,
     };
-    data[Character::Dog].frameSize = sf::Vector2i(72, 72);
+    data[Character::Dog].frameSize = sf::Vector2i(46, 40);
     data[Character::Dog].numFrames = 6;
     /*<-------------------------Dog------------------------->*/
 
@@ -163,9 +163,130 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::WraithToRight,
         Textures::WraithIdle,
     };
-    data[Character::Wraith].frameSize = sf::Vector2i(83, 67);
+    data[Character::Wraith].frameSize = sf::Vector2i(44,50);
     data[Character::Wraith].numFrames = 10;
     /*<-------------------------Wraith------------------------->*/
+
+    /*<-------------------------WraithPro------------------------->*/
+    data[Character::WraithPro].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::WraithPro].textures = {
+        Textures::WraithProToLeft,
+        Textures::WraithProToRight,
+        Textures::WraithProIdle,
+    };
+    data[Character::WraithPro].frameSize = sf::Vector2i(44,50);
+    data[Character::WraithPro].numFrames = 10;
+    /*<-------------------------WraithPro------------------------->*/
+
+    /*<-------------------------WraithSwamp------------------------->*/
+    data[Character::WraithSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::WraithSwamp].textures = {
+        Textures::WraithSwampToLeft,
+        Textures::WraithSwampToRight,
+        Textures::WraithSwampIdle,
+    };
+    data[Character::WraithSwamp].frameSize = sf::Vector2i(44,50);
+    data[Character::WraithSwamp].numFrames = 10;
+    /*<-------------------------WraithSwamp------------------------->*/
+
+    /*<-------------------------GolemGy------------------------->*/
+    data[Character::GolemGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::GolemGy].textures = {
+        Textures::GolemGyToLeft,
+        Textures::GolemGyToRight,
+        Textures::GolemGyIdle,
+    };
+    data[Character::GolemGy].frameSize = sf::Vector2i(60,50);
+    data[Character::GolemGy].numFrames = 10;
+    /*<-------------------------GolemGy------------------------->*/
+
+    /*<-------------------------Golem------------------------->*/
+    data[Character::Golem].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Golem].textures = {
+        Textures::GolemToLeft,
+        Textures::GolemToRight,
+        Textures::GolemIdle,
+    };
+    data[Character::Golem].frameSize = sf::Vector2i(60,50);
+    data[Character::Golem].numFrames = 10;
+    /*<-------------------------Golem------------------------->*/
+
+    /*<-------------------------GolemSwamp------------------------->*/
+    data[Character::GolemSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::GolemSwamp].textures = {
+        Textures::GolemSwampToLeft,
+        Textures::GolemSwampToRight,
+        Textures::GolemSwampIdle,
+    };
+    data[Character::GolemSwamp].frameSize = sf::Vector2i(60,50);
+    data[Character::GolemSwamp].numFrames = 10;
+    /*<-------------------------GolemSwamp------------------------->*/
+
+    /*<-------------------------SatyrGy------------------------->*/
+    data[Character::SatyrGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::SatyrGy].textures = {
+        Textures::SatyrGyToLeft,
+        Textures::SatyrGyToRight,
+        Textures::SatyrGyIdle,
+    };
+    data[Character::SatyrGy].frameSize = sf::Vector2i(48,48);
+    data[Character::SatyrGy].numFrames = 10;
+    /*<-------------------------SatyrGy------------------------->*/
+
+    /*<-------------------------Satyr------------------------->*/
+    data[Character::Satyr].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Satyr].textures = {
+        Textures::SatyrToLeft,
+        Textures::SatyrToRight,
+        Textures::SatyrIdle,
+    };
+    data[Character::Satyr].frameSize = sf::Vector2i(48,48);
+    data[Character::Satyr].numFrames = 10;
+    /*<-------------------------Satyr------------------------->*/
+
+    /*<-------------------------SatyrSwamp------------------------->*/
+    data[Character::SatyrSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::SatyrSwamp].textures = {
+        Textures::SatyrSwampToLeft,
+        Textures::SatyrSwampToRight,
+        Textures::SatyrSwampIdle,
+    };
+    data[Character::SatyrSwamp].frameSize = sf::Vector2i(48,48);
+    data[Character::SatyrSwamp].numFrames = 10;
+    /*<-------------------------SatyrSwamp------------------------->*/
+
+    /*<-------------------------MinoGy------------------------->*/
+    data[Character::MinoGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::MinoGy].textures = {
+        Textures::MinoGyToLeft,
+        Textures::MinoGyToRight,
+        Textures::MinoGyIdle,
+    };
+    data[Character::MinoGy].frameSize = sf::Vector2i(58,56);
+    data[Character::MinoGy].numFrames = 10;
+    /*<-------------------------MinoGy------------------------->*/
+
+    /*<-------------------------Mino------------------------->*/
+    data[Character::Mino].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Mino].textures = {
+        Textures::MinoToLeft,
+        Textures::MinoToRight,
+        Textures::MinoIdle,
+    };
+    data[Character::Mino].frameSize = sf::Vector2i(58,56);
+    data[Character::Mino].numFrames = 10;
+    /*<-------------------------Mino------------------------->*/
+
+    /*<-------------------------MinoSwamp------------------------->*/
+    data[Character::MinoSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::MinoSwamp].textures = {
+        Textures::MinoSwampToLeft,
+        Textures::MinoSwampToRight,
+        Textures::MinoSwampIdle,
+    };
+    data[Character::MinoSwamp].frameSize = sf::Vector2i(58,56);
+    data[Character::MinoSwamp].numFrames = 10;
+    /*<-------------------------MinoSwamp------------------------->*/
 
     // Skin data
     for (int i = Character::Archer; i < Character::TypeCount; ++i) {

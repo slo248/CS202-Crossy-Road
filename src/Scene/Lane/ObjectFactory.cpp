@@ -8,9 +8,8 @@ ObjectFactory::ObjectFactory(
     const TextureHolder& textures, LaneType laneType, float levelScale
 )
     : mTextures(&textures), mLaneType(laneType), mLevelScale(levelScale) {
-    mAirEnemies = {
-        Character::Type::Bee, Character::Type::Bird, Character::Type::BeeBoss,
-        Character::Type::BombBat
+    mAirEnemies = {/*Character::Type::Bee, Character::Type::Bird,*/
+                   Character::Type::BeeBoss, Character::Type::BombBat
     };
 
     switch (mLaneType) {
@@ -24,9 +23,13 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Field_Tree1,
             };
             mGroundEnemies = {
-                Character::Type::Dog,       Character::Type::Rabbit,
-                Character::Type::Sheep,     Character::Type::Zombie,
-                Character::Type::Crocodile, Character::Type::Wraith,
+                Character::Type::Dog,
+                /*Character::Type::Rabbit,
+Character::Type::Sheep,*/
+                Character::Type::Wraith,
+                Character::Type::Golem,
+                Character::Type::Satyr,
+                Character::Type::Mino,
             };
 
             break;
@@ -38,9 +41,11 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Graveyard_Tree2
             };
             mGroundEnemies = {
-                Character::Type::Orc,       Character::Type::Dog,
-                Character::Type::Fishmen,   Character::Type::Zombie,
-                Character::Type::Crocodile, Character::Type::Wraith,
+                // Character::Type::Zombie,
+                Character::Type::WraithPro,
+                Character::Type::GolemGy,
+                Character::Type::SatyrGy,
+                Character::Type::MinoGy,
             };
 
             break;
@@ -52,9 +57,14 @@ ObjectFactory::ObjectFactory(
                 Obstacle::Swamp_Well1
             };
             mGroundEnemies = {
-                Character::Type::Turtle,    Character::Type::Frog,
-                Character::Type::Fishmen,   Character::Type::Zombie,
-                Character::Type::Crocodile, Character::Type::Wraith,
+                /*Character::Type::Turtle,    Character::Type::Frog,*/
+                Character::Type::Orc,
+                // Character::Type::Zombie,
+                Character::Type::Crocodile,
+                Character::Type::WraithSwamp,
+                Character::Type::GolemSwamp,
+                Character::Type::SatyrSwamp,
+                Character::Type::MinoSwamp,
             };
 
             break;
