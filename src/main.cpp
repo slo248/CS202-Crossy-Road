@@ -366,7 +366,12 @@ int main() {
 
     loadTexture(textures);
     loadFonts(fonts);
-    World world(textures, fonts, window, Config::GameLevel::Endless, true);
+    bool isNewGame;
+    std::cout << "New game? (1 or 0) ";
+    std::cin >> isNewGame;
+    World world(
+        textures, fonts, window, Config::GameLevel::Endless, !isNewGame
+    );
     Player player;
 
     sf::Clock clock;
@@ -394,7 +399,7 @@ int main() {
         window.display();
     }
 
-    world.saveCurrentGame("data/endless.txt");
+    if (world.hasAlivePlayer()) world.saveCurrentGame();
     std::cout << "Game exited successfully!\n";
 
     return 0;

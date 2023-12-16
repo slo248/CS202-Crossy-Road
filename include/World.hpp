@@ -24,7 +24,7 @@ class World {
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
-    void saveCurrentGame(const std::string& path) const;
+    void saveCurrentGame() const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };

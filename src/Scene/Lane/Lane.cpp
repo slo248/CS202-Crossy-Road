@@ -219,6 +219,7 @@ void Lane::attachChild(SceneNode::Ptr child) {
 
 Lane::Lane(LaneType type, const TextureHolder& textures, float levelScale)
     : mType(type),
+      mRandomFactor(1),
       mChildLane(nullptr),
       mTrafficLight(nullptr),
       mSpawnInterval(Table[type].spawnInterval),

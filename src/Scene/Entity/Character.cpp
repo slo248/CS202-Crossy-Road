@@ -117,8 +117,8 @@ Character::Type Character::getType() const { return mType; }
 
 void Character::moveCharacter(Direction direction) {
     if (!mMovement.isFinished() || SceneNode::isMarkedForRemoval()) return;
-    Animation* nextAnimation;
-    sf::Vector2f incomingPosition;
+    // Remember to initialize
+    Animation* nextAnimation = &mAnimations[CharacterData::Direction::Idle];
     Lane* nextLane = nullptr;
 
     switch (direction) {
@@ -153,7 +153,8 @@ void Character::moveCharacter(Direction direction) {
         return;
     }
 
-    incomingPosition = nextLane->checkMoveablePlayer(this, direction);
+    sf::Vector2f incomingPosition =
+        nextLane->checkMoveablePlayer(this, direction);
     if (incomingPosition != getWorldPosition()) {
         mCurrentAnimation = nextAnimation;
         mCurrentLane = nextLane;

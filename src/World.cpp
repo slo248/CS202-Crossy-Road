@@ -179,6 +179,39 @@ void World::setDefaultScoreText() {
     mScoreText.setOutlineColor(sf::Color::Black);
 }
 
+std::string loadPath(Config::GameLevel::Type type) {
+    switch (type) {
+        case Config::GameLevel::Endless: {
+            return "data/endless.txt";
+            break;
+        }
+
+        case Config::GameLevel::L1: {
+            return "data/level1.txt";
+        }
+
+        case Config::GameLevel::L2: {
+            return "data/level2.txt";
+        }
+
+        case Config::GameLevel::L3: {
+            return "data/level3.txt";
+        }
+
+        case Config::GameLevel::L4: {
+            return "data/level4.txt";
+        }
+
+        case Config::GameLevel::L5: {
+            return "data/level5.txt";
+        }
+
+        default: {
+            return "";
+        }
+    }
+}
+
 void World::loadGame() {
     for (int i = 0; i < LayerCount; i++) {
         // used to be new SceneNode()
@@ -188,13 +221,10 @@ void World::loadGame() {
     }
 
     std::ifstream in;
-    if (mGameType == Config::GameLevel::Endless) {
-        in.open("data/endless.txt", std::ios::in);
-    } else {
-        in.open("data/level.txt", std::ios::in);
-    }
+    in.open(loadPath(mGameType), std::ios::in);
 
-    if (!in.is_open()) {
+    // problematic
+    if (!in.good()) {
         std::cout << "Cannot open save file!\n";
         return;
     }
@@ -226,21 +256,23 @@ void World::loadGame() {
     mLayers[Background]->attachChild(std::move(top));
     in.close();
 
+    Lane* current = mTopLane;
+    while (current) {
+        if (current->getWorldPosition().y == mPlayer->getWorldPosition().y) {
+            mPlayer->setCurrentLane(current);
+            break;
+        }
+        current = current->getChildLane();
+    }
+
     std::cout << "Game loaded successfully!\n";
-    saveCurrentGame("data/endless2.txt");
 }
 
-void World::saveCurrentGame(const std::string& path) const {
+void World::saveCurrentGame() const {
     std::ofstream out;
-    // if (mGameType == Config::GameLevel::Endless) {
-    //     out.open("data/endless.txt", std::ios::out);
-    // } else {
-    //     out.open("data/level.txt", std::ios::out);
-    // }
+    out.open(loadPath(mGameType), std::ios::out);
 
-    out.open(path, std::ios::out);
-
-    if (!out.is_open()) {
+    if (!out.good()) {
         std::cout << "Cannot open save file!\n";
         return;
     }
@@ -258,15 +290,6 @@ void World::saveCurrentGame(const std::string& path) const {
 
     std::cout << "Game saved successfully!\n";
     out.close();
-
-    Lane* current = mTopLane;
-    while (current) {
-        if (current->getWorldPosition().y == mPlayer->getWorldPosition().y) {
-            mPlayer->setCurrentLane(current);
-            break;
-        }
-        current = current->getChildLane();
-    }
 }
 
 sf::FloatRect World::getBattlefieldBounds() const {
