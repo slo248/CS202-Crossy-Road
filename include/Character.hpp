@@ -16,14 +16,14 @@ class Character : public Entity {
     enum Direction { ToLeft, ToRight, ToUpper, ToLower };
 
     enum Type {
-        Bee,
-        Bird,
+        // Bee,
+        // Bird,
         Crocodile,
         Dog,
-        Frog,
-        Rabbit,
-        Sheep,
-        Turtle,
+        // Frog,
+        // Rabbit,
+        // Sheep,
+        // Turtle,
         BeeBoss,
         BombBat,
         Fishmen,

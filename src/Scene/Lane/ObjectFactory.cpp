@@ -25,7 +25,7 @@ ObjectFactory::ObjectFactory(
             mGroundEnemies = {
                 Character::Type::Dog,
                 /*Character::Type::Rabbit,
-Character::Type::Sheep,*/
+                Character::Type::Sheep,*/
                 Character::Type::Wraith,
                 Character::Type::Golem,
                 Character::Type::Satyr,

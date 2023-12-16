@@ -34,31 +34,31 @@ enum ID {
 
     /////////////////////////////////////////////
 
-    // <------------------Animal---------------->
-    BeeToLeft,
-    BeeToRight,
-    BeeIdle,
+    // // <------------------Animal---------------->
+    // BeeToLeft,
+    // BeeToRight,
+    // BeeIdle,
 
-    BirdToLeft,
-    BirdToRight,
-    BirdIdle,
+    // BirdToLeft,
+    // BirdToRight,
+    // BirdIdle,
 
-    FrogToLeft,
-    FrogToRight,
-    FrogIdle,
+    // FrogToLeft,
+    // FrogToRight,
+    // FrogIdle,
 
-    RabbitToLeft,
-    RabbitToRight,
-    RabbitIdle,
+    // RabbitToLeft,
+    // RabbitToRight,
+    // RabbitIdle,
 
-    SheepToLeft,
-    SheepToRight,
-    SheepIdle,
+    // SheepToLeft,
+    // SheepToRight,
+    // SheepIdle,
 
-    TurtleToLeft,
-    TurtleToRight,
-    TurtleIdle,
-    // <------------------Animal----------------->
+    // TurtleToLeft,
+    // TurtleToRight,
+    // TurtleIdle,
+    // // <------------------Animal----------------->
 
     //////////////////////////////////////////////
 

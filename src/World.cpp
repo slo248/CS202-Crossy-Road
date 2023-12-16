@@ -16,7 +16,7 @@ World::World(
       //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mTopLane(nullptr),
-      mScrollSpeed(0, -40 * getLevelFactor(gameType)) {
+      mScrollSpeed(0, /*-40 * getLevelFactor(gameType)*/ 0) {
     mWorldBounds = sf::FloatRect(
         0, 0, mWorldView.getSize().x,
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)

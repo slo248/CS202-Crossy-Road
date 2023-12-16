@@ -13,27 +13,27 @@ std::vector<CharacterData> initializeCharacterData() {
 
     // Enemy data
     // Air enemy data
-    /*<-------------------------Bee------------------------------->*/
-    data[Character::Bee].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
-    data[Character::Bee].textures = {
-        Textures::BeeToLeft,
-        Textures::BeeToRight,
-        Textures::BeeIdle,
-    };
-    data[Character::Bee].frameSize = sf::Vector2i(48, 48);
-    data[Character::Bee].numFrames = 6;
-    /*<-------------------------Bee------------------------------->*/
+    // /*<-------------------------Bee------------------------------->*/
+    // data[Character::Bee].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
+    // data[Character::Bee].textures = {
+    //     Textures::BeeToLeft,
+    //     Textures::BeeToRight,
+    //     Textures::BeeIdle,
+    // };
+    // data[Character::Bee].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Bee].numFrames = 6;
+    // /*<-------------------------Bee------------------------------->*/
 
-    /*<-------------------------Bird------------------------------->*/
-    data[Character::Bird].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
-    data[Character::Bird].textures = {
-        Textures::BirdToLeft,
-        Textures::BirdToRight,
-        Textures::BirdIdle,
-    };
-    data[Character::Bird].frameSize = sf::Vector2i(48, 48);
-    data[Character::Bird].numFrames = 4;
-    /*<-------------------------Bird------------------------------->*/
+    // /*<-------------------------Bird------------------------------->*/
+    // data[Character::Bird].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
+    // data[Character::Bird].textures = {
+    //     Textures::BirdToLeft,
+    //     Textures::BirdToRight,
+    //     Textures::BirdIdle,
+    // };
+    // data[Character::Bird].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Bird].numFrames = 4;
+    // /*<-------------------------Bird------------------------------->*/
 
     /*<-------------------------BeeBoss--------------------------->*/
     data[Character::BeeBoss].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
@@ -79,49 +79,49 @@ std::vector<CharacterData> initializeCharacterData() {
     data[Character::Dog].numFrames = 6;
     /*<-------------------------Dog------------------------->*/
 
-    /*<-------------------------Frog------------------------->*/
-    data[Character::Frog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Frog].textures = {
-        Textures::FrogToLeft,
-        Textures::FrogToRight,
-        Textures::FrogIdle,
-    };
-    data[Character::Frog].frameSize = sf::Vector2i(48, 48);
-    data[Character::Frog].numFrames = 4;
-    /*<-------------------------Frog------------------------->*/
+    // /*<-------------------------Frog------------------------->*/
+    // data[Character::Frog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    // data[Character::Frog].textures = {
+    //     Textures::FrogToLeft,
+    //     Textures::FrogToRight,
+    //     Textures::FrogIdle,
+    // };
+    // data[Character::Frog].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Frog].numFrames = 4;
+    // /*<-------------------------Frog------------------------->*/
 
-    /*<-------------------------Rabbit------------------------->*/
-    data[Character::Rabbit].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Rabbit].textures = {
-        Textures::RabbitToLeft,
-        Textures::RabbitToRight,
-        Textures::RabbitIdle,
-    };
-    data[Character::Rabbit].frameSize = sf::Vector2i(48, 48);
-    data[Character::Rabbit].numFrames = 4;
-    /*<-------------------------Rabbit------------------------->*/
+    // /*<-------------------------Rabbit------------------------->*/
+    // data[Character::Rabbit].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    // data[Character::Rabbit].textures = {
+    //     Textures::RabbitToLeft,
+    //     Textures::RabbitToRight,
+    //     Textures::RabbitIdle,
+    // };
+    // data[Character::Rabbit].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Rabbit].numFrames = 4;
+    // /*<-------------------------Rabbit------------------------->*/
 
-    /*<-------------------------Sheep------------------------->*/
-    data[Character::Sheep].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Sheep].textures = {
-        Textures::SheepToLeft,
-        Textures::SheepToRight,
-        Textures::SheepIdle,
-    };
-    data[Character::Sheep].frameSize = sf::Vector2i(48, 48);
-    data[Character::Sheep].numFrames = 4;
-    /*<-------------------------Sheep------------------------->*/
+    // /*<-------------------------Sheep------------------------->*/
+    // data[Character::Sheep].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    // data[Character::Sheep].textures = {
+    //     Textures::SheepToLeft,
+    //     Textures::SheepToRight,
+    //     Textures::SheepIdle,
+    // };
+    // data[Character::Sheep].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Sheep].numFrames = 4;
+    // /*<-------------------------Sheep------------------------->*/
 
-    /*<-------------------------Turtle------------------------->*/
-    data[Character::Turtle].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Turtle].textures = {
-        Textures::TurtleToLeft,
-        Textures::TurtleToRight,
-        Textures::TurtleIdle,
-    };
-    data[Character::Turtle].frameSize = sf::Vector2i(48, 48);
-    data[Character::Turtle].numFrames = 6;
-    /*<-------------------------Turtle------------------------->*/
+    // /*<-------------------------Turtle------------------------->*/
+    // data[Character::Turtle].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    // data[Character::Turtle].textures = {
+    //     Textures::TurtleToLeft,
+    //     Textures::TurtleToRight,
+    //     Textures::TurtleIdle,
+    // };
+    // data[Character::Turtle].frameSize = sf::Vector2i(48, 48);
+    // data[Character::Turtle].numFrames = 6;
+    // /*<-------------------------Turtle------------------------->*/
 
     /*<-------------------------Fishmen------------------------->*/
     data[Character::Fishmen].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
@@ -163,7 +163,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::WraithToRight,
         Textures::WraithIdle,
     };
-    data[Character::Wraith].frameSize = sf::Vector2i(44,50);
+    data[Character::Wraith].frameSize = sf::Vector2i(44, 50);
     data[Character::Wraith].numFrames = 10;
     /*<-------------------------Wraith------------------------->*/
 
@@ -174,7 +174,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::WraithProToRight,
         Textures::WraithProIdle,
     };
-    data[Character::WraithPro].frameSize = sf::Vector2i(44,50);
+    data[Character::WraithPro].frameSize = sf::Vector2i(44, 50);
     data[Character::WraithPro].numFrames = 10;
     /*<-------------------------WraithPro------------------------->*/
 
@@ -185,7 +185,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::WraithSwampToRight,
         Textures::WraithSwampIdle,
     };
-    data[Character::WraithSwamp].frameSize = sf::Vector2i(44,50);
+    data[Character::WraithSwamp].frameSize = sf::Vector2i(44, 50);
     data[Character::WraithSwamp].numFrames = 10;
     /*<-------------------------WraithSwamp------------------------->*/
 
@@ -196,7 +196,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::GolemGyToRight,
         Textures::GolemGyIdle,
     };
-    data[Character::GolemGy].frameSize = sf::Vector2i(60,50);
+    data[Character::GolemGy].frameSize = sf::Vector2i(60, 50);
     data[Character::GolemGy].numFrames = 10;
     /*<-------------------------GolemGy------------------------->*/
 
@@ -207,7 +207,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::GolemToRight,
         Textures::GolemIdle,
     };
-    data[Character::Golem].frameSize = sf::Vector2i(60,50);
+    data[Character::Golem].frameSize = sf::Vector2i(60, 50);
     data[Character::Golem].numFrames = 10;
     /*<-------------------------Golem------------------------->*/
 
@@ -218,7 +218,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::GolemSwampToRight,
         Textures::GolemSwampIdle,
     };
-    data[Character::GolemSwamp].frameSize = sf::Vector2i(60,50);
+    data[Character::GolemSwamp].frameSize = sf::Vector2i(60, 50);
     data[Character::GolemSwamp].numFrames = 10;
     /*<-------------------------GolemSwamp------------------------->*/
 
@@ -229,7 +229,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::SatyrGyToRight,
         Textures::SatyrGyIdle,
     };
-    data[Character::SatyrGy].frameSize = sf::Vector2i(48,48);
+    data[Character::SatyrGy].frameSize = sf::Vector2i(48, 48);
     data[Character::SatyrGy].numFrames = 10;
     /*<-------------------------SatyrGy------------------------->*/
 
@@ -240,7 +240,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::SatyrToRight,
         Textures::SatyrIdle,
     };
-    data[Character::Satyr].frameSize = sf::Vector2i(48,48);
+    data[Character::Satyr].frameSize = sf::Vector2i(48, 48);
     data[Character::Satyr].numFrames = 10;
     /*<-------------------------Satyr------------------------->*/
 
@@ -251,7 +251,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::SatyrSwampToRight,
         Textures::SatyrSwampIdle,
     };
-    data[Character::SatyrSwamp].frameSize = sf::Vector2i(48,48);
+    data[Character::SatyrSwamp].frameSize = sf::Vector2i(48, 48);
     data[Character::SatyrSwamp].numFrames = 10;
     /*<-------------------------SatyrSwamp------------------------->*/
 
@@ -262,7 +262,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::MinoGyToRight,
         Textures::MinoGyIdle,
     };
-    data[Character::MinoGy].frameSize = sf::Vector2i(58,56);
+    data[Character::MinoGy].frameSize = sf::Vector2i(58, 56);
     data[Character::MinoGy].numFrames = 10;
     /*<-------------------------MinoGy------------------------->*/
 
@@ -273,7 +273,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::MinoToRight,
         Textures::MinoIdle,
     };
-    data[Character::Mino].frameSize = sf::Vector2i(58,56);
+    data[Character::Mino].frameSize = sf::Vector2i(58, 56);
     data[Character::Mino].numFrames = 10;
     /*<-------------------------Mino------------------------->*/
 
@@ -284,7 +284,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::MinoSwampToRight,
         Textures::MinoSwampIdle,
     };
-    data[Character::MinoSwamp].frameSize = sf::Vector2i(58,56);
+    data[Character::MinoSwamp].frameSize = sf::Vector2i(58, 56);
     data[Character::MinoSwamp].numFrames = 10;
     /*<-------------------------MinoSwamp------------------------->*/
 

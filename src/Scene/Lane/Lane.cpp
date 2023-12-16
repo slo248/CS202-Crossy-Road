@@ -312,10 +312,10 @@ void Lane::spawnLog() {
 
 bool isAirEnemy(Character* character) {
     Character::Type characterType = character->getType();
-    return characterType == Character::Type::Bee ||
-           characterType == Character::Type::Bird ||
-           characterType == Character::Type::BeeBoss ||
-           characterType == Character::Type::BombBat;
+    return /*characterType == Character::Type::Bee ||
+           characterType == Character::Type::Bird ||*/
+        characterType == Character::Type::BeeBoss ||
+        characterType == Character::Type::BombBat;
 }
 
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
