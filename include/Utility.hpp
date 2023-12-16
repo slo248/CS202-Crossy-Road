@@ -34,5 +34,7 @@ int getCurrentRow(int y);
 
 float getLevelFactor(Config::GameLevel::Type gameType);
 
+std::string savedGamePath(Config::GameLevel::Type type);
+
 #include "Utility.inl"
 #endif

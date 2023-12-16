@@ -131,3 +131,36 @@ int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
 float getLevelFactor(Config::GameLevel::Type gameType) {
     return 1.f + static_cast<float>(gameType) / 20;
 }
+
+std::string savedGamePath(Config::GameLevel::Type type) {
+    switch (type) {
+        case Config::GameLevel::Endless: {
+            return "data/endless.txt";
+            break;
+        }
+
+        case Config::GameLevel::L1: {
+            return "data/level1.txt";
+        }
+
+        case Config::GameLevel::L2: {
+            return "data/level2.txt";
+        }
+
+        case Config::GameLevel::L3: {
+            return "data/level3.txt";
+        }
+
+        case Config::GameLevel::L4: {
+            return "data/level4.txt";
+        }
+
+        case Config::GameLevel::L5: {
+            return "data/level5.txt";
+        }
+
+        default: {
+            return "";
+        }
+    }
+}

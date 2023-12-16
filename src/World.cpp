@@ -13,14 +13,13 @@ World::World(
       mWindow(window),
       mGameType(gameType),
       mWorldView(window.getDefaultView()),
-      //   mWorldBounds(0, 0, mWorldView.getSize().x, 2000),
       mPlayer(nullptr),
       mTopLane(nullptr),
-      mScrollSpeed(0, /*-40 * getLevelFactor(gameType)*/ 0) {
-    mWorldBounds = sf::FloatRect(
-        0, 0, mWorldView.getSize().x,
-        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
-    );
+      mScrollSpeed(0, /*-35 * getLevelFactor(gameType)*/ 0),
+      mWorldBounds(sf::FloatRect(
+          0, 0, mWorldView.getSize().x,
+          2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
+      )) {
     if (isLoadedFromFile) {
         loadGame();
     } else {
@@ -55,8 +54,6 @@ void World::update(sf::Time dt) {
     }
 
     mScoreText.setString("Scores: " + std::to_string(mScores));
-
-    // std::cout << "\n";
 }
 
 void World::draw() {
@@ -69,37 +66,39 @@ void World::draw() {
 CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 
 void World::buildScene() {
-    for (int i = 0; i < LayerCount; i++) {
-        // used to be new SceneNode()
-        SceneNode::Ptr layer(std::make_unique<SceneNode>());
-        mLayers[i] = layer.get();
-        mSceneGraph.attachChild(std::move(layer));
-    }
+    // Build all layers
+    buildLayers();
+
+    // Remained blocks count
     if (mGameType != Config::GameLevel::Endless) {
         mRemainBlocks = (static_cast<int>(mGameType) + 1) * 3;
     } else
         mRemainBlocks = -1;
 
+    // Build lanes
     Lane::Ptr top1 = nullptr;
-    Lane* bot1 = nullptr;
+    Lane* bottom1 = nullptr;
 
+    // Normal lanes
     createMultipleLanes(
-        mTextures, 2 * NUM_LANE, top1, bot1, false, getLevelFactor(mGameType)
+        mTextures, 2 * NUM_LANE, top1, bottom1, false, getLevelFactor(mGameType)
     );
     top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
     mTopLane = top1.get();
     mLayers[Background]->attachChild(std::move(top1));
 
+    // Buffer lanes
     Lane::Ptr top3 = nullptr;
-    Lane* bot3 = nullptr;
-    createMultipleLanes(mTextures, BUFFER_LANE, top3, bot3, true);
-    bot1->attachChild(std::move(top3));
+    Lane* bottom3 = nullptr;
+    createMultipleLanes(mTextures, BUFFER_LANE, top3, bottom3, true);
+    bottom1->attachChild(std::move(top3));
 
     Lane::Ptr top4 = nullptr;
-    Lane* bot4 = nullptr;
-    createMultipleLanes(mTextures, BUFFER_LANE, top4, bot4, true);
-    bot3->attachChild(std::move(top4));
+    Lane* bottom4 = nullptr;
+    createMultipleLanes(mTextures, BUFFER_LANE, top4, bottom4, true);
+    bottom3->attachChild(std::move(top4));
 
+    // Player's initial position
     Character::Ptr player(new Character(Character::Type::Archer, mTextures));
     mPlayer = player.get();
     mPlayer->setPosition(
@@ -108,9 +107,10 @@ void World::buildScene() {
             DEFAULT_CELL_LENGTH / 2
     );
     mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
-    mPlayer->setCurrentLane(bot3);
+    mPlayer->setCurrentLane(bottom3);
     mLayers[OnGround]->attachChild(std::move(player));
 
+    // Set view
     mWorldView.setCenter(
         mWorldView.getSize().x / 2,
         2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
@@ -119,44 +119,64 @@ void World::buildScene() {
 }
 
 void World::buildBlocks() {
+    // Not allow to build blocks when player is in movement -> if not player
+    // will be shifted
     if (mRemainBlocks == -2 || mPlayer->isInMovement()) return;
+
+    // Build last block
     if (mRemainBlocks == 0) {
         Lane::Ptr top = nullptr;
-        Lane* bot = nullptr;
-        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bot, true);
-        bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane))
-        );
+        Lane* bottom = nullptr;
+        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bottom, true);
+        bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane
+        )));
         top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
         mTopLane = top.get();
         mLayers[Background]->attachChild(std::move(top));
         mRemainBlocks = -2;
 
+        // Move view and player to maintain the same position (duplicate)
         mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
         mPlayer->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
 
         return;
     }
+
     if (mWorldView.getCenter().y + mWorldView.getSize().y / 2 >
-        NUM_LANE * DEFAULT_CELL_LENGTH)
+        NUM_LANE * DEFAULT_CELL_LENGTH) {
         return;
+    }
+
+    // Build as normal
     if (mRemainBlocks > 0) mRemainBlocks--;
 
+    // Build block
     Lane::Ptr top = nullptr;
-    Lane* bot = nullptr;
-
+    Lane* bottom = nullptr;
     createMultipleLanes(
-        mTextures, NUM_LANE, top, bot, false, getLevelFactor(mGameType)
+        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameType)
     );
+    bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
     top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
-
-    bot->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
-    mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
-    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
-
     mTopLane = top.get();
     mLayers[Background]->attachChild(std::move(top));
 
+    // Move view and player to maintain the same position
+    mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+
+    // Setup player's pre row for scoring
+    mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
+
     std::cout << "Remaining blocks: " << mRemainBlocks << std::endl;
+}
+
+void World::buildLayers() {
+    for (int i = 0; i < LayerCount; i++) {
+        SceneNode::Ptr layer(std::make_unique<SceneNode>());
+        mLayers[i] = layer.get();
+        mSceneGraph.attachChild(std::move(layer));
+    }
 }
 
 void World::removeEntitiesOutsizeView() {
@@ -179,51 +199,14 @@ void World::setDefaultScoreText() {
     mScoreText.setOutlineColor(sf::Color::Black);
 }
 
-std::string loadPath(Config::GameLevel::Type type) {
-    switch (type) {
-        case Config::GameLevel::Endless: {
-            return "data/endless.txt";
-            break;
-        }
-
-        case Config::GameLevel::L1: {
-            return "data/level1.txt";
-        }
-
-        case Config::GameLevel::L2: {
-            return "data/level2.txt";
-        }
-
-        case Config::GameLevel::L3: {
-            return "data/level3.txt";
-        }
-
-        case Config::GameLevel::L4: {
-            return "data/level4.txt";
-        }
-
-        case Config::GameLevel::L5: {
-            return "data/level5.txt";
-        }
-
-        default: {
-            return "";
-        }
-    }
-}
-
 void World::loadGame() {
-    for (int i = 0; i < LayerCount; i++) {
-        // used to be new SceneNode()
-        SceneNode::Ptr layer(std::make_unique<SceneNode>());
-        mLayers[i] = layer.get();
-        mSceneGraph.attachChild(std::move(layer));
-    }
+    // Build all layers
+    buildLayers();
 
     std::ifstream in;
-    in.open(loadPath(mGameType), std::ios::in);
+    in.open(savedGamePath(mGameType), std::ios::in);
 
-    // problematic
+    // problematic -> need adequate states
     if (!in.good()) {
         std::cout << "Cannot open save file!\n";
         return;
@@ -270,7 +253,7 @@ void World::loadGame() {
 
 void World::saveCurrentGame() const {
     std::ofstream out;
-    out.open(loadPath(mGameType), std::ios::out);
+    out.open(savedGamePath(mGameType), std::ios::out);
 
     if (!out.good()) {
         std::cout << "Cannot open save file!\n";

@@ -33,6 +33,7 @@ class World {
 
     void buildScene();
     void buildBlocks();
+    void buildLayers();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
     void loadGame();
