@@ -85,9 +85,6 @@ sf::FloatRect Obstacle::getLocalBounds() const {
 }
 
 void Obstacle::updateCurrent(sf::Time dt, CommandQueue& commands) {
-    // std::cout << "Position" << getWorldPosition().x << " "
-    //           << getWorldPosition().y << '\n';
-    updateMovementPattern(dt);
     Entity::updateCurrent(dt, commands);
 }
 
@@ -95,8 +92,6 @@ void Obstacle::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
     target.draw(mSprite, states);
 }
-
-void Obstacle::updateMovementPattern(sf::Time dt) {}
 
 void Obstacle::saveCurrent(std::ostream& out) const {
     Category::Type category = static_cast<Category::Type>(getCategory());

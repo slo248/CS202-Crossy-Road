@@ -7,13 +7,17 @@
 #include <functional>
 #include <vector>
 
+#include "Character.hpp"
 #include "Config.hpp"
+#include "Lane.hpp"
+#include "Obstacle.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "TrafficLight.hpp"
 
-class Character;
-class Obstacle;
-class Lane;
-class TraffictLight;
+// class Character;
+// class Obstacle;
+// class Lane;
+// class TraffictLight;
 
 struct CharacterData {
     enum Direction { ToLeft, ToRight, Idle, ToUpper, ToLower };
@@ -29,20 +33,28 @@ struct ObstacleData {
     float normalSpeed;
 };
 
+struct TrafficLightData {
+    Textures::ID texture;
+    sf::IntRect textureRect;
+};
+
+struct ObjectFactoryData {
+    enum Type { Field, Graveyard, Swamp, River, TypeCount };
+    std::vector<Character::Type> airSpawnTypes;
+    std::vector<Character::Type> groundSpawnTypes;
+    std::vector<Obstacle::Type> obstacleSpawnTypes;
+};
+
 struct LaneData {
     Textures::ID texture;
     sf::IntRect textureRect;
     sf::Time spawnInterval;
 };
 
-struct TrafficLightData {
-    Textures::ID texture;
-    sf::IntRect textureRect;
-};
-
 std::vector<CharacterData> initializeCharacterData();
 std::vector<ObstacleData> initializeObstacleData();
-std::vector<LaneData> initializeLaneData();
 std::vector<TrafficLightData> initializeTrafficLightData();
+std::vector<LaneData> initializeLaneData();
+std::vector<ObjectFactoryData> initializeObjectFactoryData();
 
 #endif  // DATATABLES_HPP

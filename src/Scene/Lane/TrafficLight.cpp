@@ -5,13 +5,10 @@
 #include <iostream>
 
 #include "Category.hpp"
+#include "Config.hpp"
 #include "DataTables.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
-
-#define GREEN_INTERVAL sf::seconds(5.0)
-#define YELLOW_INTERVAL sf::seconds(2.0)
-#define RED_INTERVAL sf::seconds(5.0)
 
 namespace {
 const std::vector<TrafficLightData> Table = initializeTrafficLightData();
@@ -62,8 +59,8 @@ void TrafficLight::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
     switch (mColor) {
         case Green: {
-            if (mElapsedTime >= GREEN_INTERVAL) {
-                mElapsedTime -= GREEN_INTERVAL;
+            if (mElapsedTime >= GREEN_LIGHT_INTERVAL) {
+                mElapsedTime -= GREEN_LIGHT_INTERVAL;
                 mPhase = GreenToYellow;
                 mColor = Yellow;
             } else {
@@ -73,8 +70,8 @@ void TrafficLight::updateCurrent(sf::Time dt, CommandQueue& commands) {
         }
 
         case Yellow: {
-            if (mElapsedTime >= YELLOW_INTERVAL) {
-                mElapsedTime -= YELLOW_INTERVAL;
+            if (mElapsedTime >= YELLOW_LIGHT_INTERVAL) {
+                mElapsedTime -= YELLOW_LIGHT_INTERVAL;
                 mPhase = YellowToRed;
                 mColor = Red;
             } else {
@@ -84,8 +81,8 @@ void TrafficLight::updateCurrent(sf::Time dt, CommandQueue& commands) {
         }
 
         case Red: {
-            if (mElapsedTime >= RED_INTERVAL) {
-                mElapsedTime -= RED_INTERVAL;
+            if (mElapsedTime >= RED_LIGHT_INTERVAL) {
+                mElapsedTime -= RED_LIGHT_INTERVAL;
                 mPhase = RedToGreen;
                 mColor = Green;
             } else {

@@ -101,29 +101,6 @@ void loadTexture(TextureHolder& textures) {
 
     /***********************Load Enemy Textures****************************/
     textures.load(
-        Textures::CrocodileToLeft,
-        "asset/game_textures/Enemy/Crocodile/S_Walk_ToLeft.png"
-    );
-    textures.load(
-        Textures::CrocodileToRight,
-        "asset/game_textures/Enemy/Crocodile/S_Walk_ToRight.png"
-    );
-    textures.load(
-        Textures::CrocodileIdle,
-        "asset/game_textures/Enemy/Crocodile/S_Attack.png"
-    );
-
-    textures.load(
-        Textures::DogToLeft, "asset/game_textures/Enemy/Dog/S_Walk_ToLeft.png"
-    );
-    textures.load(
-        Textures::DogToRight, "asset/game_textures/Enemy/Dog/S_Walk_ToRight.png"
-    );
-    textures.load(
-        Textures::DogIdle, "asset/game_textures/Enemy/Dog/S_Attack.png"
-    );
-
-    textures.load(
         Textures::BeeBossToLeft,
         "asset/game_textures/Enemy/BeeBoss/S_Fly_ToLeft.png"
     );
@@ -149,6 +126,29 @@ void loadTexture(TextureHolder& textures) {
     );
 
     textures.load(
+        Textures::CrocodileToLeft,
+        "asset/game_textures/Enemy/Crocodile/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::CrocodileToRight,
+        "asset/game_textures/Enemy/Crocodile/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::CrocodileIdle,
+        "asset/game_textures/Enemy/Crocodile/S_Attack.png"
+    );
+
+    textures.load(
+        Textures::DogToLeft, "asset/game_textures/Enemy/Dog/S_Walk_ToLeft.png"
+    );
+    textures.load(
+        Textures::DogToRight, "asset/game_textures/Enemy/Dog/S_Walk_ToRight.png"
+    );
+    textures.load(
+        Textures::DogIdle, "asset/game_textures/Enemy/Dog/S_Attack.png"
+    );
+
+    textures.load(
         Textures::FishmenToLeft,
         "asset/game_textures/Enemy/Fishmen/S_Walk_ToLeft.png"
     );
@@ -168,18 +168,6 @@ void loadTexture(TextureHolder& textures) {
     );
     textures.load(
         Textures::OrcIdle, "asset/game_textures/Enemy/Orc/D_Special.png"
-    );
-
-    textures.load(
-        Textures::ZombieToLeft,
-        "asset/game_textures/Enemy/Zombie/S_Walk_ToLeft.png"
-    );
-    textures.load(
-        Textures::ZombieToRight,
-        "asset/game_textures/Enemy/Zombie/S_Walk_ToRight.png"
-    );
-    textures.load(
-        Textures::ZombieIdle, "asset/game_textures/Enemy/Zombie/S_Attack.png"
     );
 
     textures.load(
@@ -333,14 +321,14 @@ void loadTexture(TextureHolder& textures) {
     /*************************************************************************/
 
     /**************************Load Lane Textures******************************/
-    textures.load(Textures::Dirt, "asset/game_textures/Lane/Dirt64.png");
-    textures.load(Textures::Grass, "asset/game_textures/Lane/Grass64.png");
+    textures.load(Textures::Dirt, "asset/game_textures/Lane/Dirt.png");
+    textures.load(Textures::Grass, "asset/game_textures/Lane/Grass.png");
     textures.load(
-        Textures::Graveyard, "asset/game_textures/Lane/Graveyard64.png"
+        Textures::Graveyard, "asset/game_textures/Lane/Graveyard.png"
     );
-    textures.load(Textures::Soil, "asset/game_textures/Lane/Soil64.png");
-    textures.load(Textures::Swamp, "asset/game_textures/Lane/Swamp64.png");
-    textures.load(Textures::River, "asset/game_textures/Lane/River64.png");
+    textures.load(Textures::Soil, "asset/game_textures/Lane/Soil.png");
+    textures.load(Textures::Swamp, "asset/game_textures/Lane/Swamp.png");
+    textures.load(Textures::River, "asset/game_textures/Lane/River.png");
     /*************************************************************************/
 
     /**************************Load Skin Textures************************/

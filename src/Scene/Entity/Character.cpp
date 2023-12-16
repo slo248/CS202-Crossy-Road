@@ -90,18 +90,13 @@ Character::~Character() {
     //         std::cout << "Orc";
     //         break;
 
-    //     case Zombie:
-    //         std::cout << "Zombie";
-    //         break;
-    // }
     // std::cout << " destroyed!\n";
 }
 
 unsigned int Character::getCategory() const {
-    if (mType == Archer || mType == Enchantress || mType == Knight ||
-        mType == Musketeer || mType == Swordsman || mType == Wizard)
-        return Category::Player;
-    return Category::Enemy;
+    if (mType >= BeeBoss && mType <= Mino) return Category::Enemy;
+    if (mType >= Archer && mType <= Wizard) return Category::Player;
+    return Category::None;
 }
 
 sf::FloatRect Character::getBoundingRect() const {
@@ -136,7 +131,7 @@ void Character::moveCharacter(Direction direction) {
         }
 
         case ToUpper: {
-            nextLane = dynamic_cast<Lane*>(mCurrentLane->getParent());
+            nextLane = mCurrentLane->getParentLane();
             std::cout << "Move to upper\n";
             break;
         }
@@ -231,8 +226,6 @@ void Character::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
     target.draw(*mCurrentAnimation, states);
 }
-
-void Character::updateMovementPattern(sf::Time dt) {}
 
 void Character::saveCurrent(std::ostream& out) const {
     Category::Type category = static_cast<Category::Type>(getCategory());

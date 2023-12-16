@@ -79,10 +79,6 @@ enum ID {
     OrcToRight,
     OrcIdle,
 
-    ZombieToLeft,
-    ZombieToRight,
-    ZombieIdle,
-
     CrocodileToLeft,
     CrocodileToRight,
     CrocodileIdle,

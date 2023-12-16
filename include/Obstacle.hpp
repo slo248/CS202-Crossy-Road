@@ -61,7 +61,6 @@ class Obstacle : public Entity {
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const;
-    void updateMovementPattern(sf::Time dt);
 
     virtual void saveCurrent(std::ostream& out) const override;
     virtual void loadCurrent(std::istream& in) override;

@@ -12,10 +12,14 @@
 
 #define DEFAULT_SPAWN_INTERVAL sf::seconds(3.5)
 #define DEFAULT_PLAYER_SLOT 6
-#define DEFAULT_AIR_ENEMY_SPEED 350.f
+#define DEFAULT_AIR_ENEMY_SPEED 450.f
 #define DEFAULT_GROUND_ENEMY_SPEED 150.f
 #define DEFAULT_PLAYER_SPEED 500.f
 #define DEFAULT_LOG_SPEED 100.f
+
+#define GREEN_LIGHT_INTERVAL sf::seconds(3.0)
+#define YELLOW_LIGHT_INTERVAL sf::seconds(1.0)
+#define RED_LIGHT_INTERVAL sf::seconds(2.0)
 
 #define LEVEL_ONE_COEFFICIENT 1.0
 #define LEVEL_TWO_COEFFICIENT 1.1
@@ -27,7 +31,7 @@
 
 namespace Config {
 namespace GameLevel {
-enum Type { LoadGame = -1, L1, L2, L3, L4, L5, Endless, Count };
+enum Type { L1, L2, L3, L4, L5, Endless, Count };
 }  // namespace GameLevel
 }  // namespace Config
 

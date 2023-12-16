@@ -28,13 +28,16 @@ class Lane : public SceneNode {
     virtual unsigned int getCategory() const override;
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
+    Lane* getParentLane();
     Lane* getChildLane();
     LaneType getType();
+    SpawnSide getSpawnSide();
+    float getRandomFactor() const;
+
     sf::Vector2f checkMoveablePlayer(
         Character* player, Character::Direction direction
     );
     bool isCollidedWithPlayer(Character* player);
-    float getRandomFactor() const;
     void attachChild(SceneNode::Ptr child) override;
 
    private:
@@ -49,7 +52,6 @@ class Lane : public SceneNode {
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const;
-    void updateMovementPattern(sf::Time dt);
 
     virtual void saveCurrent(std::ostream& out) const override;
     virtual void saveChildren(std::ostream& out) const override;
@@ -63,6 +65,7 @@ class Lane : public SceneNode {
     SpawnSide mSpawnSide;                           // Save
     sf::Sprite mSprite;                             // Type-dependent
     sf::Time mSpawnInterval;                        // Type-dependent
+    sf::Time mElapsedTime;                          // Type-dependent
     Lane* mChildLane;                               // Saved independently
     TrafficLight* mTrafficLight;                    // Saved independently
     std::unique_ptr<ObjectFactory> mObjectFactory;  // Type-dependent
@@ -71,7 +74,7 @@ class Lane : public SceneNode {
 
 void createMultipleLanes(
     const TextureHolder& textures, int numberOfLanes, Lane::Ptr& topLane,
-    Lane*& botLane, bool isBuffer = false,
+    Lane*& bottomLane, bool isBuffer = false,
     float levelScale = LEVEL_ONE_COEFFICIENT
 
 );

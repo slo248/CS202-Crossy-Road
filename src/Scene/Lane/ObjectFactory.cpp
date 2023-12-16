@@ -2,100 +2,60 @@
 
 #include <cstdlib>
 
+#include "DataTables.hpp"
 #include "Utility.hpp"
+
+namespace {
+const std::vector<ObjectFactoryData> Table = initializeObjectFactoryData();
+}
 
 ObjectFactory::ObjectFactory(
     const TextureHolder& textures, LaneType laneType, float levelScale
 )
     : mTextures(&textures), mLaneType(laneType), mLevelScale(levelScale) {
-    mAirEnemies = {/*Character::Type::Bee, Character::Type::Bird,*/
-                   Character::Type::BeeBoss, Character::Type::BombBat
-    };
-
+    int type = ObjectFactoryData::River;
     switch (mLaneType) {
         case LaneType::Dirt:
         case LaneType::Grass:
         case LaneType::Soil: {
-            mObstacles = {
-                Obstacle::Field_Bush,
-                Obstacle::Field_Stone6,
-                Obstacle::Field_Tent,
-                Obstacle::Field_Tree1,
-            };
-            mGroundEnemies = {
-                Character::Type::Dog,
-                /*Character::Type::Rabbit,
-                Character::Type::Sheep,*/
-                Character::Type::Wraith,
-                Character::Type::Golem,
-                Character::Type::Satyr,
-                Character::Type::Mino,
-            };
-
+            type = ObjectFactoryData::Field;
             break;
         }
 
         case LaneType::Graveyard: {
-            mObstacles = {
-                Obstacle::Graveyard_House1, Obstacle::Graveyard_Statue8,
-                Obstacle::Graveyard_Tree2
-            };
-            mGroundEnemies = {
-                // Character::Type::Zombie,
-                Character::Type::WraithPro,
-                Character::Type::GolemGy,
-                Character::Type::SatyrGy,
-                Character::Type::MinoGy,
-            };
-
+            type = ObjectFactoryData::Graveyard;
             break;
         }
 
         case LaneType::Swamp: {
-            mObstacles = {
-                Obstacle::Swamp_House1, Obstacle::Swamp_Tree2,
-                Obstacle::Swamp_Well1
-            };
-            mGroundEnemies = {
-                /*Character::Type::Turtle,    Character::Type::Frog,*/
-                Character::Type::Orc,
-                // Character::Type::Zombie,
-                Character::Type::Crocodile,
-                Character::Type::WraithSwamp,
-                Character::Type::GolemSwamp,
-                Character::Type::SatyrSwamp,
-                Character::Type::MinoSwamp,
-            };
-
+            type = ObjectFactoryData::Swamp;
             break;
         }
-
-        default:
-            break;
     }
+
+    mAirSpawnTypes = &Table[type].airSpawnTypes;
+    mGroundSpawnTypes = &Table[type].groundSpawnTypes;
+    mObstacleSpawnTypes = &Table[type].obstacleSpawnTypes;
 }
 
 std::unique_ptr<Character> ObjectFactory::createAirEnemy() {
-    unsigned int objectType = rand() % mAirEnemies.size();
+    unsigned int objectType = rand() % mAirSpawnTypes->size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(mAirEnemies[objectType]), *mTextures,
-        mLevelScale
+        (*mAirSpawnTypes)[objectType], *mTextures, mLevelScale
     );
 }
 
 std::unique_ptr<Character> ObjectFactory::createGroundEnemy() {
-    unsigned int objectType = rand() % mGroundEnemies.size();
+    unsigned int objectType = rand() % mGroundSpawnTypes->size();
     return std::make_unique<Character>(
-        static_cast<Character::Type>(mGroundEnemies[objectType]), *mTextures,
-        mLevelScale
+        (*mGroundSpawnTypes)[objectType], *mTextures, mLevelScale
     );
 }
 
 std::unique_ptr<Obstacle> ObjectFactory::createObstacle() {
-    unsigned int objectType = rand() % mObstacles.size();
+    unsigned int objectType = rand() % mObstacleSpawnTypes->size();
     return std::make_unique<Obstacle>(
-        static_cast<Obstacle::Type>(mObstacles[objectType]), *mTextures,
-        mLevelScale
+        (*mObstacleSpawnTypes)[objectType], *mTextures, mLevelScale
     );
 }
 

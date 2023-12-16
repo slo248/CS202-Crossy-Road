@@ -169,7 +169,16 @@ void SceneNode::loadChildren(std::istream& in, const TextureHolder& textures) {
 }
 
 bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs) {
-    return lhs.intersects(rhs);
+    // Normally, people could use the reverse, that is when lhs does not
+    // intersect with rhs
+
+    // Ensure lhs and rhs are certainly intersected horizontally (for this game)
+    sf::FloatRect lhsInnerBound =
+        sf::FloatRect(lhs.left + 5.f, rhs.top, lhs.width - 5.f, rhs.height);
+    sf::FloatRect rhsInnerBound =
+        sf::FloatRect(rhs.left + 5.f, rhs.top, rhs.width - 5.f, rhs.height);
+
+    return lhsInnerBound.intersects(rhsInnerBound);
 }
 
 float length(sf::Vector2f vector) {

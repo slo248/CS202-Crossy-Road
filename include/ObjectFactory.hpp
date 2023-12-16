@@ -36,9 +36,9 @@ class ObjectFactory {
    private:
     const TextureHolder* mTextures;
     LaneType mLaneType;
-    std::vector<Character::Type> mAirEnemies;
-    std::vector<Character::Type> mGroundEnemies;
-    std::vector<Obstacle::Type> mObstacles;
+    const std::vector<Character::Type>* mAirSpawnTypes;
+    const std::vector<Character::Type>* mGroundSpawnTypes;
+    const std::vector<Obstacle::Type>* mObstacleSpawnTypes;
     float mLevelScale;
 };
 

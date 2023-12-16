@@ -1,18 +1,12 @@
 #include "DataTables.hpp"
 
-#include "Character.hpp"
-#include "Lane.hpp"
-#include "Obstacle.hpp"
-#include "TrafficLight.hpp"
-
 // For std::bind() placeholders _1, _2, ...
 using namespace std::placeholders;
 
 std::vector<CharacterData> initializeCharacterData() {
     std::vector<CharacterData> data(Character::TypeCount);
 
-    // Enemy data
-    // Air enemy data
+    // Animal data
     // /*<-------------------------Bee------------------------------->*/
     // data[Character::Bee].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
     // data[Character::Bee].textures = {
@@ -34,50 +28,6 @@ std::vector<CharacterData> initializeCharacterData() {
     // data[Character::Bird].frameSize = sf::Vector2i(48, 48);
     // data[Character::Bird].numFrames = 4;
     // /*<-------------------------Bird------------------------------->*/
-
-    /*<-------------------------BeeBoss--------------------------->*/
-    data[Character::BeeBoss].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
-    data[Character::BeeBoss].textures = {
-        Textures::BeeBossToLeft,
-        Textures::BeeBossToRight,
-        Textures::BeeBossIdle,
-    };
-    data[Character::BeeBoss].frameSize = sf::Vector2i(42, 50);
-    data[Character::BeeBoss].numFrames = 6;
-    /*<-------------------------BeeBoss--------------------------->*/
-
-    /*<-------------------------BombBat--------------------------->*/
-    data[Character::BombBat].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
-    data[Character::BombBat].textures = {
-        Textures::BombBatToLeft,
-        Textures::BombBatToRight,
-        Textures::BombBatIdle,
-    };
-    data[Character::BombBat].frameSize = sf::Vector2i(52, 44);
-    data[Character::BombBat].numFrames = 6;
-    /*<-------------------------BombBat--------------------------->*/
-
-    /*<-------------------------Crocodile------------------------->*/
-    data[Character::Crocodile].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Crocodile].textures = {
-        Textures::CrocodileToLeft,
-        Textures::CrocodileToRight,
-        Textures::CrocodileIdle,
-    };
-    data[Character::Crocodile].frameSize = sf::Vector2i(72, 72);
-    data[Character::Crocodile].numFrames = 6;
-    /*<-------------------------Crocodile------------------------->*/
-
-    /*<-------------------------Dog------------------------->*/
-    data[Character::Dog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Dog].textures = {
-        Textures::DogToLeft,
-        Textures::DogToRight,
-        Textures::DogIdle,
-    };
-    data[Character::Dog].frameSize = sf::Vector2i(46, 40);
-    data[Character::Dog].numFrames = 6;
-    /*<-------------------------Dog------------------------->*/
 
     // /*<-------------------------Frog------------------------->*/
     // data[Character::Frog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
@@ -123,6 +73,51 @@ std::vector<CharacterData> initializeCharacterData() {
     // data[Character::Turtle].numFrames = 6;
     // /*<-------------------------Turtle------------------------->*/
 
+    // Enemy data
+    /*<-------------------------BeeBoss--------------------------->*/
+    data[Character::BeeBoss].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
+    data[Character::BeeBoss].textures = {
+        Textures::BeeBossToLeft,
+        Textures::BeeBossToRight,
+        Textures::BeeBossIdle,
+    };
+    data[Character::BeeBoss].frameSize = sf::Vector2i(42, 50);
+    data[Character::BeeBoss].numFrames = 6;
+    /*<-------------------------BeeBoss--------------------------->*/
+
+    /*<-------------------------BombBat--------------------------->*/
+    data[Character::BombBat].normalSpeed = DEFAULT_AIR_ENEMY_SPEED;
+    data[Character::BombBat].textures = {
+        Textures::BombBatToLeft,
+        Textures::BombBatToRight,
+        Textures::BombBatIdle,
+    };
+    data[Character::BombBat].frameSize = sf::Vector2i(52, 44);
+    data[Character::BombBat].numFrames = 6;
+    /*<-------------------------BombBat--------------------------->*/
+
+    /*<-------------------------Crocodile------------------------->*/
+    data[Character::Crocodile].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Crocodile].textures = {
+        Textures::CrocodileToLeft,
+        Textures::CrocodileToRight,
+        Textures::CrocodileIdle,
+    };
+    data[Character::Crocodile].frameSize = sf::Vector2i(72, 72);
+    data[Character::Crocodile].numFrames = 6;
+    /*<-------------------------Crocodile------------------------->*/
+
+    /*<-------------------------Dog------------------------->*/
+    data[Character::Dog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Dog].textures = {
+        Textures::DogToLeft,
+        Textures::DogToRight,
+        Textures::DogIdle,
+    };
+    data[Character::Dog].frameSize = sf::Vector2i(46, 40);
+    data[Character::Dog].numFrames = 6;
+    /*<-------------------------Dog------------------------->*/
+
     /*<-------------------------Fishmen------------------------->*/
     data[Character::Fishmen].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
     data[Character::Fishmen].textures = {
@@ -144,17 +139,6 @@ std::vector<CharacterData> initializeCharacterData() {
     data[Character::Orc].frameSize = sf::Vector2i(54, 54);
     data[Character::Orc].numFrames = 6;
     /*<-------------------------Orc------------------------->*/
-
-    /*<-------------------------Zombie------------------------->*/
-    data[Character::Zombie].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
-    data[Character::Zombie].textures = {
-        Textures::ZombieToLeft,
-        Textures::ZombieToRight,
-        Textures::ZombieIdle,
-    };
-    data[Character::Zombie].frameSize = sf::Vector2i(42, 44);
-    data[Character::Zombie].numFrames = 6;
-    /*<-------------------------Zombie------------------------->*/
 
     /*<-------------------------Wraith------------------------->*/
     data[Character::Wraith].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
@@ -298,7 +282,6 @@ std::vector<CharacterData> initializeCharacterData() {
             static_cast<Textures::ID>(Textures::ArcherIdle + tmp),
             static_cast<Textures::ID>(Textures::ArcherDead + tmp),
         };
-        // data[i].frameSize = DEFAULT_CELL_RECT.getSize();
         data[i].frameSize = sf::Vector2i(42, 38);
         data[i].numFrames = 3;
     }
@@ -320,6 +303,18 @@ std::vector<ObstacleData> initializeObstacleData() {
     return data;
 }
 
+std::vector<TrafficLightData> initializeTrafficLightData() {
+    std::vector<TrafficLightData> data(TrafficLight::Type::TypeCount);
+
+    for (int i = 0; i < TrafficLight::Type::TypeCount; ++i) {
+        data[i].texture =
+            static_cast<Textures::ID>(Textures::Field_TrafficLight + i);
+        data[i].textureRect = sf::IntRect(0, 0, 48, 64);
+    }
+
+    return data;
+}
+
 std::vector<LaneData> initializeLaneData() {
     std::vector<LaneData> data(LaneType::TypeCount);
 
@@ -332,14 +327,50 @@ std::vector<LaneData> initializeLaneData() {
     return data;
 }
 
-std::vector<TrafficLightData> initializeTrafficLightData() {
-    std::vector<TrafficLightData> data(TrafficLight::Type::TypeCount);
+std::vector<ObjectFactoryData> initializeObjectFactoryData() {
+    // Grass, Dirt and Soil share the same object factory data
+    std::vector<ObjectFactoryData> data(ObjectFactoryData::TypeCount);
 
-    for (int i = 0; i < TrafficLight::Type::TypeCount; ++i) {
-        data[i].texture =
-            static_cast<Textures::ID>(Textures::Field_TrafficLight + i);
-        data[i].textureRect = sf::IntRect(0, 0, 48, 64);
+    // Common air spawn types
+    // River is the same as "None" type
+    for (int i = 0; i < ObjectFactoryData::River; ++i) {
+        data[i].airSpawnTypes = {
+            Character::Type::BeeBoss,
+            Character::Type::BombBat,
+        };
     }
+
+    // Dirt, Grass, Soil
+    data[ObjectFactoryData::Field].groundSpawnTypes = {
+        Character::Type::Dog, Character::Type::Wraith, Character::Type::Golem,
+        Character::Type::Satyr, Character::Type::Mino
+    };
+    data[ObjectFactoryData::Field].obstacleSpawnTypes = {
+        Obstacle::Field_Bush, Obstacle::Field_Stone6, Obstacle::Field_Tent,
+        Obstacle::Field_Tree1
+    };
+
+    // Graveyard
+    data[ObjectFactoryData::Graveyard].groundSpawnTypes = {
+        Character::Type::WraithPro,
+        Character::Type::GolemGy,
+        Character::Type::SatyrGy,
+        Character::Type::MinoGy,
+    };
+    data[ObjectFactoryData::Graveyard].obstacleSpawnTypes = {
+        Obstacle::Graveyard_House1, Obstacle::Graveyard_Statue8,
+        Obstacle::Graveyard_Tree2
+    };
+
+    // Swamp
+    data[ObjectFactoryData::Swamp].groundSpawnTypes = {
+        Character::Type::Orc,         Character::Type::Crocodile,
+        Character::Type::WraithSwamp, Character::Type::GolemSwamp,
+        Character::Type::SatyrSwamp,  Character::Type::MinoSwamp,
+    };
+    data[ObjectFactoryData::Swamp].obstacleSpawnTypes = {
+        Obstacle::Swamp_House1, Obstacle::Swamp_Tree2, Obstacle::Swamp_Well1
+    };
 
     return data;
 }
