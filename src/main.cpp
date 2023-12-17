@@ -508,9 +508,7 @@ int main() {
     bool isNewGame;
     std::cout << "New game? (1 or 0) ";
     std::cin >> isNewGame;
-    World world(
-        textures, fonts, window, Config::GameLevel::Endless, !isNewGame
-    );
+    World world(textures, fonts, window, Config::GameLevel::L1, !isNewGame);
     Player player;
 
     sf::Clock clock;

@@ -17,8 +17,8 @@ World::World(
       mTopLane(nullptr),
       // The sequence of initializer list is not the sequence of initialization
       // -> fucked up
-      mTotalBlocks((static_cast<int>(gameType) + 1) * 2),
-      mScrollSpeed(0, /*-35 * getLevelFactor(gameType)*/ 0),
+      mTotalBlocks(2 + (gameType + 1) * 2),
+      mScrollSpeed(0, -25 * getLevelFactor(gameType)),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
@@ -138,6 +138,9 @@ void World::buildBlocks() {
         mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
         mPlayer->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
 
+        mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
+
+        std::cout << "Last buffer block!\n";
         return;
     }
 
@@ -264,13 +267,15 @@ void World::updateBoard() {
 
     if (mPlayerPreRow > curRow) {
         ++mScores;
+        std::cout << "Score: " << mScores << std::endl;
         mPlayerPreRow = curRow;
     }
 
     if (mGameType == Config::GameLevel::Endless) {
         mScoreText.setString("Score: " + std::to_string(mScores));
     } else {
-        int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
+        int percentage =
+            (mScores * 100) / (mTotalBlocks * NUM_LANE + 2 * BUFFER_LANE);
         mScoreText.setString("Progress: " + std::to_string(percentage) + '%');
     }
 }
