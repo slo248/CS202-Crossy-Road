@@ -119,11 +119,11 @@ std::string toString(sf::Keyboard::Key key) {
 int random(int left, int right) { return left + rand() % (right - left + 1); }
 
 float slotToPosition(int slot) {
-    return DEFAULT_CELL_LENGTH * slot + DEFAULT_CELL_LENGTH / 2;
+    return (2 * slot + 1) * DEFAULT_HALF_CELL_LENGTH;
 }
 
 int positionToSlot(float x) {
-    return (x - DEFAULT_CELL_LENGTH / 2) / DEFAULT_CELL_LENGTH;
+    return (x - DEFAULT_HALF_CELL_LENGTH) / DEFAULT_CELL_LENGTH;
 }
 
 int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
@@ -157,6 +157,39 @@ std::string savedGamePath(Config::GameLevel::Type type) {
 
         case Config::GameLevel::L5: {
             return "data/level5.txt";
+        }
+
+        default: {
+            return "";
+        }
+    }
+}
+
+std::string gameModeToString(Config::GameLevel::Type type) {
+    switch (type) {
+        case Config::GameLevel::Endless: {
+            return "Endless";
+            break;
+        }
+
+        case Config::GameLevel::L1: {
+            return "Level 1";
+        }
+
+        case Config::GameLevel::L2: {
+            return "Level 2";
+        }
+
+        case Config::GameLevel::L3: {
+            return "Level 3";
+        }
+
+        case Config::GameLevel::L4: {
+            return "Level 4";
+        }
+
+        case Config::GameLevel::L5: {
+            return "Level 5";
         }
 
         default: {

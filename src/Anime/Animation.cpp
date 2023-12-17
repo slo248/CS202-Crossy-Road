@@ -15,7 +15,7 @@ Animation::Animation(
       mInProgress(false),
       mRepeat(false) {
     mTimePerFrame = sf::seconds(mDuration.asSeconds() / mNumFrame + 0.1);
-    std::cout << mTimePerFrame.asSeconds() << std::endl;
+    // std::cout << mTimePerFrame.asSeconds() << std::endl;
 }
 
 void Animation::setDuration(sf::Time t) {

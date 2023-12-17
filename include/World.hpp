@@ -30,6 +30,7 @@ class World {
     enum Layer { Background, OnGround, Air, LayerCount };
     const int NUM_LANE = 10;
     const int BUFFER_LANE = 2;
+    const int mTotalBlocks;
 
     void buildScene();
     void buildBlocks();
@@ -37,6 +38,7 @@ class World {
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
     void loadGame();
+    void updateBoard();
 
    private:
     TextureHolder& mTextures;
@@ -63,6 +65,7 @@ class World {
     int mScores;        // Save
 
     sf::Text mScoreText;
+    sf::Text mGameModeText;
 };
 
 #endif

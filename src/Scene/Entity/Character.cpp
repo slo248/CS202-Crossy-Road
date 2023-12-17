@@ -120,25 +120,25 @@ void Character::moveCharacter(Direction direction) {
         case ToLeft: {
             nextLane = mCurrentLane;
             nextAnimation = &mAnimations[CharacterData::Direction::ToLeft];
-            std::cout << "Move to left\n";
+            // std::cout << "Move to left\n";
             break;
         }
         case ToRight: {
             nextLane = mCurrentLane;
             nextAnimation = &mAnimations[CharacterData::Direction::ToRight];
-            std::cout << "Move to right\n";
+            // std::cout << "Move to right\n";
             break;
         }
 
         case ToUpper: {
             nextLane = mCurrentLane->getParentLane();
-            std::cout << "Move to upper\n";
+            // std::cout << "Move to upper\n";
             break;
         }
 
         case ToLower: {
             nextLane = mCurrentLane->getChildLane();
-            std::cout << "Move to lower\n";
+            // std::cout << "Move to lower\n";
             break;
         }
     }
@@ -158,7 +158,7 @@ void Character::moveCharacter(Direction direction) {
         mMovement.setup(incomingPosition, Motion::Linear());
         mIsInMovement = true;
     }
-    std::cout << mCurrentLane->getType() << '\n';
+    // std::cout << mCurrentLane->getType() << '\n';
 }
 
 // Check if character is ready for removed (death animation is finished)

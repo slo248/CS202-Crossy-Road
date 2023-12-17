@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <cstdlib>
 #include <iostream>
 #include <unordered_map>
 
@@ -61,10 +60,7 @@ Lane::Lane(
     laneMap[this].second = mSpawnSide;
 }
 
-Lane::~Lane() {
-    // std::cout << "Lane " << laneMap[this] << " is deleted\n";
-    laneMap.erase(this);
-}
+Lane::~Lane() { laneMap.erase(this); }
 
 unsigned int Lane::getCategory() const { return Category::Lane; }
 
@@ -119,9 +115,9 @@ sf::Vector2f Lane::checkMoveablePlayer(
     }
 
     for (auto& child : mChildren) {
-        std::cout << child->getCategory() << '\n';
+        // std::cout << child->getCategory() << '\n';
         if (collision(playerBound, child->getBoundingRect())) {
-            std::cout << "Collided with sth\n";
+            // std::cout << "Collided with sth\n";
 
             switch (child->getCategory()) {
                 case Category::Decoration: {
@@ -129,9 +125,11 @@ sf::Vector2f Lane::checkMoveablePlayer(
                     Obstacle* log = static_cast<Obstacle*>(child.get());
                     player->setVelocity(log->getVelocity());
 
-                    // Need some alignment later
-                    float alignment = 0.1 * DEFAULT_LOG_SPEED;
+                    // Alignment (need optimization)
+                    float alignment = 0.15 * log->getVelocity().x;
                     incommingPosition.x = log->getWorldPosition().x + alignment;
+                    incommingPosition.y = log->getWorldPosition().y -
+                                          log->getLocalBounds().height / 3.f;
                     return incommingPosition;
                 }
 
@@ -150,12 +148,13 @@ sf::Vector2f Lane::checkMoveablePlayer(
 
     // Align incomming position (need optimization)
     incommingPosition.x =
-        round(
-            (incommingPosition.x - DEFAULT_CELL_LENGTH / 2.f) /
-            DEFAULT_CELL_LENGTH
-        ) * DEFAULT_CELL_LENGTH +
-        DEFAULT_CELL_LENGTH / 2.f;
-    std::cout << incommingPosition.x << '\n';
+        floor(incommingPosition.x / DEFAULT_CELL_LENGTH) * DEFAULT_CELL_LENGTH +
+        DEFAULT_HALF_CELL_LENGTH;
+
+    incommingPosition.y =
+        round(incommingPosition.y / DEFAULT_HALF_CELL_LENGTH) *
+        DEFAULT_HALF_CELL_LENGTH;
+
     return incommingPosition;
 }
 
@@ -238,7 +237,7 @@ Lane::Lane(LaneType type, const TextureHolder& textures, float levelScale)
     laneMap[this].first = type;
 
     // Death Experience: origin must be set for mSprite, not the Lane itself!
-    mSprite.setOrigin(0, DEFAULT_CELL_LENGTH / 2);
+    mSprite.setOrigin(0, DEFAULT_HALF_CELL_LENGTH);
 }
 
 void Lane::spawnObstacles(bool isBufferLane) {
@@ -247,12 +246,10 @@ void Lane::spawnObstacles(bool isBufferLane) {
     int slot = -1;
 
     // Divide in half for better objects distribution
-    // std::cout << count << '\n';
     for (int i = 0; i < count / 2; ++i) {
         slot = random(slot + 1, DEFAULT_CELLS_PER_LANE / 2 - count / 2 - 1 + i);
         obstacle = mObjectFactory->createObstacle();
         obstacle->setPosition(slotToPosition(slot), 0);
-        // std::cout << slot << ' ';
         attachChild(std::move(obstacle));
     }
 
@@ -264,10 +261,8 @@ void Lane::spawnObstacles(bool isBufferLane) {
         obstacle->setPosition(
             slotToPosition(slot + DEFAULT_CELLS_PER_LANE / 2), 0
         );
-        // std::cout << slot << ' ';
         attachChild(std::move(obstacle));
     }
-    // std::cout << '\n';
 }
 
 void Lane::spawnTrafficLight() {
@@ -401,8 +396,25 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
 
 void Lane::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
     const {
-    // states.transform *= getTransform();
     target.draw(mSprite, states);
+}
+
+void Lane::drawBoundingRect(sf::RenderTarget& target, sf::RenderStates states)
+    const {
+    sf::FloatRect rect = getBoundingRect();
+    std::vector<sf::RectangleShape> shapes(DEFAULT_CELLS_PER_LANE);
+    for (int i = 0; i < DEFAULT_CELLS_PER_LANE; ++i) {
+        shapes[i].setPosition(sf::Vector2f(
+            i * DEFAULT_CELL_LENGTH,
+            getWorldPosition().y + DEFAULT_HALF_CELL_LENGTH
+        ));
+        shapes[i].setSize(sf::Vector2f(DEFAULT_CELL_LENGTH, DEFAULT_CELL_LENGTH)
+        );
+        shapes[i].setFillColor(sf::Color::Transparent);
+        shapes[i].setOutlineColor(sf::Color::Green);
+        shapes[i].setOutlineThickness(1.f);
+        target.draw(shapes[i]);
+    }
 }
 
 void Lane::saveCurrent(std::ostream& out) const {

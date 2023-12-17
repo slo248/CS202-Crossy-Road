@@ -52,6 +52,9 @@ class Lane : public SceneNode {
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
         const;
+    virtual void drawBoundingRect(
+        sf::RenderTarget& target, sf::RenderStates states
+    ) const override;
 
     virtual void saveCurrent(std::ostream& out) const override;
     virtual void saveChildren(std::ostream& out) const override;

@@ -15,6 +15,9 @@ World::World(
       mWorldView(window.getDefaultView()),
       mPlayer(nullptr),
       mTopLane(nullptr),
+      // The sequence of initializer list is not the sequence of initialization
+      // -> fucked up
+      mTotalBlocks((static_cast<int>(gameType) + 1) * 2),
       mScrollSpeed(0, /*-35 * getLevelFactor(gameType)*/ 0),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
@@ -46,14 +49,7 @@ void World::update(sf::Time dt) {
     mSceneGraph.removeWrecks();
     mSceneGraph.update(dt, mCommandQueue);
 
-    int curRow = getCurrentRow(mPlayer->getWorldPosition().y);
-
-    if (mPlayerPreRow > curRow) {
-        mScores++;
-        mPlayerPreRow = curRow;
-    }
-
-    mScoreText.setString("Scores: " + std::to_string(mScores));
+    updateBoard();
 }
 
 void World::draw() {
@@ -61,6 +57,7 @@ void World::draw() {
     mWindow.draw(mSceneGraph);
     mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mScoreText);
+    mWindow.draw(mGameModeText);
 }
 
 CommandQueue& World::getCommandQueue() { return mCommandQueue; }
@@ -71,19 +68,21 @@ void World::buildScene() {
 
     // Remained blocks count
     if (mGameType != Config::GameLevel::Endless) {
-        mRemainBlocks = (static_cast<int>(mGameType) + 1) * 3;
-    } else
+        mRemainBlocks = mTotalBlocks - 2;
+    } else {
         mRemainBlocks = -1;
+    }
 
     // Build lanes
     Lane::Ptr top1 = nullptr;
     Lane* bottom1 = nullptr;
 
     // Normal lanes
+    // 2 * NUM_LANE -> what a surprise, then mTotalBlocks should -2
     createMultipleLanes(
         mTextures, 2 * NUM_LANE, top1, bottom1, false, getLevelFactor(mGameType)
     );
-    top1->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+    top1->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
     mTopLane = top1.get();
     mLayers[Background]->attachChild(std::move(top1));
 
@@ -91,6 +90,7 @@ void World::buildScene() {
     Lane::Ptr top3 = nullptr;
     Lane* bottom3 = nullptr;
     createMultipleLanes(mTextures, BUFFER_LANE, top3, bottom3, true);
+    Lane* initialLane = top3.get();
     bottom1->attachChild(std::move(top3));
 
     Lane::Ptr top4 = nullptr;
@@ -103,11 +103,10 @@ void World::buildScene() {
     mPlayer = player.get();
     mPlayer->setPosition(
         slotToPosition(DEFAULT_PLAYER_SLOT),
-        DEFAULT_CELL_LENGTH * (2 * NUM_LANE + BUFFER_LANE) -
-            DEFAULT_CELL_LENGTH / 2
+        DEFAULT_CELL_LENGTH * (2 * NUM_LANE) + DEFAULT_HALF_CELL_LENGTH
     );
     mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
-    mPlayer->setCurrentLane(bottom3);
+    mPlayer->setCurrentLane(initialLane);
     mLayers[OnGround]->attachChild(std::move(player));
 
     // Set view
@@ -123,14 +122,14 @@ void World::buildBlocks() {
     // will be shifted
     if (mRemainBlocks == -2 || mPlayer->isInMovement()) return;
 
-    // Build last block
+    // Build end block
     if (mRemainBlocks == 0) {
         Lane::Ptr top = nullptr;
         Lane* bottom = nullptr;
         createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bottom, true);
         bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane
         )));
-        top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+        top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
         mTopLane = top.get();
         mLayers[Background]->attachChild(std::move(top));
         mRemainBlocks = -2;
@@ -148,7 +147,9 @@ void World::buildBlocks() {
     }
 
     // Build as normal
-    if (mRemainBlocks > 0) mRemainBlocks--;
+    if (mRemainBlocks > 0) {
+        --mRemainBlocks;
+    }
 
     // Build block
     Lane::Ptr top = nullptr;
@@ -157,7 +158,7 @@ void World::buildBlocks() {
         mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameType)
     );
     bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
-    top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+    top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
     mTopLane = top.get();
     mLayers[Background]->attachChild(std::move(top));
 
@@ -192,9 +193,16 @@ void World::removeEntitiesOutsizeView() {
 }
 
 void World::setDefaultScoreText() {
+    mGameModeText.setFont(mFonts.get(Fonts::Main));
+    mGameModeText.setCharacterSize(20);
+    mGameModeText.setPosition(10, 10);
+    mGameModeText.setOutlineThickness(5);
+    mGameModeText.setOutlineColor(sf::Color::Black);
+    mGameModeText.setString("Game Mode: " + gameModeToString(mGameType));
+
     mScoreText.setFont(mFonts.get(Fonts::Main));
     mScoreText.setCharacterSize(20);
-    mScoreText.setPosition(10, 10);
+    mScoreText.setPosition(10, 40);
     mScoreText.setOutlineThickness(5);
     mScoreText.setOutlineColor(sf::Color::Black);
 }
@@ -235,7 +243,7 @@ void World::loadGame() {
     auto top =
         std::make_unique<Lane>(in, static_cast<LaneType>(type), mTextures);
     mTopLane = top.get();
-    top->setPosition(0, DEFAULT_CELL_LENGTH / 2);
+    top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
     mLayers[Background]->attachChild(std::move(top));
     in.close();
 
@@ -249,6 +257,22 @@ void World::loadGame() {
     }
 
     std::cout << "Game loaded successfully!\n";
+}
+
+void World::updateBoard() {
+    int curRow = getCurrentRow(mPlayer->getWorldPosition().y);
+
+    if (mPlayerPreRow > curRow) {
+        ++mScores;
+        mPlayerPreRow = curRow;
+    }
+
+    if (mGameType == Config::GameLevel::Endless) {
+        mScoreText.setString("Score: " + std::to_string(mScores));
+    } else {
+        int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
+        mScoreText.setString("Progress: " + std::to_string(percentage) + '%');
+    }
 }
 
 void World::saveCurrentGame() const {
