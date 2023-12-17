@@ -103,7 +103,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::CrocodileToRight,
         Textures::CrocodileIdle,
     };
-    data[Character::Crocodile].frameSize = sf::Vector2i(72, 72);
+    data[Character::Crocodile].frameSize = sf::Vector2i(54, 32);
     data[Character::Crocodile].numFrames = 6;
     /*<-------------------------Crocodile------------------------->*/
 
