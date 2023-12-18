@@ -2,8 +2,8 @@
 
 #include "ResourceHolder.hpp"
 
-CreditState::CreditState(StateStack& stack, Context& context, int mode)
-    : State(stack, context, mode),
+CreditState::CreditState(StateStack& stack, Context& context)
+    : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundCredit)) {
     auto buttonBack = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)

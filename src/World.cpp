@@ -6,24 +6,25 @@
 
 World::World(
     TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-    Config::GameLevel::Type gameType, bool isLoadedFromFile
+    State::Context& context
 )
     : mTextures(textures),
       mFonts(fonts),
       mWindow(window),
-      mGameType(gameType),
+      mGameType(static_cast<Config::GameLevel::Type>(context.mode)),
       mWorldView(window.getDefaultView()),
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
+      mContext(&context),
       // The sequence of initializer list is not the sequence of initialization
-      // -> fucked up 
-      mTotalBlocks(2 + (gameType + 1) * 2),
+      // -> fucked up
+      mTotalBlocks(2 + (context.mode + 1) * 2),
       mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
       )) {
-    if (isLoadedFromFile) {
+    if (mContext->isLoadedFromFile) {
         load();
     } else {
         mScores = 0;
@@ -99,8 +100,13 @@ void World::buildScene() {
     bottom3->attachChild(std::move(top4));
 
     // Player's initial position
-    Character::Ptr playerSkin(new Character(Character::Type::Archer, mTextures)
-    );
+    // locally created but still not be destroyed? ->problematic
+    Character::Ptr playerSkin(new Character(
+        static_cast<Character::Type>(
+            Character::Type::Archer + mContext->playerSkinNumber
+        ),
+        mTextures
+    ));
     mPlayerSkin = playerSkin.get();
     mPlayerSkin->setPosition(
         slotToPosition(DEFAULT_PLAYER_SLOT),
@@ -330,6 +336,7 @@ bool World::hasAlivePlayer() const {
         mWorldView.getCenter() - mWorldView.getSize() / 2.f,
         mWorldView.getSize()
     );
+
     return !mPlayerSkin->isMarkedForRemoval() &&
            bounds.contains(mPlayerSkin->getWorldPosition());
 }

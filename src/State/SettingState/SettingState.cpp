@@ -3,8 +3,10 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-SettingState::SettingState(StateStack& stack, Context& context, int mode)
-    : State(stack, context, mode), mWindow(context.window) {
+SettingState::SettingState(StateStack& stack, Context& context)
+    : State(stack, context),
+      mWindow(context.window),
+      mMode(static_cast<SettingState::Mode>(context.mode)) {
     mIsGeneral = true;
     mBackgroundSprite.setTexture(
         context.textures->get(Textures::BackgroundSetting)

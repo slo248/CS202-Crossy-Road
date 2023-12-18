@@ -7,12 +7,13 @@
 #include "CommandQueue.hpp"
 #include "Config.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "State.hpp"
 
 class World {
    public:
     World(
         TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-        Config::GameLevel::Type gameType, bool isLoadedFromFile = false
+        State::Context& context
     );
 
     void update(sf::Time dt);
@@ -68,6 +69,7 @@ class World {
 
     sf::Text mScoreText;
     sf::Text mGameModeText;
+    State::Context* mContext;
 };
 
 #endif
