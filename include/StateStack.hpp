@@ -16,7 +16,7 @@ class StateStack : private sf::NonCopyable {
     explicit StateStack(State::Context context);
 
     template <typename T>
-    void registerState(States::ID stateID, int mode = 0);
+    void registerState(States::ID stateID);
 
     void update(sf::Time dt);
     void draw();
@@ -55,8 +55,8 @@ class StateStack : private sf::NonCopyable {
 #endif  // STATE_STACK_HPP
 
 template <typename T>
-inline void StateStack::registerState(States::ID stateID, int mode) {
-    mFactories[stateID] = [this, mode]() {
-        return State::Ptr(new T(*this, mContext, mode));
+inline void StateStack::registerState(States::ID stateID) {
+    mFactories[stateID] = [this]() {
+        return State::Ptr(new T(*this, mContext));
     };
 }

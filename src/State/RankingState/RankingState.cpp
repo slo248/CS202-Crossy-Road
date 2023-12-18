@@ -1,8 +1,8 @@
 #include "RankingState.hpp"
 
-RankingState::RankingState(StateStack& stack, Context& context, int mode)
+RankingState::RankingState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundRanking)),
-      State(stack, context, mode) {
+      State(stack, context) {
     auto buttonBack = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );

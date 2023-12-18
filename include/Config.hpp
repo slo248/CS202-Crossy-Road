@@ -8,8 +8,8 @@
 #define SAVED_GAME_L4_PATH "data/level4.txt"
 #define SAVED_GAME_L5_PATH "data/level5.txt"
 
-#define RANKING_PATH "data/endless_ranking.txt"
-#define PLAYER_PATH "data/player.txt"
+#define RANKING_PATH "data/ranking.txt"
+#define SETTING_PATH "data/setting.txt"
 
 #define DEFAULT_RANKING_SLOTS 5
 
