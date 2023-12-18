@@ -18,11 +18,14 @@ class DialogSkin : public Dialog {
 
    private:
     int mNumSkins = 6;
-    void addSkins(int i, float x, Textures::ID skin, State::Context context);
+    int mCurrentSkin = 0;
+    void addSkins(int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin);
+    void addChosenSkins(int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin);
+    void changeSkin(int i);
     Button::Ptr mButtonLeft;
     Button::Ptr mButtonRight;
     std::array<Animation::Ptr, 6> mSkins;
-    Animation::Ptr mChosenSkin;
+    std::array<Animation::Ptr, 6> mChosenSkins;
     
 };
 

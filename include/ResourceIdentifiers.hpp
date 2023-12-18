@@ -223,6 +223,11 @@ enum ID {
 
     // Skin(serve for GUI)
     SkinArcher,
+    SkinEnchantress,
+    SkinKnight,
+    SkinMusketeer,
+    SkinSwordsman,
+    SkinWizard,
 
     // Setting state
     BackgroundSetting,

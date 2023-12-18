@@ -454,6 +454,11 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
 
     // Skin (serve for GUI)
     load(Textures::SkinArcher, "asset/textures/SkinArcher.png");
+    load(Textures::SkinEnchantress, "asset/textures/SkinEnchantress.png");
+    load(Textures::SkinKnight, "asset/textures/SkinKnight.png");
+    load(Textures::SkinMusketeer, "asset/textures/SkinMusketeer.png");
+    load(Textures::SkinSwordsman, "asset/textures/SkinSwordsman.png");
+    load(Textures::SkinWizard, "asset/textures/SkinWizard.png");
 
     // Setting state
     load(Textures::BackgroundSetting, "asset/textures/BackgroundSetting.png");
