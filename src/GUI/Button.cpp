@@ -5,7 +5,7 @@
 #include "Utility.hpp"
 
 Button::Button(
-    State::Context context, Textures::ID button, sf::Vector2f position,
+    State::Context& context, Textures::ID button, sf::Vector2f position,
     bool is2Mode
 )
     : mCallback(),

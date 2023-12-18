@@ -5,7 +5,7 @@
 
 class RankingState : public State {
    public:
-    RankingState(StateStack& stack, Context context, int mode = 0);
+    RankingState(StateStack& stack, Context& context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

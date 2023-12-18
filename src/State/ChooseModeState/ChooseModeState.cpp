@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-ChooseModeState::ChooseModeState(StateStack& stack, Context context, int mode)
+ChooseModeState::ChooseModeState(StateStack& stack, Context& context, int mode)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMenu)) {
     auto buttonLevelMenu = std::make_shared<Button>(
@@ -26,10 +26,22 @@ ChooseModeState::ChooseModeState(StateStack& stack, Context context, int mode)
         std::bind(&ChooseModeState::requestStackPop, this)
     );
     mGUIContainer.pack(buttonBackMenu);
+
+    // Continue:
+    // std::ifstream in(saveGamePath(choice), std::ios::in);
+    // context.isLoadFromFile = true;
+    // if (!in.good()) {
+    //     context.isLoadFromFile = false;
+    //     requestStackPush(States::GameState);
+    // }
+    //
+    // in >> context.isLoadFromFile;
+    // requestStackPush(States::GameState);
+    // in.close();
 }
 
 void ChooseModeState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackgroundSprite);
     window.draw(mGUIContainer);

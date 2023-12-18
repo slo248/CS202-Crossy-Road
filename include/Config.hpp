@@ -1,6 +1,18 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
+#define SAVED_GAME_ENDLESS_PATH "data/endless.txt"
+#define SAVED_GAME_L1_PATH "data/level1.txt"
+#define SAVED_GAME_L2_PATH "data/level2.txt"
+#define SAVED_GAME_L3_PATH "data/level3.txt"
+#define SAVED_GAME_L4_PATH "data/level4.txt"
+#define SAVED_GAME_L5_PATH "data/level5.txt"
+
+#define RANKING_PATH "data/endless_ranking.txt"
+#define PLAYER_PATH "data/player.txt"
+
+#define DEFAULT_RANKING_SLOTS 5
+
 #define DEFAULT_CELLS_PER_LANE 14
 #define DEFAULT_CELL_LENGTH 64.f
 #define DEFAULT_HALF_CELL_LENGTH 32.f
@@ -27,8 +39,6 @@
 #define LEVEL_THREE_COEFFICIENT 1.2
 #define LEVEL_FOUR_COEFFICIENT 1.3
 #define LEVEL_FIVE_COEFFICIENT 1.4
-
-#define NUMBER_OF_BUFFER_LANE 5
 
 namespace Config {
 namespace GameLevel {

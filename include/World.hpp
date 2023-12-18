@@ -24,7 +24,9 @@ class World {
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
-    void saveCurrentGame() const;
+    void save() const;
+    int getScore() const;
+    Config::GameLevel::Type getGameType() const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
@@ -37,7 +39,7 @@ class World {
     void buildLayers();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
-    void loadGame();
+    void load();
     void updateBoard();
 
    private:
@@ -53,7 +55,7 @@ class World {
     // Above are all type-dependent
 
     sf::FloatRect mWorldBounds;  // Type-dependent
-    Character* mPlayer;          // Saved independently
+    Character* mPlayerSkin;      // Saved independently
 
     CommandQueue mCommandQueue;
     Config::GameLevel::Type mGameType;  // Save

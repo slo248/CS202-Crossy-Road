@@ -6,7 +6,7 @@
 
 class LoseState : public State {
    public:
-    LoseState(StateStack& stack, Context context, bool mode = 0);
+    LoseState(StateStack& stack, Context& context, bool mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

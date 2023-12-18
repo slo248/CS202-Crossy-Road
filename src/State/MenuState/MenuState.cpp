@@ -1,6 +1,6 @@
 #include "MenuState.hpp"
 
-MenuState::MenuState(StateStack& stack, Context context, int mode)
+MenuState::MenuState(StateStack& stack, Context& context, int mode)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
       State(stack, context, mode) {
     auto buttonPlay = std::make_shared<Button>(
@@ -37,7 +37,7 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
 }
 
 void MenuState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);

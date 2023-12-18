@@ -6,7 +6,7 @@
 
 class WinState : public State {
    public:
-    WinState(StateStack& stack, Context context, int mode = 0);
+    WinState(StateStack& stack, Context& context, int mode = 0);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

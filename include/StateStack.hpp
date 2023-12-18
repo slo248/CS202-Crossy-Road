@@ -49,7 +49,7 @@ class StateStack : private sf::NonCopyable {
     std::vector<State::Ptr> mStack;
     std::vector<PendingChange> mPendingList;
 
-    std::map<States::ID, std::function<State::Ptr()> > mFactories;
+    std::map<States::ID, std::function<State::Ptr()>> mFactories;
 };
 
 #endif  // STATE_STACK_HPP

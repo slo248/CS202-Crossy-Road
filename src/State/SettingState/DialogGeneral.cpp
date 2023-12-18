@@ -3,7 +3,9 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-DialogGeneral::DialogGeneral(const sf::Texture& texture, State::Context context)
+DialogGeneral::DialogGeneral(
+    const sf::Texture& texture, State::Context& context
+)
     : Dialog(texture, context),
       mLabelTextKeys(context.textures->get(Textures::LabelTextKeys)),
       mLabelTextSounds(context.textures->get(Textures::LabelTextSounds)) {
@@ -89,7 +91,7 @@ void DialogGeneral::updateLabels() {
 
 void DialogGeneral::addButtonLabel(
     Player::Action action, float y, Textures::ID idTextures,
-    State::Context context
+    State::Context& context
 ) {
     mBindingButtons[action] = std::make_shared<Button>(
         context, idTextures, sf::Vector2f(144.f, y), true

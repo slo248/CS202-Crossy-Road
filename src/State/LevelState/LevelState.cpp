@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-LevelState::LevelState(StateStack& stack, Context context, int mode)
+LevelState::LevelState(StateStack& stack, Context& context, int mode)
     : State(stack, context, mode),
       mBackground(context.textures->get(Textures::BackgroundLevel)) {
     auto buttonBack = std::make_shared<Button>(
@@ -15,7 +15,7 @@ LevelState::LevelState(StateStack& stack, Context context, int mode)
 }
 
 void LevelState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);
@@ -27,7 +27,7 @@ bool LevelState::handleEvent(const sf::Event& event) {
     return false;
 }
 
-void LevelState::addButtonLevel(State::Context context, const int& numLevel) {
+void LevelState::addButtonLevel(State::Context& context, const int& numLevel) {
     for (int i = 0; i < numLevel; ++i) {
         auto barLevel = std::make_shared<Button>(
             context, Textures::BarLevel, sf::Vector2f(36, 153 + 79 * i)

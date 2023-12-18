@@ -3,7 +3,7 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-LoseState::LoseState(StateStack& stack, Context context, bool mode)
+LoseState::LoseState(StateStack& stack, Context& context, bool mode)
     : State(stack, context, mode),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogDefeat(context.textures->get(Textures::DialogDefeat)) {
@@ -53,7 +53,7 @@ LoseState::LoseState(StateStack& stack, Context context, bool mode)
 }
 
 void LoseState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackgroundSprite);
     window.draw(mDialogDefeat);

@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-CreditState::CreditState(StateStack& stack, Context context, int mode)
+CreditState::CreditState(StateStack& stack, Context& context, int mode)
     : State(stack, context, mode),
       mBackgroundSprite(context.textures->get(Textures::BackgroundCredit)) {
     auto buttonBack = std::make_shared<Button>(
@@ -13,7 +13,7 @@ CreditState::CreditState(StateStack& stack, Context context, int mode)
 }
 
 void CreditState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackgroundSprite);
     window.draw(mGUIContainer);

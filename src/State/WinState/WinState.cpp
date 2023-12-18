@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-WinState::WinState(StateStack& stack, Context context, int mode)
+WinState::WinState(StateStack& stack, Context& context, int mode)
     : State(stack, context, mode),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogVictory(context.textures->get(Textures::DialogVictory)) {
@@ -46,7 +46,7 @@ WinState::WinState(StateStack& stack, Context context, int mode)
 }
 
 void WinState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackgroundSprite);
     window.draw(mDialogVictory);

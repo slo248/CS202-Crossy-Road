@@ -13,10 +13,10 @@ World::World(
       mWindow(window),
       mGameType(gameType),
       mWorldView(window.getDefaultView()),
-      mPlayer(nullptr),
+      mPlayerSkin(nullptr),
       mTopLane(nullptr),
       // The sequence of initializer list is not the sequence of initialization
-      // -> fucked up 
+      // -> fucked up
       mTotalBlocks(2 + (gameType + 1) * 2),
       mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(
@@ -24,7 +24,7 @@ World::World(
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
       )) {
     if (isLoadedFromFile) {
-        loadGame();
+        load();
     } else {
         mScores = 0;
         buildScene();
@@ -35,9 +35,9 @@ World::World(
 void World::update(sf::Time dt) {
     buildBlocks();
 
-    if (mPlayer->getWorldPosition().y <= mWorldView.getCenter().y)
+    if (mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
         mWorldView.move(
-            0, mPlayer->getWorldPosition().y - mWorldView.getCenter().y
+            0, mPlayerSkin->getWorldPosition().y - mWorldView.getCenter().y
         );
     mWorldView.move(mScrollSpeed * dt.asSeconds());
 
@@ -99,15 +99,16 @@ void World::buildScene() {
     bottom3->attachChild(std::move(top4));
 
     // Player's initial position
-    Character::Ptr player(new Character(Character::Type::Archer, mTextures));
-    mPlayer = player.get();
-    mPlayer->setPosition(
+    Character::Ptr playerSkin(new Character(Character::Type::Archer, mTextures)
+    );
+    mPlayerSkin = playerSkin.get();
+    mPlayerSkin->setPosition(
         slotToPosition(DEFAULT_PLAYER_SLOT),
         DEFAULT_CELL_LENGTH * (2 * NUM_LANE) + DEFAULT_HALF_CELL_LENGTH
     );
-    mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
-    mPlayer->setCurrentLane(initialLane);
-    mLayers[OnGround]->attachChild(std::move(player));
+    mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
+    mPlayerSkin->setCurrentLane(initialLane);
+    mLayers[OnGround]->attachChild(std::move(playerSkin));
 
     // Set view
     mWorldView.setCenter(
@@ -120,7 +121,7 @@ void World::buildScene() {
 void World::buildBlocks() {
     // Not allow to build blocks when player is in movement -> if not player
     // will be shifted
-    if (mRemainBlocks == -2 || mPlayer->isInMovement()) return;
+    if (mRemainBlocks == -2 || mPlayerSkin->isInMovement()) return;
 
     // Build end block
     if (mRemainBlocks == 0) {
@@ -136,9 +137,9 @@ void World::buildBlocks() {
 
         // Move view and player to maintain the same position (duplicate)
         mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
-        mPlayer->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
+        mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
 
-        mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
+        mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
 
         std::cout << "Last buffer block!\n";
         return;
@@ -167,10 +168,10 @@ void World::buildBlocks() {
 
     // Move view and player to maintain the same position
     mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
-    mPlayer->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+    mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
 
     // Setup player's pre row for scoring
-    mPlayerPreRow = getCurrentRow(mPlayer->getWorldPosition().y);
+    mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
 
     std::cout << "Remaining blocks: " << mRemainBlocks << std::endl;
 }
@@ -210,7 +211,7 @@ void World::setDefaultScoreText() {
     mScoreText.setOutlineColor(sf::Color::Black);
 }
 
-void World::loadGame() {
+void World::load() {
     // Build all layers
     buildLayers();
 
@@ -222,6 +223,10 @@ void World::loadGame() {
         std::cout << "Cannot open save file!\n";
         return;
     }
+
+    int dummy;
+    // Check if saved
+    in >> dummy;
 
     // Load world data
     int category, type;
@@ -238,7 +243,7 @@ void World::loadGame() {
     auto player = std::make_unique<Character>(
         in, static_cast<Character::Type>(type), mTextures
     );
-    mPlayer = player.get();
+    mPlayerSkin = player.get();
     mLayers[OnGround]->attachChild(std::move(player));
 
     // Load lanes data
@@ -252,8 +257,9 @@ void World::loadGame() {
 
     Lane* current = mTopLane;
     while (current) {
-        if (current->getWorldPosition().y == mPlayer->getWorldPosition().y) {
-            mPlayer->setCurrentLane(current);
+        if (current->getWorldPosition().y ==
+            mPlayerSkin->getWorldPosition().y) {
+            mPlayerSkin->setCurrentLane(current);
             break;
         }
         current = current->getChildLane();
@@ -263,7 +269,7 @@ void World::loadGame() {
 }
 
 void World::updateBoard() {
-    int curRow = getCurrentRow(mPlayer->getWorldPosition().y);
+    int curRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
 
     if (mPlayerPreRow > curRow) {
         ++mScores;
@@ -274,13 +280,12 @@ void World::updateBoard() {
     if (mGameType == Config::GameLevel::Endless) {
         mScoreText.setString("Score: " + std::to_string(mScores));
     } else {
-        int percentage =
-            (mScores * 100) / (mTotalBlocks * NUM_LANE + 2 * BUFFER_LANE);
+        int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
         mScoreText.setString("Progress: " + std::to_string(percentage) + '%');
     }
 }
 
-void World::saveCurrentGame() const {
+void World::save() const {
     std::ofstream out;
     out.open(savedGamePath(mGameType), std::ios::out);
 
@@ -288,6 +293,9 @@ void World::saveCurrentGame() const {
         std::cout << "Cannot open save file!\n";
         return;
     }
+
+    // Mark as saved
+    out << "1\n";
 
     // Save world data
     out << mGameType << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
@@ -304,6 +312,10 @@ void World::saveCurrentGame() const {
     out.close();
 }
 
+int World::getScore() const { return mScores; }
+
+Config::GameLevel::Type World::getGameType() const { return mGameType; }
+
 sf::FloatRect World::getBattlefieldBounds() const {
     return sf::FloatRect(
         mWorldBounds.getPosition().x - DEFAULT_CELL_LENGTH,
@@ -318,11 +330,12 @@ bool World::hasAlivePlayer() const {
         mWorldView.getCenter() - mWorldView.getSize() / 2.f,
         mWorldView.getSize()
     );
-    return !mPlayer->isMarkedForRemoval() &&
-           bounds.contains(mPlayer->getWorldPosition());
+    return !mPlayerSkin->isMarkedForRemoval() &&
+           bounds.contains(mPlayerSkin->getWorldPosition());
 }
 
 bool World::hasPlayerReachedEnd() const {
     return mGameType != Config::GameLevel::Endless && mRemainBlocks == -2 &&
-           getCurrentRow(mPlayer->getWorldPosition().y) == BUFFER_LANE - 1;
+           getCurrentRow(mPlayerSkin->getWorldPosition().y) ==
+               2 * BUFFER_LANE - 1;
 }

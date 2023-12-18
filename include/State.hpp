@@ -2,6 +2,7 @@
 #define STATE_HPP
 
 #include <SFML/Graphics.hpp>
+#include <fstream>
 #include <memory>
 
 #include "Container.hpp"
@@ -11,6 +12,7 @@
 // Forward declaration
 class StateStack;
 class Player;
+class GameState;
 //
 
 class State {
@@ -19,16 +21,21 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, Player& player
+            FontHolder& fonts, Player& player, std::vector<int>& highScores
         );
+
         sf::RenderWindow* window;
         TextureHolder* textures;
         FontHolder* fonts;
         Player* player;
+        std::vector<int>* highScores;
+        GameState* gameState = nullptr;
+        int mode = 0;
+        bool isLoadedFromFile = false;
     };
 
    public:
-    State(StateStack& stack, Context context, int mode = 0);
+    State(StateStack& stack, Context& context, int mode = 0);
     virtual ~State();
 
     virtual void draw() = 0;
@@ -37,16 +44,16 @@ class State {
 
    protected:
     int mMode;
+    Context* mContext;
     Container mGUIContainer;
+
+   protected:
     void requestStackPush(States::ID stateID);
     void requestStackPop();
     void requestStackClear();
 
-    Context getContext() const;
-
    private:
     StateStack* mStack;
-    Context mContext;
 };
 
 #endif

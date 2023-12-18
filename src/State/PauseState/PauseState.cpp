@@ -1,6 +1,6 @@
 #include "PauseState.hpp"
 
-PauseState::PauseState(StateStack& stack, Context context, int mode)
+PauseState::PauseState(StateStack& stack, Context& context, int mode)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
       State(stack, context, mode) {
     int x = 300;
@@ -34,10 +34,13 @@ PauseState::PauseState(StateStack& stack, Context context, int mode)
     );
     buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
     mGUIContainer.pack(buttonSetting);
+
+    // buttonSaveGame
+    // if (context.gameState) context.gameState->save();
 }
 
 void PauseState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);

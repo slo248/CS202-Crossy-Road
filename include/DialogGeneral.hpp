@@ -11,13 +11,13 @@
 
 class DialogGeneral : public Dialog {
    public:
-    DialogGeneral(const sf::Texture& texture, State::Context context);
+    DialogGeneral(const sf::Texture& texture, State::Context& context);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void handleEvent(const sf::Event& event);
     void updateLabels();
     void addButtonLabel(
         Player::Action action, float y, Textures::ID Button,
-        State::Context context
+        State::Context& context
     );
 
    private:
