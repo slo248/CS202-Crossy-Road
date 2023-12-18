@@ -1,8 +1,8 @@
 #include "PauseState.hpp"
 
-PauseState::PauseState(StateStack& stack, Context& context, int mode)
+PauseState::PauseState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
-      State(stack, context, mode) {
+      State(stack, context) {
     int x = 300;
 
     auto buttonStar = std::make_shared<Button>(
@@ -32,7 +32,10 @@ PauseState::PauseState(StateStack& stack, Context& context, int mode)
     auto buttonSetting = std::make_shared<Button>(
         context, Textures::ButtonSetting, sf::Vector2f(x + 262, 340)
     );
-    buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
+    buttonSetting->setCallback([this]() {
+        mContext->mode = false;
+        requestStackPush(States::Setting);
+    });
     mGUIContainer.pack(buttonSetting);
 
     // buttonSaveGame

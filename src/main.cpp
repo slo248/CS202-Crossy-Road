@@ -94,17 +94,17 @@ int main() {
 
     /*<---------------------------GUI TESTING---------------------------->*/
 
-    stack.registerState<SettingState>(States::Setting, 1);
-    stack.registerState<SettingState>(States::SettingInGame);
+    stack.registerState<SettingState>(States::Setting);
+    // stack.registerState<SettingState>(States::SettingInGame);
     stack.registerState<CreditState>(States::Credit);
-    stack.registerState<LoseState>(States::Lose, 0);
+    stack.registerState<LoseState>(States::Lose);
     stack.registerState<WinState>(States::Win);
     stack.registerState<PauseState>(States::Pause);
     stack.registerState<MenuState>(States::Menu);
-    stack.registerState<RankingState>(States::Ranking, 0);
+    stack.registerState<RankingState>(States::Ranking);
     stack.registerState<LevelState>(States::Level);
     stack.registerState<ChooseModeState>(States::ChooseMode);
-    stack.registerState<ChooseModeState>(States::ChooseModeSaved, 1);
+    // stack.registerState<ChooseModeState>(States::ChooseModeSaved);
 
     stack.pushState(States::Menu);
 

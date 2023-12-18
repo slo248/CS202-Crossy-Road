@@ -5,7 +5,7 @@
 
 class PauseState : public State {
    public:
-    PauseState(StateStack& stack, Context& context, int mode = 0);
+    PauseState(StateStack& stack, Context& context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

@@ -17,8 +17,8 @@ State::Context::Context(
       player(&player),
       highScores(&highScores) {}
 
-State::State(StateStack& stack, Context& context, int mode)
-    : mMode(mode), mGUIContainer(), mStack(&stack), mContext(&context) {}
+State::State(StateStack& stack, Context& context)
+    : mGUIContainer(), mStack(&stack), mContext(&context) {}
 
 State::~State() {}
 

@@ -1,7 +1,7 @@
 #include "GameState.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
-    : State(stack, context, 0),
+    : State(stack, context),
       mPlayer(*context.player),
       mHighScores(context.highScores),
       mWorld(
