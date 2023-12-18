@@ -1,13 +1,12 @@
 #ifndef CREDIT_STATE_HPP
 #define CREDIT_STATE_HPP
 
-
 #include "Button.hpp"
 #include "State.hpp"
 
 class CreditState : public State {
    public:
-    CreditState(StateStack& stack, Context context, int mode = 0);
+    CreditState(StateStack& stack, Context& context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

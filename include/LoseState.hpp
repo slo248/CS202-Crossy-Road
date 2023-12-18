@@ -6,7 +6,9 @@
 
 class LoseState : public State {
    public:
-    LoseState(StateStack& stack, Context context, bool mode = 0);
+    enum Mode {};
+
+    LoseState(StateStack& stack, Context& context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);
@@ -15,6 +17,7 @@ class LoseState : public State {
    private:
     sf::Sprite mBackgroundSprite;
     sf::Sprite mDialogDefeat;
+    Mode mMode;
 };
 
 #endif

@@ -1,8 +1,8 @@
 #include "MenuState.hpp"
 
-MenuState::MenuState(StateStack& stack, Context context, int mode)
+MenuState::MenuState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
-      State(stack, context, mode) {
+      State(stack, context) {
     auto buttonPlay = std::make_shared<Button>(
         context, Textures::ButtonPlay, sf::Vector2f(584, 267)
     );
@@ -12,7 +12,11 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
     auto buttonContinue = std::make_shared<Button>(
         context, Textures::ButtonContinue, sf::Vector2f(584, 320)
     );
-    buttonContinue->setCallback([this]() { requestStackPush(States::ChooseModeSaved); });
+    buttonContinue->setCallback([this]() {
+        // problematic
+        mContext->mode = true;
+        requestStackPush(States::ChooseMode);
+    });
     mGUIContainer.pack(buttonContinue);
 
     auto buttonRanking = std::make_shared<Button>(
@@ -25,6 +29,8 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
         context, Textures::ButtonSettingMenu, sf::Vector2f(584, 426)
     );
     buttonSettingMenu->setCallback([this]() {
+        // problematic
+        mContext->mode = true;
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSettingMenu);
@@ -37,7 +43,7 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
 }
 
 void MenuState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);

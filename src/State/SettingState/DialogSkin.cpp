@@ -2,7 +2,7 @@
 
 #include "ResourceHolder.hpp"
 
-DialogSkin::DialogSkin(const sf::Texture& texture, State::Context context)
+DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     : Dialog(texture, context) {
     mSprite.setPosition(13.f, 112.f);
 

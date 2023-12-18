@@ -135,28 +135,28 @@ float getLevelFactor(Config::GameLevel::Type gameType) {
 std::string savedGamePath(Config::GameLevel::Type type) {
     switch (type) {
         case Config::GameLevel::Endless: {
-            return "data/endless.txt";
+            return SAVED_GAME_ENDLESS_PATH;
             break;
         }
 
         case Config::GameLevel::L1: {
-            return "data/level1.txt";
+            return SAVED_GAME_L1_PATH;
         }
 
         case Config::GameLevel::L2: {
-            return "data/level2.txt";
+            return SAVED_GAME_L2_PATH;
         }
 
         case Config::GameLevel::L3: {
-            return "data/level3.txt";
+            return SAVED_GAME_L3_PATH;
         }
 
         case Config::GameLevel::L4: {
-            return "data/level4.txt";
+            return SAVED_GAME_L4_PATH;
         }
 
         case Config::GameLevel::L5: {
-            return "data/level5.txt";
+            return SAVED_GAME_L5_PATH;
         }
 
         default: {

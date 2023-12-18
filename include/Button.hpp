@@ -20,7 +20,7 @@ class Button : public Component {
 
    public:
     Button(
-        State::Context context, Textures::ID button,
+        State::Context& context, Textures::ID button,
         sf::Vector2f position = sf::Vector2f(0.f, 0.f), bool is2Mode = false
     );
     void setCallback(Callback callback);

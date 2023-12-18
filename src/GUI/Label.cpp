@@ -3,7 +3,7 @@
 #include "Utility.hpp"
 
 Label::Label(
-    const std::string& text, Fonts::ID font, State::Context context,
+    const std::string& text, Fonts::ID font, State::Context& context,
     int characterSize
 )
     : mText(text, context.fonts->get(font), characterSize) {}

@@ -5,7 +5,7 @@
 
 class MenuState : public State {
    public:
-    MenuState(StateStack& stack, Context context, int mode = 0);
+    MenuState(StateStack& stack, Context& context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);

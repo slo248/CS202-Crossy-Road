@@ -6,7 +6,7 @@
 #include "CommandQueue.hpp"
 #include "SceneNode.hpp"
 
-Player::Player() : mActionBinding(), mKeyBinding() {
+Player::Player() : mActionBinding(), mKeyBinding(), mStatus(InGame) {
     initKeys();
     initActions();
 }
@@ -56,6 +56,10 @@ bool Player::isRealtimeAction(Action action) {
     // }
     return false;
 }
+
+void Player::setStatus(Status status) { mStatus = status; }
+
+Player::Status Player::getStatus() const { return mStatus; }
 
 void Player::initKeys() {
     mKeyBinding[sf::Keyboard::W] = MoveUp;

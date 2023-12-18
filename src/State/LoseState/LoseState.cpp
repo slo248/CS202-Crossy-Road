@@ -3,8 +3,9 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-LoseState::LoseState(StateStack& stack, Context context, bool mode)
-    : State(stack, context, mode),
+LoseState::LoseState(StateStack& stack, Context& context)
+    : State(stack, context),
+      mMode(static_cast<LoseState::Mode>(context.mode)),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogDefeat(context.textures->get(Textures::DialogDefeat)) {
     mDialogDefeat.setPosition(200.f, 80.f);
@@ -13,7 +14,10 @@ LoseState::LoseState(StateStack& stack, Context context, bool mode)
     auto buttonSetting = std::make_shared<Button>(
         context, Textures::ButtonSetting, sf::Vector2f(810.f, 560.f)
     );
-    buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
+    buttonSetting->setCallback([this]() {
+        mContext->mode = true;
+        requestStackPush(States::Setting);
+    });
 
     auto buttonPlayAgain = std::make_shared<Button>(
         context, Textures::ButtonPlayAgain, sf::Vector2f(485.f, 362.f)
@@ -53,7 +57,7 @@ LoseState::LoseState(StateStack& stack, Context context, bool mode)
 }
 
 void LoseState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackgroundSprite);
     window.draw(mDialogDefeat);
