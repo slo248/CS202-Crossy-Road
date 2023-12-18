@@ -16,7 +16,7 @@ World::World(
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
       // The sequence of initializer list is not the sequence of initialization
-      // -> fucked up
+      // -> fucked up 
       mTotalBlocks(2 + (gameType + 1) * 2),
       mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(

@@ -12,7 +12,8 @@
 class DialogSkin : public Dialog {
    public:
     DialogSkin(const sf::Texture& texture, State::Context& context);
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
+        const override;
     virtual void handleEvent(const sf::Event& event);
     virtual void update(sf::Time dt) override;
 
@@ -23,7 +24,6 @@ class DialogSkin : public Dialog {
     Button::Ptr mButtonRight;
     std::array<Animation::Ptr, 6> mSkins;
     Animation::Ptr mChosenSkin;
-    
 };
 
 #endif

@@ -7,12 +7,12 @@ DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     mSprite.setPosition(13.f, 112.f);
 
     mButtonLeft = std::make_shared<Button>(
-        context, Textures::ButtonLeftArrow, sf::Vector2f(241, 288), true
+        context, Textures::ButtonLeftArrow, sf::Vector2f(288, 288), true
     );
     mGUIContainer.pack(mButtonLeft);
 
     mButtonRight = std::make_shared<Button>(
-        context, Textures::ButtonRightArrow, sf::Vector2f(600, 288), true
+        context, Textures::ButtonRightArrow, sf::Vector2f(531, 288), true
     );
     mGUIContainer.pack(mButtonRight);
 
@@ -29,9 +29,9 @@ DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     }
 
     mChosenSkin = std::make_unique<Animation>(
-        context.textures->get(Textures::SkinArcher), sf::Vector2i(97, 129), 6
+        context.textures->get(Textures::SkinArcher), sf::Vector2i(129, 132), 4
     );
-    mChosenSkin->setPosition(405, 236);
+    mChosenSkin->setPosition(445, 260);
     mChosenSkin->play();
     mChosenSkin->setRepeat(true);
 }
