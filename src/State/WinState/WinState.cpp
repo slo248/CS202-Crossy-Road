@@ -2,8 +2,8 @@
 
 #include "ResourceHolder.hpp"
 
-WinState::WinState(StateStack& stack, Context& context, int mode)
-    : State(stack, context, mode),
+WinState::WinState(StateStack& stack, Context& context)
+    : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMain)),
       mDialogVictory(context.textures->get(Textures::DialogVictory)) {
     mDialogVictory.setPosition(211.f, 98.f);
@@ -19,7 +19,10 @@ WinState::WinState(StateStack& stack, Context& context, int mode)
     auto buttonSetting = std::make_shared<Button>(
         context, Textures::ButtonSetting, sf::Vector2f(810.f, 560.f)
     );
-    buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
+    buttonSetting->setCallback([this]() {
+        mContext->mode = true;
+        requestStackPush(States::Setting);
+    });
 
     auto buttonLevel = std::make_shared<Button>(
         context, Textures::ButtonLevel, sf::Vector2f(339.f, 364.f)

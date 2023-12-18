@@ -1,7 +1,7 @@
 #include "GameState.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
-    : State(stack, context, 0),
+    : State(stack, context),
       mPlayer(*context.player),
       mHighScores(context.highScores),
       mWorld(
@@ -15,10 +15,14 @@ GameState::GameState(StateStack& stack, Context& context)
 void GameState::draw() { mWorld.draw(); }
 
 bool GameState::update(sf::Time dt) {
-    mWorld.update(dt);
-
     // if player is dead but get new high score, then set status to HighScore
-    if (!mWorld.hasAlivePlayer()) {
+    if (mWorld.hasAlivePlayer()) {
+        mWorld.update(dt);
+        if (mWorld.hasPlayerReachedEnd()) {
+            mPlayer.setStatus(Player::Success);
+            // requestStackPush(States::GameOver);
+        }
+    } else {
         Config::GameLevel::Type gameMode = mWorld.getGameType();
         int score = mWorld.getScore();
 
@@ -34,10 +38,6 @@ bool GameState::update(sf::Time dt) {
             }
             mPlayer.setStatus(Player::Failure);
         }
-        // requestStackPush(States::GameOver);
-
-    } else if (mWorld.hasPlayerReachedEnd()) {
-        mPlayer.setStatus(Player::Success);
         // requestStackPush(States::GameOver);
     }
 

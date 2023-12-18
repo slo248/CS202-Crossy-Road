@@ -16,7 +16,7 @@ World::World(
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
       // The sequence of initializer list is not the sequence of initialization
-      // -> fucked up 
+      // -> fucked up
       mTotalBlocks(2 + (gameType + 1) * 2),
       mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(
@@ -99,6 +99,7 @@ void World::buildScene() {
     bottom3->attachChild(std::move(top4));
 
     // Player's initial position
+    // locally created but still not be destroyed? ->problematic
     Character::Ptr playerSkin(new Character(Character::Type::Archer, mTextures)
     );
     mPlayerSkin = playerSkin.get();
@@ -330,6 +331,7 @@ bool World::hasAlivePlayer() const {
         mWorldView.getCenter() - mWorldView.getSize() / 2.f,
         mWorldView.getSize()
     );
+
     return !mPlayerSkin->isMarkedForRemoval() &&
            bounds.contains(mPlayerSkin->getWorldPosition());
 }
