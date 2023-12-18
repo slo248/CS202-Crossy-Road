@@ -2,8 +2,8 @@
 
 #include "ResourceHolder.hpp"
 
-LevelState::LevelState(StateStack& stack, Context& context, int mode)
-    : State(stack, context, mode),
+LevelState::LevelState(StateStack& stack, Context& context)
+    : State(stack, context),
       mBackground(context.textures->get(Textures::BackgroundLevel)) {
     auto buttonBack = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)

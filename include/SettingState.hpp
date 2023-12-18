@@ -7,7 +7,9 @@
 
 class SettingState : public State {
    public:
-    SettingState(StateStack& stack, Context& context, int mode = 0);
+    enum Mode { General, Skin };
+
+    SettingState(StateStack& stack, Context& context);
 
     virtual void draw();
     virtual bool update(sf::Time dt);
@@ -21,6 +23,7 @@ class SettingState : public State {
     DialogSkin::Ptr mDialogSkin;
     Button::Ptr mButtonSkin;
     sf::RenderWindow* mWindow;
+    Mode mMode;
 };
 
 #endif
