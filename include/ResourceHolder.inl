@@ -3,7 +3,8 @@ void ResourceHolder<Resource, Identifier>::load(
     Identifier id, const std::string& filename
 ) {
     // Create and load resource
-    std::unique_ptr<Resource> resource(new Resource());
+    // used to be new Resource()
+    std::unique_ptr<Resource> resource(std::make_unique<Resource>());
     if (!resource->loadFromFile(filename))
         throw std::runtime_error(
             "ResourceHolder::load - Failed to load " + filename
@@ -19,7 +20,8 @@ void ResourceHolder<Resource, Identifier>::load(
     Identifier id, const std::string& filename, const Parameter& secondParam
 ) {
     // Create and load resource
-    std::unique_ptr<Resource> resource(new Resource());
+    // used to be new Resource()
+    std::unique_ptr<Resource> resource(std::make_unique<Resource>());
     if (!resource->loadFromFile(filename, secondParam))
         throw std::runtime_error(
             "ResourceHolder::load - Failed to load " + filename

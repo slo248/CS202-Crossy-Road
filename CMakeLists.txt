@@ -17,6 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${AllOutDir})
 
 # Copy data folder to output directory
 file(COPY ${CMAKE_SOURCE_DIR}/asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 # Find SFML, if not found, download it
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)

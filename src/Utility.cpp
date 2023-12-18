@@ -1,8 +1,7 @@
 #include "Utility.hpp"
 
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <cmath>
+#include <cstdlib>
 
 std::string toString(sf::Keyboard::Key key) {
 #define KEYTOSTRING_CASE(KEY) \
@@ -117,18 +116,84 @@ std::string toString(sf::Keyboard::Key key) {
     return "";
 }
 
-void centerOrigin(sf::Sprite& sprite) {
-    sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(
-        std::floor(bounds.left + bounds.width / 2.f),
-        std::floor(bounds.top + bounds.height / 2.f)
-    );
+int random(int left, int right) { return left + rand() % (right - left + 1); }
+
+float slotToPosition(int slot) {
+    return (2 * slot + 1) * DEFAULT_HALF_CELL_LENGTH;
 }
 
-void centerOrigin(sf::Text& text) {
-    sf::FloatRect bounds = text.getLocalBounds();
-    text.setOrigin(
-        std::floor(bounds.left + bounds.width / 2.f),
-        std::floor(bounds.top + bounds.height / 2.f)
-    );
+int positionToSlot(float x) {
+    return (x - DEFAULT_HALF_CELL_LENGTH) / DEFAULT_CELL_LENGTH;
+}
+
+int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
+
+float getLevelFactor(Config::GameLevel::Type gameType) {
+    return 1.f + static_cast<float>(gameType) / 20;
+}
+
+std::string savedGamePath(Config::GameLevel::Type type) {
+    switch (type) {
+        case Config::GameLevel::Endless: {
+            return "data/endless.txt";
+            break;
+        }
+
+        case Config::GameLevel::L1: {
+            return "data/level1.txt";
+        }
+
+        case Config::GameLevel::L2: {
+            return "data/level2.txt";
+        }
+
+        case Config::GameLevel::L3: {
+            return "data/level3.txt";
+        }
+
+        case Config::GameLevel::L4: {
+            return "data/level4.txt";
+        }
+
+        case Config::GameLevel::L5: {
+            return "data/level5.txt";
+        }
+
+        default: {
+            return "";
+        }
+    }
+}
+
+std::string gameModeToString(Config::GameLevel::Type type) {
+    switch (type) {
+        case Config::GameLevel::Endless: {
+            return "Endless";
+            break;
+        }
+
+        case Config::GameLevel::L1: {
+            return "Level 1";
+        }
+
+        case Config::GameLevel::L2: {
+            return "Level 2";
+        }
+
+        case Config::GameLevel::L3: {
+            return "Level 3";
+        }
+
+        case Config::GameLevel::L4: {
+            return "Level 4";
+        }
+
+        case Config::GameLevel::L5: {
+            return "Level 5";
+        }
+
+        default: {
+            return "";
+        }
+    }
 }

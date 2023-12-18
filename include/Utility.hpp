@@ -2,7 +2,10 @@
 #define UTILITY_HPP
 
 #include <SFML/Window/Keyboard.hpp>
+#include <iostream>
 #include <sstream>
+
+#include "Config.hpp"
 
 namespace sf {
 class Sprite;
@@ -18,8 +21,22 @@ std::string toString(const T& value);
 std::string toString(sf::Keyboard::Key key);
 
 // Call setOrigin() with the center of the object
-void centerOrigin(sf::Sprite& sprite);
-void centerOrigin(sf::Text& text);
+template <typename T>
+void centerOrigin(T& t);
+
+int random(int left, int right);
+
+float slotToPosition(int slot);
+
+int positionToSlot(float x);
+
+int getCurrentRow(int y);
+
+float getLevelFactor(Config::GameLevel::Type gameType);
+
+std::string savedGamePath(Config::GameLevel::Type type);
+
+std::string gameModeToString(Config::GameLevel::Type type);
 
 #include "Utility.inl"
 #endif
