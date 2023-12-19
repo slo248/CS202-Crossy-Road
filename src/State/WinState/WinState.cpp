@@ -56,7 +56,7 @@ void WinState::draw() {
     window.draw(mGUIContainer);
 }
 
-bool WinState::update(sf::Time dt) { return true; }
+bool WinState::update(sf::Time dt) { return false; }
 
 bool WinState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);

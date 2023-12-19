@@ -483,6 +483,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::DialogVictory, "asset/textures/DialogVictory.png");
 
     // Lose state
+    load(Textures::ButtonHomeLose, "asset/textures/ButtonHomeLose.png");
     load(Textures::DialogDefeat, "asset/textures/DialogDefeat.png");
 
     // Pause state

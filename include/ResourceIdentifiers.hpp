@@ -262,6 +262,7 @@ enum ID {
     DialogVictory,
 
     // Lose state
+    ButtonHomeLose,
     DialogDefeat,
 
     // Pause state

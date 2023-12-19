@@ -29,7 +29,7 @@ LoseState::LoseState(StateStack& stack, Context& context)
 
     if (mMode) {
         buttonHome = std::make_shared<Button>(
-            context, Textures::ButtonHome, sf::Vector2f(345.f, 362.f)
+            context, Textures::ButtonHomeLose, sf::Vector2f(345.f, 362.f)
         );
         buttonHome->setCallback([this]() {
             requestStackClear();
@@ -64,7 +64,7 @@ void LoseState::draw() {
     window.draw(mGUIContainer);
 }
 
-bool LoseState::update(sf::Time dt) { return true; }
+bool LoseState::update(sf::Time dt) { return false; }
 
 bool LoseState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);

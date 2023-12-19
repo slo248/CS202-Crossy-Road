@@ -21,7 +21,8 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, Player& player, std::vector<int>& highScores
+            FontHolder& fonts, Player& player, std::vector<int>& highScores,
+            int playerSkinNumber = 0
         );
 
         sf::RenderWindow* window;
@@ -31,7 +32,7 @@ class State {
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
         int mode = 0;
-        int playerSkin = 0;
+        int playerSkinNumber;
         bool isLoadedFromFile = false;
     };
 

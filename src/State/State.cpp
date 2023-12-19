@@ -9,13 +9,14 @@
 
 State::Context::Context(
     sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts,
-    Player& player, std::vector<int>& highScores
+    Player& player, std::vector<int>& highScores, int playerSkinNumber
 )
     : window(&window),
       textures(&textures),
       fonts(&fonts),
       player(&player),
-      highScores(&highScores) {}
+      highScores(&highScores),
+      playerSkinNumber(playerSkinNumber) {}
 
 State::State(StateStack& stack, Context& context)
     : mGUIContainer(), mStack(&stack), mContext(&context) {}

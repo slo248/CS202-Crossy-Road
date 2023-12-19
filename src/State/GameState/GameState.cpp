@@ -4,11 +4,7 @@ GameState::GameState(StateStack& stack, Context& context)
     : State(stack, context),
       mPlayer(*context.player),
       mHighScores(context.highScores),
-      mWorld(
-          *context.textures, *context.fonts, *context.window,
-          static_cast<Config::GameLevel::Type>(context.mode),
-          context.isLoadedFromFile
-      ) {
+      mWorld(*context.textures, *context.fonts, *context.window, context) {
     context.gameState = this;
 }
 
