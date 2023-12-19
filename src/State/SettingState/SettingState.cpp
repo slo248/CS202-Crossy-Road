@@ -63,7 +63,7 @@ bool SettingState::update(sf::Time dt) {
         mDialogSkin->update(dt);
     }
 
-    return true;
+    return false;
 }
 
 bool SettingState::handleEvent(const sf::Event& event) {

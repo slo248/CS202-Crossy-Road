@@ -1,5 +1,6 @@
 #include "LoseState.hpp"
 
+#include "GameState.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
@@ -23,8 +24,8 @@ LoseState::LoseState(StateStack& stack, Context& context)
         context, Textures::ButtonPlayAgain, sf::Vector2f(485.f, 362.f)
     );
     buttonPlayAgain->setCallback([this]() {
-        // requestStackPop();
-        // requestStackPush(States::Game);
+        mContext->mode = static_cast<int>(mContext->gameState->getGameType());
+        requestStackPush(States::Game);
     });
 
     if (mMode) {

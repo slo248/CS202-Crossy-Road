@@ -60,5 +60,5 @@ void PauseState::draw() {
 bool PauseState::update(sf::Time dt) { return 1; }
 bool PauseState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
-    return 0;
+    return false;
 }

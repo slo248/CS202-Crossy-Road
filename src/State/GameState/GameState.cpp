@@ -62,7 +62,7 @@ bool GameState::handleEvent(const sf::Event& event) {
         requestStackPush(States::Pause);
     }
 
-    return true;
+    return false;
 }
 
 void GameState::save() { mWorld.save(); }

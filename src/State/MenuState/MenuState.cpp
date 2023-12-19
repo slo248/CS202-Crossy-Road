@@ -51,5 +51,5 @@ void MenuState::draw() {
 bool MenuState::update(sf::Time dt) { return 1; }
 bool MenuState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
-    return 0;
+    return false;
 }
