@@ -47,7 +47,7 @@ void DialogSkin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (int i = 0; i < mNumSkins; ++i) {
         target.draw(*mSkins[i], states);
     }
-
+    target.draw(*mChosenSkins[mCurrentSkin], states);
     target.draw(mGUIContainer, states);
 }
 
@@ -91,5 +91,8 @@ void DialogSkin::addChosenSkins(
 
 void DialogSkin::changeSkin(int i) {
    mCurrentSkin = i%mNumSkins;
-
+   
+   if (mCurrentSkin < 0) {
+       mCurrentSkin += mNumSkins;
+   }
 }

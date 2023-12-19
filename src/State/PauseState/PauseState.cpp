@@ -1,14 +1,21 @@
 #include "PauseState.hpp"
+#include "GameState.hpp"
 
 PauseState::PauseState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
       State(stack, context) {
     int x = 300;
 
-    auto buttonStar = std::make_shared<Button>(
-        context, Textures::ButtonStar, sf::Vector2f(x, 244), true
+    auto buttonSaveGame = std::make_shared<Button>(
+        context, Textures::ButtonSaveGame, sf::Vector2f(x, 244), true
     );
-    mGUIContainer.pack(buttonStar);
+
+    buttonSaveGame->setCallback([this]() {
+        if (mContext->gameState) {
+            mContext->gameState->save();
+        }
+    });
+    mGUIContainer.pack(buttonSaveGame);
 
     auto buttonHome = std::make_shared<Button>(
         context, Textures::ButtonHome, sf::Vector2f(300, 340)
@@ -22,11 +29,16 @@ PauseState::PauseState(StateStack& stack, Context& context)
     auto buttonResumePause = std::make_shared<Button>(
         context, Textures::ButtonResumePause, sf::Vector2f(x + 87, 340)
     );
+    buttonResumePause->setCallback([this]() { requestStackPop(); });
     mGUIContainer.pack(buttonResumePause);
 
     auto buttonPlayAgainPause = std::make_shared<Button>(
         context, Textures::ButtonPlayAgainPause, sf::Vector2f(x + 174, 340)
     );
+    buttonPlayAgainPause->setCallback([this]() {
+        requestStackClear();
+        requestStackPush(States::Game);
+    });
     mGUIContainer.pack(buttonPlayAgainPause);
 
     auto buttonSetting = std::make_shared<Button>(
@@ -37,9 +49,6 @@ PauseState::PauseState(StateStack& stack, Context& context)
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSetting);
-
-    // buttonSaveGame
-    // if (context.gameState) context.gameState->save();
 }
 
 void PauseState::draw() {

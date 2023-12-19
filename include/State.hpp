@@ -31,6 +31,7 @@ class State {
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
         int mode = 0;
+        int playerSkin = 0;
         bool isLoadedFromFile = false;
     };
 

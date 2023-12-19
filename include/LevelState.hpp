@@ -7,15 +7,17 @@
 
 class LevelState : public State {
    public:
+    enum Mode { Play, Continue };
     LevelState(StateStack& stack, Context& context);
 
-    virtual void draw();
-    virtual bool update(sf::Time dt);
+    virtual void draw() override;
+    virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event);
 
    private:
     sf::Sprite mBackground;
-    void addButtonLevel(State::Context& context, const int& numLevel);
+    Mode mMode;
+    void addButtonLevel(int numLevel);
 };
 
 #endif

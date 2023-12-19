@@ -266,7 +266,7 @@ enum ID {
 
     // Pause state
     BackgroundPause,
-    ButtonStar,
+    ButtonSaveGame,
     ButtonResumePause,
     ButtonPlayAgainPause,
 

@@ -487,7 +487,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
 
     // Pause state
     load(Textures::BackgroundPause, "asset/textures/BackgroundPause.png");
-    load(Textures::ButtonStar, "asset/textures/ButtonStar.png");
+    load(Textures::ButtonSaveGame, "asset/textures/ButtonSaveGame.png");
     load(Textures::ButtonResumePause, "asset/textures/ButtonResumePause.png");
     load(
         Textures::ButtonPlayAgainPause,
