@@ -66,3 +66,7 @@ bool GameState::handleEvent(const sf::Event& event) {
 }
 
 void GameState::save() { mWorld.save(); }
+
+Config::GameLevel::Type GameState::getGameType() const {
+    return mWorld.getGameType();
+}

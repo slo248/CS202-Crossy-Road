@@ -13,6 +13,7 @@ class giGameState : public State {
     virtual bool update(sf::Time dt);
     virtual bool handleEvent(const sf::Event& event);
     void save();
+    Config::GameLevel::Type getGameType() const;
 
    private:
     World mWorld;
