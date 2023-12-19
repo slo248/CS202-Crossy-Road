@@ -5,7 +5,7 @@
 #include "State.hpp"
 #include "World.hpp"
 
-class GameState : public State {
+class giGameState : public State {
    public:
     GameState(StateStack& stack, Context& context);
 

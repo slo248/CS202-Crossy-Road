@@ -16,25 +16,33 @@ bool GameState::update(sf::Time dt) {
         mWorld.update(dt);
         if (mWorld.hasPlayerReachedEnd()) {
             mPlayer.setStatus(Player::Success);
-            // requestStackPush(States::GameOver);
+            requestStackPush(States::Win);
         }
     } else {
         Config::GameLevel::Type gameMode = mWorld.getGameType();
         int score = mWorld.getScore();
 
-        if (gameMode == Config::GameLevel::Endless &&
-            score > (*mHighScores)[0]) {
-            (*mHighScores)[0] = score;
-            mPlayer.setStatus(Player::HighScore);
-        } else {
-            for (int i = 1; i < mHighScores->size(); ++i) {
-                if (score > (*mHighScores)[i]) {
-                    (*mHighScores)[i] = score;
+        if (gameMode == Config::GameLevel::Endless) {
+            if (score > (*mHighScores)[0]) {
+                (*mHighScores)[0] = score;
+                mPlayer.setStatus(Player::HighScore);
+                mContext->mode = 1;
+                requestStackPush(States::Lose);
+
+            } else {
+                for (int i = 1; i < mHighScores->size(); ++i) {
+                    if (score > (*mHighScores)[i]) {
+                        (*mHighScores)[i] = score;
+                    }
                 }
+                mPlayer.setStatus(Player::Failure);
+                mContext->mode = 1;
+                requestStackPush(States::Lose);
             }
-            mPlayer.setStatus(Player::Failure);
+        } else {
+            mContext->mode = 0;
+            requestStackPush(States::Lose);
         }
-        // requestStackPush(States::GameOver);
     }
 
     CommandQueue& commands = mWorld.getCommandQueue();
