@@ -38,5 +38,7 @@ std::string savedGamePath(Config::GameLevel::Type type);
 
 std::string gameModeToString(Config::GameLevel::Type type);
 
+int gameLevelToBlocks(Config::GameLevel::Type gameLevel);
+
 #include "Utility.inl"
 #endif

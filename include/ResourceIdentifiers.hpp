@@ -216,6 +216,7 @@ enum ID {
     BackgroundLabel,
     ButtonBack,
     ButtonHome,
+    ButtonHome2,
     ButtonLevel,
     ButtonPlayAgain,
     ButtonSetting,
@@ -262,7 +263,6 @@ enum ID {
     DialogVictory,
 
     // Lose state
-    ButtonHomeLose,
     DialogDefeat,
 
     // Pause state
@@ -285,7 +285,7 @@ enum ID {
     // Chose Mode State
     ButtonLevelMenu,
     ButtonBackMenu,
-    ButtonSurvivalMenu,
+    ButtonSurvival,
 };
 }
 

@@ -1,7 +1,7 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
-#define SAVED_GAME_ENDLESS_PATH "data/endless.txt"
+#define SAVED_GAME_SURVIVAL_PATH "data/survival.txt"
 #define SAVED_GAME_L1_PATH "data/level1.txt"
 #define SAVED_GAME_L2_PATH "data/level2.txt"
 #define SAVED_GAME_L3_PATH "data/level3.txt"
@@ -42,8 +42,22 @@
 
 namespace Config {
 namespace GameLevel {
-enum Type { L1, L2, L3, L4, L5, Endless, Count };
-}  // namespace GameLevel
+enum Type { L1, L2, L3, L4, L5, Survival, Count };
+}
+namespace WinState {
+enum Mode { Win, HighScore };
+}
+namespace LoseState {
+enum Mode { Lose, Survival };
+}
+namespace ChooseModeState {
+enum Mode { NewGame, Continue };
+}
+namespace LevelState {
+enum Mode { NewGame, Continue };
+}
+namespace SettingState {
+enum Mode { NonSkin, Skin };
+}
 }  // namespace Config
-
 #endif  // CONFIG_HPP

@@ -59,7 +59,7 @@ class World {
     Character* mPlayerSkin;      // Saved independently
 
     CommandQueue mCommandQueue;
-    Config::GameLevel::Type mGameType;  // Save
+    Config::GameLevel::Type mGameLevel;  // Save
 
     Lane* mTopLane;     // Saved independently
     int mRemainBlocks;  // Save

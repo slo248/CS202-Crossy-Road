@@ -134,8 +134,8 @@ float getLevelFactor(Config::GameLevel::Type gameType) {
 
 std::string savedGamePath(Config::GameLevel::Type type) {
     switch (type) {
-        case Config::GameLevel::Endless: {
-            return SAVED_GAME_ENDLESS_PATH;
+        case Config::GameLevel::Survival: {
+            return SAVED_GAME_SURVIVAL_PATH;
             break;
         }
 
@@ -167,8 +167,8 @@ std::string savedGamePath(Config::GameLevel::Type type) {
 
 std::string gameModeToString(Config::GameLevel::Type type) {
     switch (type) {
-        case Config::GameLevel::Endless: {
-            return "Endless";
+        case Config::GameLevel::Survival: {
+            return "Survival";
             break;
         }
 
@@ -196,4 +196,8 @@ std::string gameModeToString(Config::GameLevel::Type type) {
             return "";
         }
     }
+}
+
+int gameLevelToBlocks(Config::GameLevel::Type gameLevel) {
+    return 2 + (gameLevel + 1) * 2;
 }

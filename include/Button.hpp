@@ -49,9 +49,10 @@ class Button : public Component {
     bool mIsToggle;
     bool mIsOn;
     bool mIs2Mode;
-    State::Context mContext;
+    State::Context* mContext;
     sf::Vector2f originalPosition;
     sf::Vector2f textOriginalPosition;
+    sf::FloatRect originalSize;
 };
 
 #endif

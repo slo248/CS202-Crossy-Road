@@ -6,16 +6,14 @@
 
 class ChooseModeState : public State {
    public:
-    enum Mode { Play, Continue };
-
     ChooseModeState(StateStack& stack, Context& context);
 
-    virtual void draw();
-    virtual bool update(sf::Time dt);
+    virtual void draw() override;
+    virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event);
 
    private:
-    Mode mMode;
+    Config::ChooseModeState::Mode mMode;
     sf::Sprite mBackgroundSprite;
 };
 

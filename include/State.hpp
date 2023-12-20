@@ -8,6 +8,7 @@
 #include "Container.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "StateID.hpp"
+#include "Config.hpp"
 
 // Forward declaration
 class StateStack;
@@ -31,6 +32,7 @@ class State {
         Player* player;
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
+        Config::GameLevel::Type gameLevel;
         int mode = 0;
         int playerSkinNumber;
         bool isLoadedFromFile = false;

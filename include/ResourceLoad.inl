@@ -483,7 +483,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::DialogVictory, "asset/textures/DialogVictory.png");
 
     // Lose state
-    load(Textures::ButtonHomeLose, "asset/textures/ButtonHomeLose.png");
+    load(Textures::ButtonHome2, "asset/textures/ButtonHome2.png");
     load(Textures::DialogDefeat, "asset/textures/DialogDefeat.png");
 
     // Pause state
@@ -516,7 +516,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
 
     // Chose Mode State
     load(Textures::ButtonLevelMenu, "asset/textures/ButtonLevelMenu.png");
-    load(Textures::ButtonSurvivalMenu, "asset/textures/ButtonSurvivalMenu.png");
+    load(Textures::ButtonSurvival, "asset/textures/ButtonSurvival.png");
     load(Textures::ButtonBackMenu, "asset/textures/ButtonBackMenu.png");
 }
 

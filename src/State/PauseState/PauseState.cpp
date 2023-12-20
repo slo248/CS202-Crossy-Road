@@ -1,4 +1,5 @@
 #include "PauseState.hpp"
+
 #include "GameState.hpp"
 
 PauseState::PauseState(StateStack& stack, Context& context)
@@ -36,6 +37,7 @@ PauseState::PauseState(StateStack& stack, Context& context)
         context, Textures::ButtonPlayAgainPause, sf::Vector2f(x + 174, 340)
     );
     buttonPlayAgainPause->setCallback([this]() {
+        mContext->isLoadedFromFile = false;
         requestStackClear();
         requestStackPush(States::Game);
     });
@@ -45,7 +47,7 @@ PauseState::PauseState(StateStack& stack, Context& context)
         context, Textures::ButtonSetting, sf::Vector2f(x + 262, 340)
     );
     buttonSetting->setCallback([this]() {
-        mContext->mode = false;
+        mContext->mode = Config::SettingState::NonSkin;
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSetting);
@@ -57,7 +59,8 @@ void PauseState::draw() {
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
-bool PauseState::update(sf::Time dt) { return 1; }
+bool PauseState::update(sf::Time dt) { return false; }
+
 bool PauseState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
     return false;

@@ -14,13 +14,16 @@ Button::Button(
       mIsToggle(false),
       mIsOn(false),
       mIs2Mode(is2Mode),
-      mContext(context) {
+      mContext(&context) {
     originalPosition = position;
     textOriginalPosition = sf::Vector2f(0, 0);
     mSprite.setPosition(originalPosition);
+
     if (mIs2Mode) {
         changeTexture(Normal);
     }
+
+    originalSize = mSprite.getGlobalBounds();
 }
 
 void Button::setCallback(Callback callback) { mCallback = std::move(callback); }
@@ -35,7 +38,7 @@ void Button::setText(
     centerOrigin(mText);
     textOriginalPosition = position;
 
-    mText.setFont(mContext.fonts->get(font));
+    mText.setFont(mContext->fonts->get(font));
 
     unsigned int r, g, b;
     sscanf(hexCode.c_str(), "#%02x%02x%02x", &r, &g, &b);
@@ -47,8 +50,8 @@ void Button::setText(
 }
 
 bool Button::isMouseOver(const sf::RenderWindow& window) const {
-    sf::Vector2f buttonPosition = mSprite.getPosition();
-    sf::FloatRect buttonBounds = mSprite.getGlobalBounds();
+    sf::Vector2f buttonPosition = originalPosition;
+    sf::FloatRect buttonBounds = originalSize;
     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
     sf::Vector2f convertedMousePosition =
         window.mapPixelToCoords(mousePosition);
@@ -84,7 +87,7 @@ void Button::deselect() {
 }
 
 void Button::handleEvent(const sf::Event& event) {
-    if (isMouseOver(*mContext.window)) {
+    if (isMouseOver(*(mContext->window))) {
         if (!mIsOn) {
             changeSize(Size::Small);
             mIsOn = true;
@@ -96,7 +99,7 @@ void Button::handleEvent(const sf::Event& event) {
         }
     }
 
-    if (isMouseOver(*mContext.window) &&
+    if (isMouseOver(*(mContext->window)) &&
         event.type == sf::Event::MouseButtonPressed &&
         event.mouseButton.button == sf::Mouse::Left) {
         select();

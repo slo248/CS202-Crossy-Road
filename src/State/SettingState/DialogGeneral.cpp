@@ -24,15 +24,15 @@ DialogGeneral::DialogGeneral(
     mGUIContainer.pack(buttonMusic);
 
     float y = 241.f;
-    addButtonLabel(Player::MoveLeft, y, Textures::ButtonLeftArrow, mContext);
+    addButtonLabel(Player::MoveLeft, y, Textures::ButtonLeftArrow, *mContext);
     addButtonLabel(
-        Player::MoveRight, y + 67.f, Textures::ButtonRightArrow, mContext
+        Player::MoveRight, y + 67.f, Textures::ButtonRightArrow, *mContext
     );
     addButtonLabel(
-        Player::MoveUp, y + 135.f, Textures::ButtonUpArrow, mContext
+        Player::MoveUp, y + 135.f, Textures::ButtonUpArrow, *mContext
     );
     addButtonLabel(
-        Player::MoveDown, y + 217.f, Textures::ButtonDownArrow, mContext
+        Player::MoveDown, y + 217.f, Textures::ButtonDownArrow, *mContext
     );
 
     updateLabels();
@@ -60,7 +60,7 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
             isKeyBinding = true;
 
             if (event.type == sf::Event::KeyReleased) {
-                mContext.player->assignKey(
+                mContext->player->assignKey(
                     static_cast<Player::Action>(action), event.key.code
                 );
 
@@ -81,7 +81,7 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
 }
 
 void DialogGeneral::updateLabels() {
-    Player& player = *mContext.player;
+    Player& player = *(mContext->player);
 
     for (std::size_t i = 0; i < Player::Count - 1; ++i) {
         sf::Keyboard::Key key = player.getKey(static_cast<Player::Action>(i));

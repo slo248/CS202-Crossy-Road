@@ -99,7 +99,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     drawCurrent(target, states);
     drawChildren(target, states);
 
-    drawBoundingRect(target, states);
+    // drawBoundingRect(target, states);
 }
 
 void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const {
@@ -173,12 +173,21 @@ bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs) {
     // intersect with rhs
 
     // Ensure lhs and rhs are certainly intersected horizontally (for this game)
-    sf::FloatRect lhsInnerBound =
-        sf::FloatRect(lhs.left + 5.f, rhs.top, lhs.width - 5.f, rhs.height);
-    sf::FloatRect rhsInnerBound =
-        sf::FloatRect(rhs.left + 5.f, rhs.top, rhs.width - 5.f, rhs.height);
+    float reduce = 15.f;
+
+    sf::FloatRect lhsInnerBound = sf::FloatRect(
+        lhs.left + reduce, rhs.top, lhs.width - reduce, rhs.height
+    );
+    sf::FloatRect rhsInnerBound = sf::FloatRect(
+        rhs.left + reduce, rhs.top, rhs.width - reduce, rhs.height
+    );
 
     return lhsInnerBound.intersects(rhsInnerBound);
+
+    // float leftPos = lhs.left + lhs.width / 2.f;
+    // float rightPos = rhs.left + rhs.width / 2.f;
+    // return std::abs(leftPos - rightPos) < 0.5 * (lhs.width + rhs.width
+    // - 30.f);
 }
 
 float length(sf::Vector2f vector) {

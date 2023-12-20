@@ -18,7 +18,7 @@ void CreditState::draw() {
     window.draw(mBackgroundSprite);
     window.draw(mGUIContainer);
 }
-bool CreditState::update(sf::Time dt) { return true; }
+bool CreditState::update(sf::Time dt) { return false; }
 
 bool CreditState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);

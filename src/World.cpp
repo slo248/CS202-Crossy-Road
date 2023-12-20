@@ -11,15 +11,15 @@ World::World(
     : mTextures(textures),
       mFonts(fonts),
       mWindow(window),
-      mGameType(static_cast<Config::GameLevel::Type>(context.mode)),
+      mGameLevel(context.gameLevel),
       mWorldView(window.getDefaultView()),
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
       mContext(&context),
       // The sequence of initializer list is not the sequence of initialization
       // -> fucked up
-      mTotalBlocks(2 + (context.mode + 1) * 2),
-      mScrollSpeed(0, 0),
+      mTotalBlocks(gameLevelToBlocks(context.gameLevel)),
+      mScrollSpeed(0, -20),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
@@ -68,7 +68,7 @@ void World::buildScene() {
     buildLayers();
 
     // Remained blocks count
-    if (mGameType != Config::GameLevel::Endless) {
+    if (mGameLevel != Config::GameLevel::Survival) {
         mRemainBlocks = mTotalBlocks - 2;
     } else {
         mRemainBlocks = -1;
@@ -81,7 +81,8 @@ void World::buildScene() {
     // Normal lanes
     // 2 * NUM_LANE -> what a surprise, then mTotalBlocks should -2
     createMultipleLanes(
-        mTextures, 2 * NUM_LANE, top1, bottom1, false, getLevelFactor(mGameType)
+        mTextures, 2 * NUM_LANE, top1, bottom1, false,
+        getLevelFactor(mGameLevel)
     );
     top1->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
     mTopLane = top1.get();
@@ -165,7 +166,7 @@ void World::buildBlocks() {
     Lane::Ptr top = nullptr;
     Lane* bottom = nullptr;
     createMultipleLanes(
-        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameType)
+        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameLevel)
     );
     bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
     top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
@@ -208,7 +209,7 @@ void World::setDefaultScoreText() {
     mGameModeText.setPosition(10, 10);
     mGameModeText.setOutlineThickness(5);
     mGameModeText.setOutlineColor(sf::Color::Black);
-    mGameModeText.setString("Game Mode: " + gameModeToString(mGameType));
+    mGameModeText.setString("Game Mode: " + gameModeToString(mGameLevel));
 
     mScoreText.setFont(mFonts.get(Fonts::Main));
     mScoreText.setCharacterSize(20);
@@ -222,7 +223,7 @@ void World::load() {
     buildLayers();
 
     std::ifstream in;
-    in.open(savedGamePath(mGameType), std::ios::in);
+    in.open(savedGamePath(mGameLevel), std::ios::in);
 
     // problematic -> need adequate states
     if (!in.good()) {
@@ -237,7 +238,7 @@ void World::load() {
     // Load world data
     int category, type;
     in >> type >> mRemainBlocks >> mPlayerPreRow >> mScores;
-    mGameType = static_cast<Config::GameLevel::Type>(type);
+    mGameLevel = static_cast<Config::GameLevel::Type>(type);
 
     // Load view
     float x, y;
@@ -271,6 +272,10 @@ void World::load() {
         current = current->getChildLane();
     }
 
+    std::ofstream out(savedGamePath(mGameLevel));
+    out << "0\n";
+    out.close();
+
     std::cout << "Game loaded successfully!\n";
 }
 
@@ -283,7 +288,7 @@ void World::updateBoard() {
         mPlayerPreRow = curRow;
     }
 
-    if (mGameType == Config::GameLevel::Endless) {
+    if (mGameLevel == Config::GameLevel::Survival) {
         mScoreText.setString("Score: " + std::to_string(mScores));
     } else {
         int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
@@ -293,7 +298,7 @@ void World::updateBoard() {
 
 void World::save() const {
     std::ofstream out;
-    out.open(savedGamePath(mGameType), std::ios::out);
+    out.open(savedGamePath(mGameLevel), std::ios::out);
 
     if (!out.good()) {
         std::cout << "Cannot open save file!\n";
@@ -304,7 +309,7 @@ void World::save() const {
     out << "1\n";
 
     // Save world data
-    out << mGameType << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
+    out << mGameLevel << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
         << mScores << '\n';
 
     // Save view center
@@ -320,7 +325,7 @@ void World::save() const {
 
 int World::getScore() const { return mScores; }
 
-Config::GameLevel::Type World::getGameType() const { return mGameType; }
+Config::GameLevel::Type World::getGameType() const { return mGameLevel; }
 
 sf::FloatRect World::getBattlefieldBounds() const {
     return sf::FloatRect(
@@ -342,7 +347,7 @@ bool World::hasAlivePlayer() const {
 }
 
 bool World::hasPlayerReachedEnd() const {
-    return mGameType != Config::GameLevel::Endless && mRemainBlocks == -2 &&
+    return mGameLevel != Config::GameLevel::Survival && mRemainBlocks == -2 &&
            getCurrentRow(mPlayerSkin->getWorldPosition().y) ==
                2 * BUFFER_LANE - 1;
 }

@@ -6,7 +6,7 @@
 SettingState::SettingState(StateStack& stack, Context& context)
     : State(stack, context),
       mWindow(context.window),
-      mMode(static_cast<SettingState::Mode>(context.mode)) {
+      mMode(static_cast<Config::SettingState::Mode>(context.mode)) {
     mIsGeneral = true;
     mBackgroundSprite.setTexture(
         context.textures->get(Textures::BackgroundSetting)
@@ -21,7 +21,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     mButtonGeneral->setCallback([this]() { this->mIsGeneral = true; });
     mGUIContainer.pack(mButtonGeneral);
 
-    if (mMode) {
+    if (mMode == Config::SettingState::Skin) {
         mDialogSkin = std::make_shared<DialogSkin>(
             context.textures->get(Textures::DialogCommon), context
         );
@@ -31,7 +31,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
         context, Textures::ButtonSkin, sf::Vector2f(448, 79), true
     );
 
-    if (mMode) {
+    if (mMode == Config::SettingState::Skin) {
         mButtonSkin->setCallback([this]() { this->mIsGeneral = false; });
     }
 
@@ -59,7 +59,7 @@ void SettingState::draw() {
 }
 
 bool SettingState::update(sf::Time dt) {
-    if (mMode) {
+    if (mMode == Config::SettingState::Skin) {
         mDialogSkin->update(dt);
     }
 
@@ -72,7 +72,7 @@ bool SettingState::handleEvent(const sf::Event& event) {
         mButtonGeneral->isSelectable(false);
         mButtonSkin->deselect();
         mDialogGeneral->handleEvent(event);
-    } else if (!mIsGeneral && mMode) {
+    } else if (!mIsGeneral && mMode == Config::SettingState::Skin) {
         mButtonGeneral->isSelectable(true);
         mButtonGeneral->deselect();
         mButtonSkin->select();

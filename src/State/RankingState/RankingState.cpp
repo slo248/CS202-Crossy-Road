@@ -16,7 +16,7 @@ void RankingState::draw() {
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
-bool RankingState::update(sf::Time dt) { return 1; }
+bool RankingState::update(sf::Time dt) { return false; }
 bool RankingState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
     return false;

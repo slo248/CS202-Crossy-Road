@@ -1,4 +1,5 @@
 #include "MenuState.hpp"
+#include "Config.hpp"
 
 MenuState::MenuState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
@@ -6,7 +7,10 @@ MenuState::MenuState(StateStack& stack, Context& context)
     auto buttonPlay = std::make_shared<Button>(
         context, Textures::ButtonPlay, sf::Vector2f(584, 267)
     );
-    buttonPlay->setCallback([this]() { requestStackPush(States::ChooseMode); });
+    buttonPlay->setCallback([this]() {
+        mContext->mode = Config::ChooseModeState::NewGame;
+        requestStackPush(States::ChooseMode);
+    });
     mGUIContainer.pack(buttonPlay);
 
     auto buttonContinue = std::make_shared<Button>(
@@ -14,7 +18,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
     );
     buttonContinue->setCallback([this]() {
         // problematic
-        mContext->mode = true;
+        mContext->mode = Config::ChooseModeState::Continue;
         requestStackPush(States::ChooseMode);
     });
     mGUIContainer.pack(buttonContinue);
@@ -30,7 +34,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
     );
     buttonSettingMenu->setCallback([this]() {
         // problematic
-        mContext->mode = true;
+        mContext->mode = Config::SettingState::Skin;
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSettingMenu);
@@ -48,7 +52,7 @@ void MenuState::draw() {
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
-bool MenuState::update(sf::Time dt) { return 1; }
+bool MenuState::update(sf::Time dt) { return false; }
 bool MenuState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
     return false;

@@ -21,7 +21,7 @@ class Dialog : public Component {
 
    protected:
     Container mGUIContainer;
-    State::Context mContext;
+    State::Context* mContext;
     const sf::Texture& mTexture;
     sf::Sprite mSprite;
 };

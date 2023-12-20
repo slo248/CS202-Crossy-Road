@@ -7,7 +7,6 @@
 
 class LevelState : public State {
    public:
-    enum Mode { Play, Continue };
     LevelState(StateStack& stack, Context& context);
 
     virtual void draw() override;
@@ -16,7 +15,7 @@ class LevelState : public State {
 
    private:
     sf::Sprite mBackground;
-    Mode mMode;
+    Config::LevelState::Mode mMode;
     void addButtonLevel(int numLevel);
 };
 

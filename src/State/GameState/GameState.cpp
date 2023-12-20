@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "Config.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
     : State(stack, context),
@@ -16,18 +17,20 @@ bool GameState::update(sf::Time dt) {
         mWorld.update(dt);
         if (mWorld.hasPlayerReachedEnd()) {
             mPlayer.setStatus(Player::Success);
+            mContext->mode = Config::WinState::Win;
             requestStackPush(States::Win);
         }
     } else {
         Config::GameLevel::Type gameMode = mWorld.getGameType();
         int score = mWorld.getScore();
 
-        if (gameMode == Config::GameLevel::Endless) {
+        if (gameMode == Config::GameLevel::Survival) {
             if (score > (*mHighScores)[0]) {
                 (*mHighScores)[0] = score;
                 mPlayer.setStatus(Player::HighScore);
-                mContext->mode = 1;
-                requestStackPush(States::Lose);
+                mContext->mode = Config::WinState::HighScore;
+                requestStackClear();
+                requestStackPush(States::Win);
 
             } else {
                 for (int i = 1; i < mHighScores->size(); ++i) {
@@ -36,11 +39,13 @@ bool GameState::update(sf::Time dt) {
                     }
                 }
                 mPlayer.setStatus(Player::Failure);
-                mContext->mode = 1;
+                mContext->mode = Config::LoseState::Survival;
+                requestStackClear();
                 requestStackPush(States::Lose);
             }
         } else {
-            mContext->mode = 0;
+            mContext->mode = Config::LoseState::Lose;
+            requestStackClear();
             requestStackPush(States::Lose);
         }
     }
