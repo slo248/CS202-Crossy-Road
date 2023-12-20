@@ -19,7 +19,7 @@ World::World(
       // The sequence of initializer list is not the sequence of initialization
       // -> fucked up
       mTotalBlocks(gameLevelToBlocks(context.gameLevel)),
-      mScrollSpeed(0, -20),
+      mScrollSpeed(0, 0),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
@@ -263,18 +263,22 @@ void World::load() {
     in.close();
 
     Lane* current = mTopLane;
+    int playerLaneNumber =
+        (int)mPlayerSkin->getWorldPosition().y / DEFAULT_CELL_LENGTH;
+
     while (current) {
-        if (current->getWorldPosition().y ==
-            mPlayerSkin->getWorldPosition().y) {
+        int currentLaneNumber =
+            (int)current->getWorldPosition().y / DEFAULT_CELL_LENGTH;
+        if (currentLaneNumber == playerLaneNumber) {
             mPlayerSkin->setCurrentLane(current);
             break;
         }
         current = current->getChildLane();
     }
 
-    std::ofstream out(savedGamePath(mGameLevel));
-    out << "0\n";
-    out.close();
+    // std::ofstream out(savedGamePath(mGameLevel));
+    // out << "0\n";
+    // out.close();
 
     std::cout << "Game loaded successfully!\n";
 }

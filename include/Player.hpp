@@ -11,7 +11,6 @@ class CommandQueue;
 class Player {
    public:
     enum Action { MoveUp, MoveDown, MoveLeft, MoveRight, ShowPosition, Count };
-    enum Status { InGame, Success, Failure, HighScore };
 
    public:
     Player();
@@ -24,8 +23,6 @@ class Player {
 
     static bool isRealtimeAction(Action action);
 
-    void setStatus(Status status);
-    Status getStatus() const;
 
    private:
     void initKeys();
@@ -35,7 +32,6 @@ class Player {
    private:
     std::map<sf::Keyboard::Key, Action> mKeyBinding;
     std::map<Action, Command> mActionBinding;
-    Status mStatus;
 };
 
 #endif  // PLAYER_HPP

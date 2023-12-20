@@ -8,6 +8,22 @@ RankingState::RankingState(StateStack& stack, Context& context)
     );
     buttonBack->setCallback(std::bind(&RankingState::requestStackPop, this));
     mGUIContainer.pack(buttonBack);
+
+    for (int i = 0; i < mContext->highScores->size(); ++i) {
+        int score = (*mContext->highScores)[i];
+
+        if (score > 0) {
+            auto labelRanking = std::make_shared<Label>(
+                std::to_string(score), Fonts::Main, context
+            );
+
+            labelRanking->setPosition(590, 180 + 78 * i);
+            labelRanking->setColor("#901212");
+            mGUIContainer.pack(labelRanking);
+        } else {
+            break;
+        }
+    }
 }
 
 void RankingState::draw() {

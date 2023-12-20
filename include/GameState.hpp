@@ -16,6 +16,9 @@ class GameState : public State {
     Config::GameLevel::Type getGameType() const;
 
    private:
+    bool updateHighScore();
+
+   private:
     World mWorld;
     Player& mPlayer;
     std::vector<int>* mHighScores;

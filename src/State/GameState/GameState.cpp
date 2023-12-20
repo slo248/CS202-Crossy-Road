@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+
 #include "Config.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
@@ -16,29 +17,16 @@ bool GameState::update(sf::Time dt) {
     if (mWorld.hasAlivePlayer()) {
         mWorld.update(dt);
         if (mWorld.hasPlayerReachedEnd()) {
-            mPlayer.setStatus(Player::Success);
             mContext->mode = Config::WinState::Win;
             requestStackPush(States::Win);
         }
     } else {
-        Config::GameLevel::Type gameMode = mWorld.getGameType();
-        int score = mWorld.getScore();
-
-        if (gameMode == Config::GameLevel::Survival) {
-            if (score > (*mHighScores)[0]) {
-                (*mHighScores)[0] = score;
-                mPlayer.setStatus(Player::HighScore);
+        if (mWorld.getGameType() == Config::GameLevel::Survival) {
+            if (updateHighScore()) {
                 mContext->mode = Config::WinState::HighScore;
                 requestStackClear();
                 requestStackPush(States::Win);
-
             } else {
-                for (int i = 1; i < mHighScores->size(); ++i) {
-                    if (score > (*mHighScores)[i]) {
-                        (*mHighScores)[i] = score;
-                    }
-                }
-                mPlayer.setStatus(Player::Failure);
                 mContext->mode = Config::LoseState::Survival;
                 requestStackClear();
                 requestStackPush(States::Lose);
@@ -74,4 +62,23 @@ void GameState::save() { mWorld.save(); }
 
 Config::GameLevel::Type GameState::getGameType() const {
     return mWorld.getGameType();
+}
+
+bool GameState::updateHighScore() {
+    int score = mWorld.getScore();
+    int tmp = score;
+    bool flag = false;
+
+    for (int i = 0; i < mContext->highScores->size(); ++i) {
+        if (score > (*mContext->highScores)[i]) {
+            tmp = (*mContext->highScores)[i];
+            (*mContext->highScores)[i] = score;
+            score = tmp;
+            if (i == 0) {
+                flag = true;
+            }
+        }
+    }
+
+    return flag;
 }
