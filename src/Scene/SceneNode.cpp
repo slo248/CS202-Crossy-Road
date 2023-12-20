@@ -99,7 +99,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     drawCurrent(target, states);
     drawChildren(target, states);
 
-    // drawBoundingRect(target, states);
+    drawBoundingRect(target, states);
 }
 
 void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const {
@@ -168,13 +168,13 @@ void SceneNode::loadChildren(std::istream& in, const TextureHolder& textures) {
     // For derived classes
 }
 
-bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs) {
+bool collision(
+    const sf::FloatRect& lhs, const sf::FloatRect& rhs, float reduce
+) {
     // Normally, people could use the reverse, that is when lhs does not
     // intersect with rhs
 
     // Ensure lhs and rhs are certainly intersected horizontally (for this game)
-    float reduce = 15.f;
-
     sf::FloatRect lhsInnerBound = sf::FloatRect(
         lhs.left + reduce, rhs.top, lhs.width - reduce, rhs.height
     );

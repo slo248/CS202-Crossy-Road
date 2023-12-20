@@ -164,7 +164,7 @@ bool Lane::isCollidedWithPlayer(Character* player) {
 
     // Detect any collision with enemy
     for (auto& child : mChildren) {
-        if (collision(playerBound, child->getBoundingRect())) {
+        if (collision(playerBound, child->getBoundingRect(), 15.f)) {
             switch (child->getCategory()) {
                 case Category::Enemy: {
                     return true;

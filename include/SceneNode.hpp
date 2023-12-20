@@ -95,7 +95,9 @@ class SceneNode : public sf::Transformable,
     bool mIsMarkedForRemoval;
 };
 
-bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs);
+bool collision(
+    const sf::FloatRect& lhs, const sf::FloatRect& rhs, float reduce = 0
+);
 float distance(const SceneNode& lhs, const SceneNode& rhs);
 
 #endif  // SCENENODE_HPP
