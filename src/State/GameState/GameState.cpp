@@ -13,6 +13,8 @@ GameState::GameState(StateStack& stack, Context& context)
     if (context.isLoadedFromFile) {
         setupCountDown(context);
     }
+
+    context.musics->play(Musics::DuringPlay);
 }
 
 void GameState::draw() {

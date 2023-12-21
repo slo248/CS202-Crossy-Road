@@ -7,6 +7,7 @@
 #include "Config.hpp"
 #include "Container.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "MusicPlayer.hpp"
 #include "StateID.hpp"
 
 // Forward declaration
@@ -21,13 +22,14 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, Player& player, std::vector<int>& highScores,
+            FontHolder& fonts, MusicPlayer& musics, Player& player, std::vector<int>& highScores,
             int playerSkinNumber = 0
         );
 
         sf::RenderWindow* window;
         TextureHolder* textures;
         FontHolder* fonts;
+        MusicPlayer* musics;
         Player* player;
         std::vector<int>* highScores;
         GameState* gameState = nullptr;

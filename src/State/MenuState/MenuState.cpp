@@ -45,6 +45,8 @@ MenuState::MenuState(StateStack& stack, Context& context)
     );
     buttonCredit->setCallback([this]() { requestStackPush(States::Credit); });
     mGUIContainer.pack(buttonCredit);
+
+    context.musics->play(Musics::Introduction);
 }
 
 void MenuState::draw() {

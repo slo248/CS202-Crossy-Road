@@ -4,6 +4,7 @@
 namespace sf {
 class Texture;
 class Font;
+class Music;
 }  // namespace sf
 
 namespace Fonts {
@@ -11,6 +12,20 @@ enum ID {
     Main,
     Enchanted,
 };
+}
+
+namespace Musics {
+enum ID {
+    DuringPlay,
+    Introduction,
+};
+}
+
+namespace Sounds {
+    enum ID {
+        Accident,
+        Bomb
+    }
 }
 
 namespace Textures {

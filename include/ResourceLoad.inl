@@ -533,3 +533,4 @@ template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
     load(Fonts::Main, "asset/font/Inter-Bold.ttf");
 }
+

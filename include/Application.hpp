@@ -1,7 +1,7 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-// #include "MusicPlayer.hpp"
+#include "MusicPlayer.hpp"
 #include "Player.hpp"
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
@@ -32,6 +32,7 @@ class Application {
     sf::RenderWindow mWindow;
     TextureHolder mTextures;
     FontHolder mFonts;
+    MusicPlayer mMusics;
     Player mPlayer;
     std::vector<int> mHighScores;
 
