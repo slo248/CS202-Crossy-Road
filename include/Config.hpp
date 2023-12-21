@@ -16,6 +16,8 @@
 #define DEFAULT_CELLS_PER_LANE 14
 #define DEFAULT_CELL_LENGTH 64.f
 #define DEFAULT_HALF_CELL_LENGTH 32.f
+#define DEFAULT_SCREEN_WIDTH 896.f
+#define DEFAULT_SCREEN_HEIGHT 640.f
 #define DEFAULT_CELL_RECT \
     sf::IntRect(0, 0, DEFAULT_CELL_LENGTH, DEFAULT_CELL_LENGTH)
 #define DEFAULT_LANE_RECT                                                      \
@@ -23,13 +25,14 @@
         0, 0, DEFAULT_CELL_LENGTH* DEFAULT_CELLS_PER_LANE, DEFAULT_CELL_LENGTH \
     )
 
-#define DEFAULT_SPAWN_INTERVAL sf::seconds(3.5)
 #define DEFAULT_PLAYER_SLOT 6
 #define DEFAULT_AIR_ENEMY_SPEED 450.f
 #define DEFAULT_GROUND_ENEMY_SPEED 150.f
 #define DEFAULT_PLAYER_SPEED 500.f
 #define DEFAULT_LOG_SPEED 100.f
 
+#define DEFAULT_TIME_PER_FRAME sf::seconds(1.f / 60.f)
+#define DEFAULT_SPAWN_INTERVAL sf::seconds(3.5)
 #define GREEN_LIGHT_INTERVAL sf::seconds(3.0)
 #define YELLOW_LIGHT_INTERVAL sf::seconds(1.0)
 #define RED_LIGHT_INTERVAL sf::seconds(2.0)

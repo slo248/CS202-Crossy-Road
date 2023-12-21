@@ -282,10 +282,14 @@ enum ID {
     BackgroundSaved,
     BarSaved,
 
-    // Chose Mode State
+    // Chooosemode state
     ButtonLevelMenu,
     ButtonBackMenu,
     ButtonSurvival,
+
+    // Game state
+    CountDown,
+
 };
 }
 

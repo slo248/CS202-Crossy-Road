@@ -11,7 +11,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
     typedef std::unique_ptr<Animation> Ptr;
 
    public:
-    Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame);
+    Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame, bool isTransparent = false);
 
     void setRepeat(bool flag);
     void setDuration(sf::Time t);

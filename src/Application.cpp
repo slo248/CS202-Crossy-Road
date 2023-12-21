@@ -13,11 +13,10 @@
 #include "SettingState.hpp"
 #include "WinState.hpp"
 
-const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
     : mWindow(
-          sf::VideoMode(DEFAULT_CELL_LENGTH * 14, DEFAULT_CELL_LENGTH * 10),
+          sf::VideoMode(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT),
           "Crossing Road", sf::Style::Default
       ),
       mTextures(),

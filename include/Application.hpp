@@ -27,7 +27,7 @@ class Application {
     State::Context initContext();
 
    private:
-    static const sf::Time TimePerFrame;
+    const sf::Time TimePerFrame = DEFAULT_TIME_PER_FRAME;
 
     sf::RenderWindow mWindow;
     TextureHolder mTextures;

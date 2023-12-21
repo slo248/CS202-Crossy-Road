@@ -3,7 +3,7 @@
 #include "Utility.hpp"
 
 Animation::Animation(
-    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame
+    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame, bool isTransparent
 )
     : mSprite(texture),
       mStartRect(0, 0, frameSize.x, frameSize.y),
@@ -16,6 +16,9 @@ Animation::Animation(
       mRepeat(false) {
     mTimePerFrame = sf::seconds(mDuration.asSeconds() / mNumFrame + 0.1);
     // std::cout << mTimePerFrame.asSeconds() << std::endl;
+    if (isTransparent) {
+        mSprite.setColor(sf::Color(255, 255, 255, 128));
+    }
 }
 
 void Animation::setDuration(sf::Time t) {

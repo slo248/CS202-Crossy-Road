@@ -6,13 +6,38 @@ GameState::GameState(StateStack& stack, Context& context)
     : State(stack, context),
       mPlayer(*context.player),
       mHighScores(context.highScores),
-      mWorld(*context.textures, *context.fonts, *context.window, context) {
+      mWorld(*context.textures, *context.fonts, *context.window, context),
+      mCountdown(nullptr) {
     context.gameState = this;
+
+    mCountdown = std::make_unique<Animation>(
+        context.textures->get(Textures::CountDown),
+        sf::Vector2i(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), 3, true
+    );
+    mCountdown->setPosition(DEFAULT_CELL_LENGTH * 7, DEFAULT_CELL_LENGTH * 5);
+    mCountdown->setDuration(sf::seconds(3));
+    mCountdown->setRepeat(false);
+
+    if (context.isLoadedFromFile) {
+        mCountdown->play();
+    }
 }
 
-void GameState::draw() { mWorld.draw(); }
+void GameState::draw() {
+    mWorld.draw();
+
+    if (mCountdown->isInProgress()) {
+        mContext->window->draw(*mCountdown);
+        return;
+    }
+}
 
 bool GameState::update(sf::Time dt) {
+    if (mCountdown->isInProgress()) {
+        mCountdown->update(dt);
+        return false;
+    }
+
     // if player is dead but get new high score, then set status to HighScore
     if (mWorld.hasAlivePlayer()) {
         mWorld.update(dt);
@@ -41,7 +66,7 @@ bool GameState::update(sf::Time dt) {
     CommandQueue& commands = mWorld.getCommandQueue();
     mPlayer.handleRealtimeInput(commands);
 
-    return true;
+    return false;
 }
 
 bool GameState::handleEvent(const sf::Event& event) {

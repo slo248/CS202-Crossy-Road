@@ -22,6 +22,7 @@ class GameState : public State {
     World mWorld;
     Player& mPlayer;
     std::vector<int>* mHighScores;
+    Animation::Ptr mCountdown;
 };
 
 #endif  // GAME_STATE_HPP
