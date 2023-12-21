@@ -18,13 +18,13 @@ class GameState : public State {
 
    private:
     bool updateHighScore();
-    void setupCountdown(Context& context);
+    void setupCountDown(Context& context);
 
    private:
     World mWorld;
     Player& mPlayer;
     std::vector<int>* mHighScores;
-    Animation::Ptr mCountdown;
+    Animation::Ptr mCountDown;
 };
 
 #endif  // GAME_STATE_HPP

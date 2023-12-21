@@ -7,26 +7,26 @@ GameState::GameState(StateStack& stack, Context& context)
       mPlayer(*context.player),
       mHighScores(context.highScores),
       mWorld(context),
-      mCountdown(nullptr) {
+      mCountDown(nullptr) {
     context.gameState = this;
 
     if (context.isLoadedFromFile) {
-        setupCountdown(context);
+        setupCountDown(context);
     }
 }
 
 void GameState::draw() {
     mWorld.draw();
 
-    if (mCountdown && mCountdown->isInProgress()) {
-        mContext->window->draw(*mCountdown);
+    if (mCountDown && mCountDown->isInProgress()) {
+        mContext->window->draw(*mCountDown);
         return;
     }
 }
 
 bool GameState::update(sf::Time dt) {
-    if (mCountdown && mCountdown->isInProgress()) {
-        mCountdown->update(dt);
+    if (mCountDown && mCountDown->isInProgress()) {
+        mCountDown->update(dt);
         return false;
     }
 
@@ -100,16 +100,16 @@ bool GameState::updateHighScore() {
     return flag;
 }
 
-void GameState::setupCountdown(Context& context) {
-    mCountdown = std::make_unique<Animation>(
-        context.textures->get(Textures::Countdown),
+void GameState::setupCountDown(Context& context) {
+    mCountDown = std::make_unique<Animation>(
+        context.textures->get(Textures::CountDown),
         sf::Vector2i(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), true
     );
 
-    mCountdown->setPosition(
+    mCountDown->setPosition(
         DEFAULT_SCREEN_WIDTH / 2.f, DEFAULT_SCREEN_HEIGHT / 2.f
     );
-    mCountdown->setDuration(DEFAULT_COUNTDOWN_DURATION);
-    mCountdown->setRepeat(false);
-    mCountdown->play();
+    mCountDown->setDuration(DEFAULT_COUNTDOWN_DURATION);
+    mCountDown->setRepeat(false);
+    mCountDown->play();
 }

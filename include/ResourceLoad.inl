@@ -526,7 +526,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonBackMenu, "asset/textures/ButtonBackMenu.png");
 
     // Game state
-    load(Textures::Countdown, "asset/textures/Countdown.png");
+    load(Textures::CountDown, "asset/textures/CountDown.png");
 }
 
 template <typename Resource, typename Identifier>
