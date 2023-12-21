@@ -12,7 +12,7 @@ GameState::GameState(StateStack& stack, Context& context)
 
     mCountdown = std::make_unique<Animation>(
         context.textures->get(Textures::CountDown),
-        sf::Vector2i(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), 3, -1, true
+        sf::Vector2i(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), true
     );
     mCountdown->setPosition(DEFAULT_CELL_LENGTH * 7, DEFAULT_CELL_LENGTH * 5);
     mCountdown->setDuration(sf::seconds(3));

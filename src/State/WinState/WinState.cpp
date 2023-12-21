@@ -74,7 +74,7 @@ WinState::WinState(StateStack& stack, Context& context)
         mContext->playerSkinNumber + Textures::SkinArcher
     );
     mPlayerSkin = std::make_unique<Animation>(
-        mContext->textures->get(skin), sf::Vector2i(256, 256), 6
+        mContext->textures->get(skin), sf::Vector2i(256, 256)
     );
 
     mPlayerSkin->setPosition(460, 220);

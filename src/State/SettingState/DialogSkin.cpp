@@ -7,22 +7,22 @@ DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     mSprite.setPosition(13.f, 112.f);
 
     mButtonLeft = std::make_shared<Button>(
-       context, Textures::ButtonLeftArrow, sf::Vector2f(288, 288), true
+        context, Textures::ButtonLeftArrow, sf::Vector2f(288, 288), true
     );
     mButtonLeft->setCallback([this]() { changeSkin(--mCurrentSkin); });
     mGUIContainer.pack(mButtonLeft);
 
     mButtonRight = std::make_shared<Button>(
-       context, Textures::ButtonRightArrow, sf::Vector2f(531, 288), true
+        context, Textures::ButtonRightArrow, sf::Vector2f(531, 288), true
     );
     mButtonRight->setCallback([this]() { changeSkin(++mCurrentSkin); });
     mGUIContainer.pack(mButtonRight);
 
     auto mButtonConfirm = std::make_shared<Button>(
-       context, Textures::ButtonConfirm, sf::Vector2f(382, 499)
+        context, Textures::ButtonConfirm, sf::Vector2f(382, 499)
     );
     mButtonConfirm->setCallback([this]() {
-       mContext->playerSkinNumber = mCurrentSkin;
+        mContext->playerSkinNumber = mCurrentSkin;
     });
     mGUIContainer.pack(mButtonConfirm);
 
@@ -74,7 +74,7 @@ void DialogSkin::addSkins(
     int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin
 ) {
     mSkins[i] =
-        std::make_unique<Animation>(mContext->textures->get(skin), frameSize, 6);
+        std::make_unique<Animation>(mContext->textures->get(skin), frameSize);
 
     mSkins[i]->setPosition(position.x, position.y);
     mSkins[i]->play();
@@ -85,7 +85,7 @@ void DialogSkin::addChosenSkins(
     int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin
 ) {
     mChosenSkins[i] =
-        std::make_unique<Animation>(mContext->textures->get(skin), frameSize, 6);
+        std::make_unique<Animation>(mContext->textures->get(skin), frameSize);
 
     mChosenSkins[i]->setPosition(position.x, position.y);
     mChosenSkins[i]->play();

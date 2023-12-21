@@ -64,7 +64,7 @@ LoseState::LoseState(StateStack& stack, Context& context)
         mContext->playerSkinNumber + Textures::DeadArcher
     );
     mPlayerSkin = std::make_unique<Animation>(
-        mContext->textures->get(skin), sf::Vector2i(256, 256), 3, 2
+        mContext->textures->get(skin), sf::Vector2i(256, 256)
     );
 
     mPlayerSkin->setPosition(460, 220);
