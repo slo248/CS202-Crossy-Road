@@ -272,6 +272,10 @@ enum ID {
     ButtonMusic,
     ButtonConfirm,
     BarSounds,
+    ButtonAdd,
+    ButtonSub,
+    ChosenMusic,
+    OptionMusic,
 
     // Credit state
     BackgroundCredit,

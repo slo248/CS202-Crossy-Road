@@ -2,6 +2,7 @@
 #define RESOURCE_HOLDER_HPP
 
 #include <cassert>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <stdexcept>
