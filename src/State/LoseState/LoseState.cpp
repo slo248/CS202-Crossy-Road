@@ -59,6 +59,17 @@ LoseState::LoseState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonSetting);
     mGUIContainer.pack(buttonPlayAgain);
     mGUIContainer.pack(buttonHome);
+
+    Textures::ID skin = static_cast<Textures::ID>(
+        mContext->playerSkinNumber + Textures::DeadArcher
+    );
+    mPlayerSkin = std::make_unique<Animation>(
+        mContext->textures->get(skin), sf::Vector2i(256, 256), 3, 2
+    );
+
+    mPlayerSkin->setPosition(460, 220);
+    mPlayerSkin->play();
+    mPlayerSkin->setRepeat(false);
 }
 
 void LoseState::draw() {
@@ -67,9 +78,13 @@ void LoseState::draw() {
     window.draw(mBackgroundSprite);
     window.draw(mDialogDefeat);
     window.draw(mGUIContainer);
+    window.draw(*mPlayerSkin);
 }
 
-bool LoseState::update(sf::Time dt) { return false; }
+bool LoseState::update(sf::Time dt) {
+    mPlayerSkin->update(dt);
+    return false;
+}
 
 bool LoseState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);

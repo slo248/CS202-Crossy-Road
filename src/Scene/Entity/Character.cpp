@@ -181,13 +181,13 @@ void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
     if (!SceneNode::isMarkedForRemoval() && getCategory() == Category::Player &&
         mCurrentLane && mCurrentLane->isCollidedWithPlayer(this)) {
         // The last animation of player is "dead animation"
-        if (mCurrentAnimation != &mAnimations[mAnimations.size() - 1]) {
-            std::cout << "Player is performing death!\n";
-            mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
-            mCurrentAnimation->play();
-            mCurrentAnimation->setRepeat(false);
-            destroy();
-        }
+        // if (mCurrentAnimation != &mAnimations[mAnimations.size() - 1]) {
+        //     std::cout << "Player is performing death!\n";
+        //     mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+        //     mCurrentAnimation->play();
+        //     mCurrentAnimation->setRepeat(false);
+        //     destroy();
+        // }
     }
     // For characters in general, check if character is dead
     else if (!SceneNode::isMarkedForRemoval()) {

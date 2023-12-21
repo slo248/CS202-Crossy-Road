@@ -3,6 +3,7 @@
 
 #include "Button.hpp"
 #include "State.hpp"
+#include "Animation.hpp"
 
 class LoseState : public State {
    public:
@@ -16,6 +17,7 @@ class LoseState : public State {
     sf::Sprite mBackgroundSprite;
     sf::Sprite mDialogDefeat;
     Config::LoseState::Mode mMode;
+    Animation::Ptr mPlayerSkin;
 };
 
 #endif

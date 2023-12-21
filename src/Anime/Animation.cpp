@@ -3,10 +3,12 @@
 #include "Utility.hpp"
 
 Animation::Animation(
-    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame, bool isTransparent
+    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame,
+    int defaultFrame, bool isTransparent
 )
     : mSprite(texture),
       mStartRect(0, 0, frameSize.x, frameSize.y),
+      mDefaultRect(defaultFrame * frameSize.x, 0, frameSize.x, frameSize.y),
       mNumFrame(numFrame),
       mCurFrame(0),
       mElapsedTime(sf::Time::Zero),
@@ -35,7 +37,13 @@ bool Animation::isInProgress() const { return mInProgress; }
 bool Animation::isRepeated() const { return mRepeat; }
 
 void Animation::update(sf::Time dt) {
-    if (!isInProgress()) return;
+    if (!isInProgress()) {
+        if (mDefaultRect.getPosition().x >= 0) {
+            mSprite.setTextureRect(mDefaultRect);
+            centerOrigin(mSprite);
+        }
+        return;
+    }
 
     mElapsedTime += dt;
     mTotalElapsedTime += dt;
@@ -96,7 +104,9 @@ sf::FloatRect Animation::getLocalBounds() const {
 }
 
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    if (!isInProgress()) return;
+    if (!isInProgress() && mDefaultRect.getPosition().x < 0) {
+        return;
+    }
     states.transform *= getTransform();
     target.draw(mSprite, states);
 }

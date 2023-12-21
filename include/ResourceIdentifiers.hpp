@@ -264,6 +264,12 @@ enum ID {
 
     // Lose state
     DialogDefeat,
+    DeadArcher,
+    DeadEnchantress,
+    DeadKnight,
+    DeadMusketeer,
+    DeadSwordsman,
+    DeadWizard,
 
     // Pause state
     BackgroundPause,

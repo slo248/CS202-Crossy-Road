@@ -11,7 +11,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
     typedef std::unique_ptr<Animation> Ptr;
 
    public:
-    Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame, bool isTransparent = false);
+    Animation(const sf::Texture& texture, sf::Vector2i frameSize, int numFrame, int defaultFrame = -1, bool isTransparent = false);
 
     void setRepeat(bool flag);
     void setDuration(sf::Time t);
@@ -33,6 +33,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
    private:
     sf::Sprite mSprite;
     sf::IntRect mStartRect;
+    sf::IntRect mDefaultRect;
     sf::Time mElapsedTime;
     sf::Time mTotalElapsedTime;
     sf::Time mDuration;
@@ -41,6 +42,7 @@ class Animation : public sf::Transformable, public sf::Drawable {
     int mNumFrame;
     bool mInProgress;
     bool mRepeat;
+
 };
 
 #endif  // ANIMATION_HPP

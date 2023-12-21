@@ -485,6 +485,12 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     // Lose state
     load(Textures::ButtonHome2, "asset/textures/ButtonHome2.png");
     load(Textures::DialogDefeat, "asset/textures/DialogDefeat.png");
+    load(Textures::DeadArcher, "asset/textures/DeadArcher.png");
+    load(Textures::DeadEnchantress, "asset/textures/DeadEnchantress.png");
+    load(Textures::DeadKnight, "asset/textures/DeadKnight.png");
+    load(Textures::DeadMusketeer, "asset/textures/DeadMusketeer.png");
+    load(Textures::DeadSwordsman, "asset/textures/DeadSwordsman.png");
+    load(Textures::DeadWizard, "asset/textures/DeadWizard.png");
 
     // Pause state
     load(Textures::BackgroundPause, "asset/textures/BackgroundPause.png");
