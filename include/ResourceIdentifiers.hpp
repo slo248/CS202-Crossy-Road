@@ -5,6 +5,7 @@ namespace sf {
 class Texture;
 class Font;
 class Music;
+class SoundBuffer;
 }  // namespace sf
 
 namespace Fonts {
@@ -21,11 +22,18 @@ enum ID {
 };
 }
 
-namespace Sounds {
-    enum ID {
-        Accident,
-        Bomb
-    }
+namespace SoundEffects {
+enum ID {
+    Accident,
+    BombExplode,
+    JumpInRiver,
+    Log,
+    Lose,
+    WalkGrass,
+    WalkGraveyard,
+    WalkSwamp,
+    Win,
+};
 }
 
 namespace Textures {
@@ -320,5 +328,6 @@ class ResourceHolder;
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffects::ID> SoundBufferHolder;
 
 #endif  // RESOURCE_IDENTIFIERS_HPP

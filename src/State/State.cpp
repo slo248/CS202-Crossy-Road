@@ -7,13 +7,14 @@
 
 State::Context::Context(
     sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts,
-    MusicPlayer& musics, Player& player, std::vector<int>& highScores,
+    MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player, std::vector<int>& highScores,
     int playerSkinNumber
 )
     : window(&window),
       textures(&textures),
       fonts(&fonts),
       musics(&musics),
+      soundEffects(&soundEffects),
       player(&player),
       highScores(&highScores),
       playerSkinNumber(playerSkinNumber) {}

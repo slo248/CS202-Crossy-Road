@@ -534,3 +534,34 @@ void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
     load(Fonts::Main, "asset/font/Inter-Bold.ttf");
 }
 
+template <typename Resource, typename Identifier>
+void ResourceHolder<Resource, Identifier>::loadSoundBufferFromFile() {
+    load(
+        SoundEffects::Accident, "asset/soundEffect/Accident.mp3"
+    );
+    load(
+        SoundEffects::BombExplode, "asset/soundEffect/BombExplode.mp3"
+    );
+    load(
+        SoundEffects::JumpInRiver, "asset/soundEffect/JumpInRiver.mp3"
+    );
+    load(
+        SoundEffects::Log, "asset/soundEffect/Log.mp3"
+    );
+    load(
+        SoundEffects::Lose, "asset/soundEffect/Lose.mp3"
+    );
+    // load(
+    //     SoundEffects::WalkGrass, "asset/soundEffect/WalkGrass.mp3"
+    // );
+    // load(
+    //     SoundEffects::WalkGraveyard, "asset/soundEffect/WalkGraveyard.mp3"
+    // );
+    // load(
+    //     SoundEffects::WalkSwamp, "asset/soundEffect/WalkSwamp.mp3"
+    // );
+    // load(
+    //     SoundEffects::Win, "asset/soundEffect/Win.mp3"
+    // );
+}
+

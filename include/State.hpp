@@ -8,6 +8,7 @@
 #include "Container.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "MusicPlayer.hpp"
+#include "SoundEffectPlayer.hpp"
 #include "StateID.hpp"
 
 // Forward declaration
@@ -22,7 +23,7 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, MusicPlayer& musics, Player& player, std::vector<int>& highScores,
+            FontHolder& fonts, MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player, std::vector<int>& highScores,
             int playerSkinNumber = 0
         );
 
@@ -30,6 +31,7 @@ class State {
         TextureHolder* textures;
         FontHolder* fonts;
         MusicPlayer* musics;
+        SoundEffectPlayer* soundEffects;
         Player* player;
         std::vector<int>* highScores;
         GameState* gameState = nullptr;

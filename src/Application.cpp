@@ -22,6 +22,7 @@ Application::Application()
       mTextures(),
       mFonts(),
       mMusics(),
+      mSoundEffects(),
       mPlayer(),
       mHighScores(DEFAULT_RANKING_SLOTS, 0),
       mStateStack(initContext()) {
@@ -108,7 +109,7 @@ State::Context Application::initContext() {
     std::ifstream in(RANKING_PATH);
     if (!in.good()) {
         std::cout << "No ranking file";
-        return State::Context(mWindow, mTextures, mFonts, mMusics, mPlayer, mHighScores);
+        return State::Context(mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores);
     }
 
     int score;
@@ -122,5 +123,5 @@ State::Context Application::initContext() {
     in.close();
     /*<----------------------------Load ranking------------------------>*/
 
-    return State::Context(mWindow, mTextures, mFonts, mMusics, mPlayer, mHighScores);
+    return State::Context(mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores);
 }
