@@ -1,4 +1,5 @@
 #include "MenuState.hpp"
+
 #include "Config.hpp"
 
 MenuState::MenuState(StateStack& stack, Context& context)
@@ -52,7 +53,9 @@ void MenuState::draw() {
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
+
 bool MenuState::update(sf::Time dt) { return false; }
+
 bool MenuState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
     return false;

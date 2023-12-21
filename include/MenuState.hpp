@@ -1,5 +1,6 @@
 #ifndef MENU_STATE_HPP
 #define MENU_STATE_HPP
+
 #include "Button.hpp"
 #include "State.hpp"
 

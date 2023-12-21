@@ -6,7 +6,7 @@
 
 Button::Button(
     State::Context& context, Textures::ID button, sf::Vector2f position,
-    bool is2Mode
+    bool is2Mode /*problematic name*/
 )
     : mCallback(),
       mSprite(context.textures->get(button)),

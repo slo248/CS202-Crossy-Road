@@ -3,7 +3,7 @@
 #include "ResourceHolder.hpp"
 
 DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
-    : Dialog(texture, context) {
+    : Dialog(texture, context), mCurrentSkin(context.playerSkinNumber) {
     mSprite.setPosition(13.f, 112.f);
 
     mButtonLeft = std::make_shared<Button>(
@@ -71,29 +71,31 @@ void DialogSkin::update(sf::Time dt) {
 }
 
 void DialogSkin::addSkins(
-    int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin
+    int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
+    Textures::ID skin
 ) {
-    mSkins[i] =
+    mSkins[skinNumber] =
         std::make_unique<Animation>(mContext->textures->get(skin), frameSize);
 
-    mSkins[i]->setPosition(position.x, position.y);
-    mSkins[i]->play();
-    mSkins[i]->setRepeat(true);
+    mSkins[skinNumber]->setPosition(position.x, position.y);
+    mSkins[skinNumber]->play();
+    mSkins[skinNumber]->setRepeat(true);
 }
 
 void DialogSkin::addChosenSkins(
-    int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin
+    int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
+    Textures::ID skin
 ) {
-    mChosenSkins[i] =
+    mChosenSkins[skinNumber] =
         std::make_unique<Animation>(mContext->textures->get(skin), frameSize);
 
-    mChosenSkins[i]->setPosition(position.x, position.y);
-    mChosenSkins[i]->play();
-    mChosenSkins[i]->setRepeat(true);
+    mChosenSkins[skinNumber]->setPosition(position.x, position.y);
+    mChosenSkins[skinNumber]->play();
+    mChosenSkins[skinNumber]->setRepeat(true);
 }
 
-void DialogSkin::changeSkin(int i) {
-    mCurrentSkin = i % mNumSkins;
+void DialogSkin::changeSkin(int skinNumber) {
+    mCurrentSkin = skinNumber % mNumSkins;
 
     if (mCurrentSkin < 0) {
         mCurrentSkin += mNumSkins;

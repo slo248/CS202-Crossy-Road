@@ -1,9 +1,7 @@
 #include "State.hpp"
 
-#include <fstream>
 #include <iostream>
 
-#include "Config.hpp"
 #include "GameState.hpp"
 #include "StateStack.hpp"
 

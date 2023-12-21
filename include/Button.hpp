@@ -46,13 +46,13 @@ class Button : public Component {
     Callback mCallback;
     sf::Sprite mSprite;
     sf::Text mText;
-    bool mIsToggle;
-    bool mIsOn;
-    bool mIs2Mode;
-    State::Context* mContext;
     sf::Vector2f originalPosition;
     sf::Vector2f textOriginalPosition;
     sf::FloatRect originalSize;
+    State::Context* mContext;
+    bool mIsToggle;
+    bool mIsOn;
+    bool mIs2Mode;
 };
 
 #endif

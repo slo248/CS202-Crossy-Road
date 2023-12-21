@@ -1,8 +1,9 @@
 #ifndef RANKING_STATE_HPP
 #define RANKING_STATE_HPP
+
 #include "Button.hpp"
-#include "State.hpp"
 #include "Label.hpp"
+#include "State.hpp"
 
 class RankingState : public State {
    public:

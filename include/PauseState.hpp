@@ -1,5 +1,6 @@
 #ifndef PAUSE_STATE_HPP
 #define PAUSE_STATE_HPP
+
 #include "Button.hpp"
 #include "State.hpp"
 

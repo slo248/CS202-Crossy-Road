@@ -11,7 +11,7 @@ Animation::Animation(
       mCurFrame(0),
       mElapsedTime(sf::Time::Zero),
       mTotalElapsedTime(sf::Time::Zero),
-      mDuration(sf::seconds(1.5)),
+      mDuration(DEFAULT_ANIMATION_DURATION),
       mInProgress(false),
       mRepeat(false) {
     mTimePerFrame = sf::seconds(mDuration.asSeconds() / mNumFrame + 0.1);
@@ -40,7 +40,7 @@ void Animation::update(sf::Time dt) {
     if (!isInProgress()) {
         if (mDefaultRect.getPosition().x >= 0) {
             mSprite.setTextureRect(mDefaultRect);
-            centerOrigin(mSprite);
+            // centerOrigin(mSprite);
         }
         return;
     }

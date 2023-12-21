@@ -14,7 +14,6 @@ class SettingState : public State {
     virtual bool handleEvent(const sf::Event& event);
 
    private:
-    bool mIsGeneral;
     sf::Sprite mBackgroundSprite;
     DialogGeneral::Ptr mDialogGeneral;
     Button::Ptr mButtonGeneral;
@@ -22,6 +21,7 @@ class SettingState : public State {
     Button::Ptr mButtonSkin;
     sf::RenderWindow* mWindow;
     Config::SettingState::Mode mMode;
+    bool mChangeableSkin;
 };
 
 #endif

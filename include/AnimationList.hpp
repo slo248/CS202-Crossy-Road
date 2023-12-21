@@ -24,10 +24,9 @@ class AnimationList : public sf::Transformable, public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
    private:
+    bool mRepeat;
     int mCurAnimation;
     std::vector<Animation::Ptr> mAnimations;
-
-    bool mRepeat;
 };
 
 #endif  // ANIMATION_LIST_HPP

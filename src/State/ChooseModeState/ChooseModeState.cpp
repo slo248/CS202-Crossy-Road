@@ -1,5 +1,7 @@
 #include "ChooseModeState.hpp"
 
+#include <fstream>
+
 #include "Config.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"

@@ -2,13 +2,12 @@
 #define STATE_HPP
 
 #include <SFML/Graphics.hpp>
-#include <fstream>
 #include <memory>
 
+#include "Config.hpp"
 #include "Container.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "StateID.hpp"
-#include "Config.hpp"
 
 // Forward declaration
 class StateStack;

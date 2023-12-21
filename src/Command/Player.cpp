@@ -4,6 +4,7 @@
 
 #include "Character.hpp"
 #include "CommandQueue.hpp"
+#include "Config.hpp"
 #include "SceneNode.hpp"
 
 Player::Player() : mActionBinding(), mKeyBinding() {
@@ -56,7 +57,6 @@ bool Player::isRealtimeAction(Action action) {
     // }
     return false;
 }
-
 
 void Player::initKeys() {
     mKeyBinding[sf::Keyboard::W] = MoveUp;

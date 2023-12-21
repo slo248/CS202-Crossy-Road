@@ -1,5 +1,6 @@
 #include "Application.hpp"
 
+#include <fstream>
 #include <iostream>
 
 #include "ChooseModeState.hpp"
@@ -12,7 +13,6 @@
 #include "RankingState.hpp"
 #include "SettingState.hpp"
 #include "WinState.hpp"
-
 
 Application::Application()
     : mWindow(
@@ -35,7 +35,7 @@ Application::Application()
 Application::~Application() {
     std::ofstream out(RANKING_PATH);
     if (!out.good()) {
-        std::cout << "Cannot save ranking";
+        std::cout << "Cannot save ranking\n";
         out.close();
         return;
     }
@@ -100,8 +100,8 @@ void Application::registerStates() {
     mStateStack.registerState<ChooseModeState>(States::ChooseMode);
 }
 
-State::Context Application::initContext(
-) { /*<----------------------------Load ranking------------------------>*/
+State::Context Application::initContext() {
+    /*<----------------------------Load ranking------------------------>*/
     std::ifstream in(RANKING_PATH);
     if (!in.good()) {
         std::cout << "No ranking file";

@@ -18,16 +18,23 @@ class DialogSkin : public Dialog {
     virtual void update(sf::Time dt) override;
 
    private:
-    int mNumSkins = 6;
-    int mCurrentSkin = 0;
-    void addSkins(int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin);
-    void addChosenSkins(int i, sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin);
-    void changeSkin(int i);
+    void addSkins(
+        int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
+        Textures::ID skin
+    );
+    void addChosenSkins(
+        int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
+        Textures::ID skin
+    );
+    void changeSkin(int skinNumber);
+
+   private:
+    const int mNumSkins = NUMBER_OF_SKINS;
+    int mCurrentSkin;
     Button::Ptr mButtonLeft;
     Button::Ptr mButtonRight;
-    std::array<Animation::Ptr, 6> mSkins;
-    std::array<Animation::Ptr, 6> mChosenSkins;
-    
+    std::array<Animation::Ptr, NUMBER_OF_SKINS> mSkins;
+    std::array<Animation::Ptr, NUMBER_OF_SKINS> mChosenSkins;
 };
 
 #endif

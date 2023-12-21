@@ -9,14 +9,16 @@ class GameState : public State {
    public:
     GameState(StateStack& stack, Context& context);
 
+    void save();
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event);
-    void save();
+
     Config::GameLevel::Type getGameType() const;
 
    private:
     bool updateHighScore();
+    void setupCountdown(Context& context);
 
    private:
     World mWorld;

@@ -4,7 +4,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Animation.hpp"
-#include "Config.hpp"
 #include "Entity.hpp"
 #include "ResourceIdentifiers.hpp"
 

@@ -3,7 +3,6 @@
 
 #include "Animation.hpp"
 #include "Button.hpp"
-#include "GameState.hpp"
 #include "State.hpp"
 
 class WinState : public State {

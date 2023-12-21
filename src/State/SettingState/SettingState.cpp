@@ -7,7 +7,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     : State(stack, context),
       mWindow(context.window),
       mMode(static_cast<Config::SettingState::Mode>(context.mode)) {
-    mIsGeneral = true;
+    mChangeableSkin = true;
     mBackgroundSprite.setTexture(
         context.textures->get(Textures::BackgroundSetting)
     );
@@ -18,7 +18,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     mButtonGeneral = std::make_shared<Button>(
         context, Textures::ButtonGeneral, sf::Vector2f(13, 79), true
     );
-    mButtonGeneral->setCallback([this]() { this->mIsGeneral = true; });
+    mButtonGeneral->setCallback([this]() { this->mChangeableSkin = true; });
     mGUIContainer.pack(mButtonGeneral);
 
     if (mMode == Config::SettingState::Skin) {
@@ -32,7 +32,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     );
 
     if (mMode == Config::SettingState::Skin) {
-        mButtonSkin->setCallback([this]() { this->mIsGeneral = false; });
+        mButtonSkin->setCallback([this]() { this->mChangeableSkin = false; });
     }
 
     mGUIContainer.pack(mButtonSkin);
@@ -40,19 +40,17 @@ SettingState::SettingState(StateStack& stack, Context& context)
     auto backButton = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );
-    backButton->setCallback([this]() {
-        requestStackPop();
-    });
+    backButton->setCallback([this]() { requestStackPop(); });
     mGUIContainer.pack(backButton);
 }
 
 void SettingState::draw() {
-    if (mIsGeneral) {
+    if (mChangeableSkin) {
         mWindow->clear();
         mWindow->draw(mBackgroundSprite);
         mWindow->draw(mGUIContainer);
         mWindow->draw(*mDialogGeneral);
-    } else if (!mIsGeneral && mMode) {
+    } else if (!mChangeableSkin && mMode) {
         mWindow->clear();
         mWindow->draw(mBackgroundSprite);
         mWindow->draw(mGUIContainer);
@@ -69,12 +67,12 @@ bool SettingState::update(sf::Time dt) {
 }
 
 bool SettingState::handleEvent(const sf::Event& event) {
-    if (mIsGeneral) {
+    if (mChangeableSkin) {
         mButtonGeneral->select();
         mButtonGeneral->isSelectable(false);
         mButtonSkin->deselect();
         mDialogGeneral->handleEvent(event);
-    } else if (!mIsGeneral && mMode == Config::SettingState::Skin) {
+    } else if (!mChangeableSkin && mMode == Config::SettingState::Skin) {
         mButtonGeneral->isSelectable(true);
         mButtonGeneral->deselect();
         mButtonSkin->select();

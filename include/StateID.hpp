@@ -7,7 +7,6 @@ enum ID {
     Title,
     Menu,
     Setting,
-    //SettingInGame,
     Game,
     Level,
     Loading,
@@ -17,7 +16,6 @@ enum ID {
     Credit,
     Ranking,
     ChooseMode,
-    //ChooseModeSaved,
 };
 }
 

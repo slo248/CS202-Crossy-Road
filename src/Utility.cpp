@@ -129,7 +129,37 @@ int positionToSlot(float x) {
 int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
 
 float getLevelFactor(Config::GameLevel::Type gameType) {
-    return 1.f + static_cast<float>(gameType) / 20;
+    switch (gameType) {
+        case Config::GameLevel::L1: {
+            return LEVEL_ONE_COEFFICIENT;
+            break;
+        }
+
+        case Config::GameLevel::L2: {
+            return LEVEL_TWO_COEFFICIENT;
+            break;
+        }
+
+        case Config::GameLevel::L3: {
+            return LEVEL_THREE_COEFFICIENT;
+            break;
+        }
+
+        case Config::GameLevel::L4: {
+            return LEVEL_FOUR_COEFFICIENT;
+            break;
+        }
+
+        case Config::GameLevel::L5: {
+            return LEVEL_FIVE_COEFFICIENT;
+            break;
+        }
+
+        case Config::GameLevel::Survival: {
+            return SURVIVAL_COEFFICIENT;
+            break;
+        }
+    }
 }
 
 std::string savedGamePath(Config::GameLevel::Type type) {

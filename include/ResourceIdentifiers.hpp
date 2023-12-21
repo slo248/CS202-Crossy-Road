@@ -294,7 +294,7 @@ enum ID {
     ButtonSurvival,
 
     // Game state
-    CountDown,
+    Countdown,
 
 };
 }

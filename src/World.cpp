@@ -1,18 +1,17 @@
 #include "World.hpp"
 
+#include <fstream>
+
 #include "Lane.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-World::World(
-    TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-    State::Context& context
-)
-    : mTextures(textures),
-      mFonts(fonts),
-      mWindow(window),
+World::World(State::Context& context)
+    : mTextures(*context.textures),
+      mFonts(*context.fonts),
+      mWindow(*context.window),
       mGameLevel(context.gameLevel),
-      mWorldView(window.getDefaultView()),
+      mWorldView((*context.window).getDefaultView()),
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
       mContext(&context),
@@ -222,10 +221,9 @@ void World::load() {
     // Build all layers
     buildLayers();
 
-    std::ifstream in;
-    in.open(savedGamePath(mGameLevel), std::ios::in);
+    std::ifstream in(savedGamePath(mGameLevel), std::ios::in);
 
-    // problematic -> need adequate states
+    // problematic
     if (!in.good()) {
         std::cout << "Cannot open save file!\n";
         return;
@@ -247,6 +245,9 @@ void World::load() {
 
     // Load player data
     in >> category >> type;
+    // problematic
+    mContext->playerSkinNumber = type - Character::Type::Archer;
+    std::cout << mContext->playerSkinNumber << '\n';
     auto player = std::make_unique<Character>(
         in, static_cast<Character::Type>(type), mTextures
     );
@@ -301,8 +302,7 @@ void World::updateBoard() {
 }
 
 void World::save() const {
-    std::ofstream out;
-    out.open(savedGamePath(mGameLevel), std::ios::out);
+    std::ofstream out(savedGamePath(mGameLevel), std::ios::out);
 
     if (!out.good()) {
         std::cout << "Cannot open save file!\n";
@@ -319,8 +319,10 @@ void World::save() const {
     // Save view center
     out << mWorldView.getCenter().x << ' ' << mWorldView.getCenter().y << '\n';
 
-    // Save player and lanes data
-    mLayers[OnGround]->save(out);  // OnGround only has player at the moment
+    // Save player data
+    mPlayerSkin->save(out);
+
+    // Save lanes data
     mLayers[Background]->save(out);
 
     std::cout << "Game saved successfully!\n";

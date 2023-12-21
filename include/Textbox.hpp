@@ -1,7 +1,6 @@
 #ifndef TEXTBOX_HPP
 #define TEXTBOX_HPP
 
-#include <iostream>
 #include <sstream>
 
 #include "Component.hpp"

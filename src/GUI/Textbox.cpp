@@ -17,7 +17,6 @@ Textbox::Textbox(
     updateTextPosition();
 }
 
-
 void Textbox::handleEvent(const sf::Event& event) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
         this->select();

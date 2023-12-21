@@ -5,6 +5,7 @@
 #include "Container.hpp"
 #include "State.hpp"
 
+// potentially problematic?
 using namespace GUI;
 
 class Dialog : public Component {

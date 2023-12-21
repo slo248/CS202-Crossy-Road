@@ -30,7 +30,6 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
     mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
     mCurrentAnimation->play();
     mCurrentAnimation->setRepeat(true);
-    // centerOrigin(*this);
 }
 
 Character::Character(

@@ -23,10 +23,8 @@ class Player {
 
     static bool isRealtimeAction(Action action);
 
-
    private:
     void initKeys();
-    // still developing
     void initActions();
 
    private:

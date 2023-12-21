@@ -11,10 +11,7 @@
 
 class World {
    public:
-    World(
-        TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-        State::Context& context
-    );
+    World(State::Context& context);
 
     void update(sf::Time dt);
     void draw();
@@ -22,12 +19,12 @@ class World {
     CommandQueue& getCommandQueue();
 
     sf::FloatRect getBattlefieldBounds() const;
+    int getScore() const;
+    Config::GameLevel::Type getGameType() const;
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
     void save() const;
-    int getScore() const;
-    Config::GameLevel::Type getGameType() const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
@@ -40,8 +37,8 @@ class World {
     void buildLayers();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
-    void load();
     void updateBoard();
+    void load();
 
    private:
     TextureHolder& mTextures;

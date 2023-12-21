@@ -1,7 +1,6 @@
 #include "LoseState.hpp"
 
 #include "Config.hpp"
-#include "GameState.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 

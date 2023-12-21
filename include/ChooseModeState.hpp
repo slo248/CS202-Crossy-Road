@@ -13,8 +13,8 @@ class ChooseModeState : public State {
     virtual bool handleEvent(const sf::Event& event);
 
    private:
-    Config::ChooseModeState::Mode mMode;
     sf::Sprite mBackgroundSprite;
+    Config::ChooseModeState::Mode mMode;
 };
 
 #endif
