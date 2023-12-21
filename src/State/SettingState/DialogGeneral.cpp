@@ -23,6 +23,33 @@ DialogGeneral::DialogGeneral(
     );
     mGUIContainer.pack(buttonMusic);
 
+    auto chosenMusic = std::make_shared<Button>(
+        context, Textures::ChosenMusic, sf::Vector2f(636.f, 400.f)
+    );
+    mGUIContainer.pack(chosenMusic);
+
+    auto buttonAdd = std::make_shared<Button>(
+        context, Textures::ButtonAdd, sf::Vector2f(700.f, 240.f)
+    );
+    buttonAdd->setCallback([this]() {
+        if (volume < 100) {
+            ++volume;
+            mVolLabel->setText(std::to_string(volume));
+        }
+    });
+    mGUIContainer.pack(buttonAdd);
+
+    auto buttonSub = std::make_shared<Button>(
+        context, Textures::ButtonSub, sf::Vector2f(600.f, 244.f)
+    );
+    buttonSub->setCallback([this]() {
+        if (volume > 0) {
+            --volume;
+            mVolLabel->setText(std::to_string(volume));
+        }
+    });
+    mGUIContainer.pack(buttonSub);
+
     float y = 241.f;
     addButtonLabel(Player::MoveLeft, y, Textures::ButtonLeftArrow, mContext);
     addButtonLabel(
@@ -34,7 +61,7 @@ DialogGeneral::DialogGeneral(
     addButtonLabel(
         Player::MoveDown, y + 217.f, Textures::ButtonDownArrow, mContext
     );
-
+    displayVolume();
     updateLabels();
 }
 
@@ -46,6 +73,7 @@ void DialogGeneral::draw(sf::RenderTarget& target, sf::RenderStates states)
     target.draw(mLabelTextKeys, states);
     target.draw(mLabelTextSounds, states);
     target.draw(mGUIContainer, states);
+    target.draw(*mVolLabel, states);
 }
 
 void DialogGeneral::handleEvent(const sf::Event& event) {
@@ -76,7 +104,6 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
     }
 
     if (isKeyBinding) updateLabels();
-
     mGUIContainer.handleEvent(event);
 }
 
@@ -102,4 +129,11 @@ void DialogGeneral::addButtonLabel(
     mBindingLabels[action]->setColor("#901212");
     mGUIContainer.pack(mBindingButtons[action]);
     mGUIContainer.pack(mBindingLabels[action]);
+}
+
+void DialogGeneral::displayVolume() {
+    mVolLabel = std::make_shared<Label>("", Fonts::Main, mContext);
+    mVolLabel->setText(std::to_string(volume));
+    mVolLabel->setPosition(677.f, 260.f);
+    mVolLabel->setColor("#901212");
 }

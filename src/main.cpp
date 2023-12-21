@@ -1,3 +1,4 @@
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
@@ -5,8 +6,8 @@
 
 #include "ChooseModeState.hpp"
 #include "Config.hpp"
-#include "GameState.hpp"
 #include "CreditState.hpp"
+#include "GameState.hpp"
 #include "LevelState.hpp"
 #include "LoseState.hpp"
 #include "MenuState.hpp"

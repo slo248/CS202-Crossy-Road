@@ -1,5 +1,6 @@
 #include "Button.hpp"
 
+#include <SFML/Audio.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include "Utility.hpp"

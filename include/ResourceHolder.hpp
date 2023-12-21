@@ -2,6 +2,7 @@
 #define RESOURCE_HOLDER_HPP
 
 #include <cassert>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -12,6 +13,7 @@ class ResourceHolder {
    public:
     void loadTextureFromFile();
     void loadFontFromFile();
+    void loadSoundFromFile();
     void load(Identifier id, const std::string& filename);
 
     template <typename Parameter>
