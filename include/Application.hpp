@@ -5,12 +5,11 @@
 #include "Player.hpp"
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
-// #include "SoundPlayer.hpp"
+#include "SoundEffectPlayer.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
 #include "StateStack.hpp"
-
 
 class Application {
    public:
@@ -33,11 +32,9 @@ class Application {
     TextureHolder mTextures;
     FontHolder mFonts;
     MusicPlayer mMusics;
+    SoundEffectPlayer mSoundEffects;
     Player mPlayer;
     std::vector<int> mHighScores;
-
-    // MusicPlayer mMusic;
-    // SoundPlayer mSounds;
     StateStack mStateStack;
 };
 

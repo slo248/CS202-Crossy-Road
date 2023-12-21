@@ -12,6 +12,7 @@ class ResourceHolder {
    public:
     void loadTextureFromFile();
     void loadFontFromFile();
+    void loadSoundBufferFromFile();
     void load(Identifier id, const std::string& filename);
 
     template <typename Parameter>
