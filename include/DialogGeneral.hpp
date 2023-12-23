@@ -15,7 +15,6 @@ class DialogGeneral : public Dialog {
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void handleEvent(const sf::Event& event);
     void updateLabels();
-    void updateVolume();
     void addButtonLabel(
         Player::Action action, float y, Textures::ID Button,
         State::Context& context
@@ -26,11 +25,15 @@ class DialogGeneral : public Dialog {
     sf::Sprite mLabelTextSounds;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
+    std::array<Button::Ptr, 3> mListMusics;
+    Button::Ptr mChosenMusic;
 
     int volume = 50;
+    bool isChoosingMusic = false;
     Label::Ptr mVolLabel;
     bool isAddVol = false;
     void displayVolume();
+    void addListMusic();
 };
 
 #endif
