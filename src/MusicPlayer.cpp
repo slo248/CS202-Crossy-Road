@@ -1,19 +1,22 @@
 #include "MusicPlayer.hpp"
+
 #include "State.hpp"
 
 MusicPlayer::MusicPlayer() : mMusic(), mFilenames(), mVolume(100.f) {
-    mFilenames[Musics::DuringPlay]    = "asset/music/DuringPlay.mp3";
-	mFilenames[Musics::Introduction] = "asset/music/Introduction.mp3";
+    mFilenames[Musics::DuringPlay] = "asset/music/DuringPlay.mp3";
+    mFilenames[Musics::Introduction] = "asset/music/Introduction.mp3";
+    mFilenames[Musics::Win] = "asset/music/Win.mp3";
+    mFilenames[Musics::Lose] = "asset/music/Lose.mp3";
 }
 
-void MusicPlayer::play(Musics::ID theme) {
+void MusicPlayer::play(Musics::ID theme, bool loop) {
     std::string filename = mFilenames[theme];
 
     if (!mMusic.openFromFile(filename))
         throw std::runtime_error("Music " + filename + " could not be loaded.");
 
     mMusic.setVolume(mVolume);
-    mMusic.setLoop(true);
+    mMusic.setLoop(loop);
     mMusic.play();
 }
 

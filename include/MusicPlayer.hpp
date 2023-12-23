@@ -3,15 +3,16 @@
 
 #include <SFML/Audio/Music.hpp>
 #include <SFML/System/NonCopyable.hpp>
-#include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
 #include <map>
 #include <string>
+
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
 
 class MusicPlayer : private sf::NonCopyable {
    public:
     MusicPlayer();
-    void play(Musics::ID theme);
+    void play(Musics::ID theme, bool loop = true);
     void stop();
     void setPaused(bool paused);
     void setVolume(float volume);

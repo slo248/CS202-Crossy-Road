@@ -69,6 +69,8 @@ LoseState::LoseState(StateStack& stack, Context& context)
     mPlayerSkin->setPosition(460, 220);
     mPlayerSkin->play();
     mPlayerSkin->setRepeat(false);
+
+    mContext->musics->play(Musics::Lose, false);
 }
 
 void LoseState::draw() {
