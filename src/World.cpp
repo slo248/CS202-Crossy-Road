@@ -70,19 +70,8 @@ void World::buildScene() {
     buildLayers();
 
     // Weather
-    int randomWeather = 1;
-    if (randomWeather < 2) {
-        sf::Texture& textureWeather = mTextures.get(
-            mWeatherID =
-                static_cast<Textures::ID>(Textures::Rain + randomWeather)
-        );
-        sf::IntRect textureRect(mWorldBounds);
-        textureWeather.setRepeated(true);
-
-        mWeatherSprite.setTexture(textureWeather);
-        mWeatherSprite.setTextureRect(textureRect);
-        mWeatherSprite.setPosition(mWorldBounds.getPosition());
-    }
+    mWeatherRandom = random(0, 2);
+    makeWeather();
 
     // Remained blocks count
     if (mGameLevel != Config::GameLevel::Survival) {
@@ -297,6 +286,10 @@ void World::load() {
         current = current->getChildLane();
     }
 
+    // Set weather
+    in >> mWeatherRandom;
+    makeWeather();
+
     // std::ofstream out(savedGamePath(mGameLevel));
     // out << "0\n";
     // out.close();
@@ -319,6 +312,19 @@ void World::updateBoard() {
         int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
         mScoreText.setString("Progress: " + std::to_string(percentage) + '%');
     }
+}
+
+void World::makeWeather() {
+    if (mWeatherRandom >= 2) return;
+    sf::Texture& textureWeather =
+        mTextures.get(static_cast<Textures::ID>(Textures::Rain + mWeatherRandom)
+        );
+    sf::IntRect textureRect(mWorldBounds);
+    textureWeather.setRepeated(true);
+
+    mWeatherSprite.setTexture(textureWeather);
+    mWeatherSprite.setTextureRect(textureRect);
+    mWeatherSprite.setPosition(mWorldBounds.getPosition());
 }
 
 void World::save() const {
@@ -344,6 +350,9 @@ void World::save() const {
 
     // Save lanes data
     mLayers[Background]->save(out);
+
+    // Save weather
+    out << mWeatherRandom << '\n';
 
     std::cout << "Game saved successfully!\n";
     out.close();
