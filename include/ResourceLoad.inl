@@ -443,6 +443,12 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         Textures::River_Log1, "asset/game_textures/Obstacle/River/Log/Log2.png"
     );
     /*<------------------------River Textures--------------------------->*/
+
+    /*********************** Weather Textures ****************************/
+    load(Textures::Rain, "asset/weather/rain_heavy.png");
+    load(Textures::Snow, "asset/weather/snow_medium.png");
+    /*********************************************************************/
+
     // Common
     load(Textures::BackgroundMain, "asset/textures/BackgroundMain.png");
     load(Textures::ButtonBack, "asset/textures/ButtonBack.png");
@@ -536,32 +542,19 @@ void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadSoundBufferFromFile() {
-    load(
-        SoundEffects::Accident, "asset/soundEffect/Accident.mp3"
-    );
-    load(
-        SoundEffects::BombExplode, "asset/soundEffect/BombExplode.mp3"
-    );
-    load(
-        SoundEffects::JumpInRiver, "asset/soundEffect/JumpInRiver.mp3"
-    );
-    load(
-        SoundEffects::Log, "asset/soundEffect/Log.mp3"
-    );
-    load(
-        SoundEffects::Lose, "asset/soundEffect/Lose.mp3"
-    );
+    load(SoundEffects::Accident, "asset/sound_effect/Accident.mp3");
+    load(SoundEffects::BombExplode, "asset/sound_effect/BombExplode.mp3");
+    load(SoundEffects::JumpInRiver, "asset/sound_effect/JumpInRiver.mp3");
+    load(SoundEffects::Log, "asset/sound_effect/Log.mp3");
+    load(SoundEffects::Lose, "asset/sound_effect/Lose.mp3");
+    load(SoundEffects::Win, "asset/sound_effect/Win.mp3");
     // load(
-    //     SoundEffects::WalkGrass, "asset/soundEffect/WalkGrass.mp3"
+    //     SoundEffects::WalkGrass, "asset/sound_effect/WalkGrass.mp3"
     // );
     // load(
-    //     SoundEffects::WalkGraveyard, "asset/soundEffect/WalkGraveyard.mp3"
+    //     SoundEffects::WalkGraveyard, "asset/sound_effect/WalkGraveyard.mp3"
     // );
     // load(
-    //     SoundEffects::WalkSwamp, "asset/soundEffect/WalkSwamp.mp3"
-    // );
-    // load(
-    //     SoundEffects::Win, "asset/soundEffect/Win.mp3"
+    //     SoundEffects::WalkSwamp, "asset/sound_effect/WalkSwamp.mp3"
     // );
 }
-

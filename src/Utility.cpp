@@ -132,32 +132,30 @@ float getLevelFactor(Config::GameLevel::Type gameType) {
     switch (gameType) {
         case Config::GameLevel::L1: {
             return LEVEL_ONE_COEFFICIENT;
-            break;
         }
 
         case Config::GameLevel::L2: {
             return LEVEL_TWO_COEFFICIENT;
-            break;
         }
 
         case Config::GameLevel::L3: {
             return LEVEL_THREE_COEFFICIENT;
-            break;
         }
 
         case Config::GameLevel::L4: {
             return LEVEL_FOUR_COEFFICIENT;
-            break;
         }
 
         case Config::GameLevel::L5: {
             return LEVEL_FIVE_COEFFICIENT;
-            break;
         }
 
         case Config::GameLevel::Survival: {
             return SURVIVAL_COEFFICIENT;
-            break;
+        }
+
+        default: {
+            return 1.f;
         }
     }
 }
@@ -166,7 +164,6 @@ std::string savedGamePath(Config::GameLevel::Type type) {
     switch (type) {
         case Config::GameLevel::Survival: {
             return SAVED_GAME_SURVIVAL_PATH;
-            break;
         }
 
         case Config::GameLevel::L1: {

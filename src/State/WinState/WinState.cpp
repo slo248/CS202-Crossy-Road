@@ -80,6 +80,8 @@ WinState::WinState(StateStack& stack, Context& context)
     mPlayerSkin->setPosition(460, 220);
     mPlayerSkin->play();
     mPlayerSkin->setRepeat(true);
+
+    mContext->musics->play(Musics::Win, false);
 }
 
 void WinState::draw() {

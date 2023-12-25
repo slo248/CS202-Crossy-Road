@@ -35,6 +35,14 @@ World::World(State::Context& context)
 void World::update(sf::Time dt) {
     buildBlocks();
 
+    mWeatherSprite.move(-1.f * mScrollSpeed * dt.asSeconds());
+    int tmpy = mWorldView.getCenter().y - mWorldView.getSize().y / 2;
+    if (mWeatherSprite.getPosition().y + 100 >= tmpy)
+        mWeatherSprite.setPosition(
+            mWorldBounds.getPosition().x,
+            mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
+        );
+
     if (mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
         mWorldView.move(
             0, mPlayerSkin->getWorldPosition().y - mWorldView.getCenter().y
@@ -55,6 +63,7 @@ void World::update(sf::Time dt) {
 void World::draw() {
     mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
+    mWindow.draw(mWeatherSprite);
     mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mScoreText);
     mWindow.draw(mGameModeText);
@@ -65,6 +74,10 @@ CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 void World::buildScene() {
     // Build all layers
     buildLayers();
+
+    // Weather
+    mWeatherRandom = random(0, 2);
+    makeWeather();
 
     // Remained blocks count
     if (mGameLevel != Config::GameLevel::Survival) {
@@ -162,6 +175,8 @@ void World::buildBlocks() {
     }
 
     // Build block
+    // mWeatherSprite.setPosition(mWorldBounds.getPosition());
+
     Lane::Ptr top = nullptr;
     Lane* bottom = nullptr;
     createMultipleLanes(
@@ -233,6 +248,10 @@ void World::load() {
     // Check if saved
     in >> dummy;
 
+    // Set weather
+    in >> mWeatherRandom;
+    makeWeather();
+
     // Load world data
     int category, type;
     in >> type >> mRemainBlocks >> mPlayerPreRow >> mScores;
@@ -301,6 +320,25 @@ void World::updateBoard() {
     }
 }
 
+void World::makeWeather() {
+    if (mWeatherRandom >= 2) return;
+    sf::Texture& textureWeather =
+        mTextures.get(static_cast<Textures::ID>(Textures::Rain + mWeatherRandom)
+        );
+    sf::IntRect textureRect(
+        mWorldBounds.getPosition().x, mWorldBounds.getPosition().y,
+        mWorldBounds.getSize().x, mWorldBounds.getSize().y * 3.f / 2.f
+    );
+    textureWeather.setRepeated(true);
+
+    mWeatherSprite.setTexture(textureWeather);
+    mWeatherSprite.setTextureRect(textureRect);
+    mWeatherSprite.setPosition(
+        mWorldBounds.getPosition().x,
+        mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
+    );
+}
+
 void World::save() const {
     std::ofstream out(savedGamePath(mGameLevel), std::ios::out);
 
@@ -311,6 +349,9 @@ void World::save() const {
 
     // Mark as saved
     out << "1\n";
+
+    // Save weather
+    out << mWeatherRandom << '\n';
 
     // Save world data
     out << mGameLevel << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '

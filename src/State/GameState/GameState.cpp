@@ -36,10 +36,12 @@ bool GameState::update(sf::Time dt) {
     if (mWorld.hasAlivePlayer()) {
         mWorld.update(dt);
         if (mWorld.hasPlayerReachedEnd()) {
+            mContext->musics->stop();
             mContext->mode = Config::WinState::Win;
             requestStackPush(States::Win);
         }
     } else {
+        mContext->musics->stop();
         if (mWorld.getGameType() == Config::GameLevel::Survival) {
             if (updateHighScore()) {
                 mContext->mode = Config::WinState::HighScore;

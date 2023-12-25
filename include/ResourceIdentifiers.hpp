@@ -16,10 +16,7 @@ enum ID {
 }
 
 namespace Musics {
-enum ID {
-    DuringPlay,
-    Introduction,
-};
+enum ID { Introduction, DuringPlay, Win, Lose };
 }
 
 namespace SoundEffects {
@@ -231,6 +228,11 @@ enum ID {
     // <-------------------Obstacle----------------->
 
     // <---------------Characters Skin-------------->
+
+    // <---------------Weather-------------->
+    Rain,
+    Snow,
+    // <------------------------------------>
 
     //// GUI
     // Common

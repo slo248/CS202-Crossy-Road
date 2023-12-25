@@ -38,6 +38,7 @@ class World {
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
     void updateBoard();
+    void makeWeather();
     void load();
 
    private:
@@ -67,6 +68,9 @@ class World {
     sf::Text mScoreText;
     sf::Text mGameModeText;
     State::Context* mContext;
+
+    int mWeatherRandom;
+    sf::Sprite mWeatherSprite;
 };
 
 #endif
