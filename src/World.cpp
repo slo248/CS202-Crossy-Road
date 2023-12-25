@@ -36,6 +36,12 @@ void World::update(sf::Time dt) {
     buildBlocks();
 
     mWeatherSprite.move(-1.f * mScrollSpeed * dt.asSeconds());
+    int tmpy = mWorldView.getCenter().y - mWorldView.getSize().y / 2;
+    if (mWeatherSprite.getPosition().y + 100 >= tmpy)
+        mWeatherSprite.setPosition(
+            mWorldBounds.getPosition().x,
+            mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
+        );
 
     if (mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
         mWorldView.move(
@@ -169,7 +175,7 @@ void World::buildBlocks() {
     }
 
     // Build block
-    mWeatherSprite.setPosition(mWorldBounds.getPosition());
+    // mWeatherSprite.setPosition(mWorldBounds.getPosition());
 
     Lane::Ptr top = nullptr;
     Lane* bottom = nullptr;
@@ -319,12 +325,18 @@ void World::makeWeather() {
     sf::Texture& textureWeather =
         mTextures.get(static_cast<Textures::ID>(Textures::Rain + mWeatherRandom)
         );
-    sf::IntRect textureRect(mWorldBounds);
+    sf::IntRect textureRect(
+        mWorldBounds.getPosition().x, mWorldBounds.getPosition().y,
+        mWorldBounds.getSize().x, mWorldBounds.getSize().y * 3.f / 2.f
+    );
     textureWeather.setRepeated(true);
 
     mWeatherSprite.setTexture(textureWeather);
     mWeatherSprite.setTextureRect(textureRect);
-    mWeatherSprite.setPosition(mWorldBounds.getPosition());
+    mWeatherSprite.setPosition(
+        mWorldBounds.getPosition().x,
+        mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
+    );
 }
 
 void World::save() const {

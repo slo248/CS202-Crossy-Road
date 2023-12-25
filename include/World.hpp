@@ -7,7 +7,6 @@
 #include "CommandQueue.hpp"
 #include "Config.hpp"
 #include "ResourceIdentifiers.hpp"
-#include "SpriteNode.hpp"
 #include "State.hpp"
 
 class World {
