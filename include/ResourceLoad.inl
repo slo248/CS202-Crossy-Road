@@ -445,7 +445,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     /*<------------------------River Textures--------------------------->*/
 
     /*********************** Weather Textures ****************************/
-    load(Textures::Rain, "asset/weather/rain_medium.png");
+    load(Textures::Rain, "asset/weather/rain_heavy.png");
     load(Textures::Snow, "asset/weather/snow_medium.png");
     /*********************************************************************/
 

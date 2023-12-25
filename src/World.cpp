@@ -35,6 +35,8 @@ World::World(State::Context& context)
 void World::update(sf::Time dt) {
     buildBlocks();
 
+    mWeatherSprite.move(-1.f * mScrollSpeed * dt.asSeconds());
+
     if (mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
         mWorldView.move(
             0, mPlayerSkin->getWorldPosition().y - mWorldView.getCenter().y
@@ -55,6 +57,7 @@ void World::update(sf::Time dt) {
 void World::draw() {
     mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
+    mWindow.draw(mWeatherSprite);
     mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mScoreText);
     mWindow.draw(mGameModeText);
@@ -65,6 +68,21 @@ CommandQueue& World::getCommandQueue() { return mCommandQueue; }
 void World::buildScene() {
     // Build all layers
     buildLayers();
+
+    // Weather
+    int randomWeather = 1;
+    if (randomWeather < 2) {
+        sf::Texture& textureWeather = mTextures.get(
+            mWeatherID =
+                static_cast<Textures::ID>(Textures::Rain + randomWeather)
+        );
+        sf::IntRect textureRect(mWorldBounds);
+        textureWeather.setRepeated(true);
+
+        mWeatherSprite.setTexture(textureWeather);
+        mWeatherSprite.setTextureRect(textureRect);
+        mWeatherSprite.setPosition(mWorldBounds.getPosition());
+    }
 
     // Remained blocks count
     if (mGameLevel != Config::GameLevel::Survival) {
@@ -162,6 +180,8 @@ void World::buildBlocks() {
     }
 
     // Build block
+    mWeatherSprite.setPosition(mWorldBounds.getPosition());
+
     Lane::Ptr top = nullptr;
     Lane* bottom = nullptr;
     createMultipleLanes(

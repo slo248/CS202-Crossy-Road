@@ -7,6 +7,7 @@
 #include "CommandQueue.hpp"
 #include "Config.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "SpriteNode.hpp"
 #include "State.hpp"
 
 class World {
@@ -67,6 +68,9 @@ class World {
     sf::Text mScoreText;
     sf::Text mGameModeText;
     State::Context* mContext;
+
+    Textures::ID mWeatherID;
+    sf::Sprite mWeatherSprite;
 };
 
 #endif
