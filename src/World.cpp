@@ -248,6 +248,10 @@ void World::load() {
     // Check if saved
     in >> dummy;
 
+    // Set weather
+    in >> mWeatherRandom;
+    makeWeather();
+
     // Load world data
     int category, type;
     in >> type >> mRemainBlocks >> mPlayerPreRow >> mScores;
@@ -291,10 +295,6 @@ void World::load() {
         }
         current = current->getChildLane();
     }
-
-    // Set weather
-    in >> mWeatherRandom;
-    makeWeather();
 
     // std::ofstream out(savedGamePath(mGameLevel));
     // out << "0\n";
@@ -350,6 +350,9 @@ void World::save() const {
     // Mark as saved
     out << "1\n";
 
+    // Save weather
+    out << mWeatherRandom << '\n';
+
     // Save world data
     out << mGameLevel << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
         << mScores << '\n';
@@ -362,9 +365,6 @@ void World::save() const {
 
     // Save lanes data
     mLayers[Background]->save(out);
-
-    // Save weather
-    out << mWeatherRandom << '\n';
 
     std::cout << "Game saved successfully!\n";
     out.close();
