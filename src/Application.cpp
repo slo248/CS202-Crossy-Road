@@ -37,7 +37,8 @@ Application::Application()
 }
 
 Application::~Application() {
-    std::ofstream out(RANKING_PATH);
+    std::ofstream out;
+    out.open(RANKING_PATH);
     if (!out.good()) {
         std::cout << "Cannot save ranking\n";
         out.close();
@@ -46,6 +47,18 @@ Application::~Application() {
 
     for (int i = 0; i < DEFAULT_RANKING_SLOTS; ++i) {
         out << mHighScores[i] << "\n";
+    }
+    out.close();
+
+    out.open(SETTING_PATH);
+    if (!out.good()) {
+        std::cout << "Cannot save setting\n";
+        out.close();
+        return;
+    }
+
+    for (int i = 0; i < Player::Action::Count - 1; ++i) {
+        out << mPlayer.getKey(static_cast<Player::Action>(i)) << "\n";
     }
     out.close();
 }
