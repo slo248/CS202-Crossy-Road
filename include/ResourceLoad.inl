@@ -443,6 +443,12 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         Textures::River_Log1, "asset/game_textures/Obstacle/River/Log/Log2.png"
     );
     /*<------------------------River Textures--------------------------->*/
+
+    /*********************** Weather Textures ****************************/
+    load(Textures::Rain, "asset/weather/rain_medium.png");
+    load(Textures::Snow, "asset/weather/snow_medium.png");
+    /*********************************************************************/
+
     // Common
     load(Textures::BackgroundMain, "asset/textures/BackgroundMain.png");
     load(Textures::ButtonBack, "asset/textures/ButtonBack.png");
