@@ -25,6 +25,15 @@ class DialogGeneral : public Dialog {
     sf::Sprite mLabelTextSounds;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
+    std::array<Button::Ptr, 3> mListMusics;
+    Button::Ptr mChosenMusic;
+
+    int volume = 50;
+    bool isChoosingMusic = false;
+    Label::Ptr mVolLabel;
+    bool isAddVol = false;
+    void displayVolume();
+    void addListMusic();
 };
 
 #endif

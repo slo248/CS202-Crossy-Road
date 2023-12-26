@@ -480,7 +480,11 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
     load(Textures::ButtonSound, "asset/textures/ButtonSound.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
+    load(Textures::ButtonAdd, "asset/textures/daucong.png");
+    load(Textures::ButtonSub, "asset/textures/dautru.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
+    load(Textures::ChosenMusic, "asset/textures/mOpMain.png");
+    load(Textures::OptionMusic, "asset/textures/mOpSub.png");
 
     // Credit state
     load(Textures::BackgroundCredit, "asset/textures/BackgroundCredit.png");
