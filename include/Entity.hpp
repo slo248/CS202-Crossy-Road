@@ -12,6 +12,7 @@ class Entity : public SceneNode {
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float x, float y);
     void setScaleNormalVelocity(float times);
+    void setTemporaryNormalVelocity(float temporaryFactor);
     void accelerate(sf::Vector2f velocity);
     void accelerate(float vx, float vy);
 
@@ -24,6 +25,7 @@ class Entity : public SceneNode {
    private:
     sf::Vector2f mVelocity;              // save
     const sf::Vector2f mNormalVelocity;  // save
+    float mTemporaryFactor;
 };
 
 #endif  // ENTITY_HPP

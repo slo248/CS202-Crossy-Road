@@ -42,7 +42,7 @@ bool GameState::update(sf::Time dt) {
         }
     } else {
         mContext->musics->stop();
-        if (mWorld.getGameType() == Config::GameLevel::Survival) {
+        if (mWorld.getGameType() == Config::Game::Level::Survival) {
             if (updateHighScore()) {
                 mContext->mode = Config::WinState::HighScore;
                 requestStackClear();
@@ -81,7 +81,7 @@ bool GameState::handleEvent(const sf::Event& event) {
 
 void GameState::save() { mWorld.save(); }
 
-Config::GameLevel::Type GameState::getGameType() const {
+Config::Game::Level GameState::getGameType() const {
     return mWorld.getGameType();
 }
 
