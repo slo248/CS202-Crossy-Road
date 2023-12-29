@@ -40,7 +40,10 @@ SettingState::SettingState(StateStack& stack, Context& context)
     auto backButton = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );
-    backButton->setCallback([this]() { requestStackPop(); });
+    backButton->setCallback([this, context]() {
+        requestStackPop();
+        context.musics->play(Musics::Introduction);
+    });
     mGUIContainer.pack(backButton);
 }
 

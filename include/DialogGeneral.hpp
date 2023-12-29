@@ -8,21 +8,20 @@
 #include "Label.hpp"
 #include "Player.hpp"
 #include "State.hpp"
+#include "VolumeBar.hpp"
 
 class DialogGeneral : public Dialog {
    public:
     DialogGeneral(const sf::Texture& texture, State::Context& context);
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void handleEvent(const sf::Event& event);
     void updateLabels();
-    void addButtonLabel(
-        Player::Action action, float y, Textures::ID Button,
-        State::Context& context
-    );
+    void addButtonLabel(Player::Action action, float y, Textures::ID Button);
 
    private:
     sf::Sprite mLabelTextKeys;
     sf::Sprite mLabelTextSounds;
+    VolumeBar mVolumeBar;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
     std::array<Button::Ptr, 3> mListMusics;
@@ -30,9 +29,6 @@ class DialogGeneral : public Dialog {
 
     int volume = 50;
     bool isChoosingMusic = false;
-    Label::Ptr mVolLabel;
-    bool isAddVol = false;
-    void displayVolume();
     void addListMusic();
 };
 
