@@ -43,13 +43,11 @@ void LevelState::addButtonLevel(int numLevel) {
         );
 
         barLevel->setCallback([this, i]() {
-            mContext->gameLevel = static_cast<Config::GameLevel::Type>(i);
-
-#include <fstream>  // Include the necessary header file for std::ifstream
+            mContext->gameLevel = static_cast<Config::Game::Level>(i);
 
             if (mMode == Config::LevelState::Continue) {
                 std::ifstream in(
-                    savedGamePath(static_cast<Config::GameLevel::Type>(i)),
+                    savedGamePath(static_cast<Config::Game::Level>(i)),
                     std::ios::in
                 );
 

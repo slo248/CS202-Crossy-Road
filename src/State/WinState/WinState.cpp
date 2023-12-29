@@ -50,8 +50,8 @@ WinState::WinState(StateStack& stack, Context& context)
         );
         buttonResume->setCallback([this]() {
             mContext->gameLevel =
-                static_cast<Config::GameLevel::Type>(mContext->gameLevel + 1);
-            if (mContext->gameLevel > Config::GameLevel::L5) {
+                static_cast<Config::Game::Level>(mContext->gameLevel + 1);
+            if (mContext->gameLevel > Config::Game::Level::L5) {
                 requestStackClear();
                 requestStackPush(States::Menu);
             } else {
