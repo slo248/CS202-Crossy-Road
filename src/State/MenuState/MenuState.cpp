@@ -35,6 +35,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
     );
     buttonSettingMenu->setCallback([this]() {
         // problematic
+        mContext->musics->stop();
         mContext->mode = Config::SettingState::Skin;
         requestStackPush(States::Setting);
     });
