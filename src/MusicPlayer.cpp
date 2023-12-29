@@ -3,8 +3,10 @@
 #include "State.hpp"
 
 MusicPlayer::MusicPlayer() : mMusic(), mFilenames(), mVolume(100.f) {
-    mFilenames[Musics::DuringPlay] = "asset/music/DuringPlay.mp3";
     mFilenames[Musics::Introduction] = "asset/music/Introduction.mp3";
+    mFilenames[Musics::Music1] = "asset/music/music1.mp3";
+    mFilenames[Musics::Music2] = "asset/music/music2.mp3";
+    mFilenames[Musics::Music3] = "asset/music/music3.mp3";
     mFilenames[Musics::Win] = "asset/music/Win.mp3";
     mFilenames[Musics::Lose] = "asset/music/Lose.mp3";
 }
