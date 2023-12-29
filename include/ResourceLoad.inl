@@ -2,83 +2,7 @@
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
-    /***************************Load Animal Textures***************************/
-    // load(
-    //     Textures::BeeToLeft,
-    //     "asset/game_textures/Animal/Bee/S_Walk_ToLeft.png"
-    // );
-    // load(
-    //     Textures::BeeToRight,
-    //     "asset/game_textures/Animal/Bee/S_Walk_ToRight.png"
-    // );
-    // load(
-    //     Textures::BeeIdle, "asset/game_textures/Animal/Bee/D_Walk.png"
-    // );
-
-    // load(
-    //     Textures::BirdToLeft,
-    //     "asset/game_textures/Animal/Bird1/S_Fly_ToLeft.png"
-    // );
-    // load(
-    //     Textures::BirdToRight,
-    //     "asset/game_textures/Animal/Bird1/S_Fly_ToRight.png"
-    // );
-    // load(
-    //     Textures::BirdIdle, "asset/game_textures/Animal/Bird1/S_Idle.png"
-    // );
-
-    // load(
-    //     Textures::FrogToLeft,
-    //     "asset/game_textures/Animal/Frog/S_Walk_ToLeft.png"
-    // );
-    // load(
-    //     Textures::FrogToRight,
-    //     "asset/game_textures/Animal/Frog/S_Walk_ToRight.png"
-    // );
-    // load(
-    //     Textures::FrogIdle, "asset/game_textures/Animal/Frog/S_Idle.png"
-    // );
-
-    // load(
-    //     Textures::RabbitToLeft,
-    //     "asset/game_textures/Animal/Rabbit/S_Walk_ToLeft.png"
-    // );
-    // load(
-    //     Textures::RabbitToRight,
-    //     "asset/game_textures/Animal/Rabbit/S_Walk_ToRight.png"
-    // );
-    // load(
-    //     Textures::RabbitIdle, "asset/game_textures/Animal/Rabbit/S_Idle.png"
-    // );
-
-    // load(
-    //     Textures::SheepToLeft,
-    //     "asset/game_textures/Animal/Sheep/S_Walk_ToLeft.png"
-    // );
-    // load(
-    //     Textures::SheepToRight,
-    //     "asset/game_textures/Animal/Sheep/S_Walk_ToRight.png"
-    // );
-    // load(
-    //     Textures::SheepIdle, "asset/game_textures/Animal/Sheep/S_Idle.png"
-    // );
-
-    // load(
-    //     Textures::TurtleToLeft,
-    //     "asset/game_textures/Animal/Turtle/S_Walk_ToLeft.png"
-    // );
-    // load(
-    //     Textures::TurtleToRight,
-    //     "asset/game_textures/Animal/Turtle/S_Walk_ToRight.png"
-    // );
-    // load(
-    //     Textures::TurtleIdle,
-    //     "asset/game_textures/Animal/Turtle/S_Attack.png"
-    // );
-
-    /*************************************************************************/
-
-    /***********************Load TrafficLight Textures***********************/
+       /***********************Load TrafficLight Textures***********************/
     load(
         Textures::Field_TrafficLight,
         "asset/game_textures/TrafficLight/Field_TrafficLight.png"
@@ -546,12 +470,10 @@ void ResourceHolder<Resource, Identifier>::loadFontFromFile() {
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadSoundBufferFromFile() {
-    load(SoundEffects::Accident, "asset/sound_effect/Accident.mp3");
+    load(SoundEffects::ClickButton, "asset/sound_effect/ClickButton.mp3");
     load(SoundEffects::BombExplode, "asset/sound_effect/BombExplode.mp3");
     load(SoundEffects::JumpInRiver, "asset/sound_effect/JumpInRiver.mp3");
     load(SoundEffects::Log, "asset/sound_effect/Log.mp3");
-    load(SoundEffects::Lose, "asset/sound_effect/Lose.mp3");
-    load(SoundEffects::Win, "asset/sound_effect/Win.mp3");
     // load(
     //     SoundEffects::WalkGrass, "asset/sound_effect/WalkGrass.mp3"
     // );

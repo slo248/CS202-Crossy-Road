@@ -103,7 +103,7 @@ void Button::handleEvent(const sf::Event& event) {
     if (isMouseOver(*(mContext->window)) &&
         event.type == sf::Event::MouseButtonPressed &&
         event.mouseButton.button == sf::Mouse::Left) {
-        mContext->soundEffects->play(SoundEffects::Accident);
+        mContext->soundEffects->play(SoundEffects::ClickButton);
         select();
     }
 }

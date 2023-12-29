@@ -16,20 +16,18 @@ enum ID {
 }
 
 namespace Musics {
-enum ID { Introduction, DuringPlay, Win, Lose };
+enum ID { Introduction, Music1, Music2, Music3, Win, Lose };
 }
 
 namespace SoundEffects {
 enum ID {
-    Accident,
+    ClickButton,
     BombExplode,
     JumpInRiver,
     Log,
-    Lose,
     WalkGrass,
     WalkGraveyard,
     WalkSwamp,
-    Win,
 };
 }
 

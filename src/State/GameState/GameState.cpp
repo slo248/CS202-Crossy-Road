@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stack, Context& context)
         setupCountDown(context);
     }
 
-    context.musics->play(Musics::DuringPlay);
+    context.musics->play(Musics::Music1);
 }
 
 void GameState::draw() {
