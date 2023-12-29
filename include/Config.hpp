@@ -47,10 +47,15 @@
 #define LEVEL_FIVE_COEFFICIENT 1.4
 #define SURVIVAL_COEFFICIENT 1.15
 
+#define WEATHER_NORMAL_FACTOR 1.f
+#define WEATHER_RAIN_FACTOR 0.6
+#define WEATHER_SNOW_FACTOR 0.4
+
 namespace Config {
-namespace GameLevel {
-enum Type { L1, L2, L3, L4, L5, Survival, Count };
-}
+namespace Game {
+enum Level { L1, L2, L3, L4, L5, Survival, Count };
+enum Weather { Rain, Snow, Normal };
+}  // namespace Game
 namespace WinState {
 enum Mode { Win, HighScore };
 }

@@ -43,7 +43,8 @@ void World::update(sf::Time dt) {
             mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
         );
 
-    if (mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
+    if (mPlayerSkin &&
+        mPlayerSkin->getWorldPosition().y <= mWorldView.getCenter().y)
         mWorldView.move(
             0, mPlayerSkin->getWorldPosition().y - mWorldView.getCenter().y
         );
@@ -75,12 +76,84 @@ void World::buildScene() {
     // Build all layers
     buildLayers();
 
-    // Weather
-    mWeatherRandom = random(0, 2);
+    // Build ground
+    buildGround();
+
+    // Weather -> build before ground leading to player haven't been loaded
     makeWeather();
 
+    // Set view
+    mWorldView.setCenter(
+        mWorldView.getSize().x / 2,
+        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
+            mWorldView.getSize().y / 2
+    );
+}
+
+void World::buildBlocks() {
+    // Not allow to build blocks when player is in movement -> if not player
+    // will be shifted
+    if (mRemainBlocks == -2 || mPlayerSkin->isInMovement()) return;
+
+    // Build end block
+    if (mRemainBlocks == 0) {
+        Lane::Ptr top = nullptr;
+        Lane* bottom = nullptr;
+        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bottom, true);
+        bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane
+        )));
+        top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
+        mTopLane = top.get();
+        mLayers[Background]->attachChild(std::move(top));
+        mRemainBlocks = -2;
+
+        // Move view and player to maintain the same position (duplicate)
+        mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
+        mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
+
+        mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
+
+        std::cout << "Last buffer block!\n";
+        return;
+    }
+
+    if (mWorldView.getCenter().y + mWorldView.getSize().y / 2 >
+        NUM_LANE * DEFAULT_CELL_LENGTH) {
+        return;
+    }
+
+    // Build as normal
+    if (mRemainBlocks > 0) {
+        --mRemainBlocks;
+    }
+
+    // Build random weather
+    // mWeatherSprite.setPosition(mWorldBounds.getPosition());
+    makeWeather();
+
+    Lane::Ptr top = nullptr;
+    Lane* bottom = nullptr;
+    createMultipleLanes(
+        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameLevel)
+    );
+    bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
+    top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
+    mTopLane = top.get();
+    mLayers[Background]->attachChild(std::move(top));
+
+    // Move view and player to maintain the same position
+    mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+    mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
+
+    // Setup player's pre row for scoring
+    mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
+
+    std::cout << "Remaining blocks: " << mRemainBlocks << std::endl;
+}
+
+void World::buildGround() {
     // Remained blocks count
-    if (mGameLevel != Config::GameLevel::Survival) {
+    if (mGameLevel != Config::Game::Level::Survival) {
         mRemainBlocks = mTotalBlocks - 2;
     } else {
         mRemainBlocks = -1;
@@ -128,73 +201,6 @@ void World::buildScene() {
     mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
     mPlayerSkin->setCurrentLane(initialLane);
     mLayers[OnGround]->attachChild(std::move(playerSkin));
-
-    // Set view
-    mWorldView.setCenter(
-        mWorldView.getSize().x / 2,
-        2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE) -
-            mWorldView.getSize().y / 2
-    );
-}
-
-void World::buildBlocks() {
-    // Not allow to build blocks when player is in movement -> if not player
-    // will be shifted
-    if (mRemainBlocks == -2 || mPlayerSkin->isInMovement()) return;
-
-    // Build end block
-    if (mRemainBlocks == 0) {
-        Lane::Ptr top = nullptr;
-        Lane* bottom = nullptr;
-        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bottom, true);
-        bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane
-        )));
-        top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
-        mTopLane = top.get();
-        mLayers[Background]->attachChild(std::move(top));
-        mRemainBlocks = -2;
-
-        // Move view and player to maintain the same position (duplicate)
-        mWorldView.move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
-        mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * BUFFER_LANE * 2);
-
-        mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
-
-        std::cout << "Last buffer block!\n";
-        return;
-    }
-
-    if (mWorldView.getCenter().y + mWorldView.getSize().y / 2 >
-        NUM_LANE * DEFAULT_CELL_LENGTH) {
-        return;
-    }
-
-    // Build as normal
-    if (mRemainBlocks > 0) {
-        --mRemainBlocks;
-    }
-
-    // Build block
-    // mWeatherSprite.setPosition(mWorldBounds.getPosition());
-
-    Lane::Ptr top = nullptr;
-    Lane* bottom = nullptr;
-    createMultipleLanes(
-        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameLevel)
-    );
-    bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
-    top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
-    mTopLane = top.get();
-    mLayers[Background]->attachChild(std::move(top));
-
-    // Move view and player to maintain the same position
-    mWorldView.move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
-    mPlayerSkin->move(0, DEFAULT_CELL_LENGTH * NUM_LANE);
-
-    // Setup player's pre row for scoring
-    mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
-
-    std::cout << "Remaining blocks: " << mRemainBlocks << std::endl;
 }
 
 void World::buildLayers() {
@@ -249,13 +255,14 @@ void World::load() {
     in >> dummy;
 
     // Set weather
-    in >> mWeatherRandom;
-    makeWeather();
+    int weather;
+    in >> weather;
+    makeWeather(weather);
 
     // Load world data
     int category, type;
     in >> type >> mRemainBlocks >> mPlayerPreRow >> mScores;
-    mGameLevel = static_cast<Config::GameLevel::Type>(type);
+    mGameLevel = static_cast<Config::Game::Level>(type);
 
     // Load view
     float x, y;
@@ -312,7 +319,7 @@ void World::updateBoard() {
         mPlayerPreRow = curRow;
     }
 
-    if (mGameLevel == Config::GameLevel::Survival) {
+    if (mGameLevel == Config::Game::Level::Survival) {
         mScoreText.setString("Score: " + std::to_string(mScores));
     } else {
         int percentage = (mScores * 100) / (mTotalBlocks * NUM_LANE);
@@ -320,11 +327,23 @@ void World::updateBoard() {
     }
 }
 
-void World::makeWeather() {
-    if (mWeatherRandom >= 2) return;
+void World::makeWeather(int weather) {
+    if (weather < 0) {
+        weather = random(0, 2);
+    }
+    mWeather = static_cast<Config::Game::Weather>(weather);
+
+    if (mWeather == Config::Game::Normal) {
+        // std::cout << "Normal Weather!\n";
+        mWeatherSprite.setColor(sf::Color(255, 255, 255, 0));
+        if (mPlayerSkin) {
+            mPlayerSkin->setTemporaryNormalVelocity(WEATHER_NORMAL_FACTOR);
+        }
+        return;
+    }
+
     sf::Texture& textureWeather =
-        mTextures.get(static_cast<Textures::ID>(Textures::Rain + mWeatherRandom)
-        );
+        mTextures.get(static_cast<Textures::ID>(Textures::Rain + mWeather));
     sf::IntRect textureRect(
         mWorldBounds.getPosition().x, mWorldBounds.getPosition().y,
         mWorldBounds.getSize().x, mWorldBounds.getSize().y * 3.f / 2.f
@@ -337,6 +356,12 @@ void World::makeWeather() {
         mWorldBounds.getPosition().x,
         mWorldBounds.getPosition().y - mWorldBounds.getSize().y / 2.f
     );
+    mWeatherSprite.setColor(sf::Color(255, 255, 255, 255));
+
+    if (mPlayerSkin) {
+        mPlayerSkin->setTemporaryNormalVelocity(weatherFactor(mWeather));
+    }
+    // std::cout << weatherFactor(mWeather) << " Weather!\n";
 }
 
 void World::save() const {
@@ -351,7 +376,7 @@ void World::save() const {
     out << "1\n";
 
     // Save weather
-    out << mWeatherRandom << '\n';
+    out << mWeather << '\n';
 
     // Save world data
     out << mGameLevel << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '
@@ -372,7 +397,7 @@ void World::save() const {
 
 int World::getScore() const { return mScores; }
 
-Config::GameLevel::Type World::getGameType() const { return mGameLevel; }
+Config::Game::Level World::getGameType() const { return mGameLevel; }
 
 sf::FloatRect World::getBattlefieldBounds() const {
     return sf::FloatRect(
@@ -394,7 +419,7 @@ bool World::hasAlivePlayer() const {
 }
 
 bool World::hasPlayerReachedEnd() const {
-    return mGameLevel != Config::GameLevel::Survival && mRemainBlocks == -2 &&
+    return mGameLevel != Config::Game::Level::Survival && mRemainBlocks == -2 &&
            getCurrentRow(mPlayerSkin->getWorldPosition().y) ==
                2 * BUFFER_LANE - 1;
 }

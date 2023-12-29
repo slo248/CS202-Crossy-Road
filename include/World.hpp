@@ -20,7 +20,7 @@ class World {
 
     sf::FloatRect getBattlefieldBounds() const;
     int getScore() const;
-    Config::GameLevel::Type getGameType() const;
+    Config::Game::Level getGameType() const;
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
@@ -33,12 +33,13 @@ class World {
     const int mTotalBlocks;
 
     void buildScene();
-    void buildBlocks();
     void buildLayers();
+    void buildBlocks();
+    void buildGround();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
     void updateBoard();
-    void makeWeather();
+    void makeWeather(int weather = -1);
     void load();
 
    private:
@@ -57,7 +58,7 @@ class World {
     Character* mPlayerSkin;      // Saved independently
 
     CommandQueue mCommandQueue;
-    Config::GameLevel::Type mGameLevel;  // Save
+    Config::Game::Level mGameLevel;  // Save
 
     Lane* mTopLane;     // Saved independently
     int mRemainBlocks;  // Save
@@ -69,7 +70,7 @@ class World {
     sf::Text mGameModeText;
     State::Context* mContext;
 
-    int mWeatherRandom;
+    Config::Game::Weather mWeather;
     sf::Sprite mWeatherSprite;
 };
 

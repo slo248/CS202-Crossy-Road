@@ -35,7 +35,7 @@ class State {
         Player* player;
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
-        Config::GameLevel::Type gameLevel;
+        Config::Game::Level gameLevel;
         int mode = 0;
         int playerSkinNumber;
         bool isLoadedFromFile = false;

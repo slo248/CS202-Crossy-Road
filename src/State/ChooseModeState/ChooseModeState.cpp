@@ -20,11 +20,11 @@ ChooseModeState::ChooseModeState(StateStack& stack, Context& context)
         context, Textures::ButtonSurvival, sf::Vector2f(584, 373)
     );
     buttonSurvival->setCallback([this]() {
-        mContext->gameLevel = Config::GameLevel::Survival;
+        mContext->gameLevel = Config::Game::Level::Survival;
 
         if (mMode == Config::ChooseModeState::Continue) {
             std::ifstream in(
-                savedGamePath(Config::GameLevel::Survival), std::ios::in
+                savedGamePath(Config::Game::Level::Survival), std::ios::in
             );
 
             mContext->isLoadedFromFile = false;
