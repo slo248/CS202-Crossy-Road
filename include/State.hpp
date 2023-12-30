@@ -6,8 +6,8 @@
 
 #include "Config.hpp"
 #include "Container.hpp"
-#include "ResourceIdentifiers.hpp"
 #include "MusicPlayer.hpp"
+#include "ResourceIdentifiers.hpp"
 #include "SoundEffectPlayer.hpp"
 #include "StateID.hpp"
 
@@ -23,8 +23,9 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player, std::vector<int>& highScores,
-            int playerSkinNumber = 0
+            FontHolder& fonts, MusicPlayer& musics,
+            SoundEffectPlayer& soundEffects, Player& player,
+            std::vector<int>& highScores
         );
 
         sf::RenderWindow* window;
@@ -36,8 +37,10 @@ class State {
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
         Config::Game::Level gameLevel;
+        Musics::ID currentMusic = Musics::Music1;
+        float volumeLevel = 50;
         int mode = 0;
-        int playerSkinNumber;
+        int playerSkinNumber = 0;
         bool isLoadedFromFile = false;
     };
 

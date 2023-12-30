@@ -35,7 +35,7 @@ class Button : public Component {
     void callBack();
     virtual void deselect() override;
 
-    virtual void handleEvent(const sf::Event& event);
+    virtual void handleEvent(const sf::Event& event) override;
 
    private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

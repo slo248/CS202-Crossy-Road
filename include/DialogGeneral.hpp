@@ -24,7 +24,7 @@ class DialogGeneral : public Dialog {
     VolumeBar mVolumeBar;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
-    std::array<Button::Ptr, 3> mListMusics;
+    std::array<Button::Ptr, Musics::MusicCount-1> mListMusics;
     Button::Ptr mChosenMusic;
 
     int volume = 50;

@@ -14,7 +14,7 @@ class MusicPlayer : private sf::NonCopyable {
     MusicPlayer();
     void play(Musics::ID theme, bool loop = true);
     void stop();
-    void setPaused(bool paused);
+    void setPaused(bool paused = true);
     void setVolume(float volume);
 
    private:

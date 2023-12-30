@@ -30,7 +30,9 @@ PauseState::PauseState(StateStack& stack, Context& context)
     auto buttonResumePause = std::make_shared<Button>(
         context, Textures::ButtonResumePause, sf::Vector2f(x + 87, 340)
     );
-    buttonResumePause->setCallback([this]() { requestStackPop(); });
+    buttonResumePause->setCallback([this]() {
+        requestStackPop();
+    });
     mGUIContainer.pack(buttonResumePause);
 
     auto buttonPlayAgainPause = std::make_shared<Button>(
@@ -48,6 +50,7 @@ PauseState::PauseState(StateStack& stack, Context& context)
     );
     buttonSetting->setCallback([this]() {
         mContext->mode = Config::SettingState::NonSkin;
+        mContext->musics->setPaused();
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSetting);

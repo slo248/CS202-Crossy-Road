@@ -12,6 +12,11 @@ MusicPlayer::MusicPlayer() : mMusic(), mFilenames(), mVolume(100.f) {
 }
 
 void MusicPlayer::play(Musics::ID theme, bool loop) {
+    if (theme == Musics::None) {
+        mMusic.stop();
+        return;
+    }
+
     std::string filename = mFilenames[theme];
 
     if (!mMusic.openFromFile(filename))
@@ -29,6 +34,8 @@ void MusicPlayer::setVolume(float volume) { mVolume = volume; }
 void MusicPlayer::setPaused(bool paused) {
     if (paused)
         mMusic.pause();
-    else
+    else {
+        mMusic.setVolume(mVolume);
         mMusic.play();
+    }
 }
