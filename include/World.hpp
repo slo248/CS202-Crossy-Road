@@ -2,6 +2,7 @@
 #define WORLD_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <array>
 
 #include "Character.hpp"
 #include "CommandQueue.hpp"

@@ -2,6 +2,7 @@
 #define VOLUME_BAR_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "State.hpp"
 
 class VolumeBar : public sf::Drawable {
@@ -24,4 +25,4 @@ class VolumeBar : public sf::Drawable {
     State::Context* mContext;
 };
 
-#endif /* VOLUME_BAR_HPP */
+#endif  // VOLUME_BAR_HPP

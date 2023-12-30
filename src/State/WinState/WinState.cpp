@@ -38,7 +38,7 @@ WinState::WinState(StateStack& stack, Context& context)
         auto labelHighScore =
             std::make_shared<Label>("HIGH SCORE", Fonts::Main, context, 30);
         labelHighScore->setColor("#5B1010");
-        labelHighScore->setPosition(345, 121);
+        labelHighScore->setPosition(358, 121);
         mGUIContainer.pack(labelHighScore);
     } else {
         mContext->musics->play(Musics::Win, false);

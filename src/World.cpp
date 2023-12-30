@@ -336,10 +336,10 @@ void World::makeWeather(int weather) {
     mWeather = static_cast<Config::Game::Weather>(weather);
 
     if (mWeather == Config::Game::Normal) {
+        // std::cout << "Normal Weather!\n";
         mWeatherSprite.setColor(sf::Color(255, 255, 255, 0));
         if (mPlayerSkin) {
             mPlayerSkin->setTemporaryNormalVelocity(WEATHER_NORMAL_FACTOR);
-            std::cout << "Normal speed!\n";
         }
         return;
     }
@@ -362,8 +362,8 @@ void World::makeWeather(int weather) {
 
     if (mPlayerSkin) {
         mPlayerSkin->setTemporaryNormalVelocity(weatherFactor(mWeather));
-        std::cout << "Weather: " << mWeather << '\n';
     }
+    // std::cout << weatherFactor(mWeather) << " Weather!\n";
 }
 
 void World::save() const {

@@ -13,8 +13,7 @@
 class DialogGeneral : public Dialog {
    public:
     DialogGeneral(const sf::Texture& texture, State::Context& context);
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
-        const override;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void handleEvent(const sf::Event& event);
 
    private:
