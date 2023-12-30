@@ -8,6 +8,7 @@ MusicPlayer::MusicPlayer() : mMusic(), mFilenames(), mVolume(100.f) {
     mFilenames[Musics::Music2] = "asset/music/music2.mp3";
     mFilenames[Musics::Music3] = "asset/music/music3.mp3";
     mFilenames[Musics::Win] = "asset/music/Win.mp3";
+    mFilenames[Musics::HighScore] = "asset/music/HighScore.mp3";
     mFilenames[Musics::Lose] = "asset/music/Lose.mp3";
 }
 

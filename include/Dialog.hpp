@@ -21,8 +21,8 @@ class Dialog : public Component {
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
    protected:
-    Container mGUIContainer;
     State::Context* mContext;
+    Container mGUIContainer;
     const sf::Texture& mTexture;
     sf::Sprite mSprite;
 };

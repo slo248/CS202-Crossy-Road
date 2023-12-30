@@ -1,5 +1,6 @@
 #include "WinState.hpp"
 
+#include "Label.hpp"
 #include "ResourceHolder.hpp"
 
 WinState::WinState(StateStack& stack, Context& context)
@@ -28,10 +29,19 @@ WinState::WinState(StateStack& stack, Context& context)
     });
 
     if (mMode == Config::WinState::HighScore) {
+        mContext->musics->play(Musics::HighScore, false);
+
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome2, sf::Vector2f(339.f, 364.f)
         );
+
+        auto labelHighScore =
+            std::make_shared<Label>("HIGH SCORE", Fonts::Main, context, 30);
+        labelHighScore->setColor("#5B1010");
+        labelHighScore->setPosition(345, 121);
+        mGUIContainer.pack(labelHighScore);
     } else {
+        mContext->musics->play(Musics::Win, false);
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome, sf::Vector2f(25.f, 560.f)
         );
@@ -81,8 +91,6 @@ WinState::WinState(StateStack& stack, Context& context)
     mPlayerSkin->setPosition(460, 220);
     mPlayerSkin->play();
     mPlayerSkin->setRepeat(true);
-
-    mContext->musics->play(Musics::Win, false);
 }
 
 void WinState::draw() {

@@ -407,8 +407,8 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonAdd, "asset/textures/daucong.png");
     load(Textures::ButtonSub, "asset/textures/dautru.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
-    load(Textures::ChosenMusic, "asset/textures/mOpMain.png");
-    load(Textures::OptionMusic, "asset/textures/mOpSub.png");
+    load(Textures::ChosenMusic, "asset/textures/ChosenMusic.png");
+    load(Textures::OptionMusic, "asset/textures/OptionMusic.png");
 
     // Credit state
     load(Textures::BackgroundCredit, "asset/textures/BackgroundCredit.png");

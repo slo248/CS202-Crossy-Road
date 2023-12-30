@@ -24,23 +24,22 @@ class Button : public Component {
         sf::Vector2f position = sf::Vector2f(0.f, 0.f), bool is2Mode = false
     );
     void setCallback(Callback callback);
-    void setToggle(bool flag);
     void setText(
         const std::string& text, const std::string& hexCode, int characterSize,
         sf::Vector2f position, Fonts::ID font = Fonts::Main
     );
 
-    virtual bool isMouseOver(const sf::RenderWindow& window) const override;
     virtual void select() override;
-    void callBack();
     virtual void deselect() override;
 
     virtual void handleEvent(const sf::Event& event) override;
 
    private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void callBack();
     void changeSize(Size buttonSize);
     void changeTexture(Mode buttonMode);
+    bool isMouseOver(const sf::RenderWindow& window) const;
 
    private:
     Callback mCallback;

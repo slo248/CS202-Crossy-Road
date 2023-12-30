@@ -29,8 +29,6 @@ Button::Button(
 
 void Button::setCallback(Callback callback) { mCallback = std::move(callback); }
 
-void Button::setToggle(bool flag) { mIsToggle = flag; }
-
 void Button::setText(
     const std::string& text, const std::string& hexCode, int characterSize,
     sf::Vector2f position, Fonts::ID font
@@ -50,19 +48,6 @@ void Button::setText(
     mText.setPosition(position);
 }
 
-bool Button::isMouseOver(const sf::RenderWindow& window) const {
-    sf::Vector2f buttonPosition = originalPosition;
-    sf::FloatRect buttonBounds = originalSize;
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-    sf::Vector2f convertedMousePosition =
-        window.mapPixelToCoords(mousePosition);
-
-    buttonBounds.left = buttonPosition.x;
-    buttonBounds.top = buttonPosition.y;
-
-    return buttonBounds.contains(convertedMousePosition);
-}
-
 void Button::select() {
     if (!mIsSelectable) return;
     Component::select();
@@ -75,17 +60,12 @@ void Button::select() {
     }
 }
 
-void Button::callBack() {
-    if (mCallback) {
-        mCallback();
-    }
-}
-
 void Button::deselect() {
     Component::deselect();
 
     changeTexture(Normal);
 }
+
 
 void Button::handleEvent(const sf::Event& event) {
     if (isMouseOver(*(mContext->window))) {
@@ -112,6 +92,12 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(mSprite, states);
     target.draw(mText, states);
+}
+
+void Button::callBack() {
+    if (mCallback) {
+        mCallback();
+    }
 }
 
 void Button::changeSize(Size buttonSize) {
@@ -156,3 +142,17 @@ void Button::changeTexture(Mode buttonMode) {
     );
     mSprite.setTextureRect(textureRect);
 }
+
+bool Button::isMouseOver(const sf::RenderWindow& window) const {
+    sf::Vector2f buttonPosition = originalPosition;
+    sf::FloatRect buttonBounds = originalSize;
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+    sf::Vector2f convertedMousePosition =
+        window.mapPixelToCoords(mousePosition);
+
+    buttonBounds.left = buttonPosition.x;
+    buttonBounds.top = buttonPosition.y;
+
+    return buttonBounds.contains(convertedMousePosition);
+}
+

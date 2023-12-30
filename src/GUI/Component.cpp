@@ -14,7 +14,3 @@ void Component::select() { mIsSelected = true; }
 void Component::deselect() { mIsSelected = false; }
 
 bool Component::isActive() const { return mIsActive; }
-
-bool Component::isMouseOver(const sf::RenderWindow& window) const {
-    return false;
-}

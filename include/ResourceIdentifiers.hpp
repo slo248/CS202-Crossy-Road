@@ -16,7 +16,7 @@ enum ID {
 }
 
 namespace Musics {
-enum ID { None, Introduction, Music1, Music2, Music3, MusicCount, Win, Lose };
+enum ID { None, Introduction, Music1, Music2, Music3, MusicCount, Win, HighScore, Lose };
 }
 
 namespace SoundEffects {

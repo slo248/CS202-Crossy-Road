@@ -48,6 +48,7 @@ DialogGeneral::DialogGeneral(
     addButtonLabel(Player::MoveRight, y + 67.f, Textures::ButtonRightArrow);
     addButtonLabel(Player::MoveUp, y + 135.f, Textures::ButtonUpArrow);
     addButtonLabel(Player::MoveDown, y + 217.f, Textures::ButtonDownArrow);
+    
     addListMusic();
     updateLabels();
 }

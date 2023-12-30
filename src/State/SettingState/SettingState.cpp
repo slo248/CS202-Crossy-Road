@@ -42,9 +42,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     );
     backButton->setCallback([this]() {
         requestStackPop();
-        if (mContext->currentMusic != Musics::None) {
-            mContext->musics->setPaused(false);
-        }
+        mContext->musics->setPaused(false);
     });
     mGUIContainer.pack(backButton);
 }
