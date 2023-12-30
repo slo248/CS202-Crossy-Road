@@ -18,7 +18,6 @@ MenuState::MenuState(StateStack& stack, Context& context)
         context, Textures::ButtonContinue, sf::Vector2f(584, 320)
     );
     buttonContinue->setCallback([this]() {
-        // problematic
         mContext->mode = Config::ChooseModeState::Continue;
         requestStackPush(States::ChooseMode);
     });
@@ -34,8 +33,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
         context, Textures::ButtonSettingMenu, sf::Vector2f(584, 426)
     );
     buttonSettingMenu->setCallback([this]() {
-        // problematic
-        mContext->musics->stop();
+        mContext->musics->setPaused();
         mContext->mode = Config::SettingState::Skin;
         requestStackPush(States::Setting);
     });

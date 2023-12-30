@@ -7,8 +7,8 @@
 
 State::Context::Context(
     sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts,
-    MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player, std::vector<int>& highScores,
-    int playerSkinNumber
+    MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player,
+    std::vector<int>& highScores
 )
     : window(&window),
       textures(&textures),
@@ -16,11 +16,12 @@ State::Context::Context(
       musics(&musics),
       soundEffects(&soundEffects),
       player(&player),
-      highScores(&highScores),
-      playerSkinNumber(playerSkinNumber) {}
+      highScores(&highScores) {}
 
 State::State(StateStack& stack, Context& context)
     : mGUIContainer(), mStack(&stack), mContext(&context) {}
+
+
 
 State::~State() {}
 

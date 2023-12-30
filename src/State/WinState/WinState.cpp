@@ -49,6 +49,7 @@ WinState::WinState(StateStack& stack, Context& context)
             context, Textures::ButtonResume, sf::Vector2f(433.f, 364.f)
         );
         buttonResume->setCallback([this]() {
+            mContext->isLoadedFromFile = false;
             mContext->gameLevel =
                 static_cast<Config::Game::Level>(mContext->gameLevel + 1);
             if (mContext->gameLevel > Config::Game::Level::L5) {

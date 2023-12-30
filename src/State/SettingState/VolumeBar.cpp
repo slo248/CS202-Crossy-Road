@@ -1,29 +1,51 @@
 #include "VolumeBar.hpp"
+
 #include <iostream>
 
-VolumeBar::VolumeBar(float width, float height) : isDragging(false), volumeLevel(50.0f) {
-    volumeBar.setSize(sf::Vector2f(width, height));
-    volumeBar.setFillColor(sf::Color::Green);
+#define VOLUME_BAR_WIDTH 210.f
+#define VOLUME_BAR_HEIGHT 10.f
+#define VOLUME_BAR_X 586.f
+#define VOLUME_BAR_Y 248.f
 
-    volumeDot.setRadius(10);
-    volumeDot.setFillColor(sf::Color::Blue);
-    volumeDot.setPosition(50, 100);
-}
+VolumeBar::VolumeBar(State::Context& context)
+    : isDragging(false), mVolumeLevel(context.volumeLevel), mContext(&context) {
+    sf::Color color;
 
-void VolumeBar::setPosition(float x, float y) {
-    volumeBar.setPosition(x, y);
+    mVolumeBackground.setSize(sf::Vector2f(VOLUME_BAR_WIDTH, VOLUME_BAR_HEIGHT)
+    );
+    color = sf::Color(232, 180, 133);
+    mVolumeBackground.setFillColor(color);
+    mVolumeBackground.setPosition(VOLUME_BAR_X, VOLUME_BAR_Y);
+
+    mVolumeBar.setSize(sf::Vector2f(
+        (mVolumeLevel / 100.f) * VOLUME_BAR_WIDTH, VOLUME_BAR_HEIGHT
+    ));
+    color = sf::Color(56, 151, 40);
+    mVolumeBar.setFillColor(color);
+    mVolumeBar.setPosition(VOLUME_BAR_X, VOLUME_BAR_Y);
+
+    mVolumeDot.setRadius(10);
+    color = sf::Color(182, 182, 182);
+    mVolumeDot.setFillColor(color);
+
+    mVolumeDot.setPosition(
+        VOLUME_BAR_X + (mVolumeLevel / 100.f) * VOLUME_BAR_WIDTH,
+        VOLUME_BAR_Y - 5
+    );
 }
 
 void VolumeBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(volumeBar, states);
-    target.draw(volumeDot, states);
+    target.draw(mVolumeBackground, states);
+    target.draw(mVolumeBar, states);
+    target.draw(mVolumeDot, states);
 }
 
 void VolumeBar::handleEvent(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-            if (volumeDot.getGlobalBounds().contains(mousePos)) {
+            sf::Vector2f mousePos =
+                window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            if (mVolumeDot.getGlobalBounds().contains(mousePos)) {
                 isDragging = true;
             }
         }
@@ -37,19 +59,22 @@ void VolumeBar::handleEvent(sf::RenderWindow& window, sf::Event event) {
 
     if (event.type == sf::Event::MouseMoved) {
         if (isDragging) {
-            sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-            float newX = clamp(mousePos.x, 50.0f, 350.0f);
-            volumeDot.setPosition(newX, 100);
-            volumeBar.setSize(sf::Vector2f(newX - 50, 20));
-            volumeLevel = (newX - 50) / 3;
-            std::cout << "Volume set to: " << volumeLevel << std::endl;
+            sf::Vector2f mousePos =
+                window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            float newX = clamp(
+                mousePos.x, VOLUME_BAR_X, VOLUME_BAR_X + VOLUME_BAR_WIDTH
+            );
+            mVolumeDot.setPosition(newX, VOLUME_BAR_Y - 5);
+            mVolumeLevel = (newX - VOLUME_BAR_X) / VOLUME_BAR_WIDTH * 100.f;
+            mContext->volumeLevel = mVolumeLevel;
+            mVolumeBar.setSize(sf::Vector2f(
+                (mVolumeLevel / 100.f) * VOLUME_BAR_WIDTH, VOLUME_BAR_HEIGHT
+            ));
         }
     }
 }
 
-void VolumeBar::update() {
-    // Any updates to the volume bar can be handled here (if needed)
-}
+void VolumeBar::update() {}
 
 float VolumeBar::clamp(float value, float min, float max) {
     return std::max(min, std::min(value, max));

@@ -16,7 +16,7 @@ class SoundEffectPlayer : private sf::NonCopyable {
 
     void play(SoundEffects::ID effect);
     void play(SoundEffects::ID effect, sf::Vector2f position);
-
+    void setVolume(float volume);
     void removeStoppedSounds();
     void setListenerPosition(sf::Vector2f position);
     sf::Vector2f getListenerPosition() const;
@@ -24,6 +24,7 @@ class SoundEffectPlayer : private sf::NonCopyable {
    private:
     SoundBufferHolder mSoundBuffers;
     std::list<sf::Sound> mSounds;
+    float mVolume;
 };
 
 #endif  // SOUND_EFFECT_PLAYER_HPP

@@ -1,7 +1,7 @@
+#include "SoundEffectPlayer.hpp"
+
 #include <SFML/Audio/Listener.hpp>
 #include <cmath>
-
-#include "SoundEffectPlayer.hpp"
 
 namespace {
 // Sound coordinate system, point of view of a player in front of the screen:
@@ -32,6 +32,8 @@ void SoundEffectPlayer::play(SoundEffects::ID effect, sf::Vector2f position) {
 
     sound.play();
 }
+
+void SoundEffectPlayer::setVolume(float volume) { mVolume = volume; }
 
 void SoundEffectPlayer::removeStoppedSounds() {
     mSounds.remove_if([](const sf::Sound& s) {

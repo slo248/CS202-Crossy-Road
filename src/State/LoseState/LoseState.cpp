@@ -25,8 +25,6 @@ LoseState::LoseState(StateStack& stack, Context& context)
     );
     buttonPlayAgain->setCallback([this]() {
         mContext->isLoadedFromFile = false;
-        // add requesStackClear may lead to problem with
-        // mContext->gameState->getGameType()
         requestStackClear();
         requestStackPush(States::Game);
     });
