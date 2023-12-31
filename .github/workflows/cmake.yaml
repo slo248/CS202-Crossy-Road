@@ -1,0 +1,29 @@
+name: cmake
+
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+    branches: [main, dev]
+  pull_request:
+    paths-ignore:
+      - "README.md"
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+
+      - name: Build
+        run: |
+          cd build
+          make

@@ -20,7 +20,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY
 file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 # Find SFML, if not found, download it
-find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
+find_package(SFML 2.6 COMPONENTS graphics window system audio network REQUIRED)
 
 if(NOT SFML_FOUND)
     message(STATUS "SFML not found. Downloading from the internet...")
@@ -28,7 +28,7 @@ if(NOT SFML_FOUND)
     FetchContent_Declare(
         SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.5.1
+        GIT_TAG 2.6.1
     )
     FetchContent_MakeAvailable(SFML)
 endif()
