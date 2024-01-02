@@ -46,11 +46,12 @@ jobs:
 
       - name: Installing dependencies
         run: |
+          choco install mingw
           git clone https://github.com/SFML/SFML.git
           cd SFML
           git checkout 2.6.x
           mkdir build && cd build
-          cmake -DBUILD_SHARED_LIBS=ON ..
+          cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc ..
           cmake --build . --config Release
           cmake --install . --config Release
           cd ../..
@@ -59,7 +60,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc ..
           cmake --build . --config Release
   MacOS-Build:
     runs-on: macos-latest
@@ -75,5 +76,5 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
           cmake --build . --config Release
