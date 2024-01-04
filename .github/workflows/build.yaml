@@ -1,0 +1,80 @@
+name: cmake
+
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+    branches: [main, dev]
+  pull_request:
+    paths-ignore:
+      - "README.md"
+    branches: [main, dev]
+
+jobs:
+  Linux-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libfreetype-dev libx11-dev libxcursor-dev libxrandr-dev libudev-dev libgl1-mesa-dev libopenal-dev libflac-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libogg-dev libpthread-stubs0-dev libxcb-image0-dev libjpeg-dev libudev-dev libx11-xcb-dev libxcb-randr0-dev libxcb1-dev libxcb1 libxcb-util0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shm0-dev libxcb-xkb-dev libxcb-cursor-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-xrm-dev libxcb-glx0-dev libxcb-xinput-dev libxcb-xrm-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev
+
+      - name: Install SFML
+        run: |
+          git clone https://github.com/SFML/SFML.git
+          cd SFML
+          git checkout 2.6.x
+          mkdir build && cd build
+          cmake -DBUILD_SHARED_LIBS=ON ..
+          make
+          sudo make install
+
+      - name: Building with cmake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+  Windows-Build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Installing dependencies
+        run: |
+          choco install mingw
+          git clone https://github.com/SFML/SFML.git
+          cd SFML
+          git checkout 2.6.x
+          mkdir build && cd build
+          cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G"MinGW Makefiles" ..
+          cmake --build . --config Release
+          cmake --install . --config Release
+          cd ../..
+
+      - name: Building
+        run: |
+          mkdir build
+          cd build
+          cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G"MinGW Makefiles" ..
+          cmake --build . --config Release
+  MacOS-Build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Installing dependencies
+        run: |
+          brew install sfml
+
+      - name: Building
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
+          cmake --build . --config Release

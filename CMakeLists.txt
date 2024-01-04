@@ -45,4 +45,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     sfml-audio
     sfml-network
 )
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR} include)
