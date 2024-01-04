@@ -2,7 +2,6 @@
 #define LANE_HPP
 
 #include <SFML/System/Clock.hpp>
-#include <iostream>
 
 #include "ObjectFactory.hpp"
 #include "ResourceIdentifiers.hpp"

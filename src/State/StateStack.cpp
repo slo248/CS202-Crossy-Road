@@ -1,7 +1,6 @@
 #include "StateStack.hpp"
 
 #include <cassert>
-// #include <iostream>
 
 State::Ptr StateStack::createState(States::ID stateID) {
     auto found = mFactories.find(stateID);
@@ -13,15 +12,12 @@ void StateStack::applyPendingChanges() {
     for (const PendingChange& change : mPendingList) switch (change.action) {
             case Push:
                 mStack.push_back(createState(change.stateID));
-                // std::cout << "Pushed state " << change.stateID << std::endl;
                 break;
             case Pop:
                 mStack.pop_back();
-                // std::cout << "Popped current state " << std::endl;
                 break;
             case Clear:
                 mStack.clear();
-                // std::cout << "Cleared states" << std::endl;
                 break;
         }
     mPendingList.clear();

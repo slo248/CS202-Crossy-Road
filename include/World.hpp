@@ -8,13 +8,11 @@
 #include "CommandQueue.hpp"
 #include "Config.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "State.hpp"
 
 class World {
    public:
-    World(
-        TextureHolder& textures, FontHolder& fonts, sf::RenderWindow& window,
-        Config::GameLevel::Type gameType, bool isLoadedFromFile = false
-    );
+    World(State::Context& context);
 
     void update(sf::Time dt);
     void draw();
@@ -22,10 +20,12 @@ class World {
     CommandQueue& getCommandQueue();
 
     sf::FloatRect getBattlefieldBounds() const;
+    int getScore() const;
+    Config::Game::Level getGameType() const;
 
     bool hasAlivePlayer() const;
     bool hasPlayerReachedEnd() const;
-    void saveCurrentGame() const;
+    void save() const;
 
    private:
     enum Layer { Background, OnGround, Air, LayerCount };
@@ -34,12 +34,14 @@ class World {
     const int mTotalBlocks;
 
     void buildScene();
-    void buildBlocks();
     void buildLayers();
+    void buildBlocks();
+    void buildGround();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
-    void loadGame();
     void updateBoard();
+    void makeWeather(int weather = -1);
+    void load();
 
    private:
     TextureHolder& mTextures;
@@ -54,10 +56,10 @@ class World {
     // Above are all type-dependent
 
     sf::FloatRect mWorldBounds;  // Type-dependent
-    Character* mPlayer;          // Saved independently
+    Character* mPlayerSkin;      // Saved independently
 
     CommandQueue mCommandQueue;
-    Config::GameLevel::Type mGameType;  // Save
+    Config::Game::Level mGameLevel;  // Save
 
     Lane* mTopLane;     // Saved independently
     int mRemainBlocks;  // Save
@@ -67,6 +69,10 @@ class World {
 
     sf::Text mScoreText;
     sf::Text mGameModeText;
+    State::Context* mContext;
+
+    Config::Game::Weather mWeather;
+    sf::Sprite mWeatherSprite;
 };
 
 #endif

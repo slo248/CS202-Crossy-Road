@@ -35,7 +35,6 @@ TrafficLight::TrafficLight(
       mNumFrames(6) {
     loadCurrent(in);
     centerOrigin(mSprite);
-    // move(0, -30);
 }
 
 unsigned int TrafficLight::getCategory() const {

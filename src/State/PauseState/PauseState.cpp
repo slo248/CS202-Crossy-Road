@@ -1,14 +1,22 @@
 #include "PauseState.hpp"
 
-PauseState::PauseState(StateStack& stack, Context context, int mode)
+#include "GameState.hpp"
+
+PauseState::PauseState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
-      State(stack, context, mode) {
+      State(stack, context) {
     int x = 300;
 
-    auto buttonStar = std::make_shared<Button>(
-        context, Textures::ButtonStar, sf::Vector2f(x, 244), true
+    auto buttonSaveGame = std::make_shared<Button>(
+        context, Textures::ButtonSaveGame, sf::Vector2f(x, 244), true
     );
-    mGUIContainer.pack(buttonStar);
+
+    buttonSaveGame->setCallback([this]() {
+        if (mContext->gameState) {
+            mContext->gameState->save();
+        }
+    });
+    mGUIContainer.pack(buttonSaveGame);
 
     auto buttonHome = std::make_shared<Button>(
         context, Textures::ButtonHome, sf::Vector2f(300, 340)
@@ -22,28 +30,42 @@ PauseState::PauseState(StateStack& stack, Context context, int mode)
     auto buttonResumePause = std::make_shared<Button>(
         context, Textures::ButtonResumePause, sf::Vector2f(x + 87, 340)
     );
+    buttonResumePause->setCallback([this]() {
+        requestStackPop();
+    });
     mGUIContainer.pack(buttonResumePause);
 
     auto buttonPlayAgainPause = std::make_shared<Button>(
         context, Textures::ButtonPlayAgainPause, sf::Vector2f(x + 174, 340)
     );
+    buttonPlayAgainPause->setCallback([this]() {
+        mContext->isLoadedFromFile = false;
+        requestStackClear();
+        requestStackPush(States::Game);
+    });
     mGUIContainer.pack(buttonPlayAgainPause);
 
     auto buttonSetting = std::make_shared<Button>(
         context, Textures::ButtonSetting, sf::Vector2f(x + 262, 340)
     );
-    buttonSetting->setCallback([this]() { requestStackPush(States::Setting); });
+    buttonSetting->setCallback([this]() {
+        mContext->mode = Config::SettingState::NonSkin;
+        mContext->musics->setPaused();
+        requestStackPush(States::Setting);
+    });
     mGUIContainer.pack(buttonSetting);
 }
 
 void PauseState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
-bool PauseState::update(sf::Time dt) { return 1; }
+
+bool PauseState::update(sf::Time dt) { return false; }
+
 bool PauseState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
-    return 0;
+    return false;
 }

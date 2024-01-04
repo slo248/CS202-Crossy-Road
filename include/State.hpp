@@ -4,13 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+#include "Config.hpp"
 #include "Container.hpp"
+#include "MusicPlayer.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "SoundEffectPlayer.hpp"
 #include "StateID.hpp"
 
 // Forward declaration
 class StateStack;
 class Player;
+class GameState;
 //
 
 class State {
@@ -19,16 +23,29 @@ class State {
     struct Context {
         Context(
             sf::RenderWindow& window, TextureHolder& textures,
-            FontHolder& fonts, Player& player
+            FontHolder& fonts, MusicPlayer& musics,
+            SoundEffectPlayer& soundEffects, Player& player,
+            std::vector<int>& highScores
         );
+
         sf::RenderWindow* window;
         TextureHolder* textures;
         FontHolder* fonts;
+        MusicPlayer* musics;
+        SoundEffectPlayer* soundEffects;
         Player* player;
+        std::vector<int>* highScores;
+        GameState* gameState = nullptr;
+        Config::Game::Level gameLevel;
+        Musics::ID currentMusic = Musics::Music1;
+        float volumeLevel = 50;
+        int mode = 0;
+        int playerSkinNumber = 0;
+        bool isLoadedFromFile = false;
     };
 
    public:
-    State(StateStack& stack, Context context, int mode = 0);
+    State(StateStack& stack, Context& context);
     virtual ~State();
 
     virtual void draw() = 0;
@@ -36,17 +53,16 @@ class State {
     virtual bool handleEvent(const sf::Event& event) = 0;
 
    protected:
-    int mMode;
+    Context* mContext;
     Container mGUIContainer;
+
+   protected:
     void requestStackPush(States::ID stateID);
     void requestStackPop();
     void requestStackClear();
 
-    Context getContext() const;
-
    private:
     StateStack* mStack;
-    Context mContext;
 };
 
 #endif

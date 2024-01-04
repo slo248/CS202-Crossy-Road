@@ -5,10 +5,7 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
-#include <fstream>
 #include <memory>
-#include <set>
-#include <utility>
 #include <vector>
 
 #include "Category.hpp"
@@ -95,7 +92,10 @@ class SceneNode : public sf::Transformable,
     bool mIsMarkedForRemoval;
 };
 
-bool collision(const sf::FloatRect& lhs, const sf::FloatRect& rhs);
+bool collision(
+    const sf::FloatRect& lhs, const sf::FloatRect& rhs, float reduceLeft = 0,
+    float reduceRight = 0
+);
 float distance(const SceneNode& lhs, const SceneNode& rhs);
 
 #endif  // SCENENODE_HPP

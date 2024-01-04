@@ -25,7 +25,6 @@ class Player {
 
    private:
     void initKeys();
-    // still developing
     void initActions();
 
    private:

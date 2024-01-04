@@ -3,43 +3,85 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
-SettingState::SettingState(StateStack& stack, Context context, int mode)
-    : State(stack, context, mode) {
+SettingState::SettingState(StateStack& stack, Context& context)
+    : State(stack, context),
+      mWindow(context.window),
+      mMode(static_cast<Config::SettingState::Mode>(context.mode)) {
+    mChangeableSkin = true;
     mBackgroundSprite.setTexture(
         context.textures->get(Textures::BackgroundSetting)
     );
 
-    auto dialogGeneral = std::make_shared<DialogGeneral>(
-        context.textures->get(Textures::DialogGeneral), context
+    mDialogGeneral = std::make_shared<DialogGeneral>(
+        context.textures->get(Textures::DialogCommon), context
     );
-    mGUIContainer.pack(dialogGeneral);
+    mButtonGeneral = std::make_shared<Button>(
+        context, Textures::ButtonGeneral, sf::Vector2f(13, 79), true
+    );
+    mButtonGeneral->setCallback([this]() { this->mChangeableSkin = true; });
+    mGUIContainer.pack(mButtonGeneral);
 
-    auto buttonGeneral = std::make_shared<Button>(
-        context, Textures::ButtonGeneral, sf::Vector2f(13, 79)
-    );
-    mGUIContainer.pack(buttonGeneral);
+    if (mMode == Config::SettingState::Skin) {
+        mDialogSkin = std::make_shared<DialogSkin>(
+            context.textures->get(Textures::DialogCommon), context
+        );
+    }
 
-    auto buttonSkin = std::make_shared<Button>(
-        context, Textures::ButtonSkin, sf::Vector2f(448, 79)
+    mButtonSkin = std::make_shared<Button>(
+        context, Textures::ButtonSkin, sf::Vector2f(448, 79), true
     );
-    mGUIContainer.pack(buttonSkin);
+
+    if (mMode == Config::SettingState::Skin) {
+        mButtonSkin->setCallback([this]() { this->mChangeableSkin = false; });
+    }
+
+    mGUIContainer.pack(mButtonSkin);
 
     auto backButton = std::make_shared<Button>(
         context, Textures::ButtonBack, sf::Vector2f(836, 4)
     );
-    backButton->setCallback(std::bind(&SettingState::requestStackPop, this));
+    backButton->setCallback([this]() {
+        requestStackPop();
+        mContext->musics->setPaused(false);
+    });
     mGUIContainer.pack(backButton);
 }
 
 void SettingState::draw() {
-    sf::RenderWindow& window = *getContext().window;
-    window.draw(mBackgroundSprite);
-    window.draw(mGUIContainer);
+    if (mChangeableSkin) {
+        mWindow->clear();
+        mWindow->draw(mBackgroundSprite);
+        mWindow->draw(mGUIContainer);
+        mWindow->draw(*mDialogGeneral);
+    } else if (!mChangeableSkin && mMode) {
+        mWindow->clear();
+        mWindow->draw(mBackgroundSprite);
+        mWindow->draw(mGUIContainer);
+        mWindow->draw(*mDialogSkin);
+    }
 }
 
-bool SettingState::update(sf::Time) { return true; }
+bool SettingState::update(sf::Time dt) {
+    if (mMode == Config::SettingState::Skin) {
+        mDialogSkin->update(dt);
+    }
+
+    return false;
+}
 
 bool SettingState::handleEvent(const sf::Event& event) {
+    if (mChangeableSkin) {
+        mButtonGeneral->select();
+        mButtonGeneral->isSelectable(false);
+        mButtonSkin->deselect();
+        mDialogGeneral->handleEvent(event);
+    } else if (!mChangeableSkin && mMode == Config::SettingState::Skin) {
+        mButtonGeneral->isSelectable(true);
+        mButtonGeneral->deselect();
+        mButtonSkin->select();
+        mDialogSkin->handleEvent(event);
+    }
+
     mGUIContainer.handleEvent(event);
     return false;
 }

@@ -128,35 +128,62 @@ int positionToSlot(float x) {
 
 int getCurrentRow(int y) { return y / DEFAULT_CELL_LENGTH; }
 
-float getLevelFactor(Config::GameLevel::Type gameType) {
-    return 1.f + static_cast<float>(gameType) / 20;
+float getLevelFactor(Config::Game::Level gameType) {
+    switch (gameType) {
+        case Config::Game::Level::L1: {
+            return LEVEL_ONE_COEFFICIENT;
+        }
+
+        case Config::Game::Level::L2: {
+            return LEVEL_TWO_COEFFICIENT;
+        }
+
+        case Config::Game::Level::L3: {
+            return LEVEL_THREE_COEFFICIENT;
+        }
+
+        case Config::Game::Level::L4: {
+            return LEVEL_FOUR_COEFFICIENT;
+        }
+
+        case Config::Game::Level::L5: {
+            return LEVEL_FIVE_COEFFICIENT;
+        }
+
+        case Config::Game::Level::Survival: {
+            return SURVIVAL_COEFFICIENT;
+        }
+
+        default: {
+            return 1.f;
+        }
+    }
 }
 
-std::string savedGamePath(Config::GameLevel::Type type) {
+std::string savedGamePath(Config::Game::Level type) {
     switch (type) {
-        case Config::GameLevel::Endless: {
-            return "data/endless.txt";
-            break;
+        case Config::Game::Level::Survival: {
+            return SAVED_GAME_SURVIVAL_PATH;
         }
 
-        case Config::GameLevel::L1: {
-            return "data/level1.txt";
+        case Config::Game::Level::L1: {
+            return SAVED_GAME_L1_PATH;
         }
 
-        case Config::GameLevel::L2: {
-            return "data/level2.txt";
+        case Config::Game::Level::L2: {
+            return SAVED_GAME_L2_PATH;
         }
 
-        case Config::GameLevel::L3: {
-            return "data/level3.txt";
+        case Config::Game::Level::L3: {
+            return SAVED_GAME_L3_PATH;
         }
 
-        case Config::GameLevel::L4: {
-            return "data/level4.txt";
+        case Config::Game::Level::L4: {
+            return SAVED_GAME_L4_PATH;
         }
 
-        case Config::GameLevel::L5: {
-            return "data/level5.txt";
+        case Config::Game::Level::L5: {
+            return SAVED_GAME_L5_PATH;
         }
 
         default: {
@@ -165,35 +192,52 @@ std::string savedGamePath(Config::GameLevel::Type type) {
     }
 }
 
-std::string gameModeToString(Config::GameLevel::Type type) {
+std::string gameModeToString(Config::Game::Level type) {
     switch (type) {
-        case Config::GameLevel::Endless: {
-            return "Endless";
+        case Config::Game::Level::Survival: {
+            return "Survival";
             break;
         }
 
-        case Config::GameLevel::L1: {
+        case Config::Game::Level::L1: {
             return "Level 1";
         }
 
-        case Config::GameLevel::L2: {
+        case Config::Game::Level::L2: {
             return "Level 2";
         }
 
-        case Config::GameLevel::L3: {
+        case Config::Game::Level::L3: {
             return "Level 3";
         }
 
-        case Config::GameLevel::L4: {
+        case Config::Game::Level::L4: {
             return "Level 4";
         }
 
-        case Config::GameLevel::L5: {
+        case Config::Game::Level::L5: {
             return "Level 5";
         }
 
         default: {
             return "";
         }
+    }
+}
+
+int gameLevelToBlocks(Config::Game::Level gameLevel) {
+    return 2 + (gameLevel + 1) * 2;
+}
+
+float weatherFactor(Config::Game::Weather weather) {
+    switch (weather) {
+        case Config::Game::Rain:
+            return WEATHER_RAIN_FACTOR;
+
+        case Config::Game::Snow:
+            return WEATHER_SNOW_FACTOR;
+
+        default:
+            return 1.f;
     }
 }

@@ -2,7 +2,6 @@
 #define OBJECT_FACTORY_HPP
 
 #include "Character.hpp"
-#include "Config.hpp"
 #include "Obstacle.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "TrafficLight.hpp"

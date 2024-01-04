@@ -15,7 +15,6 @@ enum ID {
     Lose,
     Credit,
     Ranking,
-    Saved,
     ChooseMode,
 };
 }

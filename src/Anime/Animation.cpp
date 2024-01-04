@@ -3,19 +3,24 @@
 #include "Utility.hpp"
 
 Animation::Animation(
-    const sf::Texture& texture, sf::Vector2i frameSize, int numFrame
+    const sf::Texture& texture, sf::Vector2i frameSize, bool isTransparent
 )
     : mSprite(texture),
       mStartRect(0, 0, frameSize.x, frameSize.y),
-      mNumFrame(numFrame),
+      mNumFrame(texture.getSize().x / frameSize.x),
       mCurFrame(0),
       mElapsedTime(sf::Time::Zero),
       mTotalElapsedTime(sf::Time::Zero),
-      mDuration(sf::seconds(1.5)),
+      mDuration(DEFAULT_ANIMATION_DURATION),
       mInProgress(false),
       mRepeat(false) {
     mTimePerFrame = sf::seconds(mDuration.asSeconds() / mNumFrame + 0.1);
-    // std::cout << mTimePerFrame.asSeconds() << std::endl;
+    mDefaultRect =
+        sf::IntRect((mNumFrame - 1) * frameSize.x, 0, frameSize.x, frameSize.y);
+
+    if (isTransparent) {
+        mSprite.setColor(sf::Color(255, 255, 255, 128));
+    }
 }
 
 void Animation::setDuration(sf::Time t) {
@@ -32,7 +37,13 @@ bool Animation::isInProgress() const { return mInProgress; }
 bool Animation::isRepeated() const { return mRepeat; }
 
 void Animation::update(sf::Time dt) {
-    if (!isInProgress()) return;
+    if (!isInProgress()) {
+        if (mDefaultRect.getPosition().x >= 0) {
+            mSprite.setTextureRect(mDefaultRect);
+            // centerOrigin(mSprite);
+        }
+        return;
+    }
 
     mElapsedTime += dt;
     mTotalElapsedTime += dt;
@@ -93,7 +104,9 @@ sf::FloatRect Animation::getLocalBounds() const {
 }
 
 void Animation::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    if (!isInProgress()) return;
+    if (!isInProgress() && mDefaultRect.getPosition().x < 0) {
+        return;
+    }
     states.transform *= getTransform();
     target.draw(mSprite, states);
 }

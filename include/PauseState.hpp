@@ -1,14 +1,15 @@
 #ifndef PAUSE_STATE_HPP
 #define PAUSE_STATE_HPP
-#include "State.hpp"
+
 #include "Button.hpp"
+#include "State.hpp"
 
 class PauseState : public State {
    public:
-    PauseState(StateStack& stack, Context context, int mode = 0);
+    PauseState(StateStack& stack, Context& context);
 
-    virtual void draw();
-    virtual bool update(sf::Time dt);
+    virtual void draw() override;
+    virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event);
 
    private:

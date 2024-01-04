@@ -1,9 +1,11 @@
 #include "Player.hpp"
 
+#include <fstream>
 #include <iostream>
 
 #include "Character.hpp"
 #include "CommandQueue.hpp"
+#include "Config.hpp"
 #include "SceneNode.hpp"
 
 Player::Player() : mActionBinding(), mKeyBinding() {
@@ -58,10 +60,18 @@ bool Player::isRealtimeAction(Action action) {
 }
 
 void Player::initKeys() {
-    mKeyBinding[sf::Keyboard::W] = MoveUp;
-    mKeyBinding[sf::Keyboard::S] = MoveDown;
-    mKeyBinding[sf::Keyboard::A] = MoveLeft;
-    mKeyBinding[sf::Keyboard::D] = MoveRight;
+    std::ifstream in(SETTING_PATH);
+    if (!in.good()) {
+        std::cout << "No setting file" << std::endl;
+        return;
+    }
+
+    int key;
+    for (int i = 0; i < Action::Count - 1 && !in.eof(); ++i) {
+        in >> key;
+        mKeyBinding[sf::Keyboard::Key(key)] = Action(i);
+    }
+
     mKeyBinding[sf::Keyboard::P] = ShowPosition;
 }
 

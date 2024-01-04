@@ -22,15 +22,14 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
       mIsInMovement(false) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
-        mAnimations.push_back(Animation(
-            textures.get(data.textures[i]), data.frameSize, data.numFrames
-        ));
+        mAnimations.push_back(
+            Animation(textures.get(data.textures[i]), data.frameSize)
+        );
     }
 
     mCurrentAnimation = &mAnimations[CharacterData::Direction::Idle];
     mCurrentAnimation->play();
     mCurrentAnimation->setRepeat(true);
-    // centerOrigin(*this);
 }
 
 Character::Character(

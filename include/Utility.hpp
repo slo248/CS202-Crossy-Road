@@ -32,11 +32,15 @@ int positionToSlot(float x);
 
 int getCurrentRow(int y);
 
-float getLevelFactor(Config::GameLevel::Type gameType);
+float getLevelFactor(Config::Game::Level gameType);
 
-std::string savedGamePath(Config::GameLevel::Type type);
+std::string savedGamePath(Config::Game::Level type);
 
-std::string gameModeToString(Config::GameLevel::Type type);
+std::string gameModeToString(Config::Game::Level type);
+
+int gameLevelToBlocks(Config::Game::Level gameLevel);
+
+float weatherFactor(Config::Game::Weather weather);
 
 #include "Utility.inl"
 #endif

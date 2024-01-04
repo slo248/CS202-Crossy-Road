@@ -4,12 +4,30 @@
 namespace sf {
 class Texture;
 class Font;
+class Music;
+class SoundBuffer;
 }  // namespace sf
 
 namespace Fonts {
 enum ID {
     Main,
     Enchanted,
+};
+}
+
+namespace Musics {
+enum ID { None, Introduction, Music1, Music2, Music3, MusicCount, Win, HighScore, Lose };
+}
+
+namespace SoundEffects {
+enum ID {
+    ClickButton,
+    BombExplode,
+    JumpInRiver,
+    Log,
+    WalkGrass,
+    WalkGraveyard,
+    WalkSwamp,
 };
 }
 
@@ -209,6 +227,11 @@ enum ID {
 
     // <---------------Characters Skin-------------->
 
+    // <---------------Weather-------------->
+    Rain,
+    Snow,
+    // <------------------------------------>
+
     //// GUI
     // Common
     BackgroundMain,
@@ -216,14 +239,23 @@ enum ID {
     BackgroundLabel,
     ButtonBack,
     ButtonHome,
+    ButtonHome2,
     ButtonLevel,
     ButtonPlayAgain,
     ButtonSetting,
     ButtonResume,
 
+    // Skin(serve for GUI)
+    SkinArcher,
+    SkinEnchantress,
+    SkinKnight,
+    SkinMusketeer,
+    SkinSwordsman,
+    SkinWizard,
+
     // Setting state
     BackgroundSetting,
-    DialogGeneral,
+    DialogCommon,
     ButtonLeftArrow,
     ButtonRightArrow,
     ButtonUpArrow,
@@ -236,7 +268,12 @@ enum ID {
     ButtonSave,
     ButtonSound,
     ButtonMusic,
+    ButtonConfirm,
     BarSounds,
+    ButtonAdd,
+    ButtonSub,
+    ChosenMusic,
+    OptionMusic,
 
     // Credit state
     BackgroundCredit,
@@ -254,10 +291,16 @@ enum ID {
 
     // Lose state
     DialogDefeat,
+    DeadArcher,
+    DeadEnchantress,
+    DeadKnight,
+    DeadMusketeer,
+    DeadSwordsman,
+    DeadWizard,
 
     // Pause state
     BackgroundPause,
-    ButtonStar,
+    ButtonSaveGame,
     ButtonResumePause,
     ButtonPlayAgainPause,
 
@@ -272,10 +315,14 @@ enum ID {
     BackgroundSaved,
     BarSaved,
 
-    // Chose Mode State
+    // Chooosemode state
     ButtonLevelMenu,
     ButtonBackMenu,
-    ButtonSurvivalMenu,
+    ButtonSurvival,
+
+    // Game state
+    CountDown,
+
 };
 }
 
@@ -285,5 +332,6 @@ class ResourceHolder;
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffects::ID> SoundBufferHolder;
 
 #endif  // RESOURCE_IDENTIFIERS_HPP

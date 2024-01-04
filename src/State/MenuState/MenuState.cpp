@@ -1,18 +1,26 @@
 #include "MenuState.hpp"
 
-MenuState::MenuState(StateStack& stack, Context context, int mode)
+#include "Config.hpp"
+
+MenuState::MenuState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
-      State(stack, context, mode) {
+      State(stack, context) {
     auto buttonPlay = std::make_shared<Button>(
         context, Textures::ButtonPlay, sf::Vector2f(584, 267)
     );
-    buttonPlay->setCallback([this]() { requestStackPush(States::ChooseMode); });
+    buttonPlay->setCallback([this]() {
+        mContext->mode = Config::ChooseModeState::NewGame;
+        requestStackPush(States::ChooseMode);
+    });
     mGUIContainer.pack(buttonPlay);
 
     auto buttonContinue = std::make_shared<Button>(
         context, Textures::ButtonContinue, sf::Vector2f(584, 320)
     );
-    buttonContinue->setCallback([this]() { requestStackPush(States::Saved); });
+    buttonContinue->setCallback([this]() {
+        mContext->mode = Config::ChooseModeState::Continue;
+        requestStackPush(States::ChooseMode);
+    });
     mGUIContainer.pack(buttonContinue);
 
     auto buttonRanking = std::make_shared<Button>(
@@ -25,6 +33,8 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
         context, Textures::ButtonSettingMenu, sf::Vector2f(584, 426)
     );
     buttonSettingMenu->setCallback([this]() {
+        mContext->musics->setPaused();
+        mContext->mode = Config::SettingState::Skin;
         requestStackPush(States::Setting);
     });
     mGUIContainer.pack(buttonSettingMenu);
@@ -34,16 +44,20 @@ MenuState::MenuState(StateStack& stack, Context context, int mode)
     );
     buttonCredit->setCallback([this]() { requestStackPush(States::Credit); });
     mGUIContainer.pack(buttonCredit);
+
+    context.musics->play(Musics::Introduction);
 }
 
 void MenuState::draw() {
-    sf::RenderWindow& window = *getContext().window;
+    sf::RenderWindow& window = *(mContext->window);
 
     window.draw(mBackground);
     window.draw(mGUIContainer);
 }
-bool MenuState::update(sf::Time dt) { return 1; }
+
+bool MenuState::update(sf::Time dt) { return false; }
+
 bool MenuState::handleEvent(const sf::Event& event) {
     mGUIContainer.handleEvent(event);
-    return 0;
+    return false;
 }

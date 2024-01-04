@@ -164,7 +164,7 @@ bool Lane::isCollidedWithPlayer(Character* player) {
 
     // Detect any collision with enemy
     for (auto& child : mChildren) {
-        if (collision(playerBound, child->getBoundingRect())) {
+        if (collision(playerBound, child->getBoundingRect(), 20.f, 20.f)) {
             switch (child->getCategory()) {
                 case Category::Enemy: {
                     return true;
@@ -224,7 +224,7 @@ void Lane::attachChild(SceneNode::Ptr child) {
 
 Lane::Lane(LaneType type, const TextureHolder& textures, float levelScale)
     : mType(type),
-      mRandomFactor(1),
+      mRandomFactor(1.f),
       mChildLane(nullptr),
       mTrafficLight(nullptr),
       mSpawnInterval(
@@ -304,7 +304,6 @@ void Lane::spawnAirEnemy() {
 
 void Lane::spawnLog() {
     std::unique_ptr<Obstacle> log(mObjectFactory->createLog());
-
     // -1 or 1 based on spawn side
     log->setScaleNormalVelocity((1 - (mSpawnSide << 1)) * mRandomFactor);
 
@@ -481,7 +480,6 @@ void createMultipleLanes(
 ) {
     // If these are buffer lanes, then they do not contain river
     int laneTypeCount = LaneType::TypeCount - isBuffer;
-    std::cout << laneTypeCount << '\n';
 
     // Bottom lane
     LaneType randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
@@ -492,7 +490,6 @@ void createMultipleLanes(
     bottomLane = lane.get();
 
     while (--laneNumber) {
-        // std::cout << "Lane of type " << randomLaneType << " is created\n";
         randomLaneType = static_cast<LaneType>(rand() % laneTypeCount);
 
         Lane::Ptr parentLane(std::make_unique<Lane>(

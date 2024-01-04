@@ -24,7 +24,6 @@ struct CharacterData {
     float normalSpeed;
     std::vector<Textures::ID> textures;
     sf::Vector2i frameSize;
-    size_t numFrames;
 };
 
 struct ObstacleData {
