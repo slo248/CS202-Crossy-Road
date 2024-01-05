@@ -35,6 +35,8 @@ VolumeBar::VolumeBar(State::Context& context, float x, float y, Type type)
     mVolumeDot.setPosition(
         mX + (mVolumeLevel / 100.f) * VOLUME_BAR_WIDTH, mY - 5
     );
+
+    toggleMute();
 }
 
 void VolumeBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -44,6 +46,10 @@ void VolumeBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void VolumeBar::handleEvent(const sf::Event& event) {
+    if ((mType == Music && mContext->isMuteMusic) ||
+        (mType == Sfx && mContext->isMuteSfx))
+        return;
+
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
             sf::Vector2f mousePos = mContext->window->mapPixelToCoords(
@@ -83,6 +89,15 @@ void VolumeBar::handleEvent(const sf::Event& event) {
                 (mVolumeLevel / 100.f) * VOLUME_BAR_WIDTH, VOLUME_BAR_HEIGHT
             ));
         }
+    }
+}
+
+void VolumeBar::toggleMute() {
+    if ((mType == Music && mContext->isMuteMusic) ||
+        (mType == Sfx && mContext->isMuteSfx)) {
+        mVolumeBar.setFillColor(sf::Color(182, 182, 182));
+    } else {
+        mVolumeBar.setFillColor(sf::Color(56, 151, 40));
     }
 }
 

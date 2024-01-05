@@ -37,8 +37,17 @@ DialogGeneral::DialogGeneral(
         context, Textures::ButtonMusic, sf::Vector2f(493.f, ORIGIN_Y + 86.f),
         true
     );
+    if (mContext->isMuteMusic) buttonMusic->changeTexture(Button::Selected);
+
     buttonMusic->setCallback([this, buttonMusic]() {
-        handleVolume(buttonMusic, mContext->isMuteMusic);
+        if (mContext->isMuteMusic) {
+            mContext->isMuteMusic = false;
+            buttonMusic->deselect();
+        } else {
+            mContext->isMuteMusic = true;
+        }
+
+        mVolumeBarMusic->toggleMute();
     });
     mGUIContainer.pack(buttonMusic);
 
@@ -72,17 +81,27 @@ DialogGeneral::DialogGeneral(
     // Sfx area
     mLabelSfx.setPosition(603.f, ORIGIN_Y + 221.f);
 
-    auto buttonSound = std::make_shared<Button>(
-        context, Textures::ButtonSound, sf::Vector2f(487.f, ORIGIN_Y + 221.f),
+    auto buttonSfx = std::make_shared<Button>(
+        context, Textures::ButtonSfx, sf::Vector2f(487.f, ORIGIN_Y + 221.f),
         true
     );
-    buttonSound->setCallback([this, buttonSound]() {
-        handleVolume(buttonSound, mContext->isMuteSfx);
+    if (mContext->isMuteSfx) buttonSfx->changeTexture(Button::Selected);
+    
+    buttonSfx->setCallback([this, buttonSfx]() {
+        if (mContext->isMuteSfx) {
+            mContext->isMuteSfx = false;
+            buttonSfx->deselect();
+        } else {
+            mContext->isMuteSfx = true;
+        }
+
+        mVolumeBarSfx->toggleMute();
     });
-    mGUIContainer.pack(buttonSound);
+    mGUIContainer.pack(buttonSfx);
 
     mVolumeBarSfx = std::make_shared<VolumeBar>(
-        context, 586.f, VOLUME_BAR_ALIGN + ORIGIN_Y + 303.f, VolumeBar::Type::Sfx
+        context, 586.f, VOLUME_BAR_ALIGN + ORIGIN_Y + 303.f,
+        VolumeBar::Type::Sfx
     );
     mGUIContainer.pack(mVolumeBarSfx);
 }
@@ -135,11 +154,19 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
 
     mVolumeBarMusic->handleEvent(event);
     float volumeLevel = mVolumeBarMusic->getVolumeLevel();
-    mContext->musics->setVolume(volumeLevel);
+    if (mContext->isMuteMusic) {
+        mContext->musics->setVolume(0.f);
+    } else {
+        mContext->musics->setVolume(volumeLevel);
+    }
 
     mVolumeBarSfx->handleEvent(event);
     volumeLevel = mVolumeBarSfx->getVolumeLevel();
-    mContext->soundEffects->setVolume(volumeLevel);
+    if (mContext->isMuteSfx) {
+        mContext->soundEffects->setVolume(0.f);
+    } else {
+        mContext->soundEffects->setVolume(volumeLevel);
+    }
 
     if (isChoosingMusic) {
         for (int i = 0; i < Musics::MusicCount - 1; ++i) {
@@ -207,15 +234,5 @@ void DialogGeneral::addListMusic() {
             );
             mContext->currentMusic = static_cast<Musics::ID>(i + 1);
         });
-    }
-}
-
-void DialogGeneral::handleVolume(Button::Ptr buttonVolume, bool& isMute) {
-    if (isMute) {
-        // code handle
-        isMute = false;
-        buttonVolume->deselect();
-    } else {
-        isMute = true;
     }
 }

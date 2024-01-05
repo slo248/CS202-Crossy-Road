@@ -403,8 +403,8 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::LabelMusic, "asset/textures/LabelMusic.png");
     load(Textures::LabelSfx, "asset/textures/LabelSfx.png");
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
-    load(Textures::ButtonSound, "asset/textures/ButtonSound.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
+    load(Textures::ButtonSfx, "asset/textures/ButtonSfx.png");
     load(Textures::ButtonAdd, "asset/textures/daucong.png");
     load(Textures::ButtonSub, "asset/textures/dautru.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");

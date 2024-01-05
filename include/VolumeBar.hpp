@@ -17,6 +17,7 @@ class VolumeBar : public Component {
     float getVolumeLevel() { return mVolumeLevel; }
 
     void handleEvent(const sf::Event& event) override;
+    void toggleMute();
 
    private:
     float clamp(float value, float min, float max);

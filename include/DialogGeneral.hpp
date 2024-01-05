@@ -20,7 +20,6 @@ class DialogGeneral : public Dialog {
     void updateLabels();
     void addButtonLabel(Player::Action action, float y, Textures::ID Button);
     void addListMusic();
-    void handleVolume(Button::Ptr buttonVolume, bool& isMute);
 
    private:
     sf::Sprite mLabelKeys;
