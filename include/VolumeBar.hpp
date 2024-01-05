@@ -3,15 +3,20 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Component.hpp"
 #include "State.hpp"
 
-class VolumeBar : public sf::Drawable {
+class VolumeBar : public Component {
    public:
-    VolumeBar(State::Context& Context);
+    enum Type { Music, Sfx };
+    typedef std::shared_ptr<VolumeBar> Ptr;
+
+    VolumeBar(State::Context& Context, float x, float y, Type type = Music);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    void handleEvent(sf::RenderWindow& window, sf::Event event);
     void update();
     float getVolumeLevel() { return mVolumeLevel; }
+
+    void handleEvent(const sf::Event& event) override;
 
    private:
     float clamp(float value, float min, float max);
@@ -20,9 +25,12 @@ class VolumeBar : public sf::Drawable {
     sf::RectangleShape mVolumeBackground;
     sf::RectangleShape mVolumeBar;
     sf::CircleShape mVolumeDot;
-    bool isDragging;
-    float mVolumeLevel;
     State::Context* mContext;
+    Type mType;
+    float mVolumeLevel;
+    float mX;
+    float mY;
+    bool mIsDragging;
 };
 
 #endif  // VOLUME_BAR_HPP

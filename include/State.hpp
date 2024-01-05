@@ -37,11 +37,15 @@ class State {
         std::vector<int>* highScores;
         GameState* gameState = nullptr;
         Config::Game::Level gameLevel;
+        
         Musics::ID currentMusic = Musics::Music1;
-        float volumeLevel = 50;
+        float volumeMusic = 50;
+        float volumeSfx = 50;
         int mode = 0;
         int playerSkinNumber = 0;
         bool isLoadedFromFile = false;
+        bool isMuteMusic = false;
+        bool isMuteSfx = false;
     };
 
    public:

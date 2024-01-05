@@ -20,11 +20,14 @@ class DialogGeneral : public Dialog {
     void updateLabels();
     void addButtonLabel(Player::Action action, float y, Textures::ID Button);
     void addListMusic();
+    void handleVolume(Button::Ptr buttonVolume, bool& isMute);
 
    private:
-    sf::Sprite mLabelTextKeys;
-    sf::Sprite mLabelTextSounds;
-    VolumeBar mVolumeBar;
+    sf::Sprite mLabelKeys;
+    sf::Sprite mLabelMusic;
+    sf::Sprite mLabelSfx;
+    VolumeBar::Ptr mVolumeBarMusic;
+    VolumeBar::Ptr mVolumeBarSfx;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
     std::array<Button::Ptr, Musics::MusicCount - 1> mListMusics;

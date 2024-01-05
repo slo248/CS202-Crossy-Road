@@ -399,8 +399,9 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonDownArrow, "asset/textures/ButtonDownArrow.png");
     load(Textures::ButtonGeneral, "asset/textures/ButtonGeneral.png");
     load(Textures::ButtonSkin, "asset/textures/ButtonSkin.png");
-    load(Textures::LabelTextKeys, "asset/textures/LabelTextKeys.png");
-    load(Textures::LabelTextSounds, "asset/textures/LabelTextSounds.png");
+    load(Textures::LabelKeys, "asset/textures/LabelKeys.png");
+    load(Textures::LabelMusic, "asset/textures/LabelMusic.png");
+    load(Textures::LabelSfx, "asset/textures/LabelSfx.png");
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
     load(Textures::ButtonSound, "asset/textures/ButtonSound.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");

@@ -28,6 +28,7 @@ class Button : public Component {
         const std::string& text, const std::string& hexCode, int characterSize,
         sf::Vector2f position, Fonts::ID font = Fonts::Main
     );
+    void changeTexture(Mode buttonMode);
 
     virtual void select() override;
     virtual void deselect() override;
@@ -38,7 +39,6 @@ class Button : public Component {
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void callBack();
     void changeSize(Size buttonSize);
-    void changeTexture(Mode buttonMode);
     bool isMouseOver(const sf::RenderWindow& window) const;
 
    private:
