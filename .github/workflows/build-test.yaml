@@ -1,17 +1,23 @@
-name: cmake
+name: build-test
 
 on:
   push:
     paths-ignore:
       - "README.md"
+      - "RULES.md"
+      - ".gitignore"
+      - "LICENSE"
     branches: [main, dev]
   pull_request:
     paths-ignore:
       - "README.md"
+      - ".gitignore"
+      - "RULES.md"
+      - "LICENSE"
     branches: [main, dev]
 
 jobs:
-  Linux-Build:
+  Linux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,19 +38,24 @@ jobs:
           make
           sudo make install
 
-      - name: Building with cmake
+      - name: Build
         run: |
           mkdir build
           cd build
           cmake ..
           make
-  Windows-Build:
+
+      - name: Test
+        run: |
+          cd build
+          ctest --verbose
+  Windows:
     runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Installing dependencies
+      - name: Install dependencies
         run: |
           choco install mingw
           git clone https://github.com/SFML/SFML.git
@@ -56,25 +67,35 @@ jobs:
           cmake --install . --config Release
           cd ../..
 
-      - name: Building
+      - name: Build
         run: |
           mkdir build
           cd build
           cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G"MinGW Makefiles" ..
           cmake --build . --config Release
-  MacOS-Build:
+
+      - name: Test
+        run: |
+          cd build
+          ctest --verbose
+  MacOS:
     runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Installing dependencies
+      - name: Install dependencies
         run: |
           brew install sfml
 
-      - name: Building
+      - name: Build
         run: |
           mkdir build
           cd build
           cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
           cmake --build . --config Release
+
+      - name: Test
+        run: |
+          cd build
+          ctest --verbose
