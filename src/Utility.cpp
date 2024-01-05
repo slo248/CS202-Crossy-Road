@@ -251,6 +251,6 @@ std::string getCurrentDateTime() {
     std::tm* timeinfo = std::localtime(&now);
 
     std::ostringstream oss;
-    oss << std::put_time(timeinfo, "%m/%d/%Y %I:%M%p");
+    oss << std::put_time(timeinfo, "%d/%m/%Y %I:%M%p");
     return oss.str();
 }

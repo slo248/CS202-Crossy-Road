@@ -87,16 +87,15 @@ Config::Game::Level GameState::getGameType() const {
 }
 
 bool GameState::updateHighScore() {
-    int score = mWorld.getScore();
-    int tmp = score;
+    Highscore currentScore = {mWorld.getScore(), getCurrentDateTime()};
+    Highscore tmp = currentScore;
     bool flag = false;
 
     for (int i = 0; i < mContext->highScores->size(); ++i) {
-        if (score > (*mContext->highScores)[i].score) {
-            tmp = (*mContext->highScores)[i].score;
-            (*mContext->highScores)[i].score = score;
-            (*mContext->highScores)[i].date = getCurrentDateTime();
-            score = tmp;
+        if (currentScore.score > (*mContext->highScores)[i].score) {
+            tmp = (*mContext->highScores)[i];
+            (*mContext->highScores)[i] = currentScore;
+            currentScore = tmp;
             if (i == 0) {
                 flag = true;
             }
