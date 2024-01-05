@@ -15,9 +15,11 @@ endif()
 set(AllOutDir "${CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}${OSBit}/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${AllOutDir})
 
-# Copy data folder to output directory
+# Copy data and asset folder to output directory
 file(COPY ${CMAKE_SOURCE_DIR}/asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY ${CMAKE_SOURCE_DIR}/asset DESTINATION ${CMAKE_SOURCE_DIR}/build)
+file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_SOURCE_DIR}/build)
 
 # Find SFML, if not found, download it
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
@@ -46,3 +48,36 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     sfml-network
 )
 target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIR} include)
+
+# # Make tests
+include(CTest)
+enable_testing()
+
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+
+# Get all test files
+file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
+
+# Loop over all test files
+foreach(TEST_SOURCE ${TEST_SOURCES})
+    # Get the file name without the full path and extension
+    get_filename_component(TEST_NAME ${TEST_SOURCE} NAME_WE)
+
+    # Add executable
+    add_executable(${TEST_NAME} ${TEST_SOURCE} ${SOURCES})
+
+    # Link libraries
+    target_link_libraries(${TEST_NAME} PRIVATE
+        sfml-graphics
+        sfml-window
+        sfml-system
+        sfml-audio
+        sfml-network
+    )
+
+    # Include directories
+    target_include_directories(${TEST_NAME} PRIVATE ${SFML_INCLUDE_DIR} include)
+
+    # Add the test
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+endforeach()
