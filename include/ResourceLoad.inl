@@ -405,8 +405,6 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
     load(Textures::ButtonSfx, "asset/textures/ButtonSfx.png");
-    load(Textures::ButtonAdd, "asset/textures/daucong.png");
-    load(Textures::ButtonSub, "asset/textures/dautru.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
     load(Textures::ChosenMusic, "asset/textures/ChosenMusic.png");
     load(Textures::OptionMusic, "asset/textures/OptionMusic.png");

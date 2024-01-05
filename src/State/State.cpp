@@ -8,7 +8,7 @@
 State::Context::Context(
     sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts,
     MusicPlayer& musics, SoundEffectPlayer& soundEffects, Player& player,
-    std::vector<int>& highScores
+    std::vector<Highscore>& highScores
 )
     : window(&window),
       textures(&textures),

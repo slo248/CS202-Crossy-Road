@@ -34,7 +34,7 @@ class Application {
     MusicPlayer mMusics;
     SoundEffectPlayer mSoundEffects;
     Player mPlayer;
-    std::vector<int> mHighScores;
+    std::vector<Highscore> mHighScores;
     StateStack mStateStack;
 };
 

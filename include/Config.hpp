@@ -51,6 +51,11 @@
 #define WEATHER_RAIN_FACTOR 0.6
 #define WEATHER_SNOW_FACTOR 0.4
 
+struct Highscore {
+    int score;
+    std::string date;
+};
+
 namespace Config {
 namespace Game {
 enum Level { L1, L2, L3, L4, L5, Survival, Count };

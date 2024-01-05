@@ -271,8 +271,6 @@ enum ID {
     ButtonSfx,
     ButtonConfirm,
     BarSounds,
-    ButtonAdd,
-    ButtonSub,
     ChosenMusic,
     OptionMusic,
 

@@ -1,6 +1,7 @@
 #include "GameState.hpp"
 
 #include "Config.hpp"
+#include "Utility.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
     : State(stack, context),
@@ -91,9 +92,10 @@ bool GameState::updateHighScore() {
     bool flag = false;
 
     for (int i = 0; i < mContext->highScores->size(); ++i) {
-        if (score > (*mContext->highScores)[i]) {
-            tmp = (*mContext->highScores)[i];
-            (*mContext->highScores)[i] = score;
+        if (score > (*mContext->highScores)[i].score) {
+            tmp = (*mContext->highScores)[i].score;
+            (*mContext->highScores)[i].score = score;
+            (*mContext->highScores)[i].date = getCurrentDateTime();
             score = tmp;
             if (i == 0) {
                 flag = true;

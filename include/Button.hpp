@@ -32,7 +32,6 @@ class Button : public Component {
 
     virtual void select() override;
     virtual void deselect() override;
-
     virtual void handleEvent(const sf::Event& event) override;
 
    private:

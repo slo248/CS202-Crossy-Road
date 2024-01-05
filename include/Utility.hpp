@@ -42,5 +42,7 @@ int gameLevelToBlocks(Config::Game::Level gameLevel);
 
 float weatherFactor(Config::Game::Weather weather);
 
+std::string getCurrentDateTime();
+
 #include "Utility.inl"
 #endif
