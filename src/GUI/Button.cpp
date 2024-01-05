@@ -66,7 +66,6 @@ void Button::deselect() {
     changeTexture(Normal);
 }
 
-
 void Button::handleEvent(const sf::Event& event) {
     if (isMouseOver(*(mContext->window))) {
         if (!mIsOn) {
@@ -155,4 +154,3 @@ bool Button::isMouseOver(const sf::RenderWindow& window) const {
 
     return buttonBounds.contains(convertedMousePosition);
 }
-
