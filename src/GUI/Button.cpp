@@ -13,9 +13,9 @@ Button::Button(
       mSprite(context.textures->get(button)),
       mText(),
       mIsToggle(false),
-      mIsOn(false),
       mIs2Mode(is2Mode),
       mContext(&context) {
+    mIsActive = false;
     originalPosition = position;
     textOriginalPosition = sf::Vector2f(0, 0);
     mSprite.setPosition(originalPosition);
@@ -48,6 +48,14 @@ void Button::setText(
     mText.setPosition(position);
 }
 
+void Button::changeTexture(Mode buttonMode) {
+    sf::Vector2u textureSize = mSprite.getTexture()->getSize();
+    sf::IntRect textureRect(
+        (textureSize.x / 2) * buttonMode, 0, textureSize.x / 2, textureSize.y
+    );
+    mSprite.setTextureRect(textureRect);
+}
+
 void Button::select() {
     if (!mIsSelectable) return;
     Component::select();
@@ -68,14 +76,14 @@ void Button::deselect() {
 
 void Button::handleEvent(const sf::Event& event) {
     if (isMouseOver(*(mContext->window))) {
-        if (!mIsOn) {
+        if (!mIsActive) {
             changeSize(Size::Small);
-            mIsOn = true;
+            mIsActive = true;
         }
     } else {
-        if (mIsOn) {
+        if (mIsActive) {
             changeSize(Size::Medium);
-            mIsOn = false;
+            mIsActive = false;
         }
     }
 
@@ -132,14 +140,6 @@ void Button::changeSize(Size buttonSize) {
     }
 
     mSprite.setScale(scaleFactor, scaleFactor);
-}
-
-void Button::changeTexture(Mode buttonMode) {
-    sf::Vector2u textureSize = mSprite.getTexture()->getSize();
-    sf::IntRect textureRect(
-        (textureSize.x / 2) * buttonMode, 0, textureSize.x / 2, textureSize.y
-    );
-    mSprite.setTextureRect(textureRect);
 }
 
 bool Button::isMouseOver(const sf::RenderWindow& window) const {

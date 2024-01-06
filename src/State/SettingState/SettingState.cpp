@@ -38,7 +38,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     mGUIContainer.pack(mButtonSkin);
 
     auto backButton = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(836, 4)
+        context, Textures::ButtonBack, sf::Vector2f(DEFAULT_BACK_BUTTON_X, DEFAULT_BACK_BUTTON_Y)
     );
     backButton->setCallback([this]() {
         requestStackPop();

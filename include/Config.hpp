@@ -26,6 +26,8 @@
     sf::IntRect(                                                               \
         0, 0, DEFAULT_CELL_LENGTH* DEFAULT_CELLS_PER_LANE, DEFAULT_CELL_LENGTH \
     )
+#define DEFAULT_BACK_BUTTON_X 836.f
+#define DEFAULT_BACK_BUTTON_Y 4.f
 
 #define DEFAULT_AIR_ENEMY_SPEED 450.f
 #define DEFAULT_GROUND_ENEMY_SPEED 150.f

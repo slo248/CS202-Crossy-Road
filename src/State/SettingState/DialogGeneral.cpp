@@ -4,7 +4,10 @@
 #include "Utility.hpp"
 
 #define ORIGIN_Y 155.f
-#define ORIGIN_MUSIC_Y (ORIGIN_Y + 153.f)
+#define FIRST_Y (ORIGIN_Y + 86.f)
+#define SECOND_Y (ORIGIN_Y + 153.f)
+#define THIRD_Y (ORIGIN_Y + 221.f)
+#define FOURTH_Y (ORIGIN_Y + 303.f)
 #define VOLUME_BAR_ALIGN 10.f
 
 DialogGeneral::DialogGeneral(
@@ -19,14 +22,14 @@ DialogGeneral::DialogGeneral(
     // Keys area
     mLabelKeys.setPosition(174.f, ORIGIN_Y);
     addButtonLabel(
-        Player::MoveLeft, ORIGIN_Y + 86.f, Textures::ButtonLeftArrow
+        Player::MoveLeft, FIRST_Y, Textures::ButtonLeftArrow
     );
     addButtonLabel(
-        Player::MoveRight, ORIGIN_Y + 153.f, Textures::ButtonRightArrow
+        Player::MoveRight, SECOND_Y, Textures::ButtonRightArrow
     );
-    addButtonLabel(Player::MoveUp, ORIGIN_Y + 221.f, Textures::ButtonUpArrow);
+    addButtonLabel(Player::MoveUp, THIRD_Y, Textures::ButtonUpArrow);
     addButtonLabel(
-        Player::MoveDown, ORIGIN_Y + 303.f, Textures::ButtonDownArrow
+        Player::MoveDown, FOURTH_Y, Textures::ButtonDownArrow
     );
     updateLabels();
 
@@ -34,7 +37,7 @@ DialogGeneral::DialogGeneral(
     mLabelMusic.setPosition(603.f, ORIGIN_Y);
 
     auto buttonMusic = std::make_shared<Button>(
-        context, Textures::ButtonMusic, sf::Vector2f(493.f, ORIGIN_Y + 86.f),
+        context, Textures::ButtonMusic, sf::Vector2f(493.f, FIRST_Y),
         true
     );
     if (mContext->isMuteMusic) buttonMusic->changeTexture(Button::Selected);
@@ -52,21 +55,21 @@ DialogGeneral::DialogGeneral(
     mGUIContainer.pack(buttonMusic);
 
     mVolumeBarMusic = std::make_shared<VolumeBar>(
-        context, 586.f, VOLUME_BAR_ALIGN + ORIGIN_Y + 86.f
+        context, 586.f, VOLUME_BAR_ALIGN + FIRST_Y
     );
     mGUIContainer.pack(mVolumeBarMusic);
 
     mChosenMusic = std::make_shared<Button>(
-        context, Textures::ChosenMusic, sf::Vector2f(586.f, ORIGIN_MUSIC_Y)
+        context, Textures::ChosenMusic, sf::Vector2f(586.f, SECOND_Y)
     );
 
     if (context.currentMusic) {
         mChosenMusic->setText(
             "Music " + std::to_string(context.currentMusic - 1), "#901212", 18,
-            {630.f, ORIGIN_MUSIC_Y}
+            {630.f, SECOND_Y}
         );
     } else {
-        mChosenMusic->setText("None", "#901212", 18, {630.f, ORIGIN_MUSIC_Y});
+        mChosenMusic->setText("None", "#901212", 18, {630.f, SECOND_Y});
     }
 
     mChosenMusic->setCallback([this]() {
@@ -79,10 +82,10 @@ DialogGeneral::DialogGeneral(
     addListMusic();
 
     // Sfx area
-    mLabelSfx.setPosition(603.f, ORIGIN_Y + 221.f);
+    mLabelSfx.setPosition(603.f, THIRD_Y);
 
     auto buttonSfx = std::make_shared<Button>(
-        context, Textures::ButtonSfx, sf::Vector2f(487.f, ORIGIN_Y + 221.f),
+        context, Textures::ButtonSfx, sf::Vector2f(487.f, THIRD_Y),
         true
     );
     if (mContext->isMuteSfx) buttonSfx->changeTexture(Button::Selected);
@@ -100,7 +103,7 @@ DialogGeneral::DialogGeneral(
     mGUIContainer.pack(buttonSfx);
 
     mVolumeBarSfx = std::make_shared<VolumeBar>(
-        context, 586.f, VOLUME_BAR_ALIGN + ORIGIN_Y + 303.f,
+        context, 586.f, VOLUME_BAR_ALIGN + FOURTH_Y,
         VolumeBar::Type::Sfx
     );
     mGUIContainer.pack(mVolumeBarSfx);
@@ -154,6 +157,7 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
 
     mVolumeBarMusic->handleEvent(event);
     float volumeLevel = mVolumeBarMusic->getVolumeLevel();
+
     if (mContext->isMuteMusic) {
         mContext->musics->setVolume(0.f);
     } else {
@@ -162,6 +166,7 @@ void DialogGeneral::handleEvent(const sf::Event& event) {
 
     mVolumeBarSfx->handleEvent(event);
     volumeLevel = mVolumeBarSfx->getVolumeLevel();
+
     if (mContext->isMuteSfx) {
         mContext->soundEffects->setVolume(0.f);
     } else {
@@ -204,15 +209,15 @@ void DialogGeneral::addButtonLabel(
 void DialogGeneral::addListMusic() {
     mListMusics[0] = std::make_shared<Button>(
         *mContext, Textures::OptionMusic,
-        sf::Vector2f(586.f, ORIGIN_MUSIC_Y + 28.f)
+        sf::Vector2f(586.f, SECOND_Y + 28.f)
     );
     mListMusics[0]->setText(
-        "None", "#901212", 18, {630.f, ORIGIN_MUSIC_Y + 28.f}
+        "None", "#901212", 18, {630.f, SECOND_Y + 28.f}
     );
     mListMusics[0]->setCallback([this]() {
         isChoosingMusic = false;
         mChosenMusic->setText(
-            "None", "#901212", 18, {650.f, ORIGIN_MUSIC_Y + 12.f}
+            "None", "#901212", 18, {650.f, SECOND_Y + 12.f}
         );
         mContext->currentMusic = Musics::None;
     });
@@ -220,17 +225,17 @@ void DialogGeneral::addListMusic() {
     for (int i = 1; i < Musics::MusicCount - 1; ++i) {
         mListMusics[i] = std::make_shared<Button>(
             *mContext, Textures::OptionMusic,
-            sf::Vector2f(586.f, ORIGIN_MUSIC_Y + 28.f * (i + 1))
+            sf::Vector2f(586.f, SECOND_Y + 28.f * (i + 1))
         );
         mListMusics[i]->setText(
             "Music" + std::to_string(i), "#901212", 18,
-            {630.f, ORIGIN_MUSIC_Y + 28.f * (i + 1)}
+            {630.f, SECOND_Y + 28.f * (i + 1)}
         );
         mListMusics[i]->setCallback([this, i]() {
             isChoosingMusic = false;
             mChosenMusic->setText(
                 "Music" + std::to_string(i), "#901212", 18,
-                {650.f, ORIGIN_MUSIC_Y + 12.f}
+                {650.f, SECOND_Y + 12.f}
             );
             mContext->currentMusic = static_cast<Musics::ID>(i + 1);
         });

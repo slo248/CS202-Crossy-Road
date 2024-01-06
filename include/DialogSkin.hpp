@@ -19,12 +19,8 @@ class DialogSkin : public Dialog {
 
    private:
     void addSkins(
-        int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
-        Textures::ID skin
-    );
-    void addChosenSkins(
-        int skinNumber, sf::Vector2f position, sf::Vector2i frameSize,
-        Textures::ID skin
+        std::array<Animation::Ptr, NUMBER_OF_SKINS>& mSkins, int skinNumber,
+        sf::Vector2f position, sf::Vector2i frameSize, Textures::ID skin
     );
     void changeSkin(int skinNumber);
 

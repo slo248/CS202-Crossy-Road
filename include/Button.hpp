@@ -49,7 +49,6 @@ class Button : public Component {
     sf::FloatRect originalSize;
     State::Context* mContext;
     bool mIsToggle;
-    bool mIsOn;
     bool mIs2Mode;
 };
 

@@ -2,11 +2,14 @@
 
 #include "Config.hpp"
 
+#define ORIGIN_X 584.f
+#define ORIGIN_Y 267.f
+
 MenuState::MenuState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundMenu)),
       State(stack, context) {
     auto buttonPlay = std::make_shared<Button>(
-        context, Textures::ButtonPlay, sf::Vector2f(584, 267)
+        context, Textures::ButtonPlay, sf::Vector2f(ORIGIN_X, ORIGIN_Y)
     );
     buttonPlay->setCallback([this]() {
         mContext->mode = Config::ChooseModeState::NewGame;
@@ -15,7 +18,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonPlay);
 
     auto buttonContinue = std::make_shared<Button>(
-        context, Textures::ButtonContinue, sf::Vector2f(584, 320)
+        context, Textures::ButtonContinue, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 53.f)
     );
     buttonContinue->setCallback([this]() {
         mContext->mode = Config::ChooseModeState::Continue;
@@ -24,13 +27,13 @@ MenuState::MenuState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonContinue);
 
     auto buttonRanking = std::make_shared<Button>(
-        context, Textures::ButtonRanking, sf::Vector2f(584, 373)
+        context, Textures::ButtonRanking, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 106.f)
     );
     buttonRanking->setCallback([this]() { requestStackPush(States::Ranking); });
     mGUIContainer.pack(buttonRanking);
 
     auto buttonSettingMenu = std::make_shared<Button>(
-        context, Textures::ButtonSettingMenu, sf::Vector2f(584, 426)
+        context, Textures::ButtonSettingMenu, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 159.f)
     );
     buttonSettingMenu->setCallback([this]() {
         mContext->musics->setPaused();
@@ -40,7 +43,7 @@ MenuState::MenuState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonSettingMenu);
 
     auto buttonCredit = std::make_shared<Button>(
-        context, Textures::ButtonCredit, sf::Vector2f(584, 479)
+        context, Textures::ButtonCredit, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 212.f)
     );
     buttonCredit->setCallback([this]() { requestStackPush(States::Credit); });
     mGUIContainer.pack(buttonCredit);
