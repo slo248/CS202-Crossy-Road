@@ -17,6 +17,11 @@ class Player;
 class GameState;
 //
 
+struct HighScore {
+    int score;
+    std::string date;
+};
+
 class State {
    public:
     typedef std::unique_ptr<State> Ptr;
@@ -43,6 +48,7 @@ class State {
         float volumeSfx = 50;
         int mode = 0;
         int playerSkinNumber = 0;
+        int currentScore = 0;
         bool isLoadedFromFile = false;
         bool isMuteMusic = false;
         bool isMuteSfx = false;

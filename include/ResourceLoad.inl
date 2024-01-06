@@ -2,7 +2,7 @@
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
-       /***********************Load TrafficLight Textures***********************/
+    /***********************Load TrafficLight Textures***********************/
     load(
         Textures::Field_TrafficLight,
         "asset/game_textures/TrafficLight/Field_TrafficLight.png"
@@ -30,6 +30,9 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         Textures::BeeBossIdle,
         "asset/game_textures/Enemy/BeeBoss/Special_Idle.png"
     );
+    load(
+        Textures::BeeBossDead, "asset/game_textures/Enemy/BeeBoss/S_Attack.png"
+    );
 
     load(
         Textures::BombBatToLeft,
@@ -40,6 +43,20 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         "asset/game_textures/Enemy/BombBat/S_Fly_ToRight.png"
     );
     load(Textures::BombBatIdle, "asset/game_textures/Enemy/BombBat/D_Fly.png");
+    load(
+        Textures::BombBatDead, "asset/game_textures/Enemy/BombBat/S_Attack.png"
+    );
+
+    load(
+        Textures::BirdToLeft,
+        "asset/game_textures/Animal/Bird4/S_Fly_ToLeft.png"
+    );
+    load(
+        Textures::BirdToRight,
+        "asset/game_textures/Animal/Bird4/S_Fly_ToRight.png"
+    );
+    load(Textures::BirdIdle, "asset/game_textures/Animal/Bird4/S_Death.png");
+    load(Textures::BirdDead, "asset/game_textures/Animal/Bird4/S_Attack.png");
 
     load(
         Textures::CrocodileToLeft,

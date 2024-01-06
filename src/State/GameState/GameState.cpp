@@ -44,6 +44,8 @@ bool GameState::update(sf::Time dt) {
     } else {
         mContext->musics->stop();
         if (mWorld.getGameType() == Config::Game::Level::Survival) {
+            mContext->currentScore = mWorld.getScore();
+
             if (updateHighScore()) {
                 mContext->mode = Config::WinState::HighScore;
                 requestStackClear();

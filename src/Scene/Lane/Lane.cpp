@@ -36,11 +36,10 @@ Lane::Lane(
         );
     } else {
         int isHavingTrafficLight =
-            isBufferLane ? 0 : (rand() % 3) - 1;  // -1, 0 , 1
-        mSpawnSide =
-            isHavingTrafficLight == 0
-                ? None
-                : static_cast<SpawnSide>((isHavingTrafficLight + 1) / 2);
+            isBufferLane ? 0 : (rand() % 2);  // Yes or No
+        mSpawnSide = isHavingTrafficLight == 0
+                         ? None
+                         : static_cast<SpawnSide>(rand() % 2);  // Left or Right
 
         if (!isHavingTrafficLight) {
             spawnObstacles(isBufferLane);
@@ -126,7 +125,10 @@ sf::Vector2f Lane::checkMoveablePlayer(
                     player->setVelocity(log->getVelocity());
 
                     // Alignment (need optimization)
-                    float alignment = 0.15 * log->getVelocity().x;
+                    // Suck approximation
+                    float alignment = AVERAGE_MOVEMENT_DURATION *
+                                      log->getVelocity().x /
+                                      player->getTemporaryFactor();
                     incommingPosition.x = log->getWorldPosition().x + alignment;
                     incommingPosition.y = log->getWorldPosition().y -
                                           log->getLocalBounds().height / 3.f;
@@ -167,6 +169,8 @@ bool Lane::isCollidedWithPlayer(Character* player) {
         if (collision(playerBound, child->getBoundingRect(), 20.f, 20.f)) {
             switch (child->getCategory()) {
                 case Category::Enemy: {
+                    Character* enemy = static_cast<Character*>(child.get());
+                    enemy->attack();
                     return true;
                 }
 
@@ -184,7 +188,8 @@ bool Lane::isCollidedWithPlayer(Character* player) {
     }
 
     // If no collision happened, check if player is on the river and not moving
-    if (mType == LaneType::River && player->getVelocity().x == 0) {
+    if (mType == LaneType::River && player->getVelocity().x == 0 &&
+        !player->isWaterproof()) {
         // std::cout << "Jumped to the river\n";
         return true;
     }
@@ -315,12 +320,6 @@ void Lane::spawnLog() {
     attachChild(std::move(log));
 }
 
-bool isAirEnemy(Character* character) {
-    Character::Type characterType = character->getType();
-    return characterType == Character::Type::BeeBoss ||
-           characterType == Character::Type::BombBat;
-}
-
 void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
     mElapsedTime += dt;
 
@@ -372,7 +371,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
             for (int i = 0; i < mChildren.size(); ++i) {
                 if (mChildren[i]->getCategory() == Category::Enemy) {
                     character = static_cast<Character*>(mChildren[i].get());
-                    if (character && !isAirEnemy(character)) {
+                    if (character && !character->isAirEnemy()) {
                         sf::Vector2f currentVelocity = character->getVelocity();
                         character->setScaleNormalVelocity(times * 0.25);
                     }
@@ -384,7 +383,7 @@ void Lane::updateCurrent(sf::Time dt, CommandQueue& commands) {
         case TrafficLight::Phase::YellowToRed: {
             for (int i = 0; i < mChildren.size(); ++i) {
                 character = static_cast<Character*>(mChildren[i].get());
-                if (character && !isAirEnemy(character)) {
+                if (character && !character->isAirEnemy()) {
                     character->setVelocity(0, 0);
                 }
             }

@@ -13,6 +13,21 @@ Player::Player() : mActionBinding(), mKeyBinding() {
     initActions();
 }
 
+Player::~Player() {
+    std::ofstream out;
+    out.open(SETTING_PATH);
+    if (!out.good()) {
+        std::cout << "Cannot save keybinding\n";
+        out.close();
+        return;
+    }
+
+    for (int i = 0; i < Player::Action::Count - 1; ++i) {
+        out << getKey(static_cast<Player::Action>(i)) << "\n";
+    }
+    out.close();
+}
+
 void Player::handleEvent(const sf::Event& event, CommandQueue& commands) {
     for (const auto& pair : mKeyBinding)
         if (event.type == sf::Event::KeyReleased &&

@@ -25,6 +25,11 @@ class Application {
     void registerStates();
     State::Context initContext();
 
+    void saveRanking();
+    void loadRanking();
+    // void saveSettings();
+    // void loadSettings();
+
    private:
     const sf::Time TimePerFrame = DEFAULT_TIME_PER_FRAME;
 

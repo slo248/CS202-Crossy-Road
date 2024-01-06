@@ -74,8 +74,10 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::BeeBossToLeft,
         Textures::BeeBossToRight,
         Textures::BeeBossIdle,
+        Textures::BeeBossDead,
     };
     data[Character::BeeBoss].frameSize = sf::Vector2i(42, 50);
+    data[Character::BeeBoss].isWaterproof = true;
     /*<-------------------------BeeBoss--------------------------->*/
 
     /*<-------------------------BombBat--------------------------->*/
@@ -84,28 +86,44 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::BombBatToLeft,
         Textures::BombBatToRight,
         Textures::BombBatIdle,
+        Textures::BombBatDead,
     };
     data[Character::BombBat].frameSize = sf::Vector2i(52, 44);
+    data[Character::BeeBoss].isWaterproof = true;
     /*<-------------------------BombBat--------------------------->*/
 
+    /*<-------------------------Bird--------------------------->*/
+    data[Character::Bird].normalSpeed = DEFAULT_AIR_ENEMY_SPEED * 0.8;
+    data[Character::Bird].textures = {
+        Textures::BirdToLeft,
+        Textures::BirdToRight,
+        Textures::BirdIdle,
+        Textures::BirdDead,
+    };
+    data[Character::Bird].frameSize = sf::Vector2i(42, 48);
+    data[Character::Bird].isWaterproof = true;
+    /*<-------------------------Bird--------------------------->*/
+
     /*<-------------------------Crocodile------------------------->*/
-    data[Character::Crocodile].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Crocodile].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 1.2;
     data[Character::Crocodile].textures = {
         Textures::CrocodileToLeft,
         Textures::CrocodileToRight,
         Textures::CrocodileIdle,
     };
     data[Character::Crocodile].frameSize = sf::Vector2i(54, 32);
+    data[Character::Crocodile].isWaterproof = true;
     /*<-------------------------Crocodile------------------------->*/
 
     /*<-------------------------Dog------------------------->*/
-    data[Character::Dog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Dog].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.9;
     data[Character::Dog].textures = {
         Textures::DogToLeft,
         Textures::DogToRight,
         Textures::DogIdle,
     };
     data[Character::Dog].frameSize = sf::Vector2i(46, 40);
+    data[Character::Dog].isWaterproof = true;
     /*<-------------------------Dog------------------------->*/
 
     /*<-------------------------Fishmen------------------------->*/
@@ -116,66 +134,73 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::FishmenIdle,
     };
     data[Character::Fishmen].frameSize = sf::Vector2i(42, 44);
+    data[Character::Fishmen].isWaterproof = true;
     /*<-------------------------Fishmen------------------------->*/
 
     /*<-------------------------Orc------------------------->*/
-    data[Character::Orc].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Orc].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 1.2;
     data[Character::Orc].textures = {
         Textures::OrcToLeft,
         Textures::OrcToRight,
         Textures::OrcIdle,
     };
     data[Character::Orc].frameSize = sf::Vector2i(54, 54);
+    data[Character::Orc].isWaterproof = true;
     /*<-------------------------Orc------------------------->*/
 
     /*<-------------------------Wraith------------------------->*/
-    data[Character::Wraith].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Wraith].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.8;
     data[Character::Wraith].textures = {
         Textures::WraithToLeft,
         Textures::WraithToRight,
         Textures::WraithIdle,
     };
     data[Character::Wraith].frameSize = sf::Vector2i(44, 50);
+    data[Character::Wraith].isWaterproof = true;
     /*<-------------------------Wraith------------------------->*/
 
     /*<-------------------------WraithPro------------------------->*/
-    data[Character::WraithPro].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::WraithPro].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.9;
     data[Character::WraithPro].textures = {
         Textures::WraithProToLeft,
         Textures::WraithProToRight,
         Textures::WraithProIdle,
     };
     data[Character::WraithPro].frameSize = sf::Vector2i(44, 50);
+    data[Character::WraithPro].isWaterproof = true;
     /*<-------------------------WraithPro------------------------->*/
 
     /*<-------------------------WraithSwamp------------------------->*/
-    data[Character::WraithSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::WraithSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.7;
     data[Character::WraithSwamp].textures = {
         Textures::WraithSwampToLeft,
         Textures::WraithSwampToRight,
         Textures::WraithSwampIdle,
     };
     data[Character::WraithSwamp].frameSize = sf::Vector2i(44, 50);
+    data[Character::WraithSwamp].isWaterproof = true;
     /*<-------------------------WraithSwamp------------------------->*/
 
     /*<-------------------------GolemGy------------------------->*/
-    data[Character::GolemGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::GolemGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.8;
     data[Character::GolemGy].textures = {
         Textures::GolemGyToLeft,
         Textures::GolemGyToRight,
         Textures::GolemGyIdle,
     };
     data[Character::GolemGy].frameSize = sf::Vector2i(60, 50);
+    data[Character::GolemGy].isWaterproof = true;
     /*<-------------------------GolemGy------------------------->*/
 
     /*<-------------------------Golem------------------------->*/
-    data[Character::Golem].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Golem].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 1.1;
     data[Character::Golem].textures = {
         Textures::GolemToLeft,
         Textures::GolemToRight,
         Textures::GolemIdle,
     };
     data[Character::Golem].frameSize = sf::Vector2i(60, 50);
+    data[Character::Golem].isWaterproof = true;
     /*<-------------------------Golem------------------------->*/
 
     /*<-------------------------GolemSwamp------------------------->*/
@@ -186,26 +211,29 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::GolemSwampIdle,
     };
     data[Character::GolemSwamp].frameSize = sf::Vector2i(60, 50);
+    data[Character::GolemSwamp].isWaterproof = true;
     /*<-------------------------GolemSwamp------------------------->*/
 
     /*<-------------------------SatyrGy------------------------->*/
-    data[Character::SatyrGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::SatyrGy].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 1.2;
     data[Character::SatyrGy].textures = {
         Textures::SatyrGyToLeft,
         Textures::SatyrGyToRight,
         Textures::SatyrGyIdle,
     };
     data[Character::SatyrGy].frameSize = sf::Vector2i(48, 48);
+    data[Character::SatyrGy].isWaterproof = true;
     /*<-------------------------SatyrGy------------------------->*/
 
     /*<-------------------------Satyr------------------------->*/
-    data[Character::Satyr].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Satyr].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.7;
     data[Character::Satyr].textures = {
         Textures::SatyrToLeft,
         Textures::SatyrToRight,
         Textures::SatyrIdle,
     };
     data[Character::Satyr].frameSize = sf::Vector2i(48, 48);
+    data[Character::Satyr].isWaterproof = true;
     /*<-------------------------Satyr------------------------->*/
 
     /*<-------------------------SatyrSwamp------------------------->*/
@@ -216,6 +244,7 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::SatyrSwampIdle,
     };
     data[Character::SatyrSwamp].frameSize = sf::Vector2i(48, 48);
+    data[Character::SatyrSwamp].isWaterproof = true;
     /*<-------------------------SatyrSwamp------------------------->*/
 
     /*<-------------------------MinoGy------------------------->*/
@@ -226,40 +255,103 @@ std::vector<CharacterData> initializeCharacterData() {
         Textures::MinoGyIdle,
     };
     data[Character::MinoGy].frameSize = sf::Vector2i(58, 56);
+    data[Character::MinoGy].isWaterproof = true;
     /*<-------------------------MinoGy------------------------->*/
 
     /*<-------------------------Mino------------------------->*/
-    data[Character::Mino].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::Mino].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 1.1;
     data[Character::Mino].textures = {
         Textures::MinoToLeft,
         Textures::MinoToRight,
         Textures::MinoIdle,
     };
     data[Character::Mino].frameSize = sf::Vector2i(58, 56);
+    data[Character::Mino].isWaterproof = true;
     /*<-------------------------Mino------------------------->*/
 
     /*<-------------------------MinoSwamp------------------------->*/
-    data[Character::MinoSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED;
+    data[Character::MinoSwamp].normalSpeed = DEFAULT_GROUND_ENEMY_SPEED * 0.8;
     data[Character::MinoSwamp].textures = {
         Textures::MinoSwampToLeft,
         Textures::MinoSwampToRight,
         Textures::MinoSwampIdle,
     };
     data[Character::MinoSwamp].frameSize = sf::Vector2i(58, 56);
+    data[Character::MinoSwamp].isWaterproof = true;
     /*<-------------------------MinoSwamp------------------------->*/
 
     // Skin data
-    for (int i = Character::Archer; i < Character::TypeCount; ++i) {
-        data[i].normalSpeed = DEFAULT_PLAYER_SPEED;
-        int tmp = 4 * (i - Character::Archer);
-        data[i].textures = {
-            static_cast<Textures::ID>(Textures::ArcherToLeft + tmp),
-            static_cast<Textures::ID>(Textures::ArcherToRight + tmp),
-            static_cast<Textures::ID>(Textures::ArcherIdle + tmp),
-            static_cast<Textures::ID>(Textures::ArcherDead + tmp),
-        };
-        data[i].frameSize = sf::Vector2i(42, 38);
-    }
+    /*<-------------------------Archer------------------------->*/
+    data[Character::Archer].normalSpeed = DEFAULT_PLAYER_SPEED;
+    data[Character::Archer].textures = {
+        Textures::ArcherToLeft,
+        Textures::ArcherToRight,
+        Textures::ArcherIdle,
+        Textures::ArcherDead,
+    };
+    data[Character::Archer].frameSize = sf::Vector2i(42, 38);
+    data[Character::Archer].isWaterproof = false;
+    /*<-------------------------Archer------------------------->*/
+
+    /*<-------------------------Enchantress------------------------->*/
+    data[Character::Enchantress].normalSpeed = DEFAULT_PLAYER_SPEED * 0.7;
+    data[Character::Enchantress].textures = {
+        Textures::EnchantressToLeft,
+        Textures::EnchantressToRight,
+        Textures::EnchantressIdle,
+        Textures::EnchantressDead,
+    };
+    data[Character::Enchantress].frameSize = sf::Vector2i(42, 38);
+    data[Character::Enchantress].isWaterproof = true;
+    /*<-------------------------Enchantress------------------------->*/
+
+    /*<-------------------------Knight------------------------->*/
+    data[Character::Knight].normalSpeed = DEFAULT_PLAYER_SPEED;
+    data[Character::Knight].textures = {
+        Textures::KnightToLeft,
+        Textures::KnightToRight,
+        Textures::KnightIdle,
+        Textures::KnightDead,
+    };
+    data[Character::Knight].frameSize = sf::Vector2i(42, 38);
+    data[Character::Knight].isWaterproof = false;
+    /*<-------------------------Knight------------------------->*/
+
+    /*<-------------------------Musketeer------------------------->*/
+    data[Character::Musketeer].normalSpeed = DEFAULT_PLAYER_SPEED * 1.2;
+    data[Character::Musketeer].textures = {
+        Textures::MusketeerToLeft,
+        Textures::MusketeerToRight,
+        Textures::MusketeerIdle,
+        Textures::MusketeerDead,
+    };
+    data[Character::Musketeer].frameSize = sf::Vector2i(42, 38);
+    data[Character::Musketeer].isWaterproof = false;
+    /*<-------------------------Musketeer------------------------->*/
+
+    /*<-------------------------Swordsman------------------------->*/
+    data[Character::Swordsman].normalSpeed = DEFAULT_PLAYER_SPEED * 1.1;
+    data[Character::Swordsman].textures = {
+        Textures::SwordsmanToLeft,
+        Textures::SwordsmanToRight,
+        Textures::SwordsmanIdle,
+        Textures::SwordsmanDead,
+    };
+    data[Character::Swordsman].frameSize = sf::Vector2i(42, 38);
+    data[Character::Swordsman].isWaterproof = false;
+    /*<-------------------------Swordsman------------------------->*/
+
+    /*<-------------------------Wizard------------------------->*/
+    data[Character::Wizard].normalSpeed = DEFAULT_PLAYER_SPEED * 0.8;
+    data[Character::Wizard].textures = {
+        Textures::WizardToLeft,
+        Textures::WizardToRight,
+        Textures::WizardIdle,
+        Textures::WizardDead,
+    };
+    data[Character::Wizard].frameSize = sf::Vector2i(42, 38);
+    data[Character::Wizard].isWaterproof = true;
+    /*<-------------------------Wizard------------------------->*/
 
     return data;
 }
@@ -312,6 +404,7 @@ std::vector<ObjectFactoryData> initializeObjectFactoryData() {
         data[i].airSpawnTypes = {
             Character::Type::BeeBoss,
             Character::Type::BombBat,
+            Character::Type::Bird,
         };
     }
 

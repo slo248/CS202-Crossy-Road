@@ -15,10 +15,12 @@ World::World(State::Context& context)
       mPlayerSkin(nullptr),
       mTopLane(nullptr),
       mContext(&context),
+      mDifficultyFactor(getLevelFactor(context.gameLevel)),
       // The sequence of initializer list is not the sequence of initialization
       // -> fucked up
       mTotalBlocks(gameLevelToBlocks(context.gameLevel)),
-      mScrollSpeed(0, -20),
+      mWeather(Config::Game::Weather::Normal),
+      mScrollSpeed(0, -30 * getLevelFactor(context.gameLevel)),
       mWorldBounds(sf::FloatRect(
           0, 0, mWorldView.getSize().x,
           2 * DEFAULT_CELL_LENGTH * (NUM_LANE + BUFFER_LANE)
@@ -80,7 +82,7 @@ void World::buildScene() {
     buildGround();
 
     // Weather -> build before ground leading to player haven't been loaded
-    makeWeather();
+    makeWeather(Config::Game::Weather::Normal);
 
     // Set view
     mWorldView.setCenter(
@@ -99,7 +101,10 @@ void World::buildBlocks() {
     if (mRemainBlocks == 0) {
         Lane::Ptr top = nullptr;
         Lane* bottom = nullptr;
-        createMultipleLanes(mTextures, BUFFER_LANE * 2, top, bottom, true);
+        createMultipleLanes(
+            mTextures, BUFFER_LANE * 2, top, bottom, true,
+            getLevelFactor(mGameLevel)
+        );
         bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane
         )));
         top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
@@ -133,8 +138,9 @@ void World::buildBlocks() {
 
     Lane::Ptr top = nullptr;
     Lane* bottom = nullptr;
+    updateDifficulty();
     createMultipleLanes(
-        mTextures, NUM_LANE, top, bottom, false, getLevelFactor(mGameLevel)
+        mTextures, NUM_LANE, top, bottom, false, mDifficultyFactor
     );
     bottom->attachChild(std::move(mLayers[Background]->detachChild(*mTopLane)));
     top->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
@@ -166,8 +172,7 @@ void World::buildGround() {
     // Normal lanes
     // 2 * NUM_LANE -> what a surprise, then mTotalBlocks should -2
     createMultipleLanes(
-        mTextures, 2 * NUM_LANE, top1, bottom1, false,
-        getLevelFactor(mGameLevel)
+        mTextures, 2 * NUM_LANE, top1, bottom1, false, mDifficultyFactor
     );
     top1->setPosition(0, DEFAULT_HALF_CELL_LENGTH);
     mTopLane = top1.get();
@@ -201,6 +206,16 @@ void World::buildGround() {
     mPlayerPreRow = getCurrentRow(mPlayerSkin->getWorldPosition().y);
     mPlayerSkin->setCurrentLane(initialLane);
     mLayers[OnGround]->attachChild(std::move(playerSkin));
+}
+
+void World::updateDifficulty() {
+    if (mDifficultyFactor < MAXIMUM_DIFFICULTY_FACTOR) {
+        mDifficultyFactor += 0.03;
+    }
+    if (mScrollSpeed.y > -MAXIMUM_SCROLL_SPEED) {
+        mScrollSpeed.y *= 1.05;
+    }
+    std::cout << "Difficulty factor: " << mDifficultyFactor << '\n';
 }
 
 void World::buildLayers() {
@@ -257,6 +272,13 @@ void World::load() {
     // Set weather
     int weather;
     in >> weather;
+
+    // Set difficulty factor
+    in >> mDifficultyFactor;
+
+    // Set scroll speed
+    in >> mScrollSpeed.y;
+    std::cout << "Scroll speed: " << mScrollSpeed.y << '\n';
 
     // Load world data
     int category, type;
@@ -379,6 +401,12 @@ void World::save() const {
 
     // Save weather
     out << mWeather << '\n';
+
+    // Save difficulty factor
+    out << mDifficultyFactor << '\n';
+
+    // Save scroll speed
+    out << mScrollSpeed.y << '\n';
 
     // Save world data
     out << mGameLevel << ' ' << mRemainBlocks << ' ' << mPlayerPreRow << ' '

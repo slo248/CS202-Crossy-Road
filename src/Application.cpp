@@ -38,30 +38,8 @@ Application::Application()
 }
 
 Application::~Application() {
-    std::ofstream out;
-    out.open(RANKING_PATH);
-    if (!out.good()) {
-        std::cout << "Cannot save ranking\n";
-        out.close();
-        return;
-    }
-
-    for (int i = 0; i < DEFAULT_RANKING_SLOTS; ++i) {
-        out << mHighScores[i].score << "\n" << mHighScores[i].date << "\n";
-    }
-    out.close();
-
-    out.open(SETTING_PATH);
-    if (!out.good()) {
-        std::cout << "Cannot save setting\n";
-        out.close();
-        return;
-    }
-
-    for (int i = 0; i < Player::Action::Count - 1; ++i) {
-        out << mPlayer.getKey(static_cast<Player::Action>(i)) << "\n";
-    }
-    out.close();
+    // saveSettings();
+    saveRanking();
 }
 
 void Application::run() {
@@ -119,14 +97,33 @@ void Application::registerStates() {
 }
 
 State::Context Application::initContext() {
-    /*<----------------------------Load ranking------------------------>*/
+    // loadSettings();
+    loadRanking();
+
+    return State::Context(
+        mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores
+    );
+}
+
+void Application::saveRanking() {
+    std::ofstream out;
+    out.open(RANKING_PATH);
+    if (!out.good()) {
+        std::cout << "Cannot save ranking\n";
+        out.close();
+        return;
+    }
+
+    for (int i = 0; i < DEFAULT_RANKING_SLOTS; ++i) {
+        out << mHighScores[i].score << "\n" << mHighScores[i].date << "\n";
+    }
+    out.close();
+}
+
+void Application::loadRanking() {
     std::ifstream in(RANKING_PATH);
     if (!in.good()) {
         std::cout << "No ranking file";
-        return State::Context(
-            mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer,
-            mHighScores
-        );
     }
 
     HighScore score;
@@ -142,9 +139,4 @@ State::Context Application::initContext() {
     }
 
     in.close();
-    /*<----------------------------Load ranking------------------------>*/
-
-    return State::Context(
-        mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores
-    );
 }

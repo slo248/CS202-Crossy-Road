@@ -1,6 +1,8 @@
 #include "LoseState.hpp"
 
 #include "Config.hpp"
+#include "GameState.hpp"
+#include "Label.hpp"
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
@@ -30,6 +32,16 @@ LoseState::LoseState(StateStack& stack, Context& context)
     });
 
     if (mMode == Config::LoseState::Survival) {
+        std::string score = std::to_string(mContext->currentScore);
+
+        auto labelScore = std::make_shared<Label>(
+            "Your score: " + score, Fonts::Main, context, 20
+        );
+        labelScore->setColor("#5B1010");
+        float labelScoreX = 375 - 3 * float(score.length());
+        labelScore->setPosition(labelScoreX, 165);
+        mGUIContainer.pack(labelScore);
+
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome2, sf::Vector2f(345.f, 362.f)
         );
