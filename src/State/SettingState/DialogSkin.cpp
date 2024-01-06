@@ -1,21 +1,34 @@
 #include "DialogSkin.hpp"
 
+#include "DialogSuccess.hpp"
 #include "ResourceHolder.hpp"
 
 DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     : Dialog(texture, context), mCurrentSkin(context.playerSkinNumber) {
     mSprite.setPosition(13.f, 112.f);
 
-    mButtonLeft = std::make_shared<Button>(
+    auto mButtonLeft = std::make_shared<Button>(
         context, Textures::ButtonLeftArrow, sf::Vector2f(288, 288), true
     );
-    mButtonLeft->setCallback([this]() { changeSkin(--mCurrentSkin); });
+    mButtonLeft->setCallback([this, mButtonLeft]() {
+        if (mButtonLeft->isSelected()) {
+            mButtonLeft->deselect();
+        }
+
+        changeSkin(--mCurrentSkin);
+    });
     mGUIContainer.pack(mButtonLeft);
 
-    mButtonRight = std::make_shared<Button>(
+    auto mButtonRight = std::make_shared<Button>(
         context, Textures::ButtonRightArrow, sf::Vector2f(531, 288), true
     );
-    mButtonRight->setCallback([this]() { changeSkin(++mCurrentSkin); });
+    mButtonRight->setCallback([this, mButtonRight]() {
+        if (mButtonRight->isSelected()) {
+            mButtonRight->deselect();
+        }
+
+        changeSkin(++mCurrentSkin);
+    });
     mGUIContainer.pack(mButtonRight);
 
     auto mButtonConfirm = std::make_shared<Button>(
@@ -23,8 +36,14 @@ DialogSkin::DialogSkin(const sf::Texture& texture, State::Context& context)
     );
     mButtonConfirm->setCallback([this]() {
         mContext->playerSkinNumber = mCurrentSkin;
+        mDialogSuccess->activate();
     });
     mGUIContainer.pack(mButtonConfirm);
+
+    mDialogSuccess = std::make_shared<DialogSuccess>(
+        mContext->textures->get(Textures::DialogSuccess), *mContext
+    );
+    mGUIContainer.pack(mDialogSuccess);
 
     int skin = Textures::ArcherIdle;
     for (int i = 0; i < mNumSkins; ++i) {
@@ -50,14 +69,15 @@ void DialogSkin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (int i = 0; i < mNumSkins; ++i) {
         target.draw(*mSkins[i], states);
     }
+
     target.draw(*mChosenSkins[mCurrentSkin], states);
     target.draw(mGUIContainer, states);
 }
 
 void DialogSkin::handleEvent(const sf::Event& event) {
-    if (mButtonLeft->isSelected() || mButtonRight->isSelected()) {
-        mButtonLeft->deselect();
-        mButtonRight->deselect();
+    if (mDialogSuccess && mDialogSuccess->isActive()) {
+        mDialogSuccess->handleEvent(event);
+        return;
     }
 
     mGUIContainer.handleEvent(event);

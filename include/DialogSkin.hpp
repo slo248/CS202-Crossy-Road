@@ -29,12 +29,11 @@ class DialogSkin : public Dialog {
     void changeSkin(int skinNumber);
 
    private:
-    const int mNumSkins = NUMBER_OF_SKINS;
-    int mCurrentSkin;
-    Button::Ptr mButtonLeft;
-    Button::Ptr mButtonRight;
     std::array<Animation::Ptr, NUMBER_OF_SKINS> mSkins;
     std::array<Animation::Ptr, NUMBER_OF_SKINS> mChosenSkins;
+    Dialog::Ptr mDialogSuccess;
+    const int mNumSkins = NUMBER_OF_SKINS;
+    int mCurrentSkin;
 };
 
 #endif

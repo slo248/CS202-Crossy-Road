@@ -256,6 +256,7 @@ enum ID {
     // Setting state
     BackgroundSetting,
     DialogCommon,
+    DialogSuccess,
     ButtonLeftArrow,
     ButtonRightArrow,
     ButtonUpArrow,
@@ -270,6 +271,7 @@ enum ID {
     ButtonMusic,
     ButtonSfx,
     ButtonConfirm,
+    ButtonOK,
     BarSounds,
     ChosenMusic,
     OptionMusic,

@@ -393,6 +393,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     // Setting state
     load(Textures::BackgroundSetting, "asset/textures/BackgroundSetting.png");
     load(Textures::DialogCommon, "asset/textures/DialogCommon.png");
+    load(Textures::DialogSuccess, "asset/textures/DialogSuccess.png");
     load(Textures::ButtonLeftArrow, "asset/textures/ButtonLeftArrow.png");
     load(Textures::ButtonRightArrow, "asset/textures/ButtonRightArrow.png");
     load(Textures::ButtonUpArrow, "asset/textures/ButtonUpArrow.png");
@@ -406,6 +407,7 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
     load(Textures::ButtonSfx, "asset/textures/ButtonSfx.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
+    load(Textures::ButtonOK, "asset/textures/ButtonOK.png");
     load(Textures::ChosenMusic, "asset/textures/ChosenMusic.png");
     load(Textures::OptionMusic, "asset/textures/OptionMusic.png");
 

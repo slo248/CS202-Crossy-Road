@@ -48,15 +48,12 @@ SettingState::SettingState(StateStack& stack, Context& context)
 }
 
 void SettingState::draw() {
+    mWindow->draw(mBackgroundSprite);
+    mWindow->draw(mGUIContainer);
+    
     if (mChangeableSkin) {
-        mWindow->clear();
-        mWindow->draw(mBackgroundSprite);
-        mWindow->draw(mGUIContainer);
         mWindow->draw(*mDialogGeneral);
     } else if (!mChangeableSkin && mMode) {
-        mWindow->clear();
-        mWindow->draw(mBackgroundSprite);
-        mWindow->draw(mGUIContainer);
         mWindow->draw(*mDialogSkin);
     }
 }
