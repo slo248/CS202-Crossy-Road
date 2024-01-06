@@ -51,7 +51,7 @@
 #define WEATHER_RAIN_FACTOR 0.6
 #define WEATHER_SNOW_FACTOR 0.4
 
-struct Highscore {
+struct HighScore {
     int score;
     std::string date;
 };

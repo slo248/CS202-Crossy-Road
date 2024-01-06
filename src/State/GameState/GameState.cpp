@@ -87,8 +87,8 @@ Config::Game::Level GameState::getGameType() const {
 }
 
 bool GameState::updateHighScore() {
-    Highscore currentScore = {mWorld.getScore(), getCurrentDateTime()};
-    Highscore tmp = currentScore;
+    HighScore currentScore = {mWorld.getScore(), getCurrentDateTime()};
+    HighScore tmp = currentScore;
     bool flag = false;
 
     for (int i = 0; i < mContext->highScores->size(); ++i) {

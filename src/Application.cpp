@@ -30,7 +30,7 @@ Application::Application()
     mTextures.loadTextureFromFile();
     mFonts.loadFontFromFile();
 
-        registerStates();
+    registerStates();
     mStateStack.pushState(States::Menu);
 
     mMusics.setVolume(25.f);
@@ -129,7 +129,7 @@ State::Context Application::initContext() {
         );
     }
 
-    Highscore score;
+    HighScore score;
     in >> score.score;
     in.ignore();
     std::getline(in, score.date);

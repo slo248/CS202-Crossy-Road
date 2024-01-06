@@ -14,19 +14,35 @@ RankingState::RankingState(StateStack& stack, Context& context)
 
         if (score > 0) {
             auto labelScore = std::make_shared<Label>(
-                std::to_string(score), Fonts::Main, context, 22
+                "Score", Fonts::Main, context, 18
             );
-
-            labelScore->setPosition(500, 182 + 78 * i);
+            labelScore->addStyle(sf::Text::Underlined);
+            labelScore->setPosition(497, 170 + 78 * i);
             labelScore->setColor("#901212");
             mGUIContainer.pack(labelScore);
 
             auto labelDate = std::make_shared<Label>(
-                (*mContext->highScores)[i].date, Fonts::Main, context, 22
+                "Date", Fonts::Main, context, 18
             );
-            labelDate->setPosition(570, 182 + 78 * i);
+            labelDate->addStyle(sf::Text::Underlined);
+            labelDate->setPosition(590, 170 + 78 * i);
             labelDate->setColor("#901212");
             mGUIContainer.pack(labelDate);
+            
+            auto playerScore = std::make_shared<Label>(
+                std::to_string(score), Fonts::Main, context, 22
+            );
+
+            playerScore->setPosition(497, 195 + 78 * i);
+            playerScore->setColor("#901212");
+            mGUIContainer.pack(playerScore);
+
+            auto datePlayed = std::make_shared<Label>(
+                (*mContext->highScores)[i].date, Fonts::Main, context, 22
+            );
+            datePlayed->setPosition(590, 195 + 78 * i);
+            datePlayed->setColor("#901212");
+            mGUIContainer.pack(datePlayed);
         } else {
             break;
         }

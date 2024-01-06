@@ -23,3 +23,5 @@ void Label::setColor(const std::string& hexCode) {
     sscanf(hexCode.c_str(), "#%02x%02x%02x", &r, &g, &b);
     mText.setFillColor(sf::Color(r, g, b));
 }
+
+void Label::addStyle(sf::Text::Style style) { mText.setStyle(style); }

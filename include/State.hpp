@@ -25,7 +25,7 @@ class State {
             sf::RenderWindow& window, TextureHolder& textures,
             FontHolder& fonts, MusicPlayer& musics,
             SoundEffectPlayer& soundEffects, Player& player,
-            std::vector<Highscore>& highScores
+            std::vector<HighScore>& highScores
         );
 
         sf::RenderWindow* window;
@@ -34,7 +34,7 @@ class State {
         MusicPlayer* musics;
         SoundEffectPlayer* soundEffects;
         Player* player;
-        std::vector<Highscore>* highScores;
+        std::vector<HighScore>* highScores;
         GameState* gameState = nullptr;
         Config::Game::Level gameLevel;
 

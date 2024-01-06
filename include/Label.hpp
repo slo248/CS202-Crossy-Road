@@ -19,6 +19,7 @@ class Label : public Component {
     void setText(const std::string& text);
     virtual void handleEvent(const sf::Event& event) override {};
     void setColor(const std::string& hexCode);
+    void addStyle(sf::Text::Style style);
 
    private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
