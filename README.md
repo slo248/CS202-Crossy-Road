@@ -8,6 +8,8 @@ This is a 2D game clone version of <a href="https://www.google.com/search?q=cros
 
 ![Game Preview](https://github.com/slo248/CS202-Crossy-Road/assets/116567243/3bb49d17-d257-4f49-b7c4-1f2d50f6d3e6)
 
+Video demo: [Youtube](https://youtu.be/MwSDSFgAg_0)
+
 ## II. Minimum requirements
 
 | **Operating System** |    **Compiler**   |
