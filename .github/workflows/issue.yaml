@@ -1,0 +1,39 @@
+name: issue auto comment
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: React to issue
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const repository = context.repo;
+            await github.rest.reactions.createForIssue({
+              ...repository,
+              issue_number: issueNumber,
+              content: 'heart',
+            });
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hi, there! Thanks for opening this issue!
+
+            We will look into it as soon as possible. If you have any questions, please feel free to ask them here.
+
+            Hope you have a nice day 🚀
