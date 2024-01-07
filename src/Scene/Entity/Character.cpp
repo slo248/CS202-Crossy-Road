@@ -19,7 +19,9 @@ Character::Character(Type type, const TextureHolder& textures, float levelScale)
       mType(type),
       mMovement(this),
       mCurrentLane(nullptr),
-      mIsInMovement(false) {
+      mIsInMovement(false),
+      mIsAttacking(false),
+      mIsWaterproof(Table[type].isWaterproof) {
     CharacterData data = Table[type];
     for (int i = 0; i < data.textures.size(); ++i) {
         mAnimations.push_back(
@@ -109,6 +111,10 @@ sf::FloatRect Character::getLocalBounds() const {
 
 Character::Type Character::getType() const { return mType; }
 
+bool Character::isAirEnemy() const {
+    return mType == BeeBoss || mType == BombBat || mType == Bird;
+}
+
 void Character::moveCharacter(Direction direction) {
     if (!mMovement.isFinished() || SceneNode::isMarkedForRemoval()) return;
     // Remember to initialize
@@ -173,7 +179,24 @@ void Character::setCurrentLane(Lane* lane) { mCurrentLane = lane; }
 
 bool Character::isInMovement() const { return mIsInMovement; }
 
+void Character::attack() {
+    if (!isAirEnemy()) {
+        return;
+    }
+    mCurrentAnimation = &mAnimations[mAnimations.size() - 1];
+    mCurrentAnimation->play();
+    mCurrentAnimation->setRepeat(false);
+    mIsAttacking = true;
+}
+
+bool Character::isWaterproof() { return mIsWaterproof; }
+
 void Character::updateCurrent(sf::Time dt, CommandQueue& commands) {
+    if (mIsAttacking) {
+        mCurrentAnimation->update(dt);
+        return;
+    }
+
     Entity::updateCurrent(dt, commands);
 
     // Only for the death of player

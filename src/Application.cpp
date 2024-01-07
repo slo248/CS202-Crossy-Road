@@ -24,7 +24,7 @@ Application::Application()
       mMusics(),
       mSoundEffects(),
       mPlayer(),
-      mHighScores(DEFAULT_RANKING_SLOTS, 0),
+      mHighScores(DEFAULT_RANKING_SLOTS, {0, "anonymous"}),
       mStateStack(initContext()) {
     mWindow.setFramerateLimit(60);
     mTextures.loadTextureFromFile();
@@ -34,33 +34,12 @@ Application::Application()
     mStateStack.pushState(States::Menu);
 
     mMusics.setVolume(25.f);
+    mSoundEffects.setVolume(50.f);
 }
 
 Application::~Application() {
-    std::ofstream out;
-    out.open(RANKING_PATH);
-    if (!out.good()) {
-        std::cout << "Cannot save ranking\n";
-        out.close();
-        return;
-    }
-
-    for (int i = 0; i < DEFAULT_RANKING_SLOTS; ++i) {
-        out << mHighScores[i] << "\n";
-    }
-    out.close();
-
-    out.open(SETTING_PATH);
-    if (!out.good()) {
-        std::cout << "Cannot save setting\n";
-        out.close();
-        return;
-    }
-
-    for (int i = 0; i < Player::Action::Count - 1; ++i) {
-        out << mPlayer.getKey(static_cast<Player::Action>(i)) << "\n";
-    }
-    out.close();
+    // saveSettings();
+    saveRanking();
 }
 
 void Application::run() {
@@ -118,23 +97,46 @@ void Application::registerStates() {
 }
 
 State::Context Application::initContext() {
-    /*<----------------------------Load ranking------------------------>*/
+    // loadSettings();
+    loadRanking();
+
+    return State::Context(
+        mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores
+    );
+}
+
+void Application::saveRanking() {
+    std::ofstream out;
+    out.open(RANKING_PATH);
+    if (!out.good()) {
+        std::cout << "Cannot save ranking\n";
+        out.close();
+        return;
+    }
+
+    for (int i = 0; i < DEFAULT_RANKING_SLOTS; ++i) {
+        out << mHighScores[i].score << "\n" << mHighScores[i].date << "\n";
+    }
+    out.close();
+}
+
+void Application::loadRanking() {
     std::ifstream in(RANKING_PATH);
     if (!in.good()) {
         std::cout << "No ranking file";
-        return State::Context(mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores);
     }
 
-    int score;
-    in >> score;
+    HighScore score;
+    in >> score.score;
+    in.ignore();
+    std::getline(in, score.date);
 
     for (int i = 0; i < DEFAULT_RANKING_SLOTS && !in.eof(); ++i) {
         mHighScores[i] = score;
-        in >> score;
+        in >> score.score;
+        in.ignore();
+        std::getline(in, score.date);
     }
 
     in.close();
-    /*<----------------------------Load ranking------------------------>*/
-
-    return State::Context(mWindow, mTextures, mFonts, mMusics, mSoundEffects, mPlayer, mHighScores);
 }

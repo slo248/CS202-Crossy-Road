@@ -2,6 +2,10 @@
 
 #include <SFML/Graphics/Text.hpp>
 #include <cstdlib>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 
 std::string toString(sf::Keyboard::Key key) {
 #define KEYTOSTRING_CASE(KEY) \
@@ -240,4 +244,13 @@ float weatherFactor(Config::Game::Weather weather) {
         default:
             return 1.f;
     }
+}
+
+std::string getCurrentDateTime() {
+    std::time_t now = std::time(nullptr);
+    std::tm* timeinfo = std::localtime(&now);
+
+    std::ostringstream oss;
+    oss << std::put_time(timeinfo, "%d/%m/%Y %I:%M%p");
+    return oss.str();
 }

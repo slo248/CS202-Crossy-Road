@@ -15,7 +15,7 @@ class Dialog : public Component {
    public:
     Dialog(const sf::Texture& texture, State::Context& context);
     virtual void update(sf::Time dt){};
-    virtual void handleEvent(const sf::Event& event){};
+    virtual void handleEvent(const sf::Event& event) = 0;
 
    protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

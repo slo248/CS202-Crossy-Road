@@ -22,18 +22,16 @@ class Component : public sf::Drawable,
 
    public:
     Component();
-    virtual ~Component();
 
    public:
-    virtual void isSelectable(bool isSelectable) {
-        mIsSelectable = isSelectable;
-    }
-    bool isSelected() const;
+    virtual void handleEvent(const sf::Event& event) = 0;
     virtual void select();
     virtual void deselect();
-
-    virtual bool isActive() const;
-    virtual void handleEvent(const sf::Event& event) = 0;
+    bool isSelected() const;
+    bool isActive() const;
+    void isSelectable(bool isSelectable);
+    void activate();
+    void deactivate();
 
    protected:
     bool mIsSelectable;

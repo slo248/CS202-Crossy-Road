@@ -2,13 +2,15 @@
 
 #include "GameState.hpp"
 
+#define ORIGIN_X 300.f
+#define ORIGIN_Y 340.f
+
 PauseState::PauseState(StateStack& stack, Context& context)
     : mBackground(context.textures->get(Textures::BackgroundPause)),
       State(stack, context) {
-    int x = 300;
-
     auto buttonSaveGame = std::make_shared<Button>(
-        context, Textures::ButtonSaveGame, sf::Vector2f(x, 244), true
+        context, Textures::ButtonSaveGame,
+        sf::Vector2f(ORIGIN_X, ORIGIN_Y - 96.f), true
     );
 
     buttonSaveGame->setCallback([this]() {
@@ -19,7 +21,7 @@ PauseState::PauseState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonSaveGame);
 
     auto buttonHome = std::make_shared<Button>(
-        context, Textures::ButtonHome, sf::Vector2f(300, 340)
+        context, Textures::ButtonHome, sf::Vector2f(ORIGIN_X, ORIGIN_Y)
     );
     buttonHome->setCallback([this]() {
         requestStackClear();
@@ -28,15 +30,15 @@ PauseState::PauseState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonHome);
 
     auto buttonResumePause = std::make_shared<Button>(
-        context, Textures::ButtonResumePause, sf::Vector2f(x + 87, 340)
+        context, Textures::ButtonResumePause,
+        sf::Vector2f(ORIGIN_X + 87, ORIGIN_Y)
     );
-    buttonResumePause->setCallback([this]() {
-        requestStackPop();
-    });
+    buttonResumePause->setCallback([this]() { requestStackPop(); });
     mGUIContainer.pack(buttonResumePause);
 
     auto buttonPlayAgainPause = std::make_shared<Button>(
-        context, Textures::ButtonPlayAgainPause, sf::Vector2f(x + 174, 340)
+        context, Textures::ButtonPlayAgainPause,
+        sf::Vector2f(ORIGIN_X + 174, ORIGIN_Y)
     );
     buttonPlayAgainPause->setCallback([this]() {
         mContext->isLoadedFromFile = false;
@@ -46,7 +48,7 @@ PauseState::PauseState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonPlayAgainPause);
 
     auto buttonSetting = std::make_shared<Button>(
-        context, Textures::ButtonSetting, sf::Vector2f(x + 262, 340)
+        context, Textures::ButtonSetting, sf::Vector2f(ORIGIN_X + 262, ORIGIN_Y)
     );
     buttonSetting->setCallback([this]() {
         mContext->mode = Config::SettingState::NonSkin;

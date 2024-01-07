@@ -20,6 +20,7 @@ class Character : public Entity {
         // Bird,
         BeeBoss,
         BombBat,
+        Bird,
         Crocodile,
         Dog,
         // Frog,
@@ -72,11 +73,14 @@ class Character : public Entity {
     virtual sf::FloatRect getBoundingRect() const override;
     virtual sf::FloatRect getLocalBounds() const override;
     Type getType() const;
+    bool isAirEnemy() const;
 
     void moveCharacter(Direction direction);
     bool isMarkedForRemoval() const override;
     void setCurrentLane(Lane* lane);
     bool isInMovement() const;
+    void attack();
+    bool isWaterproof();
 
    private:
     void updateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -93,6 +97,8 @@ class Character : public Entity {
     Movement mMovement;                  // Type-dependent
     Lane* mCurrentLane;                  // Position-dependent
     bool mIsInMovement;                  // Player-dependent -> no need to save
+    bool mIsAttacking;
+    bool mIsWaterproof;
 };
 
 #endif  // CHARACTER_HPP

@@ -30,6 +30,7 @@ void SoundEffectPlayer::play(SoundEffects::ID effect, sf::Vector2f position) {
     sound.setAttenuation(Attenuation);
     sound.setMinDistance(MinDistance3D);
 
+    sound.setVolume(mVolume);
     sound.play();
 }
 

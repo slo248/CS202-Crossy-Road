@@ -14,9 +14,7 @@ class Container : public Component {
 
    public:
     Container();
-
     void pack(Component::Ptr component);
-
     virtual void handleEvent(const sf::Event& event);
 
    private:

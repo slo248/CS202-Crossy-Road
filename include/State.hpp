@@ -17,6 +17,11 @@ class Player;
 class GameState;
 //
 
+struct HighScore {
+    int score;
+    std::string date;
+};
+
 class State {
    public:
     typedef std::unique_ptr<State> Ptr;
@@ -25,7 +30,7 @@ class State {
             sf::RenderWindow& window, TextureHolder& textures,
             FontHolder& fonts, MusicPlayer& musics,
             SoundEffectPlayer& soundEffects, Player& player,
-            std::vector<int>& highScores
+            std::vector<HighScore>& highScores
         );
 
         sf::RenderWindow* window;
@@ -34,14 +39,19 @@ class State {
         MusicPlayer* musics;
         SoundEffectPlayer* soundEffects;
         Player* player;
-        std::vector<int>* highScores;
+        std::vector<HighScore>* highScores;
         GameState* gameState = nullptr;
         Config::Game::Level gameLevel;
+
         Musics::ID currentMusic = Musics::Music1;
-        float volumeLevel = 50;
+        float volumeMusic = 50;
+        float volumeSfx = 50;
         int mode = 0;
         int playerSkinNumber = 0;
+        int currentScore = 0;
         bool isLoadedFromFile = false;
+        bool isMuteMusic = false;
+        bool isMuteSfx = false;
     };
 
    public:

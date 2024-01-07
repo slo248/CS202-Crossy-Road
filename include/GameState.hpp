@@ -23,7 +23,7 @@ class GameState : public State {
    private:
     World mWorld;
     Player& mPlayer;
-    std::vector<int>* mHighScores;
+    std::vector<HighScore>* mHighScores;
     Animation::Ptr mCountDown;
 };
 

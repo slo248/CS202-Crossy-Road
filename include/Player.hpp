@@ -14,6 +14,7 @@ class Player {
 
    public:
     Player();
+    ~Player();
 
     void handleEvent(const sf::Event& event, CommandQueue& commands);
     void handleRealtimeInput(CommandQueue& commands);

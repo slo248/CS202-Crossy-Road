@@ -38,7 +38,7 @@ SettingState::SettingState(StateStack& stack, Context& context)
     mGUIContainer.pack(mButtonSkin);
 
     auto backButton = std::make_shared<Button>(
-        context, Textures::ButtonBack, sf::Vector2f(836, 4)
+        context, Textures::ButtonBack, sf::Vector2f(DEFAULT_BACK_BUTTON_X, DEFAULT_BACK_BUTTON_Y)
     );
     backButton->setCallback([this]() {
         requestStackPop();
@@ -48,15 +48,12 @@ SettingState::SettingState(StateStack& stack, Context& context)
 }
 
 void SettingState::draw() {
+    mWindow->draw(mBackgroundSprite);
+    mWindow->draw(mGUIContainer);
+    
     if (mChangeableSkin) {
-        mWindow->clear();
-        mWindow->draw(mBackgroundSprite);
-        mWindow->draw(mGUIContainer);
         mWindow->draw(*mDialogGeneral);
     } else if (!mChangeableSkin && mMode) {
-        mWindow->clear();
-        mWindow->draw(mBackgroundSprite);
-        mWindow->draw(mGUIContainer);
         mWindow->draw(*mDialogSkin);
     }
 }

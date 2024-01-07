@@ -28,6 +28,8 @@ sf::Vector2f Entity::getNormalVelocity() const {
     return mNormalVelocity * mTemporaryFactor;
 }
 
+float Entity::getTemporaryFactor() { return mTemporaryFactor; }
+
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commands) {
     move(mVelocity * dt.asSeconds());
 }

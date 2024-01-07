@@ -24,6 +24,7 @@ struct CharacterData {
     float normalSpeed;
     std::vector<Textures::ID> textures;
     sf::Vector2i frameSize;
+    bool isWaterproof;
 };
 
 struct ObstacleData {

@@ -22,9 +22,11 @@ class DialogGeneral : public Dialog {
     void addListMusic();
 
    private:
-    sf::Sprite mLabelTextKeys;
-    sf::Sprite mLabelTextSounds;
-    VolumeBar mVolumeBar;
+    sf::Sprite mLabelKeys;
+    sf::Sprite mLabelMusic;
+    sf::Sprite mLabelSfx;
+    VolumeBar::Ptr mVolumeBarMusic;
+    VolumeBar::Ptr mVolumeBarSfx;
     std::array<Button::Ptr, Player::Count> mBindingButtons;
     std::array<Label::Ptr, Player::Count> mBindingLabels;
     std::array<Button::Ptr, Musics::MusicCount - 1> mListMusics;

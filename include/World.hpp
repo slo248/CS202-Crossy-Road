@@ -31,12 +31,15 @@ class World {
     enum Layer { Background, OnGround, Air, LayerCount };
     const int NUM_LANE = 10;
     const int BUFFER_LANE = 2;
+    const float MAXIMUM_DIFFICULTY_FACTOR = 1.6;
+    const int MAXIMUM_SCROLL_SPEED = 60;
     const int mTotalBlocks;
 
     void buildScene();
     void buildLayers();
     void buildBlocks();
     void buildGround();
+    void updateDifficulty();
     void removeEntitiesOutsizeView();
     void setDefaultScoreText();
     void updateBoard();
@@ -64,8 +67,9 @@ class World {
     Lane* mTopLane;     // Saved independently
     int mRemainBlocks;  // Save
 
-    int mPlayerPreRow;  // Save
-    int mScores;        // Save
+    int mPlayerPreRow;        // Save
+    int mScores;              // Save
+    float mDifficultyFactor;  // Save
 
     sf::Text mScoreText;
     sf::Text mGameModeText;

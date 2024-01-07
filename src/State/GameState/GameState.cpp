@@ -1,6 +1,7 @@
 #include "GameState.hpp"
 
 #include "Config.hpp"
+#include "Utility.hpp"
 
 GameState::GameState(StateStack& stack, Context& context)
     : State(stack, context),
@@ -43,6 +44,8 @@ bool GameState::update(sf::Time dt) {
     } else {
         mContext->musics->stop();
         if (mWorld.getGameType() == Config::Game::Level::Survival) {
+            mContext->currentScore = mWorld.getScore();
+
             if (updateHighScore()) {
                 mContext->mode = Config::WinState::HighScore;
                 requestStackClear();
@@ -86,15 +89,15 @@ Config::Game::Level GameState::getGameType() const {
 }
 
 bool GameState::updateHighScore() {
-    int score = mWorld.getScore();
-    int tmp = score;
+    HighScore currentScore = {mWorld.getScore(), getCurrentDateTime()};
+    HighScore tmp = currentScore;
     bool flag = false;
 
     for (int i = 0; i < mContext->highScores->size(); ++i) {
-        if (score > (*mContext->highScores)[i]) {
+        if (currentScore.score > (*mContext->highScores)[i].score) {
             tmp = (*mContext->highScores)[i];
-            (*mContext->highScores)[i] = score;
-            score = tmp;
+            (*mContext->highScores)[i] = currentScore;
+            currentScore = tmp;
             if (i == 0) {
                 flag = true;
             }

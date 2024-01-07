@@ -1,5 +1,6 @@
 #include "WinState.hpp"
 
+#include "GameState.hpp"
 #include "Label.hpp"
 #include "ResourceHolder.hpp"
 
@@ -29,11 +30,20 @@ WinState::WinState(StateStack& stack, Context& context)
     });
 
     if (mMode == Config::WinState::HighScore) {
+        std::string score = std::to_string(mContext->currentScore);
         mContext->musics->play(Musics::HighScore, false);
 
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome2, sf::Vector2f(339.f, 364.f)
         );
+
+        auto labelScore = std::make_shared<Label>(
+            "Your score: " + score, Fonts::Main, context, 20
+        );
+        labelScore->setColor("#5B1010");
+        float labelScoreX = 380 - 3 * float(score.length());
+        labelScore->setPosition(labelScoreX, 161);
+        mGUIContainer.pack(labelScore);
 
         auto labelHighScore =
             std::make_shared<Label>("HIGH SCORE", Fonts::Main, context, 30);
@@ -45,6 +55,12 @@ WinState::WinState(StateStack& stack, Context& context)
         buttonHome = std::make_shared<Button>(
             context, Textures::ButtonHome, sf::Vector2f(25.f, 560.f)
         );
+
+        auto labelWin =
+            std::make_shared<Label>("LEVEL PASSED!", Fonts::Main, context, 25);
+        labelWin->setColor("#5B1010");
+        labelWin->setPosition(357, 123);
+        mGUIContainer.pack(labelWin);
 
         auto buttonLevel = std::make_shared<Button>(
             context, Textures::ButtonLevel, sf::Vector2f(339.f, 364.f)

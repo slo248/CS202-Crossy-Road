@@ -6,18 +6,21 @@
 #include "ResourceHolder.hpp"
 #include "Utility.hpp"
 
+#define ORIGIN_X 584.f
+#define ORIGIN_Y 320.f
+
 ChooseModeState::ChooseModeState(StateStack& stack, Context& context)
     : State(stack, context),
       mBackgroundSprite(context.textures->get(Textures::BackgroundMenu)),
       mMode(static_cast<Config::ChooseModeState::Mode>(context.mode)) {
     auto buttonLevelMenu = std::make_shared<Button>(
-        context, Textures::ButtonLevelMenu, sf::Vector2f(584, 320)
+        context, Textures::ButtonLevelMenu, sf::Vector2f(ORIGIN_X, ORIGIN_Y)
     );
     buttonLevelMenu->setCallback([this]() { requestStackPush(States::Level); });
     mGUIContainer.pack(buttonLevelMenu);
 
     auto buttonSurvival = std::make_shared<Button>(
-        context, Textures::ButtonSurvival, sf::Vector2f(584, 373)
+        context, Textures::ButtonSurvival, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 53.f)
     );
     buttonSurvival->setCallback([this]() {
         mContext->gameLevel = Config::Game::Level::Survival;
@@ -45,24 +48,12 @@ ChooseModeState::ChooseModeState(StateStack& stack, Context& context)
     mGUIContainer.pack(buttonSurvival);
 
     auto buttonBackMenu = std::make_shared<Button>(
-        context, Textures::ButtonBackMenu, sf::Vector2f(584, 426)
+        context, Textures::ButtonBackMenu, sf::Vector2f(ORIGIN_X, ORIGIN_Y + 106.f)
     );
     buttonBackMenu->setCallback(
         std::bind(&ChooseModeState::requestStackPop, this)
     );
     mGUIContainer.pack(buttonBackMenu);
-
-    // Continue:
-    // std::ifstream in(saveGamePath(choice), std::ios::in);
-    // context.isLoadFromFile = true;
-    // if (!in.good()) {
-    //     context.isLoadFromFile = false;
-    //     requestStackPush(States::GameState);
-    // }
-    //
-    // in >> context.isLoadFromFile;
-    // requestStackPush(States::GameState);
-    // in.close();
 }
 
 void ChooseModeState::draw() {

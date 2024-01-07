@@ -2,7 +2,7 @@
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
-       /***********************Load TrafficLight Textures***********************/
+    /***********************Load TrafficLight Textures***********************/
     load(
         Textures::Field_TrafficLight,
         "asset/game_textures/TrafficLight/Field_TrafficLight.png"
@@ -30,6 +30,9 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         Textures::BeeBossIdle,
         "asset/game_textures/Enemy/BeeBoss/Special_Idle.png"
     );
+    load(
+        Textures::BeeBossDead, "asset/game_textures/Enemy/BeeBoss/S_Attack.png"
+    );
 
     load(
         Textures::BombBatToLeft,
@@ -40,6 +43,20 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
         "asset/game_textures/Enemy/BombBat/S_Fly_ToRight.png"
     );
     load(Textures::BombBatIdle, "asset/game_textures/Enemy/BombBat/D_Fly.png");
+    load(
+        Textures::BombBatDead, "asset/game_textures/Enemy/BombBat/S_Attack.png"
+    );
+
+    load(
+        Textures::BirdToLeft,
+        "asset/game_textures/Animal/Bird4/S_Fly_ToLeft.png"
+    );
+    load(
+        Textures::BirdToRight,
+        "asset/game_textures/Animal/Bird4/S_Fly_ToRight.png"
+    );
+    load(Textures::BirdIdle, "asset/game_textures/Animal/Bird4/S_Death.png");
+    load(Textures::BirdDead, "asset/game_textures/Animal/Bird4/S_Attack.png");
 
     load(
         Textures::CrocodileToLeft,
@@ -393,20 +410,21 @@ void ResourceHolder<Resource, Identifier>::loadTextureFromFile() {
     // Setting state
     load(Textures::BackgroundSetting, "asset/textures/BackgroundSetting.png");
     load(Textures::DialogCommon, "asset/textures/DialogCommon.png");
+    load(Textures::DialogSuccess, "asset/textures/DialogSuccess.png");
     load(Textures::ButtonLeftArrow, "asset/textures/ButtonLeftArrow.png");
     load(Textures::ButtonRightArrow, "asset/textures/ButtonRightArrow.png");
     load(Textures::ButtonUpArrow, "asset/textures/ButtonUpArrow.png");
     load(Textures::ButtonDownArrow, "asset/textures/ButtonDownArrow.png");
     load(Textures::ButtonGeneral, "asset/textures/ButtonGeneral.png");
     load(Textures::ButtonSkin, "asset/textures/ButtonSkin.png");
-    load(Textures::LabelTextKeys, "asset/textures/LabelTextKeys.png");
-    load(Textures::LabelTextSounds, "asset/textures/LabelTextSounds.png");
+    load(Textures::LabelKeys, "asset/textures/LabelKeys.png");
+    load(Textures::LabelMusic, "asset/textures/LabelMusic.png");
+    load(Textures::LabelSfx, "asset/textures/LabelSfx.png");
     load(Textures::ButtonSave, "asset/textures/ButtonSave.png");
-    load(Textures::ButtonSound, "asset/textures/ButtonSound.png");
     load(Textures::ButtonMusic, "asset/textures/ButtonMusic.png");
-    load(Textures::ButtonAdd, "asset/textures/daucong.png");
-    load(Textures::ButtonSub, "asset/textures/dautru.png");
+    load(Textures::ButtonSfx, "asset/textures/ButtonSfx.png");
     load(Textures::ButtonConfirm, "asset/textures/ButtonConfirm.png");
+    load(Textures::ButtonOK, "asset/textures/ButtonOK.png");
     load(Textures::ChosenMusic, "asset/textures/ChosenMusic.png");
     load(Textures::OptionMusic, "asset/textures/OptionMusic.png");
 
