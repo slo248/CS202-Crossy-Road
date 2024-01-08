@@ -26,7 +26,7 @@ Video demo: [Youtube](https://youtu.be/MwSDSFgAg_0)
 - Step 1: Install dependencies (**Linux users only**)
 ```console
 sudo apt-get update
-sudo apt-get install libfreetype6-dev libx11-dev libxrandr-dev libudev-dev libgl1-mesa-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libpthread-stubs0-dev
+sudo apt-get install libfreetype6-dev libx11-dev libxcursor-dev libxrandr-dev libudev-dev libgl1-mesa-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libpthread-stubs0-dev
 ```
 
 - Step 2: Build
