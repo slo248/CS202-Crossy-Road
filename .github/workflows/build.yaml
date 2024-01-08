@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libfreetype-dev libx11-dev libxcursor-dev libxrandr-dev libudev-dev libgl1-mesa-dev libopenal-dev libflac-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libogg-dev libpthread-stubs0-dev libxcb-image0-dev libjpeg-dev libudev-dev libx11-xcb-dev libxcb-randr0-dev libxcb1-dev libxcb1 libxcb-util0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shm0-dev libxcb-xkb-dev libxcb-cursor-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-xrm-dev libxcb-glx0-dev libxcb-xinput-dev libxcb-xrm-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev
+          sudo apt-get install libfreetype6-dev libx11-dev libxrandr-dev libudev-dev libgl1-mesa-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libpthread-stubs0-dev
 
       - name: Build
         run: |

@@ -23,73 +23,22 @@ Video demo: [Youtube](https://youtu.be/MwSDSFgAg_0)
 
 ## III. How to run?
 
-The executable file is located at `CS202-Crossy-Road/bin/<your operating system name>/CrossyRoad`.
-
-### a. Linux (Ubuntu)
-
-1. Install SFML (you would not have to do this if your machine already had SFML)
+- Step 1: Install dependencies (**Linux users only**)
 ```console
 sudo apt-get update
-sudo apt-get install libfreetype-dev libx11-dev libxcursor-dev libxrandr-dev libudev-dev libgl1-mesa-dev libopenal-dev libflac-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libogg-dev libpthread-stubs0-dev libxcb-image0-dev libjpeg-dev libudev-dev libx11-xcb-dev libxcb-randr0-dev libxcb1-dev libxcb1 libxcb-util0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shm0-dev libxcb-xkb-dev libxcb-cursor-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-xrm-dev libxcb-glx0-dev libxcb-xinput-dev libxcb-xrm-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxcb-xfixes0-dev libxcb-sync-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-randr0-dev
-git clone https://github.com/SFML/SFML.git
-cd SFML
-git checkout 2.6.x
+sudo apt-get install libfreetype6-dev libx11-dev libxrandr-dev libudev-dev libgl1-mesa-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libpthread-stubs0-dev
+```
+
+- Step 2: Build
+```console
+git clone git@github.com:slo248/CS202-Crossy-Road.git
+cd CS202-Crossy-Road
 mkdir build && cd build
-cmake -DBUILD_SHARED_LIBS=ON ..
-make
-sudo make install
-```
-
-2. Build code
-```console
-git clone https://github.com/slo248/CS202-Crossy-Road.git
-cd CS202-Crossy-Road
-mkdir build
-cd build
-cmake -DBUILD_SHARED_LIBS=ON ..
+cmake ..
 cmake --build . --config Release
 ```
 
-### b. Windows
-
-1. Install SFML
-```console
-choco install mingw
-git clone https://github.com/SFML/SFML.git
-cd SFML
-git checkout 2.6.x
-mkdir build && cd build
-cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G"MinGW Makefiles" ..
-cmake --build . --config Release
-cmake --install . --config Release
-```
-
-2. Build code
-```console
-git clone https://github.com/slo248/CS202-Crossy-Road.git
-cd CS202-Crossy-Road
-mkdir build
-cd build
-cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -G"MinGW Makefiles" ..
-cmake --build . --config Release
-```
-
-### c. MacOS
-
-1. Install SFML
-```console
-brew install sfml
-```
-
-2. Build code
-```console
-git clone https://github.com/slo248/CS202-Crossy-Road.git
-cd CS202-Crossy-Road
-mkdir build
-cd build
-cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
-cmake --build . --config Release
-```
+The executable file is located at `CS202-Crossy-Road/bin/<your operating system name>/CrossyRoad`.
 
 ## IV. Find a bug?
 
