@@ -14,9 +14,9 @@ Video demo: [Youtube](https://youtu.be/MwSDSFgAg_0)
 
 | **Operating System** |    **Compiler**   |
 |:--------------------:|:-----------------:|
-| Linux (Ubuntu)       | GNU 11.4.0        |
-| Windows              | Clang 16.0.6      |
-| MacOS                | AppleClang 14.0.0 |
+| Linux (Ubuntu)       | GNU 11.4          |
+| Windows              | MSVC 19.37        |
+| MacOS                | AppleClang 14.0   |
 
 - CMake: v3.10
 - SFML: [v2.6.1](https://github.com/SFML/SFML/releases/tag/2.6.1)
