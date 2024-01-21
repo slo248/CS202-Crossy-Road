@@ -15,6 +15,7 @@ on:
       - "Class-Diagrams/*"
       - "data/*"
     branches: [main, dev]
+  workflow_dispatch:
 
 jobs:
   Linux-Build:
